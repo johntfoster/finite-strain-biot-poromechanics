@@ -1,0 +1,56 @@
+\section{Finite-deformation coefficient from material conservation}
+
+The computational reference configuration is that of the solid skeleton.  Let
+\(\mbf F_s\) denote the skeleton deformation gradient and
+\(J_s=\det\mbf F_s\).  For the registered load-bearing solid phases
+\(a\in\mc S\), let \(\phi_a\) be the current phase volume fraction and
+\(\rho_a^\alpha\) the current bulk density of component \(\alpha\) in phase
+\(a\).  Summing the solid phase/component material-conservation storage terms
+gives the intrinsic skeleton specific volume
+\begin{equation}
+ \bar v_s=
+ \frac{J_s\displaystyle\sum_{a\in\mc S}\phi_a}
+ {\displaystyle\sum_{a\in\mc S}\sum_\alpha J_s\rho_a^\alpha}.
+ \label{eq:summed-specific-volume}
+\end{equation}
+The denominator is a referential component accumulation.  Dividing it by
+\(J_s\) gives a bulk solid partial density; the intrinsic skeleton density is
+instead
+\begin{equation}
+ \bar\rho_s=\frac{1}{\bar v_s}=
+ \frac{\displaystyle\sum_{a\in\mc S}\sum_\alpha J_s\rho_a^\alpha}
+ {J_s\displaystyle\sum_{a\in\mc S}\phi_a}.
+ \label{eq:intrinsic-density}
+\end{equation}
+
+The nonlinear coefficient is
+\begin{equation}
+ B=1-\frac{1}{v_{s0}}
+ \left.\frac{\partial\bar v_s}{\partial J_s}\right|_{p_E,T,\ldots},
+ \label{eq:nonlinear-biot}
+\end{equation}
+where \(v_{s0}\) is the intrinsic skeleton reference specific volume and
+\(p_E\) is equivalent pore pressure.  The qualifier ``fixed \(p_E\)'' is a
+constitutive partial derivative.  It is not the total derivative obtained by
+allowing every finite-element field to vary along an arbitrary solution path.
+
+The reference stress consumed by the mechanics residual is
+\begin{equation}
+ \mbf P_s=\mbf P_s^{\prime\prime}
+ -B p_E J_s\mbf F_s^{-T},
+ \label{eq:reference-biot-stress}
+\end{equation}
+where \(\mbf P_s^{\prime\prime}\) is the effective first
+Piola--Kirchhoff stress evaluated at fixed \(p_E\).  Because \(B\) is a state
+variable, the consistent Newton derivative of \cref{eq:reference-biot-stress}
+contains derivatives of \(B\), \(p_E\), \(J_s\), and \(\mbf F_s^{-T}\).
+
+In the single-solid infinitesimal-strain limit, evaluation at the reference
+state gives
+\begin{equation}
+ B_0=1-\frac{K}{K_s}.
+ \label{eq:classical-limit}
+\end{equation}
+The implementation is required to approach \cref{eq:classical-limit} under
+shrinking perturbations rather than merely reproduce it at one selected state.
+

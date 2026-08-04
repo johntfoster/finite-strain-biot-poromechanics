@@ -1,0 +1,21 @@
+data_source:
+  article_doi: 10.1029/2025GL120883
+  dataset_doi: 10.5281/zenodo.20089570
+  figure: 3c
+  source_points: 46
+  formula_check_tolerance: 5.0e-15
+  status: passed
+constitutive_model:
+  name: exponential crack-closure compliance
+  equation: 1/K(P) = 1/K_inf + C_c exp(-P/P_c)
+  positive_tangent_required: true
+moose_implicit_ad:
+  samples: [HT14, SP14, SP30]
+  maximum_implicit_tangent_error_tolerance: 2.0e-6
+  maximum_constraint_norm_tolerance: 2.0e-8
+  status: passed
+paper:
+  build_command: latexmk -lualatex -interaction=nonstopmode -halt-on-error -outdir=paper/build paper/main.tex
+  pages: 7
+  undefined_references: 0
+  status: passed

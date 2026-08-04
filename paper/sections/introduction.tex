@@ -1,0 +1,43 @@
+\section{Introduction}
+
+The Biot coefficient controls the portion of pore pressure that enters the
+macroscopic stress of a porous skeleton.  In the classical isotropic theory it
+is related to the drained skeleton modulus \(K\) and the solid or unjacketed
+modulus \(K_s\) by \(B=1-K/K_s\) \citep{biotwillis1957,nurbyerlee1971}.
+This expression is frequently evaluated once and then treated as a constant.
+That practice is unsuitable when cracks close, pores collapse, or the mineral
+framework changes with stress, because the tangent modulus of the skeleton can
+vary substantially along the loading path.
+
+Foster and Xu \citep{fosterxu2025} derived a finite-deformation coefficient from
+the intrinsic solid specific-volume response at fixed pore pressure.  The
+definition gives the coefficient a direct constitutive meaning and recovers the
+classical expression after linearization.  Its numerical realization is less
+straightforward than the definition suggests.  The intrinsic specific volume
+is not generally an explicit function of the skeleton Jacobian.  It is obtained
+from coupled material-conservation, phase-volume, equation-of-state, and
+equilibrium statements.  Consequently, the derivative needed by the Biot
+coefficient is an implicit constrained tangent.  Moreover, the coefficient
+appears inside the global mechanics residual, so the tangent itself must remain
+differentiable with respect to the finite-element degrees of freedom.
+
+This paper describes a nested differentiation strategy.  A small local
+constitutive system is differentiated implicitly with respect to the skeleton
+Jacobian at fixed equivalent pore pressure.  The local Jacobian and its solution
+are represented by MOOSE automatic-differentiation (AD) scalars.  MOOSE then
+differentiates the assembled coefficient through the global stress and storage
+residuals.  The method avoids both finite-difference constitutive tangents and a
+user-specified Biot function that could be inconsistent with material
+conservation.
+
+As a nonreacting application, we consider the hydrostatic dunite experiments of
+Lawal and Kim \citep{lawal2026}.  Their Figure~3c reports a pronounced decrease
+in Biot coefficient with pressure for a dry heat-treated control and specimens
+serpentinized for 14 and 30 days.  The authors released the underlying
+poromechanical workbook \citep{lawal2026dataset}, allowing the plotted values to
+be reproduced without pixel digitization.  We fit a compact crack-closure law,
+embed it in the constrained tangent, and compare the MOOSE result with all 46
+published pressure--coefficient pairs.  Reaction is intentionally suppressed:
+the goal is to isolate pressure-dependent poromechanical response before adding
+reaction-state evolution.
+
