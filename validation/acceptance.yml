@@ -9,6 +9,8 @@ constitutive_model:
   name: exponential crack-closure compliance
   equation: 1/K(P) = 1/K_inf + C_c exp(-P/P_c)
   positive_tangent_required: true
+  calibration_target: measured drained tangent modulus K(P)
+  evidence_class: calibration
 moose_implicit_ad:
   samples: [HT14, SP14, SP30]
   maximum_implicit_tangent_error_tolerance: 2.0e-6
@@ -19,3 +21,13 @@ paper:
   pages: 7
   undefined_references: 0
   status: passed
+interpretation:
+  lawal_kim_curve_status: calibrated constitutive-path comparison
+  independent_validation: false
+  reasons:
+    - the workbook coefficient is computed from the drained modulus used for calibration
+    - the current MOOSE pressure path uses solve=false and does not solve the hydrostatic boundary-value problem
+  required_next_steps:
+    - implement a pressure-controlled Q2 mechanics and P1+P0 EG pressure solve
+    - calibrate against independent volumetric-strain or microcrack observables, or declare train/holdout pressures before fitting
+    - predict held-out or independent Biot observations with a fixed acceptance tolerance

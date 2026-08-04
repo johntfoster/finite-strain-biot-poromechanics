@@ -10,17 +10,17 @@ independent user-specified Biot function.
 
 The implementation recovers the classical limit, preserves intrinsic-density
 and specific-volume inverse consistency, and passes analytic, finite-difference,
-small-strain, endpoint, storage, undrained, and coupled Jacobian tests.  Applied
-to the nonreacting Lawal--Kim dunite data, a positive three-parameter crack
-compliance law reproduces the decreasing pressure-dependent coefficient for all
-three specimens with errors below 0.02 at every measured point.  The dominant
-mechanism is the pressure dependence of the drained tangent modulus; the
-finite-deformation specific-volume correction is below \(8\times10^{-4}\) over
-the measured range.
+small-strain, endpoint, storage, undrained, and coupled Jacobian tests. For the
+nonreacting Lawal--Kim data, calibration of a positive three-parameter crack-
+compliance law to the measured drained tangent modulus reproduces the
+coefficient calculated from those same data with errors below 0.02. This result
+verifies the calibrated constitutive path and implicit differentiation. An
+independent validation requires separate calibration observables or declared
+holdout pressures together with a pressure-controlled boundary-value solve.
 
-The resulting framework is ready for coupled calculations in which pressure,
-deformation, composition, and reaction state evolve simultaneously.  Because
+The resulting implementation supplies the constrained tangent and global AD
+path required for coupled calculations in which pressure, deformation,
+composition, and reaction state evolve simultaneously. Because
 the coefficient remains inside the AD graph, these extensions require new
 constitutive constraints and verification rather than hand-derived global
 Jacobians.
-

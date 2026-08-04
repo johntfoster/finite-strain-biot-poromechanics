@@ -11,8 +11,8 @@
 \input{paper/defs.tex}
 \graphicspath{{figures/}{../figures/}}
 
-\title{Implicit automatic differentiation of a nonlinear Biot coefficient:\\
-finite-deformation implementation and pressure-dependent dunite response}
+\title{Implicit automatic differentiation of the nonlinear Biot coefficient\\
+in multicomponent finite-deformation poromechanics}
 \author{John T. Foster and collaborators}
 \date{Draft: \today}
 
@@ -20,26 +20,26 @@ finite-deformation implementation and pressure-dependent dunite response}
 \maketitle
 
 \begin{abstract}
-The Biot coefficient is commonly supplied to a poromechanical calculation as a
-constant, even though measurements on cracked rocks show a strong dependence on
-confining pressure.  We present a finite-deformation implementation in which the
-coefficient is a constrained constitutive tangent rather than an independent
-input.  The intrinsic skeleton specific volume is formed from the
-solid-phase/component material conservation statements, and its derivative with
-respect to the skeleton Jacobian is evaluated at fixed equivalent pore pressure.
+We derive and implement the nonlinear Biot coefficient appearing in the
+solid-reference specialization of a multicomponent, multiphase porous-medium
+theory. The coefficient is a constrained constitutive tangent. The intrinsic
+skeleton specific volume is formed from the registered solid-phase/component
+material conservation statements, and its derivative with respect to the
+skeleton Jacobian is evaluated at fixed equivalent pore pressure.
 Local phase, volume, and equation-of-state constraints are differentiated
 implicitly at each quadrature point.  The resulting dense tangent solve is
 carried out with automatic-differentiation scalars, allowing MOOSE to apply a
 second, outer chain rule through the state-dependent coefficient in the global
-Newton system.  The implementation recovers the classical
-\(B=1-K/K_s\) limit, passes a coupled PETSc Jacobian test, and is applied to the
-nonreacting pressure-dependent measurements of Lawal and Kim.  A three-parameter
-crack-closure compliance law reproduces their HT14, SP14, and SP30 data with
-Biot-coefficient root-mean-square errors between \(0.0053\) and \(0.0087\).
-The example demonstrates that the observed decline in Biot coefficient follows
-from the evolution of the drained tangent modulus relative to the unjacketed
-modulus, while retaining a thermodynamically interpretable finite-deformation
-coefficient and a consistent global Jacobian.
+Newton system. The implementation recovers the classical \(B=1-K/K_s\) limit
+and passes a coupled PETSc Jacobian test. We then calibrate a three-parameter
+crack-closure compliance law to the drained tangent moduli released by Lawal
+and Kim for HT14, SP14, and SP30 dunite specimens. Because their plotted
+coefficient is computed from those same drained moduli and the unjacketed
+modulus, the comparison is a calibration and constitutive-path verification,
+with coefficient root-mean-square errors between \(0.0053\) and \(0.0087\).
+The resulting workflow defines the numerical requirements for a
+pressure-controlled boundary-value solve and an independent or holdout
+validation study.
 \end{abstract}
 
 \input{paper/sections/introduction.tex}

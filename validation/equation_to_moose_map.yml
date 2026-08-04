@@ -1,0 +1,79 @@
+upstream_repository: /home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow
+paper_root: paper/main.tex
+entries:
+  - id: solid_component_material_storage
+    upstream_equations:
+      - eq:augmented_component_material_measure
+      - eq:MC_solid_component_material_mass
+      - eq:MC_solid_phase_material_mass
+    paper_equations:
+      - eq:summed-specific-volume
+      - eq:intrinsic-density
+    moose_objects:
+      - ADConstrainedSkeletonBiotMaterial
+    verification:
+      - moose_app/test/tests/nonlinear_biot_coefficient
+    notes:
+      - Uses the registered solid-phase/component sums directly.
+      - Intrinsic skeleton density is the reciprocal of intrinsic skeleton specific volume.
+  - id: fixed_pressure_legendre_tangent
+    upstream_equations:
+      - eq:MC_phase_pressure_specific_volume
+      - eq:MC_phase_legendre_transform
+      - eq:MC_phase_specific_volume_deformation_chain_rule
+      - eq:MC_phase_biot_coefficient
+    paper_equations:
+      - eq:nonlinear-biot
+      - eq:local-constraints
+      - eq:implicit-tangent
+    moose_objects:
+      - ADConstrainedSkeletonBiotMaterial
+    verification:
+      - analytic fixed-equivalent-pressure tangent
+      - centered finite-difference tangent
+      - intrinsic density/specific volume inverse consistency
+  - id: nonlinear_biot_stress
+    upstream_equations:
+      - eq:MC_phase_pk_biot_split
+      - eq:MC_phase_biot_split
+      - eq:solid_reference_effective_piola_stress
+      - eq:biot_limit_reference_momentum
+    paper_equations:
+      - eq:reference-biot-stress
+    moose_objects:
+      - ADReferenceSolidStressMaterial
+      - ADSolidReferenceKinematics
+      - ADEGReconstructedScalarMaterial
+    verification:
+      - constrained production PETSc Jacobian test
+      - Q2 displacement and P1+P0 EG equivalent-pressure tests
+  - id: classical_biot_limit
+    upstream_equations:
+      - eq:biot_limit_porosity_tangent_storage
+      - eq:linear_biot_limit
+      - eq:linear_biot_momentum
+      - eq:linear_biot_fluid_content
+    paper_equations:
+      - eq:classical-limit
+    verification:
+      - multi-amplitude 1D/2D/3D convergence to B=1-K/K_s
+      - B to 1 Terzaghi limit
+      - B to 0 equal-modulus limit
+      - storage and undrained identities
+  - id: lawal_kim_calibrated_path
+    upstream_equations:
+      - eq:MC_phase_biot_coefficient
+    paper_equations:
+      - eq:lawal-kim-alpha
+      - eq:crack-compliance
+      - eq:hydrostatic-constraint
+      - eq:grain-volume-constraint
+      - eq:pressure-path-tangent
+      - eq:finite-pressure-biot
+    moose_objects:
+      - ADConstrainedSkeletonBiotMaterial
+    evidence_class: calibration
+    notes:
+      - The drained-modulus data determine the fitted compliance parameters.
+      - The workbook Biot coefficient is calculated from the same drained modulus and unjacketed modulus.
+      - The current solve=false path verifies constitutive evaluation and implicit differentiation, not a pressure-controlled boundary-value solve.

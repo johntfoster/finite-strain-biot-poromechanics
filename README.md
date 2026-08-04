@@ -1,8 +1,14 @@
 # Implicit AD nonlinear Biot coefficient
 
-Standalone paper and reproducibility repository for the MOOSE implementation of
-a constrained finite-deformation Biot coefficient and a nonreacting replication
-of the pressure-dependent dunite measurements of Lawal and Kim (2026).
+Companion derivation, MOOSE implementation, and reproducibility repository for
+the nonlinear-Biot specialization of the theory in
+`multicomponent_reactive_flow`. The repository uses that paper's notation,
+solid-reference equations, MOOSE workflow, validation conventions, and
+agent-assisted input-deck architecture.
+
+The existing Lawal--Kim curves are a calibration to their measured drained
+moduli. They verify data handling and the constrained implicit-AD constitutive
+path; they are not an independent prediction of the plotted Biot coefficient.
 
 ## Repository layout
 
@@ -13,6 +19,10 @@ of the pressure-dependent dunite measurements of Lawal and Kim (2026).
 - `moose/` — experiment decks and upstream source manifest
 - `validation/` — quantitative acceptance records
 - `references/` — bibliographic and source-provenance notes
+- `agent_workflows/` — request routing, scoped-edit and validation checklists,
+  problem schema, and MOOSE failure triage inherited from the parent repository
+- `validation/equation_to_moose_map.yml` and
+  `validation/theory_traceability.yml` — paper/theory/code/test traceability
 
 ## Reproduce the data extraction
 
