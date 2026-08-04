@@ -1,0 +1,48 @@
+\section{Nested implicit automatic differentiation}
+
+Let \(\mbf y\) collect local implicit variables such as phase volume fractions,
+intrinsic/component densities, composition coordinates, or internal variables.
+The local constitutive closure is written
+\begin{equation}
+ \mbf R(\mbf y,J_s,p_E,T,\ldots)=\mbf 0.
+ \label{eq:local-constraints}
+\end{equation}
+Holding \(p_E,T,\ldots\) fixed and differentiating
+\cref{eq:local-constraints} with respect to \(J_s\) gives
+\begin{equation}
+ \pder{\mbf R}{\mbf y}\mbf y_{,J}
+ +\pder{\mbf R}{J_s}=\mbf 0,
+ \qquad
+ \mbf y_{,J}=-
+ \left(\pder{\mbf R}{\mbf y}\right)^{-1}
+ \pder{\mbf R}{J_s}.
+ \label{eq:implicit-tangent}
+\end{equation}
+The derivatives of every solid volume fraction and every referential component
+accumulation in \cref{eq:summed-specific-volume} follow from
+\cref{eq:implicit-tangent}.  Applying the quotient rule directly to the summed
+variables, without introducing a separate aggregate-mass constitutive input,
+then supplies the derivative in \cref{eq:nonlinear-biot}.
+
+There are two distinct differentiation levels:
+\begin{enumerate}
+ \item The \emph{inner} derivative is the semantic constitutive partial in
+       \cref{eq:implicit-tangent}.  The held-fixed variables are selected by the
+       residual definition and derivative-property names.
+ \item The \emph{outer} derivative is MOOSE AD with respect to nonlinear
+       finite-element degrees of freedom.  The entries of the local matrix,
+       right-hand side, Gaussian-elimination factors, solution \(\mbf y_{,J}\),
+       specific-volume tangent, and \(B\) all remain AD-valued.
+\end{enumerate}
+Thus the local implicit-function theorem is embedded inside the global AD
+graph.  Extracting raw scalar values during the arithmetic would destroy the
+second derivative level.  Raw values are used only to select a pivot, test for
+singularity, and report a diagnostic constraint norm.
+
+The local solve uses partial-pivoted dense Gaussian elimination.  This choice is
+appropriate because the number of constitutive variables at a quadrature point
+is small and fixed by the registered phase/component closure.  A pivot tolerance
+rejects singular local states.  The global Jacobian is subsequently checked by
+a PETSc finite-difference Jacobian comparison, including the \(J_s\), \(p_E\),
+and implicit-state paths.
+

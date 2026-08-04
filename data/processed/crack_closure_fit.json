@@ -1,0 +1,32 @@
+{
+  "SP14": {
+    "k_infinity_gpa": 35.994410219950794,
+    "crack_compliance_per_gpa": 0.12771938030042704,
+    "closure_pressure_mpa": 7.3468980954725085,
+    "unjacketed_bulk_modulus_gpa": 65.0,
+    "biot_rmse": 0.008723081520762736,
+    "biot_max_abs_error": 0.01953200260449961,
+    "biot_bias": -0.0002472327837120888,
+    "modulus_rmse_gpa": 0.5670002988495793
+  },
+  "HT14": {
+    "k_infinity_gpa": 51.0527461946679,
+    "crack_compliance_per_gpa": 0.014981038312398408,
+    "closure_pressure_mpa": 13.368859928405467,
+    "unjacketed_bulk_modulus_gpa": 85.3,
+    "biot_rmse": 0.00531264768799528,
+    "biot_max_abs_error": 0.008030833182412545,
+    "biot_bias": 5.492335257820807e-06,
+    "modulus_rmse_gpa": 0.4531688477859981
+  },
+  "SP30": {
+    "k_infinity_gpa": 24.067540328341344,
+    "crack_compliance_per_gpa": 0.07159707999980984,
+    "closure_pressure_mpa": 8.7599453098093,
+    "unjacketed_bulk_modulus_gpa": 47.6,
+    "biot_rmse": 0.005886042385766439,
+    "biot_max_abs_error": 0.011353525138308007,
+    "biot_bias": 1.8084673573826037e-05,
+    "modulus_rmse_gpa": 0.2801756175624822
+  }
+}

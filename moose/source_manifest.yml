@@ -1,0 +1,16 @@
+upstream_repository: /home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow
+application: moose_app/multicomponent_reactive_flow-opt
+objects:
+  - source: moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C
+    role: local implicit tangent and AD-valued nonlinear Biot coefficient
+  - source: moose_app/src/materials/ADReferenceSolidStressMaterial.C
+    role: consumption of the AD Biot coefficient in the reference stress
+  - source: moose_app/src/materials/ADSolidReferenceKinematics.C
+    role: solid-reference deformation gradient and Jacobian
+  - source: moose_app/src/materials/ADEGReconstructedScalarMaterial.C
+    role: P1+P0 equivalent-pressure reconstruction
+verification:
+  - source: moose_app/test/tests/nonlinear_biot_coefficient
+    role: constrained tangent, inverse density, small-strain limits, and PETSc Jacobian
+note: The upstream working tree is intentionally not copied or modified by this paper repository.
+

@@ -1,0 +1,26 @@
+\section{Conclusions}
+
+We implemented the finite-deformation Biot coefficient as a constrained
+constitutive tangent derived from solid phase/component material conservation.
+The local implicit-function solve is performed with AD scalars, preserving the
+outer MOOSE chain rule through the state-dependent coefficient in the global
+residual.  This nested construction separates the fixed-equivalent-pressure
+constitutive partial from the total finite-element derivative and avoids an
+independent user-specified Biot function.
+
+The implementation recovers the classical limit, preserves intrinsic-density
+and specific-volume inverse consistency, and passes analytic, finite-difference,
+small-strain, endpoint, storage, undrained, and coupled Jacobian tests.  Applied
+to the nonreacting Lawal--Kim dunite data, a positive three-parameter crack
+compliance law reproduces the decreasing pressure-dependent coefficient for all
+three specimens with errors below 0.02 at every measured point.  The dominant
+mechanism is the pressure dependence of the drained tangent modulus; the
+finite-deformation specific-volume correction is below \(8\times10^{-4}\) over
+the measured range.
+
+The resulting framework is ready for coupled calculations in which pressure,
+deformation, composition, and reaction state evolve simultaneously.  Because
+the coefficient remains inside the AD graph, these extensions require new
+constitutive constraints and verification rather than hand-derived global
+Jacobians.
+
