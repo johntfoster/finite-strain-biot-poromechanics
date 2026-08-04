@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/nonlinear-biot-ad/problem_spec.schema.json",
+  "title": "Nonlinear Biot MOOSE Problem Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "track",
+    "physics_regime",
+    "manuscript_basis",
+    "variables",
+    "closures",
+    "mesh",
+    "boundary_conditions",
+    "initial_conditions",
+    "execution",
+    "outputs",
+    "validation"
+  ],
+  "properties": {
+    "name": {"type": "string", "minLength": 1},
+    "track": {
+      "type": "string",
+      "enum": ["exploratory", "regression", "benchmark", "reference-data"]
+    },
+    "physics_regime": {"type": "string"},
+    "manuscript_basis": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "role"],
+        "properties": {
+          "source": {"type": "string"},
+          "role": {"type": "string"},
+          "assumptions_added": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    },
+    "variables": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "family", "order", "meaning"],
+        "properties": {
+          "name": {"type": "string"},
+          "family": {"type": "string"},
+          "order": {"type": "string"},
+          "meaning": {"type": "string"},
+          "units": {"type": "string"}
+        }
+      }
+    },
+    "closures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "type", "inputs", "outputs"],
+        "properties": {
+          "name": {"type": "string"},
+          "type": {
+            "type": "string",
+            "enum": ["free-energy", "eos", "constraint", "mechanics", "other"]
+          },
+          "inputs": {"type": "array", "items": {"type": "string"}},
+          "outputs": {"type": "array", "items": {"type": "string"}},
+          "manuscript_basis": {"type": "string"}
+        }
+      }
+    },
+    "mesh": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dimension", "description"],
+      "properties": {
+        "dimension": {"type": "integer", "minimum": 1, "maximum": 3},
+        "description": {"type": "string"},
+        "displaced_mesh": {"type": "boolean"}
+      }
+    },
+    "boundary_conditions": {"type": "array", "items": {"type": "string"}},
+    "initial_conditions": {"type": "array", "items": {"type": "string"}},
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "solver_notes"],
+      "properties": {
+        "type": {"type": "string"},
+        "solver_notes": {"type": "string"},
+        "time_step": {"type": "number", "exclusiveMinimum": 0.0},
+        "end_time": {"type": "number", "exclusiveMinimum": 0.0}
+      }
+    },
+    "outputs": {"type": "array", "items": {"type": "string"}},
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["matrix_id", "evidence_class", "observables", "pass_fail"],
+      "properties": {
+        "matrix_id": {"type": "string"},
+        "evidence_class": {
+          "type": "string",
+          "enum": ["verification", "calibration", "holdout-prediction", "independent-validation"]
+        },
+        "observables": {"type": "array", "items": {"type": "string"}},
+        "pass_fail": {"type": "string"},
+        "reference_data": {"type": "string"}
+      }
+    },
+    "open_questions": {"type": "array", "items": {"type": "string"}}
+  }
+}

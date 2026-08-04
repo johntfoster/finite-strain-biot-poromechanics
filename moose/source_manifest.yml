@@ -13,4 +13,18 @@ verification:
   - source: moose_app/test/tests/nonlinear_biot_coefficient
     role: constrained tangent, inverse density, small-strain limits, and PETSc Jacobian
 note: The upstream working tree is intentionally not copied or modified by this paper repository.
-
+theory_basis:
+  manuscript_root: main.tex
+  definitions: defs.tex
+  equations:
+    - eq:augmented_component_material_measure
+    - eq:MC_solid_component_material_mass
+    - eq:MC_solid_phase_material_mass
+    - eq:MC_phase_pressure_specific_volume
+    - eq:MC_phase_specific_volume_deformation_chain_rule
+    - eq:MC_phase_biot_coefficient
+    - eq:MC_phase_pk_biot_split
+    - eq:solid_reference_effective_piola_stress
+    - eq:biot_limit_reference_momentum
+    - eq:biot_limit_porosity_tangent_storage
+    - eq:linear_biot_limit

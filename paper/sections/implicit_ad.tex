@@ -4,10 +4,10 @@ Let \(\mbf y\) collect local implicit variables such as phase volume fractions,
 intrinsic/component densities, composition coordinates, or internal variables.
 The local constitutive closure is written
 \begin{equation}
- \mbf R(\mbf y,J_s,p_E,T,\ldots)=\mbf 0.
+ \mbf R(\mbf y,J_s,\bar p_E,\theta_{\mc S},\ldots)=\mbf 0.
  \label{eq:local-constraints}
 \end{equation}
-Holding \(p_E,T,\ldots\) fixed and differentiating
+Holding \(\bar p_E,\theta_{\mc S},\ldots\) fixed and differentiating
 \cref{eq:local-constraints} with respect to \(J_s\) gives
 \begin{equation}
  \pder{\mbf R}{\mbf y}\mbf y_{,J}
@@ -45,4 +45,3 @@ is small and fixed by the registered phase/component closure.  A pivot tolerance
 rejects singular local states.  The global Jacobian is subsequently checked by
 a PETSc finite-difference Jacobian comparison, including the \(J_s\), \(p_E\),
 and implicit-state paths.
-

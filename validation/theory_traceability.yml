@@ -1,0 +1,42 @@
+upstream_repository: /home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow
+upstream_theory_root: main.tex
+paper_root: paper/main.tex
+records:
+  - object: ADSolidReferenceKinematics
+    source: moose_app/src/materials/ADSolidReferenceKinematics.C
+    equations:
+      - solid-reference deformation gradient and Jacobian used by eq:solid_reference_effective_piola_stress
+    role: supplies F_s, J_s, inverse, and inverse transpose
+  - object: ADEGReconstructedScalarMaterial
+    source: moose_app/src/materials/ADEGReconstructedScalarMaterial.C
+    equations:
+      - eq:biot_limit_reference_momentum
+      - eq:biot_limit_pressure_storage_balance
+    role: reconstructs total P1+P0 EG equivalent pressure
+  - object: ADConstrainedSkeletonBiotMaterial
+    source: moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C
+    equations:
+      - eq:augmented_component_material_measure
+      - eq:MC_solid_component_material_mass
+      - eq:MC_phase_specific_volume_deformation_chain_rule
+      - eq:MC_phase_biot_coefficient
+    role: solves the local fixed-equivalent-pressure implicit tangent with AD scalars and returns specific volume, intrinsic density, and B
+    derivative_policy:
+      inner: semantic partial at fixed equivalent pressure and declared state
+      outer: MOOSE AD through all nonlinear finite-element degrees of freedom
+  - object: ADReferenceSolidStressMaterial
+    source: moose_app/src/materials/ADReferenceSolidStressMaterial.C
+    equations:
+      - eq:MC_phase_pk_biot_split
+      - eq:solid_reference_effective_piola_stress
+      - eq:biot_limit_reference_momentum
+    role: consumes AD-valued B and equivalent pressure in the reference stress
+  - object: pressure_path_biot
+    source: moose/input/pressure_path_biot.i
+    evidence_class: calibration
+    role: evaluates the calibrated Lawal-Kim constitutive path
+    limitation: solve=false; the deformation path is initialized from the calibrated compliance and is not a boundary-value solution
+open_requirements:
+  - pressure-controlled Q2 displacement and P1+P0 EG equivalent-pressure boundary-value solve
+  - independent calibration observable or declared train/holdout protocol
+  - quantitative prediction tolerance fixed before examining holdout results

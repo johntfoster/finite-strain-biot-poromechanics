@@ -1,6 +1,6 @@
 \section{Discussion}
 
-The replication supports two distinct conclusions.  First, a decreasing Biot
+The calibrated constitutive-path study supports two conclusions. First, a decreasing Biot
 coefficient does not require the coefficient itself to be an independently
 fitted pressure function.  It follows from a pressure-dependent constrained
 tangent: cracks close, the drained skeleton stiffens toward the unjacketed
@@ -8,15 +8,17 @@ solid response, and the ratio \(K/K_s'\) increases.  The same physical trend is
 represented by the finite-deformation derivative in
 \cref{eq:nonlinear-biot}.
 
-Second, agreement with Figure~3c alone does not uniquely validate the selected
-crack law.  The reported coefficient is calculated from the measured moduli, so
+Second, agreement with Figure~3c does not independently validate the selected
+crack law. The reported coefficient is calculated from the measured moduli, so
 the present comparison primarily tests whether a compact, positive constitutive
 model can reproduce those moduli and whether the MOOSE implicit derivative
 returns the resulting coefficient consistently.  Independent validation would
 require volumetric strain, pore-volume change, or intrinsic density measurements
-under controlled pore pressure.  The finite-deformation definition suggests a
-particularly direct experiment: measure the intrinsic solid specific-volume
-change as the skeleton volume changes while pore pressure is held fixed.
+under controlled pore pressure. The finite-deformation definition suggests a
+direct experiment: measure the intrinsic solid specific-volume change as the
+skeleton volume changes while pore pressure is held fixed. A pressure-controlled
+numerical experiment must likewise solve displacement and pressure from its
+boundary conditions instead of prescribing the fitted \(J_s(P)\) path.
 
 The SP14 workbook discrepancy illustrates the importance of archiving source
 cells and formulas.  Using the annotated \(65.5\)~GPa rather than the workbook's
@@ -31,4 +33,3 @@ free-energy, crack-compliance, and unjacketed-modulus parameters to evolve with
 registered phase/component reaction variables.  In that case the tangent must
 state whether reaction/internal variables are held fixed or included through
 the local implicit system.
-

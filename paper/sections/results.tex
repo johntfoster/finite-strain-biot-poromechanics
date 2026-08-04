@@ -24,19 +24,22 @@ consistent with mineral softening and reaction-generated microstructure.
 \begin{figure}[ht]
  \centering
  \includegraphics[width=0.92\linewidth]{moose_lawal_kim_biot_replication.pdf}
- \caption{Pressure-dependent Biot coefficients from the released Lawal--Kim
- Figure~3c workbook and the constrained implicit-AD MOOSE calculation.  The
- curves are obtained from \cref{eq:crack-compliance,eq:hydrostatic-constraint,eq:grain-volume-constraint};
- the measured coefficient is not prescribed to MOOSE.}
- \label{fig:lawal-kim-replication}
+ \caption{Pressure-dependent Biot coefficients calculated in the released
+ Lawal--Kim Figure~3c workbook and the constrained implicit-AD constitutive-path
+ calculation. The crack-compliance parameters are calibrated to the drained
+ tangent moduli from which the workbook coefficients were calculated. The
+ curves therefore show calibration and differentiation consistency rather than
+ independent prediction.}
+ \label{fig:lawal-kim-calibration}
 \end{figure}
 
 The MOOSE tangent agrees with the analytic derivative in
 \cref{eq:pressure-path-tangent} to maximum absolute errors of
 \(1.3\times10^{-9}\), \(1.5\times10^{-8}\), and \(9.8\times10^{-9}\) for
 HT14, SP14, and SP30, respectively.  The largest local constraint norm is
-\(2.3\times10^{-9}\).  These comparisons test the implicit derivative that
-produces \(B\), independently of the quality of the constitutive fit.
+\(2.3\times10^{-9}\). These comparisons verify the implicit derivative
+producing \(B\) for the calibrated constitutive path. They do not constitute an
+independent validation of the pressure dependence.
 
 Over the experimental range, the finite-deformation correction relative to
 \(1-K(P)/K_s'\) remains small: its maximum magnitude is approximately
@@ -44,4 +47,3 @@ Over the experimental range, the finite-deformation correction relative to
 \(7.1\times10^{-4}\) for SP30.  The observed pressure dependence is therefore
 controlled primarily by crack closure through \(K(P)\), while the nonlinear
 specific-volume factor provides a systematic finite-deformation correction.
-
