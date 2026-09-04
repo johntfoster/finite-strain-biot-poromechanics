@@ -469,12 +469,14 @@ the plastic pore allocation follows as
 \(a^p=\exp(\beta\Delta\gamma)\), and the fixed-pressure, fixed-history
 tangent with \(v=\bar J/a^p\) gives the coefficient correction
 \begin{equation}
- B
- =1-(1-B_{\mathrm{el}})/a^p,
+ 1-B=\frac{1-B_{\mathrm{el}}}{a^p},
  \label{eq:poroplastic-biot-correction}
 \end{equation}
 where \(B_{\mathrm{el}}\) is the elastic coefficient of the same drained
-skeleton and mineral.
+skeleton and mineral: plastic pore allocation divides the elastic Biot
+deficit \(1-B_{\mathrm{el}}\), so an active mechanism with \(a^p>1\) drives
+the coefficient toward unity, while the inactive limit \(a^p=1\) returns
+\(B=B_{\mathrm{el}}\).
 
 Two checks verify the update.  First, with yield inactive (a large
 \(M\)), the return map collapses exactly onto the elastic response:
