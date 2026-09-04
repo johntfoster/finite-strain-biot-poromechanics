@@ -1,0 +1,32 @@
+[Tests]
+  design = 'validation/equation_to_moose_map.yml validation/theory_traceability.yml'
+  issues = ''
+
+  [poroplastic_delta_b_elastic]
+    type = RunApp
+    input = poroplastic_delta_b_elastic.i
+    max_time = 60
+    requirement = 'The poroplastic single-element material with yield inactive (M=100) shall collapse to the elastic response: a^p = 1, Delta_gamma = 0, and the pore-allocation-corrected Biot coefficient shall equal the elastic coefficient (E-1 collapse, Delta B = 0).'
+  []
+
+  [poroplastic_delta_b]
+    type = RunApp
+    input = poroplastic_delta_b.i
+    max_time = 60
+    requirement = 'The ideal Drucker-Prager poroplastic return map on the single-prime Kirchhoff stress shall run on a single element under 10% prescribed axial compression and return to the yield surface with a^p = exp(beta*Delta_gamma) > 1 and Delta B = B - B_el > 0.'
+  []
+
+  [poroplastic_delta_b_20]
+    type = RunApp
+    input = poroplastic_delta_b_20.i
+    max_time = 60
+    requirement = 'The poroplastic single-element compression study at 20% axial compression shall report a pore-allocation correction Delta B consistent with B = 1 - (1 - B_el)/a^p.'
+  []
+
+  [poroplastic_delta_b_30]
+    type = RunApp
+    input = poroplastic_delta_b_30.i
+    max_time = 60
+    requirement = 'The poroplastic single-element compression study at 30% axial compression shall report a pore-allocation correction Delta B consistent with B = 1 - (1 - B_el)/a^p.'
+  []
+[]

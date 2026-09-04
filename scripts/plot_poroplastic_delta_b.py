@@ -44,3 +44,6 @@ ax2.grid(alpha=0.3)
 fig.tight_layout()
 fig.savefig(png_path, dpi=200)
 print("wrote", png_path)
+# Note: a manuscript-convention .pgf can be emitted with the matplotlib PGF
+# backend in an environment that provides a TeX engine
+# (matplotlib.backends.backend_pgf FigureCanvasPgf(...).print_pgf(...)).
