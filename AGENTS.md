@@ -91,6 +91,9 @@
   interpretation in that order when practical.
 - State contributions positively. Remove drafting-history language and
   rhetorical claims based on what another formulation lacks.
+- Render every bibliography DOI as a clickable link to
+  `https://dx.doi.org/<doi>` in the compiled PDF (see the `\doi` macro in
+  `paper/defs.tex`). Never emit a plain-text, non-hyperlinked DOI.
 
 ## Manuscript build
 
