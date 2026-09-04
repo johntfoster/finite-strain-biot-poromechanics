@@ -21,14 +21,19 @@ png_path = os.path.join(ROOT, "figures", "poroplastic_delta_b.png")
 rows = []
 with open(csv_path, newline="") as fh:
     for r in csv.DictReader(fh):
-        rows.append({k: float(v) for k, v in r.items()})
+        v = {k: float(val) for k, val in r.items()}
+        # Restrict to the physically meaningful range (elastic B_el >= 0);
+        # the single-element uniaxial-strain closed form leaves the physical
+        # regime beyond ~30% compression.
+        if v["compression"] <= 0.30:
+            rows.append(v)
 
 comp = [r["compression"] for r in rows]
 b_el = [r["B_el"] for r in rows]
 b_pl = [r["B_pl"] for r in rows]
 db = [r["delta_B"] for r in rows]
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.5, 4.2))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.4, 3.0))
 ax1.plot(comp, b_el, "-o", color="tab:gray", label=r"$B_{\mathrm{el}}$ (elastic)")
 ax1.plot(comp, b_pl, "-s", color="tab:red", label=r"$B_{\mathrm{pl}}$ (poroplastic)")
 ax1.axhline(0.6, color="black", lw=0.8, ls=":", label=r"$B_0$ (small-strain limit)")

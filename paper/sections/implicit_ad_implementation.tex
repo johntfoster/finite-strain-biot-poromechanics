@@ -76,8 +76,16 @@ inelastic update.  The plastic driving stress is the single-prime stress
 \(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\), which therefore
 depends on the coefficient returned by the same implicit solve; the
 fixed-pressure tangent above closes that coupling.  The reported calculations
-exercise the inactive-mechanism limit \(\bar{\mbf F}^p=\mbf I\), \(a^p=1\), in
-which \(\mbf y=(\bar\rho_s)\).
+on the coupled boundary-value problem exercise the inactive-mechanism limit
+\(\bar{\mbf F}^p=\mbf I\), \(a^p=1\), in
+which \(\mbf y=(\bar\rho_s)\).  The implemented inelastic demonstration in
+Sec.~\ref{sec:poroplastic-demonstration} instead activates the
+constant-strength (no-hardening) limit of this update at a single material
+point, where the discrete consistency of
+Sec.~\ref{sec:plastic-loading-incremental-rate} reduces to the closed-form
+radial return; at that level the fixed-pressure pore-allocation correction
+\(B=1-(1-B_{\mathrm{el}})/a^p\) is verified to collapse exactly to the
+elastic coefficient when \(a^p=1\).
 
 The reported elastic calculations provide a closed-form test of this general
 path.  Their only local state variable is \(\mbf y=(\bar\rho_s)\), and its
