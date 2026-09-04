@@ -1,6 +1,14 @@
 /build/
 /paper/build/
+.agent-runtime/
+.codex/
+.claude/
+.opencode/
+.github/skills/
 .jitcache/
+moose_app/build/
+moose_app/lib/
+moose_app/nonlinear_biot_ad-opt
 *.aux
 *.bbl
 *.blg
@@ -18,3 +26,10 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .DS_Store
+
+# Machine-specific local editor and workspace configuration
+.vscode/
+*.code-workspace
+
+# Stray retrieval state written by local Codex sessions (canonical store is .agent-runtime/research/)
+.codex-research/

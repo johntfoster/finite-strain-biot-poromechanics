@@ -1,26 +1,56 @@
 \section{Conclusions}
+\label{sec:conclusions}
 
-We implemented the finite-deformation Biot coefficient as a constrained
-constitutive tangent derived from solid phase/component material conservation.
-The local implicit-function solve is performed with AD scalars, preserving the
-outer MOOSE chain rule through the state-dependent coefficient in the global
-residual.  This nested construction separates the fixed-equivalent-pressure
-constitutive partial from the total finite-element derivative and avoids an
-independent user-specified Biot function.
+The formulation solves the solid partial-density balance in spatial form and
+pulls it back to the solid reference configuration for finite-element
+assembly.  The local constitutive update supplies intrinsic solid density and
+the solid volume fraction follows algebraically from the partial and intrinsic
+densities.  The water
+balance is likewise posed spatially;
+water pressure determines intrinsic water density through its barotropic EOS.
+The finite-deformation coefficient follows from the fixed-pressure derivative
+of the local mineral distension.  That derivative is obtained by
+implicit differentiation of the complete local constitutive residual system at
+fixed intrinsic phase pressure and referential solid mass \(J\rho_s\).  The intrinsic
+pressure is the common solid/fluid pressure, the negative mean intrinsic solid
+stress \(\bar p_s=-\frac{1}{3}\operatorname{tr}\bar{\bs\sigma}_s\), while the
+mineral distension \(\bar J\) carries its intrinsic-density response.  The Biot
+transform reconstructs
+\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\), while the
+momentum residual uses the total stress
+\(\bs\sigma=\bs\sigma^{\prime\prime}-Bp\mbf I\).
 
-The implementation recovers the classical limit, preserves intrinsic-density
-and specific-volume inverse consistency, and passes analytic, finite-difference,
-small-strain, endpoint, storage, undrained, and coupled Jacobian tests. For the
-nonreacting Lawal--Kim data, calibration of a positive three-parameter crack-
-compliance law to the measured drained tangent modulus reproduces the
-coefficient calculated from those same data with errors below 0.02. This result
-verifies the calibrated constitutive path and implicit differentiation. An
-independent validation requires separate calibration observables or declared
-holdout pressures together with a pressure-controlled boundary-value solve.
+The implementation uses AD scalar operations for the local constitutive
+residual derivatives, implicit tangent, and global balance residuals.
+The elastic state and its direct tangent are independent verification oracles;
+the coefficient passed to momentum comes from the fixed-pressure constitutive
+tangent.
+The coefficient agrees with
+\eqref{eq:elastic-finite-deformation-biot-coefficient}; the solid referential
+mass and local mineral law close to their reported tolerances; and the outer
+Jacobian is checked against a PETSc finite-difference comparison.  These tests
+verify the constitutive derivative and its propagation through the Newton
+system.
 
-The resulting implementation supplies the constrained tangent and global AD
-path required for coupled calculations in which pressure, deformation,
-composition, and reaction state evolve simultaneously. Because
-the coefficient remains inside the AD graph, these extensions require new
-constitutive constraints and verification rather than hand-derived global
-Jacobians.
+The solid--water Mandel benchmark uses a prescribed platen displacement.
+Continuous Q2 displacement and Q1 water
+pressure agree with the Cheng--Detournay pressure and lateral-displacement
+profiles to the reported discretization differences and recover the applied
+platen load.  A separate ten-percent
+compression continuation decreases the spatially averaged coefficient from
+\(0.600\) to \(0.51417\).  Together, the two calculations exercise
+finite-deformation momentum, solid mass conservation, mineral compressibility,
+nonlinear water accumulation, Darcy transport, and the nonlinear Biot transform in
+one monolithic solve.  The continuation is a synthetic demonstration rather
+than physical validation.
+
+The elastic mineral law supplies the closed-form verification case used here.  It also gives
+a storage coefficient that differs from the classical single-mineral Biot
+relation, so the Mandel comparison validates the discretization for this
+selected closure rather than the closure itself.  The present evidence is
+limited to a saturated, isothermal, homogeneous elastic solid--water test and
+the reported mesh/time sensitivity checks.  Applying the implemented general
+interface to a particular inelastic mineral requires its local residuals,
+history update, and active-set-consistent derivatives, while conservative
+time-discrete accumulation, systematic convergence studies, and independent
+physical validation remain future work.

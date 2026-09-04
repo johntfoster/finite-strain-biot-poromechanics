@@ -1,0 +1,474 @@
+\section{Mandel verification}
+\label{sec:mandel-verification}
+
+\subsection{Boundary-value problem}
+\label{sec:mandel-boundary-value-problem}
+
+The Mandel problem considers a saturated plane-strain specimen compressed
+between impermeable, frictionless rigid platens.  Water drains through the
+lateral faces \citep{chengdetournay1988}.  Let \(X\) and \(Y\) denote the
+horizontal and vertical reference coordinates, and let \(a\) and \(b\) be the
+quarter-domain width and height, respectively.  Symmetry reduces the
+calculation to
+\begin{equation}
+ \Omega_0=\left\{(X,Y):0\leq X\leq a,\ 0\leq Y\leq b\right\},
+ \qquad
+ a=1\ \mathrm{m},
+ \qquad
+ b=0.1\ \mathrm{m}.
+ \label{eq:mandel-quarter-domain}
+\end{equation}
+The mechanical symmetry conditions and drained pressure condition are
+\begin{subequations}
+ \label{eq:mandel-boundary-conditions}
+ \begin{align}
+  u_x(0,Y,t)&=0,
+  &u_y(X,0,t)&=0,
+  \label{eq:mandel-symmetry-boundaries}\\
+  p(a,Y,t)&=0,
+  &\mbf W_f\mathbin{\cdot}\mbf N&=0
+  \quad\text{on the remaining fluid boundaries}.
+  \label{eq:mandel-fluid-boundaries}
+ \end{align}
+\end{subequations}
+Here \(u_x\) and \(u_y\) are the components of \(\mbf u\), and \(\mbf N\) is
+the outward unit normal to the reference boundary.
+The top displacement is spatially uniform and follows the analytical
+constant-load solution of \citet{chengdetournay1988}.  The computed vertical
+nominal-stress resultant then provides an independent check of the applied
+\(100\ \mathrm{kPa}\) compression.  The right face is mechanically
+traction-free, and the prescribed-normal-displacement boundaries are
+frictionless.  The initial material state is
+\(\mbf u=\mbf0\), \(p=0\), and \(\rho_s=\rho_{s0}\); the local constitutive
+state then has \(\bar\rho_s=\bar\rho_{s0}\), \(\phi_s=\phi_{s0}\), and
+\(\bar J=1\).  The first time step applies the analytical platen
+displacement, after which its time history follows
+\eqref{eq:mandel-vertical-displacement-series}.  Because the vertical
+displacement is imposed and is linear in \(Y\), its profile is a
+boundary-condition reproduction check rather than an independent benchmark
+observable.
+
+The spatial solid-mass residual in \eqref{eq:solid-mass-weak-residual} remains
+active throughout the Mandel solve.  The global field \(\rho_s\) supplies the
+referential solid mass \(J\rho_s\), the elastic update supplies the intrinsic
+solid state and its residual derivatives, and the fixed-pressure tangent
+calculates \(B\) at every quadrature point
+and time step.  The solid volume fraction is derived from the partial and
+intrinsic solid densities, while water
+pressure determines \(\bar\rho_f\) through
+\eqref{eq:barotropic-water-density}.  The small applied load keeps
+the coefficient near its reference value while exercising the same nonlinear
+implementation used away from the reference state.
+
+The material parameters are listed in \cref{tab:mandel-parameters}.
+\begin{table}[ht]
+ \centering
+ \caption{Solid--water Mandel parameters.}
+ \label{tab:mandel-parameters}
+ \begin{tabular}{lr}
+  \toprule
+  Parameter & Value \\
+  \midrule
+  Drained skeleton bulk modulus \(K\) & \(1.0\ \mathrm{GPa}\) \\
+  Skeleton shear modulus \(G\) & \(0.75\ \mathrm{GPa}\) \\
+  Mineral bulk modulus \(K_s\) & \(2.5\ \mathrm{GPa}\) \\
+  Water bulk modulus \(K_f\) & \(8.0\ \mathrm{GPa}\) \\
+  Initial water volume fraction \(\phi_{f0}\) & \(0.1\) \\
+  Permeability \(\kappa\) & \(1.5\times10^{-12}\ \mathrm{m^2}\) \\
+  Water viscosity \(\mu_f\) & \(10^{-3}\ \mathrm{Pa\,s}\) \\
+  Applied compressive stress \(P_0\) & \(100\ \mathrm{kPa}\) \\
+  \bottomrule
+ \end{tabular}
+\end{table}
+
+The reference coefficient from
+\eqref{eq:elastic-finite-deformation-biot-coefficient} is \(B_0=0.6\).
+
+\subsection{Analytical solution}
+\label{sec:mandel-analytical-solution}
+
+Cheng and Detournay give the plane-strain analytical solution for constant
+poroelastic coefficients \citep{chengdetournay1988}.  For the parameters in
+\cref{tab:mandel-parameters}, the analytical storage coefficient is obtained by
+linearizing the equations solved by the finite-element model.  At
+\(J=1\), \(\rho_s=\rho_{s0}\), \(\phi_s=\phi_{s0}\), and \(\bar J=1\), source-free solid
+mass gives \(\phi_s=\phi_{s0}\bar J/J\), and hence
+\(J(1-\phi_s)=J-\phi_{s0}\bar J\).  Differentiation of this identity,
+using \eqref{eq:elastic-mineral-jacobian-derivative} and
+\(\partial\bar J/\partial p=-\bar J/K_s\), gives
+\begin{equation}
+ \frac{\partial}{\partial t}\left[J(1-\phi_s)\right]
+ =B_0\dot J+\frac{\phi_{s0}}{K_s}\dot p.
+ \label{eq:mandel-linearized-pore-volume-rate}
+\end{equation}
+Substitution into the exact water balance yields
+\begin{equation}
+ B_0\dot J
+ +\left(
+  \frac{\phi_{s0}}{K_s}+\frac{\phi_{f0}}{K_f}
+ \right)\dot p
+ +\frac{1}{\bar\rho_{f0}}
+ \nabla_{\mbf X}\mathbin{\cdot}\mbf W_f=0.
+ \label{eq:mandel-linearized-water-balance}
+\end{equation}
+This reduction defines the linearized storage modulus \(M_{\mathrm{lin}}\) for
+the analytical comparison, obtained from the solved phase states.  Following
+\citet{chengdetournay1988}, the remaining poroelastic parameters are
+\begin{subequations}
+ \label{eq:mandel-derived-parameters}
+ \begin{align}
+  \frac{1}{M_{\mathrm{lin}}}
+  &=\frac{\phi_{s0}}{K_s}+\frac{\phi_{f0}}{K_f},
+  \label{eq:mandel-storage-modulus}\\
+  K_u&=K+B_0^2M_{\mathrm{lin}},
+  \label{eq:mandel-undrained-bulk-modulus}\\
+  B_{\mathrm{Sk}}&=\frac{B_0M_{\mathrm{lin}}}{K_u},
+  \label{eq:mandel-skempton-coefficient}\\
+  \nu&=\frac{3K-2G}{2(3K+G)},
+  \qquad
+  \nu_u=\frac{3K_u-2G}{2(3K_u+G)},
+  \label{eq:mandel-poisson-ratios}\\
+  c&=\frac{
+   2G(1-\nu)(\nu_u-\nu)\kappa
+  }{
+   B_0^2(1-\nu_u)(1-2\nu)^2\mu_f
+  }.
+  \label{eq:mandel-consolidation-coefficient}
+ \end{align}
+\end{subequations}
+Here \(K_u\) is the undrained bulk modulus, \(B_{\mathrm{Sk}}\) is the Skempton
+coefficient, \(\nu\) and \(\nu_u\) are the drained and undrained Poisson
+ratios, respectively, and \(c\) is the consolidation coefficient.
+
+The storage in \eqref{eq:mandel-storage-modulus} is specific to the elastic
+mineral law in \eqref{eq:elastic-mineral-density}.  The classical single-mineral Biot
+storage relation would instead give
+\begin{equation}
+ \frac{1}{M_{\mathrm{Biot}}}
+ =\frac{B_0-\phi_{f0}}{K_s}+\frac{\phi_{f0}}{K_f}
+ =\frac{\phi_{s0}}{K_s}-\frac{K}{K_s^2}
+ +\frac{\phi_{f0}}{K_f}.
+ \label{eq:classical-biot-storage-comparison}
+\end{equation}
+The extra \(K/K_s^2\) in \(1/M_{\mathrm{lin}}\) follows from the selected
+dependence of the elastic mineral law on the volumetric skeleton stress.  The
+analytical series
+therefore provides a model-consistent benchmark for the discretized equations;
+it does not independently validate this constitutive storage choice against
+classical Biot theory or experimental data \citep{biotwillis1957}.
+
+The Cheng--Detournay characteristic equation defines \(\alpha_n\) as its
+positive roots \citep{chengdetournay1988}:
+\begin{equation}
+ \tan\alpha_n
+ =\frac{1-\nu}{\nu_u-\nu}\alpha_n.
+ \label{eq:mandel-root-equation}
+\end{equation}
+The corresponding analytical water pressure is
+\citep{chengdetournay1988}
+\begin{align}
+ p(X,t)
+ ={}&\frac{2P_0B_{\mathrm{Sk}}(1+\nu_u)}{3}
+ \sum_{n=1}^{\infty}
+ \frac{
+  \sin\alpha_n\cos\left(\alpha_n X/a\right)
+  -\sin\alpha_n\cos\alpha_n
+ }{
+  \alpha_n-\sin\alpha_n\cos\alpha_n
+ }
+ \notag\\
+ &\mathbin{\times}
+ \exp\left(-\frac{\alpha_n^2ct}{a^2}\right).
+ \label{eq:mandel-pressure-series}
+\end{align}
+The corresponding displacement fields are \citep{chengdetournay1988}
+\begin{subequations}
+ \label{eq:mandel-displacement-series}
+ \begin{align}
+  u_x(X,Y,t)
+  ={}&\left[
+  \frac{P_0\nu}{2G}
+  -\frac{P_0\nu_u}{G}
+  \sum_{n=1}^{\infty}
+  \frac{\sin\alpha_n\cos\alpha_n}
+  {\alpha_n-\sin\alpha_n\cos\alpha_n}
+  \exp\left(-\frac{\alpha_n^2ct}{a^2}\right)
+  \right]X
+  \notag\\
+  &\mathbin{+}\frac{P_0a}{G}
+  \sum_{n=1}^{\infty}
+  \frac{\cos\alpha_n\sin\left(\alpha_n X/a\right)}
+  {\alpha_n-\sin\alpha_n\cos\alpha_n}
+  \exp\left(-\frac{\alpha_n^2ct}{a^2}\right),
+  \label{eq:mandel-horizontal-displacement-series}\\
+  u_y(X,Y,t)
+  ={}&\left[
+  -\frac{P_0(1-\nu)}{2G}
+  +\frac{P_0(1-\nu_u)}{G}
+  \sum_{n=1}^{\infty}
+  \frac{\sin\alpha_n\cos\alpha_n}
+  {\alpha_n-\sin\alpha_n\cos\alpha_n}
+  \exp\left(-\frac{\alpha_n^2ct}{a^2}\right)
+  \right]Y.
+  \label{eq:mandel-vertical-displacement-series}
+ \end{align}
+\end{subequations}
+The comparison retains the first twelve roots in
+\eqref{eq:mandel-pressure-series} and
+\eqref{eq:mandel-displacement-series}.  Against a 128-root evaluation over
+401 positions and all reported times, this truncation changes pressure by at
+most \(1.5067\times10^{-5}p_{\mathrm{scale}}\) and displacement by
+\(5.3513\times10^{-12}\ \mathrm{m}\).
+
+\subsection{Numerical comparison}
+\label{sec:mandel-numerical-comparison}
+
+The reported calculation uses a \(40\)-by-\(4\) mesh of nine-node quadrilateral
+(QUAD9) elements and backward-Euler time-step size
+\(\Delta t=0.002\ \mathrm{s}\).  Water pressure is sampled along
+\(Y=0.05\ \mathrm{m}\).  In \cref{fig:mandel-pressure-profiles}, solid curves
+are \eqref{eq:mandel-pressure-series}; open circles are the finite-element
+solution.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/mandel_pressure_profiles.pgf}
+ \caption{Water pressure as a function of distance from the undrained center
+ at five times.  Solid curves are the Cheng--Detournay analytical series, and
+ open circles are Q2/Q1 finite-element values on the reported mesh with
+ \(\Delta t=0.002\ \mathrm{s}\).}
+ \label{fig:mandel-pressure-profiles}
+\end{figure}
+
+The profiles reproduce the transient concentration of pressure near the
+undrained center and the zero-pressure condition at the drained edge.  Across
+the five plotted times, the maximum nodal pressure difference is
+\(1.9563\times10^{-2}\) of the analytical pressure scale
+\begin{equation}
+ p_{\mathrm{scale}}
+ =\frac{P_0B_{\mathrm{Sk}}(1+\nu_u)}{3}.
+ \label{eq:mandel-pressure-scale}
+\end{equation}
+The complete reported history also compares pressure at
+\(X=0,0.3,0.8\ \mathrm{m}\); its maximum normalized difference is
+\(2.8221\times10^{-2}\).
+
+\Cref{fig:mandel-displacements} compares spatial displacement profiles at the
+same five times used for the pressure comparison.  Horizontal displacement is
+sampled along \(Y=0.1\ \mathrm{m}\), and vertical displacement is sampled
+along \(X=1\ \mathrm{m}\).  Solid curves are
+\eqref{eq:mandel-horizontal-displacement-series} and
+\eqref{eq:mandel-vertical-displacement-series};
+open circles are the Q2 finite-element solution.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/mandel_displacements.pgf}
+ \caption{Horizontal displacement as a function of \(X\) and vertical
+ displacement as a function of \(Y\) at five times in the small-load Mandel
+ verification.  Solid curves are the Cheng--Detournay series, and open circles
+ are Q2 finite-element values on the reported mesh with
+ \(\Delta t=0.002\ \mathrm{s}\).  The horizontal profile is an independent
+ benchmark observable; the vertical profile confirms reproduction of the
+ prescribed analytical platen displacement.}
+ \label{fig:mandel-displacements}
+\end{figure}
+\FloatBarrier
+
+For a scalar field \(f\), the notation
+\(\lVert f\rVert_{L^2(\Omega_0)}
+:=(\int_{\Omega_0}|f|^2\dd V_0)^{1/2}\) denotes its
+quadrature-evaluated spatial norm.  The pressure-profile
+metric is the largest nodal absolute difference over the stated locations and
+times divided by \(p_{\mathrm{scale}}\).  The displacement-profile metrics use
+the analogous maximum differences divided by \(P_0a/G\) and \(P_0b/G\).
+
+\begin{table}[ht]
+ \centering
+ \caption{Constitutive, Jacobian, and Mandel verification results.}
+ \label{tab:mandel-verification-results}
+ \begin{tabular}{p{0.68\linewidth}r}
+  \toprule
+  Verification quantity & Maximum or range \\
+  \midrule
+  Difference between calculated \(B\) and
+  \eqref{eq:elastic-finite-deformation-biot-coefficient}, \(L^2\) &
+  \(4.3942\times10^{-17}\) \\
+  Difference between calculated \(B\) and its centered-difference
+  fixed-pressure tangent, \(L^2\) &
+  \(1.0507\times10^{-8}\) \\
+  Referential solid-mass drift \(J\rho_s/\rho_{s0}-1\), \(L^2\) &
+  \(4.8754\times10^{-10}\) \\
+  Elastic mineral-law residual, \(L^2\) &
+  \(2.2384\times10^{-17}\) \\
+  Transient PETSc Jacobian relative Frobenius difference &
+  \(3.8413\times10^{-8}\) \\
+  Departure from \(B_0=0.6\) & \(4.0793\times10^{-5}\) \\
+  Horizontal-displacement profile difference divided by \(P_0a/G\) &
+  \(3.0219\times10^{-4}\) \\
+  Vertical-displacement profile difference divided by \(P_0b/G\) &
+  \(1.0860\times10^{-13}\) \\
+  Plotted-profile pressure difference divided by
+  \(p_{\mathrm{scale}}\) & \(1.9563\times10^{-2}\) \\
+  Complete-history pressure difference divided by
+  \(p_{\mathrm{scale}}\) & \(2.8221\times10^{-2}\) \\
+  Applied-load relative difference & \(1.5254\times10^{-3}\) \\
+  Spatial-refinement pressure difference divided by
+  \(p_{\mathrm{scale}}\) & \(2.7094\times10^{-3}\) \\
+  Temporal-refinement pressure difference divided by
+  \(p_{\mathrm{scale}}\) & \(2.1494\times10^{-2}\) \\
+  Finer temporal-refinement pressure difference divided by
+  \(p_{\mathrm{scale}}\) & \(1.3136\times10^{-2}\) \\
+  \bottomrule
+ \end{tabular}
+\end{table}
+
+The spatial-sensitivity entry compares \(20\)-by-\(2\) and
+\(40\)-by-\(4\) QUAD9 meshes at \(\Delta t=0.002\ \mathrm{s}\).  The
+temporal-sensitivity entry compares \(\Delta t=0.004\ \mathrm{s}\) and
+\(0.002\ \mathrm{s}\) on the \(40\)-by-\(4\) mesh; the finer entry compares
+\(0.002\ \mathrm{s}\) and \(0.001\ \mathrm{s}\) on that mesh.  The two
+successive differences correspond to an observed reduction exponent of
+0.710.  All are maximum
+pressure differences at \(X=0,0.3,0.8\ \mathrm m\) over coincident output
+times, normalized by \(p_{\mathrm{scale}}\).  These pairwise comparisons are
+sensitivity checks, not estimates of an asymptotic convergence order.  The
+analytical pressure metric uses the same three locations over the complete
+history, whereas the plotted-profile metric uses all plotted nodes at the five
+figure times.  The applied-load metric is the maximum relative difference of
+the recovered vertical nominal stress from \(-P_0\) over the complete history.
+
+The referential solid-mass drift and elastic mineral-law residual in
+\cref{tab:mandel-verification-results} verify the spatial balance and local
+elastic test state.  Agreement with the elastic oracle and the centered
+difference independently verifies the fixed-pressure constitutive tangent.  A separate focused mechanics regression
+compares the outer AD Jacobian with a Portable, Extensible Toolkit for
+Scientific Computation (PETSc) finite-difference Jacobian
+\citep{lindsayetal2021ad}.  The maximum relative and absolute Frobenius
+differences are reported in \cref{sec:nested-automatic-differentiation}.
+Together these checks connect the local constitutive derivative to the coupled
+Mandel residual.
+\FloatBarrier
+
+\subsection{Finite-deformation continuation}
+\label{sec:mandel-finite-deformation-continuation}
+
+The analytical solution in
+\eqref{eq:mandel-pressure-series} and
+\eqref{eq:mandel-displacement-series} verifies the
+small-load limit.  A second calculation uses the same water-filled domain,
+Q2/Q1/Q2 approximation, spatial solid-mass residual, elastic mineral update,
+and Biot transform to measure the finite-deformation response.  The platen displacement increases
+linearly from zero to \(-0.1b\) over \(0.2\ \mathrm{s}\) and is then held
+fixed.  This imposed history defines a displacement-controlled numerical
+experiment; the resulting lateral displacement, pressure, nominal stress, and
+Biot coefficient are predictions of the coupled model.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/mandel_finite_deformation.pgf}
+ \caption{Finite-deformation continuation of the solid--water Mandel system.
+ The left panel shows the imposed platen compression and predicted lateral
+ expansion.  The right panel shows the spatial average and range of the
+ calculated Biot coefficient.  The vertical dotted line marks the
+ end of the displacement ramp.}
+ \label{fig:mandel-finite-deformation}
+\end{figure}
+\FloatBarrier
+
+At the end of the ramp, the lateral expansion reaches \(3.6795\%\) of the
+specimen width.  Drainage during the subsequent hold reduces it to
+\(2.7204\%\).  The spatially averaged coefficient decreases from \(B_0=0.6\)
+to \(0.51417\), a relative change of \(14.30\%\).  Its final quadrature-point
+range is \(0.51360\leq B\leq0.51450\).  Over the complete continuation, the coefficient
+identity has a maximum \(L^2\) difference of
+\(3.2763\times10^{-17}\); the maximum referential solid-mass drift and elastic
+mineral-law \(L^2\) residual measures are \(2.7675\times10^{-5}\) and
+\(2.1154\times10^{-17}\), respectively.  The mass diagnostic is global and
+therefore measures the backward-Euler error of the weak chain-rule residual,
+not a separately imposed algebraic constraint.  It is
+\(5.5394\times10^{-5}\) at \(\Delta t=0.004\ \mathrm{s}\), approximately twice
+its value at \(0.002\ \mathrm{s}\).  These results exercise the same
+constitutive update far enough
+from the reference state to produce a visible coefficient change.  The
+calculation is a synthetic implementation demonstration rather than an
+independent physical validation.
+
+For the continuation, the \(20\)-by-\(2\) and \(40\)-by-\(4\) meshes at
+\(\Delta t=0.002\ \mathrm{s}\) differ by \(1.9648\times10^{-4}\) of the peak
+pressure and by \(5.8916\times10^{-6}\) in spatially averaged \(B\).  On the
+fine mesh, halving the step from \(0.004\) to \(0.002\ \mathrm{s}\) changes
+the same quantities by \(3.2489\times10^{-3}\) and
+\(5.6935\times10^{-5}\), respectively.  The corresponding maximum normalized
+lateral-displacement differences are \(3.1895\times10^{-6}\) and
+\(3.2938\times10^{-5}\).
+
+\Cref{fig:mandel-biot-contours} resolves the spatial range in
+\cref{fig:mandel-finite-deformation} at six times.  The plotted field is the
+elementwise projection of the calculated coefficient on the solid
+reference coordinates.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/mandel_biot_contours.pgf}
+ \caption{Biot-coefficient distribution during the finite-deformation Mandel
+ continuation.  All panels use the same color scale.  The coefficient is
+ initially uniform, develops its largest reduction near the drained boundary
+ at \(X=1\ \mathrm{m}\) during the displacement ramp, and approaches a nearly
+ uniform field during the hold.  The vertical plotting scale is enlarged
+ relative to the specimen aspect ratio to show the through-height field.}
+ \label{fig:mandel-biot-contours}
+\end{figure}
+\FloatBarrier
+
+The homogeneous material, rigid platen, and symmetry conditions produce a
+coefficient field that is uniform through the height.  Its horizontal gradient
+is largest near the end of the displacement ramp.  Drainage during the hold
+reduces this gradient while the coefficient approaches its final value.
+
+The corresponding normalized intrinsic solid density in
+\cref{fig:mandel-density-contours} is \(\bar\rho_s/\bar\rho_{s0}\), evaluated
+by the local elastic mineral law.  Each panel samples the material field at the
+QUAD9 element centers used for the coefficient field.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/mandel_density_contours.pgf}
+ \caption{Normalized intrinsic solid density during the finite-deformation Mandel
+ continuation at the times used in \cref{fig:mandel-biot-contours}.  All
+ panels use the same color scale.  Compression increases
+ \(\bar\rho_s/\bar\rho_{s0}\)
+ from its reference value of one to a maximum of \(1.05509\) near the end of
+ the displacement ramp.  During the hold, the field approaches the final
+ range \(1.03864\leq\bar\rho_s/\bar\rho_{s0}\leq1.03919\).  The vertical plotting scale is
+ enlarged relative to the specimen aspect ratio.}
+ \label{fig:mandel-density-contours}
+\end{figure}
+\FloatBarrier
+
+The density increase is greatest near the undrained center during the ramp.
+Drainage reduces the horizontal gradient during the hold.  This local state
+supplies the mineral-compression response and therefore accompanies the spatial
+evolution of \(B\).
+\FloatBarrier
+
+\subsection{Scope and reproducibility}
+\label{sec:mandel-scope-and-reproducibility}
+
+The evidence separates implementation verification from constitutive and
+physical validation.  The elastic closed-form identity checks the general
+local fixed-pressure derivative, the PETSc comparison checks its outer AD propagation, and the
+small-load Mandel calculation benchmarks the coupled discretization against a
+series formed from the same linearized storage law.  The ten-percent
+continuation is a synthetic discrimination test.  None of these calculations
+independently validates the mineral EOS, and the reported model is restricted
+to a saturated, isothermal, homogeneous, elastic body containing one solid and
+one water phase.
+
+The source archive accompanying this article contains the MOOSE objects, input
+deck, verification driver, curated CSV files, and figure scripts.  From the
+archive root, \texttt{make reproduce} builds the application, runs the tests
+and Mandel driver, regenerates the figures, and compiles the manuscript.
+Equation-to-object mappings are recorded in
+\texttt{validation/equation\_to\_moose\_map.yml}, and artifact hashes and the
+framework version are recorded in \texttt{validation/provenance.yml}.

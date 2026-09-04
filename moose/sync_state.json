@@ -1,0 +1,168 @@
+{
+  "files": [
+    {
+      "biot": "moose_app/include/kernels/ADMaterialPropertyResidual.h",
+      "master": "moose_app/include/kernels/ADMaterialPropertyResidual.h",
+      "sha256": "c086f659c2adcaec938e44a57151aac19e367a00a98aaa2eae53e5f6f3dc82a5"
+    },
+    {
+      "biot": "moose_app/include/kernels/ADReferenceComponentFluxTerm.h",
+      "master": "moose_app/include/kernels/ADReferenceComponentFluxTerm.h",
+      "sha256": "0546e5e8ccfd8162352843b6278a6f71b0442baf2362a426308cf6aca18caf38"
+    },
+    {
+      "biot": "moose_app/include/kernels/ADReferenceMaterialStorageRateTerm.h",
+      "master": "moose_app/include/kernels/ADReferenceMaterialStorageRateTerm.h",
+      "sha256": "c5cf92ceede8f5fd1d90d86946e9967d7cf074635a40aafdf3fc6adbad342cfa"
+    },
+    {
+      "biot": "moose_app/include/kernels/ADReferenceSolidMomentum.h",
+      "master": "moose_app/include/kernels/ADReferenceSolidMomentum.h",
+      "sha256": "570e1e74d552bcc8a922629b76111c02248211e44e3e43d3b5c2ab93d2f4a4e2"
+    },
+    {
+      "biot": "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h",
+      "master": "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h",
+      "sha256": "b1c38b7707f46120f9e2e7939f360ceaf30a35473d1101cc8ccc163a7e2043d2"
+    },
+    {
+      "biot": "moose_app/include/materials/ADBiotPressureStorageMaterial.h",
+      "master": "moose_app/include/materials/ADBiotPressureStorageMaterial.h",
+      "sha256": "1f72903cd280f542ed35c20daca6647cdebf9ca2d1abe1496ae682b984f04c05"
+    },
+    {
+      "biot": "moose_app/include/materials/ADConstrainedSkeletonBiotMaterial.h",
+      "master": "moose_app/include/materials/ADConstrainedSkeletonBiotMaterial.h",
+      "sha256": "ee709a054ae7cb2d50c9ad2b8166bcf769fa331b87907a72a761062a4ca4fab9"
+    },
+    {
+      "biot": "moose_app/include/materials/ADLocalElasticMineralBiotMaterial.h",
+      "master": "moose_app/include/materials/ADLocalElasticMineralBiotMaterial.h",
+      "sha256": "ca2bef50ec0464dd42542f909f8656bb5b7b3403f27628848646cac526942422"
+    },
+    {
+      "biot": "moose_app/include/materials/ADReferenceSolidStressMaterial.h",
+      "master": "moose_app/include/materials/ADReferenceSolidStressMaterial.h",
+      "sha256": "773dc3edecea20cff3020a2aeea92f55d1371d4f7861a13ac951e2dd651a7d4a"
+    },
+    {
+      "biot": "moose_app/include/materials/ADSolidReferenceKinematics.h",
+      "master": "moose_app/include/materials/ADSolidReferenceKinematics.h",
+      "sha256": "343d81f2c8479d6abf8a8d131d8b6bf5bccc5d3237961c03bbcd8a3af73d5d12"
+    },
+    {
+      "biot": "moose_app/include/materials/ADBiotDarcyReferenceFluxMaterial.h",
+      "master": "moose_app/include/materials/ADBiotDarcyReferenceFluxMaterial.h",
+      "sha256": "822102b9813e3d592b2e98744be9a6fbf4ad7eb3ae6a2473597e1b4c74658caa"
+    },
+    {
+      "biot": "moose_app/include/materials/ADVolumetricBarotropicSkeletonStressMaterial.h",
+      "master": "moose_app/include/materials/ADVolumetricBarotropicSkeletonStressMaterial.h",
+      "sha256": "81e73a536bcf34e88b7c028cf993d436d65d559266876e663ac8c7b23fd8e5ed"
+    },
+    {
+      "biot": "moose_app/include/postprocessors/ADMaterialScalarL2Error.h",
+      "master": "moose_app/include/postprocessors/ADMaterialScalarL2Error.h",
+      "sha256": "66a08ec210a09d830bc0d45cc86e588704c89cdec20562fb7ffd1dac3c1a4fc4"
+    },
+    {
+      "biot": "moose_app/src/kernels/ADMaterialPropertyResidual.C",
+      "master": "moose_app/src/kernels/ADMaterialPropertyResidual.C",
+      "sha256": "f579c7d8a0fe3d654366aaff7f347580ee28c6821d2b086f947385f2b1b973b7"
+    },
+    {
+      "biot": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C",
+      "master": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C",
+      "sha256": "98d22a1419b61f62bc15226f680ede04b3e4d2cdaefe5c8980f478b444b1b948"
+    },
+    {
+      "biot": "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C",
+      "master": "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C",
+      "sha256": "37949b95362ac61164504f8ee11d4cbd090baaac345a30b9bb01f70b538314a9"
+    },
+    {
+      "biot": "moose_app/src/kernels/ADReferenceSolidMomentum.C",
+      "master": "moose_app/src/kernels/ADReferenceSolidMomentum.C",
+      "sha256": "a469a325d1e876422846b4b6841778b9016fadd5c8234c2336a9c02b3b0c0301"
+    },
+    {
+      "biot": "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C",
+      "master": "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C",
+      "sha256": "a91cb763ec048927d93f330d12a021c1e0ad5c2451116263b168941609093db7"
+    },
+    {
+      "biot": "moose_app/src/materials/ADBiotPressureStorageMaterial.C",
+      "master": "moose_app/src/materials/ADBiotPressureStorageMaterial.C",
+      "sha256": "ff889d4b502934a8ea80aabbc973a7b6ee89d869dd7f8db4aea02b25eeb7f12d"
+    },
+    {
+      "biot": "moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C",
+      "master": "moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C",
+      "sha256": "d8342f30188842ecb4aa3dac71d701adce16dc78d4f2d4ee9eabd53459c0aeb5"
+    },
+    {
+      "biot": "moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C",
+      "master": "moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C",
+      "sha256": "7395fcfa194b04447060f4cc0f038b9a5f18c3ace47e8a2169b63a05579e67bb"
+    },
+    {
+      "biot": "moose_app/src/materials/ADReferenceSolidStressMaterial.C",
+      "master": "moose_app/src/materials/ADReferenceSolidStressMaterial.C",
+      "sha256": "c0c39cf04372091874baf3c184e24000bb19a2701e58c86d9f27f5b2bc62cee9"
+    },
+    {
+      "biot": "moose_app/src/materials/ADSolidReferenceKinematics.C",
+      "master": "moose_app/src/materials/ADSolidReferenceKinematics.C",
+      "sha256": "9e714d7b167412a16811a268703c99e4b4cec7e91fb8bd0d9396c1bf57c81b35"
+    },
+    {
+      "biot": "moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C",
+      "master": "moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C",
+      "sha256": "127f3a46b7f96543c6fd8854c859fd24454a3ed92f0d2ddb856ff14a87bfc98c"
+    },
+    {
+      "biot": "moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C",
+      "master": "moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C",
+      "sha256": "3c8cb46bf09f412a8f8256fdbd914bc26a8273f54368f652c62c589bc5d49bdc"
+    },
+    {
+      "biot": "moose_app/src/postprocessors/ADMaterialScalarL2Error.C",
+      "master": "moose_app/src/postprocessors/ADMaterialScalarL2Error.C",
+      "sha256": "4a4960797c2bd209d37bc32ed6a9c8970c6d1c07cb00dad11e58103e5faeba31"
+    },
+    {
+      "biot": "moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i",
+      "master": "moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i",
+      "sha256": "b377cd06816cc3089c0e2db650bd2b2f6481fdcb7d6e314cb16dcbac833778fa"
+    },
+    {
+      "biot": "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i",
+      "master": "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i",
+      "sha256": "1d30520ecb7d69eb870167dc71ff0415f8dacd05f91799a0273726f45017e476"
+    },
+    {
+      "biot": "moose_app/test/tests/mandel_implicit_biot/tests",
+      "master": "moose_app/test/tests/mandel_implicit_biot/tests",
+      "sha256": "55ca03e4dd9e3fe160f56b41f9d4c8d4de39c8d688b738a9d188e68522550adf"
+    },
+    {
+      "biot": "validation/scripts/check_mandel_implicit_biot.py",
+      "master": "validation/scripts/check_mandel_implicit_biot.py",
+      "sha256": "aac201c9a04838a3e283eec22fb732789a4f527351614487984fc501fa34c532"
+    },
+    {
+      "biot": "moose_app/patches/moose/0001-skip-automatic-premake-check.patch",
+      "master": "moose_app/patches/moose/0001-skip-automatic-premake-check.patch",
+      "sha256": "4e2f5980525c3b0c23743135a9ce0b69caea310a2c5c96101da6060b44923ee5"
+    },
+    {
+      "biot": "moose_app/patches/moose/series.yml",
+      "master": "moose_app/patches/moose/series.yml",
+      "sha256": "806c70e91c05c598912fc2bbdb74c5895ac8d00eb101234f5eb2bb6254f22767"
+    }
+  ],
+  "manifest_sha256": "b0de1a23a720884a5088958201cc1bda3342f519f5777b123a36c0c9948d9b85",
+  "master_commit": "9674548eac2d11f20efcb045ebe5ff344a43794a",
+  "synchronized_at_utc": "2026-08-27T13:22:17.385484+00:00",
+  "version": 1
+}

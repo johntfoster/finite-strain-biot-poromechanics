@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "project": {
+    "title": "Implicit automatic differentiation of a finite-deformation Biot coefficient",
+    "public_repository_url": null,
+    "public_repository_url_status": "unknown_not_yet_assigned"
+  },
+  "manuscript_paths": [
+    "paper/main.tex",
+    "paper/defs.tex",
+    "paper/sections",
+    "all.bib"
+  ],
+  "disclosure": {
+    "status": "active",
+    "submission_tag": null,
+    "authors_retained_responsibility": true,
+    "ai_output_treated_as_scholarly_source": false,
+    "complete_prompt_history_available": false
+  },
+  "uses": [
+    "proposing and critiquing prose",
+    "examining notation and equation references",
+    "auditing derivational consistency",
+    "identifying candidate literature and bibliographic issues",
+    "supporting LaTeX quality assurance",
+    "assisting with reproducibility and scientific-software development"
+  ],
+  "verification": [
+    "The author reviewed every accepted change.",
+    "Equations and citations were checked against manuscript source and primary literature as applicable.",
+    "Computational changes were subjected to the repository's applicable validation procedures."
+  ],
+  "tools": [
+    {
+      "name": "OpenAI Codex",
+      "provider": "OpenAI",
+      "model_versions": null,
+      "model_versions_status": "unknown_not_consistently_recorded"
+    }
+  ]
+}

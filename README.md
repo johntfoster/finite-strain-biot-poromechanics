@@ -1,59 +1,91 @@
-# Implicit AD nonlinear Biot coefficient
+# Spatial mass balances and nonlinear Biot coefficient
 
-Companion derivation, MOOSE implementation, and reproducibility repository for
-the nonlinear-Biot specialization of the theory in
-`multicomponent_reactive_flow`. The repository uses that paper's notation,
-solid-reference equations, MOOSE workflow, validation conventions, and
-agent-assisted input-deck architecture.
+This repository contains the manuscript, minimal MOOSE application, validation
+data, and agent workflow for computing a finite-deformation Biot coefficient
+from a general fixed-pressure local constitutive update.  The elastic mineral
+response is the verification specialization.
 
-The existing Lawal--Kim curves are a calibration to their measured drained
-moduli. They verify data handling and the constrained implicit-AD constitutive
-path; they are not an independent prediction of the plotted Biot coefficient.
+The physical specialization contains one deformable solid and one water phase.
+The global fields are Q2 displacement, continuous Q1 water pressure, and Q2
+solid partial density. Spatial solid mass balance evolves the partial density;
+the local constitutive update supplies intrinsic solid density, solid volume
+fraction, and any inelastic internal variables. Implicit differentiation of the
+complete local residual system supplies the fixed-pressure Biot coefficient.
+The elastic closure supplies analytical and centered-difference tests of this
+general path. Spatial water mass balance
+uses a barotropic pressure--density equation of state. The Biot transform maps
+the constitutive double-prime stress to the single-prime material stress and
+the total mixture stress. These local dependencies remain in the outer MOOSE
+automatic-differentiation Jacobian.
+
+The water-filled Mandel benchmark compares spatial pressure and displacement
+profiles with the analytical plane-strain solution. A finite-deformation
+continuation reports the departure of the Biot coefficient from its reference
+value and provides two-dimensional Biot-coefficient and solid-density
+snapshots. The discretization has no pressure enrichment or EG operators.
 
 ## Repository layout
 
-- `paper/` — manuscript and sections
-- `data/raw/` — immutable public source data and checksums
-- `data/processed/` — tidy Figure 3c data and fitted curves
-- `scripts/` — extraction, fitting, plotting, and validation
-- `moose/` — experiment decks and upstream source manifest
-- `validation/` — quantitative acceptance records
-- `references/` — bibliographic and source-provenance notes
-- `agent_workflows/` — request routing, scoped-edit and validation checklists,
-  problem schema, and MOOSE failure triage inherited from the parent repository
-- `validation/equation_to_moose_map.yml` and
-  `validation/theory_traceability.yml` — paper/theory/code/test traceability
+- `paper/` — canonical LaTeX manuscript rooted at `paper/main.tex`
+- `moose_app/` — standalone minimal MOOSE application and focused tests
+- `moose/` — shared-source manifest and synchronization state
+- `validation/` — analytical comparisons, curated data, and traceability
+- `scripts/` — figure, extraction, provenance, and repository-validation tools
+- `agent_environment/` — portable manuscript, research, and MOOSE skills
+- `agent_workflows/` — Biot-specific routing, checklists, and failure triage
 
-## Reproduce the data extraction
+## Agentic work
 
-```bash
-python3 scripts/extract_lawal_kim_figure3c.py \
-  data/raw/GRL_Poromechanical_Measurements.xlsx \
-  data/processed/lawal_kim_figure3c.csv
-python3 scripts/verify_lawal_kim_figure3c.py data/processed/lawal_kim_figure3c.csv
+Start every repository task with:
+
+```sh
+tools/agentctl route "describe the task"
 ```
 
-## Build the manuscript
+The repository can be used as a complete manuscript workspace without another
+checkout. `AGENTS.md` identifies `paper/main.tex` as the source of truth and
+defines the manuscript build, citation, equation, and MOOSE workflows.
 
-```bash
-latexmk -lualatex -interaction=nonstopmode -halt-on-error \
-  -outdir=paper/build paper/main.tex
+Shared MOOSE files are synchronized with the authoritative general simulator
+repository. A successful pull records its local location in the ignored
+`.agent-runtime/master_repository` file:
+
+```sh
+tools/sync_biot_moose.py check
+tools/sync_biot_moose.py pull --master PATH_TO_MASTER
+tools/sync_biot_moose.py push
 ```
 
-The published article is open access under CC BY 4.0. The underlying workbook
-is cited by its version DOI, `10.5281/zenodo.20089570`.
+An agent may edit shared MOOSE files here. `push` copies those edits to the
+master only when its files still match the recorded base; divergent edits fail
+without overwriting either repository.
 
-## Complete validation
+## Reproduce
 
-With the MOOSE conda environment active, the complete data, constitutive-fit,
-implicit-AD MOOSE, figure, and manuscript workflow is:
+The setup skill pins MOOSE commit
+`abafb58b67a6037c6723ffeb19647c84484466da` and the tested Conda package
+versions. Inspect the environment without changing it:
 
-```bash
+```sh
+agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh status
+```
+
+Provision missing dependencies only when authorized:
+
+```sh
+agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh setup
+```
+
+Build, run the Mandel and Q1 Jacobian tests, regenerate figures and manuscript,
+and validate the package with:
+
+```sh
 make reproduce
 ```
 
-For a quick audit of the committed artifacts without rerunning MOOSE:
+Useful focused targets are `make build`, `make test`, `make mandel`, `make
+figures`, `make paper`, `make validate`, and `make sync-check`.
 
-```bash
-make validate
-```
+The numerical results constitute implementation verification, analytical
+benchmark comparison, and synthetic finite-deformation discrimination. They do
+not constitute material-specific physical validation.

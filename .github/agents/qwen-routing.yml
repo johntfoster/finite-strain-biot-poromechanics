@@ -1,0 +1,70 @@
+# qwen-routing.yml — authoritative skill -> destination routing.
+#
+# The qwen-orchestrator MUST read this file before executing any task and treat
+# it as the single source of truth. A gap here is a routing bug: every skill in
+# agent_environment/skills/ must appear under exactly one destination (enforced
+# by check_qwen_routing.py).
+#
+# Destinations:
+#   deepseek-keep              Never delegate. DeepSeek (the default Copilot
+#                              model) handles these itself; a confident wrong
+#                              answer here is expensive and gates manuscript or
+#                              derivation correctness.
+#   qwen3:4b                   Delegate: qwen_delegate(model="qwen3:4b").
+#                              Deterministic, mechanical, low risk; output is
+#                              cheap to verify locally.
+#   qwen3:30b-a3b              Delegate: qwen_delegate(model omitted -> default).
+#                              Ordinary repo / manuscript editing.
+#   qwen3-coder-next:q4_K_M    Delegate: qwen_delegate(model="qwen3-coder-next:q4_K_M").
+#                              Large C++ / MOOSE refactors.
+#   direct-run                 Not an LLM task. Run the deterministic command
+#                              directly (orchestrator `execute`), do not delegate.
+
+models:
+  installed:
+    - qwen3:4b
+    - qwen3:30b-a3b
+    - qwen3-coder-next:q4_K_M
+  default: qwen3:30b-a3b
+
+skills:
+  deepseek-keep:
+    - canonical-reference-finder
+    - latex-derivation-auditor
+    - latex-equation-integrity-checker
+    - latex-manuscript-request-router
+    - latex-notation-propagation-planner
+    - latex-research-ingest
+    - manuscript-narrative-review
+    - moose-residual-traceability-planner
+  qwen3:4b:
+    - latex-citation-verifier
+    - latex-display-math-normalizer
+    - latex-equation-resolver
+    - latex-summary-table-auditor
+  qwen3:30b-a3b: []
+  qwen3-coder-next:q4_K_M: []
+  direct-run:
+    - latex-workshop-recompile
+    - setup-moose-conda
+
+# VS Code / Copilot-provided skills: handled by the orchestrator itself (DeepSeek);
+# they are never qwen delegation targets.
+builtin_skills:
+  - agent-customization
+  - chronicle
+  - get-search-view-results
+  - project-setup-info-local
+
+# Fallback for anything not named above (unlisted or general editing). Checked
+# in order; first match wins.
+unlisted_rules:
+  - "large C++ / MOOSE refactor editing          -> qwen3-coder-next:q4_K_M"
+  - "general repo or manuscript editing          -> qwen3:30b-a3b (default)"
+  - "mechanical single-command check, no editing -> qwen3:4b"
+  - "anything else, or any uncertainty           -> deepseek-keep"
+
+# If Hamilton / qwen is unavailable (qwen_ping fails or delegations error), do
+# not delegate: the orchestrator edits directly, behaving as the default Copilot
+# model (DeepSeek). This is unconditional and overrides every entry above.
+availability_fallback: deepseek

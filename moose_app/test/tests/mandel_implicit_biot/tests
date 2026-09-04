@@ -1,0 +1,38 @@
+[Tests]
+  design = 'moose_app/doc/theory_traceability.yml validation/validation_matrix.yml'
+  issues = ''
+
+  [mandel_water_q2_q1_smoke]
+    type = RunApp
+    input = mandel_water_q2_q1.i
+    cli_args = 'Executioner/end_time=0.014 Outputs/file_base=mandel_water_q2_q1_smoke'
+    max_time = 180
+    requirement = 'The application shall solve the water-filled plane-strain Mandel problem with Q2 displacement, continuous Q1 pressure, a Q2 spatial solid partial-density balance, local mineral density and volume-fraction outputs, exact pulled-back water accumulation, and a fixed-pressure elastic Biot tangent.'
+  []
+
+  [mandel_water_q2_q1_bdf2]
+    type = RunApp
+    input = mandel_water_q2_q1.i
+    cli_args = 'Executioner/scheme=bdf2 Executioner/end_time=0.014 Outputs/file_base=mandel_water_q2_q1_bdf2'
+    max_time = 180
+    requirement = 'The pulled-back solid and water accumulations shall use MOOSE AD time-integrator rates and solve with BDF2 without a hard-coded backward difference.'
+  []
+
+  [mandel_water_q2_q1_verification]
+    type = RunCommand
+    prereq = mandel_water_q2_q1_smoke
+    command = 'python3 ../../../../validation/scripts/check_mandel_implicit_biot.py --quick'
+    max_time = 180
+    requirement = 'The water-filled Q2/Q1 Mandel solution shall solve solid partial-density conservation in spatial form, obtain intrinsic solid density and volume fraction from the elastic test provider, compute the production Biot coefficient with the general ADConstrainedSkeletonBiotMaterial tangent, agree with both the separate elastic oracle and a centered-difference fixed-pressure tangent, use the complete J(1-phi_s)rho_f(p) water accumulation without a prescribed Biot storage modulus, agree with the plane-strain analytical pressure and displacement histories, recover the 0.6 small-strain Biot coefficient, satisfy solid-mass and mineral-EOS diagnostics, reproduce the Mandel-Cryer pressure rise, and remain stable under spatial refinement without a pressure-enrichment variable.'
+  []
+
+  [mandel_water_q2_q1_jacobian]
+    type = PetscJacobianTester
+    input = implicit_biot_q2_q1_jacobian.i
+    run_sim = true
+    ratio_tol = 1e-7
+    difference_tol = 1e-5
+    max_time = 180
+    requirement = 'The transient Q2-displacement, Q1-pressure, and Q2-solid-partial-density system shall preserve the outer automatic-differentiation Jacobian through momentum with the local Biot pressure term, pulled-back solid partial-density storage, complete barotropic-water storage, and Darcy transport without a pressure-enrichment field or EG operator.'
+  []
+[]

@@ -1,0 +1,16 @@
+/build/
+/lib/
+/.jitcache/
+/nonlinear_biot_ad-opt
+/*.csv
+*.lo
+*.lo.d
+*.la
+*.so*
+
+# Generated build, harness snapshot, and test-run artifacts
+*.o
+*.os
+.libs/
+.previous_test_results.json
+/nonlinear_biot_ad.yaml

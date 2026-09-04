@@ -1,0 +1,26 @@
+schema_version: 1
+moose_base_commit: "abafb58b67a6037c6723ffeb19647c84484466da"
+patches:
+  - id: "skip-automatic-premake-check"
+    order: 1
+    file: "0001-skip-automatic-premake-check.patch"
+    sha256: "4e2f5980525c3b0c23743135a9ce0b69caea310a2c5c96101da6060b44923ee5"
+    state_in_verified_checkout: "applied"
+    affected_files:
+      - "framework/moose.mk"
+    rationale: >-
+      Keep application builds from invoking MOOSE's automatic premake check
+      after the verified 128-entry AD configuration has been established.
+    verification:
+      - "setup-moose-conda environment diagnostic"
+      - "optimized application build"
+      - "application --version"
+      - "parsed-material JIT regressions"
+    upstream_assessment:
+      disposition: "not_as_is"
+      reason: >-
+        Unconditionally disabling premake is local build policy and is too
+        broad for upstream MOOSE.
+      possible_upstream_shape: >-
+        Consider an opt-in, documented Make variable that suppresses the
+        automatic premake invocation while preserving the default behavior.

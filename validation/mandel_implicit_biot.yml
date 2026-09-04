@@ -1,0 +1,71 @@
+schema_version: 1
+status: pass
+benchmark: water-filled plane-strain Mandel consolidation
+evidence_class: analytical_benchmark_and_implementation_verification
+discretization:
+  displacement: continuous Q2 Lagrange
+  pressure: continuous Q1 Lagrange
+  solid_partial_density: continuous Q2 Lagrange
+  pressure_enrichment: false
+  fine_mesh: [40, 4]
+  fine_time_step_seconds: 0.002
+metrics:
+  maximum_pressure_normalized_error: 0.028221423721293732
+  maximum_side_displacement_relative_error: 0.004589731892243235
+  maximum_top_displacement_relative_error: 0.0007412408964986999
+  maximum_horizontal_displacement_profile_normalized_error: 0.00030218928703562705
+  maximum_vertical_displacement_profile_normalized_error: 1.0860021174984198e-13
+  maximum_load_relative_error: 0.001525360593499936
+  maximum_biot_reference_error: 0.000040792557689961484
+  maximum_biot_identity_l2: 4.3941728940372e-17
+  maximum_biot_centered_difference_l2: 1.050679322998e-08
+  maximum_referential_solid_mass_drift_l2: 4.8753609702705e-10
+  maximum_mineral_eos_residual_l2: 2.2383716359994e-17
+  mandel_cryer_pressure_increase: 0.021730746228057596
+  mandel_cryer_peak_time_seconds: 0.018
+  maximum_spatial_refinement_pressure_difference: 0.0027094087323559202
+  maximum_temporal_refinement_pressure_difference: 0.02149425293437488
+  maximum_finer_temporal_refinement_pressure_difference: 0.013135962768457654
+  analytical_12_vs_128_root_pressure_difference: 1.5066513062860393e-05
+  analytical_12_vs_128_root_displacement_difference_m: 5.351299403930158e-12
+finite_deformation_continuation:
+  classification: synthetic finite-deformation implementation demonstration
+  result: validation/mandel_large_deformation.csv
+  spatial_biot_field: validation/mandel_biot_contours.csv
+  spatial_density_field: validation/mandel_density_contours.csv
+  spatial_field_times_seconds: [0.0, 0.046, 0.094, 0.206, 0.398, 0.702]
+  mesh: [40, 4]
+  pressure_enrichment: false
+  platen_history: linear ramp to ten-percent compression over 0.2 seconds, followed by a hold to 0.702 seconds
+  metrics:
+    maximum_platen_compression_over_height: 0.1
+    maximum_lateral_expansion_over_width: 0.03679468984281
+    final_lateral_expansion_over_width: 0.027204092415354
+    final_biot_minimum: 0.51360255434187
+    final_biot_average: 0.51417410820727
+    final_biot_maximum: 0.51450277385234
+    maximum_intrinsic_solid_density_ratio: 1.05509217159
+    final_intrinsic_solid_density_ratio_range: [1.03863500727, 1.03919021716]
+    final_average_biot_relative_departure_from_reference: 0.143043152987883
+    maximum_biot_identity_l2: 3.2763279895298e-17
+    maximum_referential_solid_mass_drift_l2: 2.7675134128686e-05
+    maximum_mineral_eos_residual_l2: 2.1153822656986e-17
+    final_vertical_nominal_stress_pa: -215268940.13558
+  sensitivity:
+    spatial_20x2_vs_40x4_at_dt_0p002:
+      maximum_pressure_difference_over_peak: 1.9648219055412472e-04
+      maximum_average_biot_difference: 5.891596639995278e-06
+    temporal_dt_0p004_vs_0p002_on_40x4:
+      maximum_pressure_difference_over_peak: 3.248881900322377e-03
+      maximum_average_biot_difference: 5.6934768440042305e-05
+      coarse_maximum_referential_solid_mass_drift_l2: 5.5393678735054e-05
+reproduction:
+  build: make build
+  tests: make test
+  benchmark: make mandel
+  figures: make figures
+  paper: make paper
+  full: make reproduce
+  executable: moose_app/nonlinear_biot_ad-opt
+  input: moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i
+provenance: validation/provenance.yml

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "description": "Paths belonging to the public nonlinear-Biot paper and reproducibility repository.",
+  "paths": [
+    ".latexmkrc",
+    ".vscode",
+    "AGENTS.md",
+    "VISION.md",
+    "README.md",
+    "LICENSES.md",
+    "Makefile",
+    "all.bib",
+    "author_style_profile_2026-07-27.md",
+    "paper",
+    "figures",
+    "references",
+    "validation",
+    "scripts",
+    "moose",
+    "moose_app",
+    "provenance",
+    "agent_environment",
+    "agent_workflows",
+    "tools"
+  ]
+}

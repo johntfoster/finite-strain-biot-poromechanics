@@ -1,0 +1,491 @@
+#!/usr/bin/env python3
+"""Portable, repository-local agent environment router and bootstrapper."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+from typing import Any, Iterable
+
+
+DEFAULT_MANIFEST = Path("agent_environment/dependencies.json")
+SKILLS_DIR = Path("agent_environment/skills")
+HOOKS_DIR = Path(".githooks")
+WORD_RE = re.compile(r"[a-z0-9][a-z0-9+_.-]*")
+
+
+class AgentctlError(RuntimeError):
+    pass
+
+
+def run_git(args: list[str], cwd: Path, check: bool = True) -> subprocess.CompletedProcess[str]:
+    result = subprocess.run(
+        ["git", *args], cwd=cwd, text=True, capture_output=True, check=False
+    )
+    if check and result.returncode:
+        detail = result.stderr.strip() or result.stdout.strip()
+        raise AgentctlError(detail or f"git {' '.join(args)} failed")
+    return result
+
+
+def discover_root(start: Path | None = None) -> Path:
+    current = (start or Path.cwd()).resolve()
+    if current.is_file():
+        current = current.parent
+    result = run_git(["rev-parse", "--show-toplevel"], current, check=False)
+    if result.returncode == 0:
+        return Path(result.stdout.strip()).resolve()
+    for candidate in (current, *current.parents):
+        if (candidate / ".git").exists() and (candidate / "AGENTS.md").is_file():
+            return candidate
+    raise AgentctlError("not inside a supported repository")
+
+
+def relative_path(value: str, label: str) -> Path:
+    path = Path(value)
+    if path.is_absolute() or ".." in path.parts:
+        raise AgentctlError(f"{label} must be a repository-relative path: {value}")
+    return path
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise AgentctlError(f"missing configuration: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise AgentctlError(f"invalid JSON in {path}: {exc}") from exc
+    if not isinstance(value, dict):
+        raise AgentctlError(f"configuration must be a JSON object: {path}")
+    return value
+
+
+def manifest_path(root: Path, requested: str) -> Path:
+    return root / relative_path(requested, "manifest")
+
+
+def load_manifest(root: Path, requested: str) -> tuple[Path, dict[str, Any]]:
+    path = manifest_path(root, requested)
+    manifest = read_json(path)
+    if manifest.get("version") != 1 or not isinstance(manifest.get("profiles"), dict):
+        raise AgentctlError(f"unsupported dependency manifest schema: {path}")
+    return path, manifest
+
+
+def scalar_frontmatter(text: str) -> dict[str, str]:
+    """Read top-level scalar fields without requiring a YAML package."""
+    if not text.startswith("---\n"):
+        return {}
+    end = text.find("\n---", 4)
+    if end < 0:
+        return {}
+    values: dict[str, str] = {}
+    for line in text[4:end].splitlines():
+        match = re.match(r"^([A-Za-z][A-Za-z0-9_-]*):\s*(.*?)\s*$", line)
+        if not match:
+            continue
+        value = match.group(2).strip().strip("'\"")
+        if value:
+            values[match.group(1).lower()] = value
+    return values
+
+
+def skills(root: Path) -> list[dict[str, str]]:
+    base = root / SKILLS_DIR
+    if not base.is_dir():
+        return []
+    found: list[dict[str, str]] = []
+    for skill_file in sorted(base.glob("*/SKILL.md")):
+        metadata = scalar_frontmatter(skill_file.read_text(encoding="utf-8"))
+        name = metadata.get("name", skill_file.parent.name)
+        found.append(
+            {
+                "name": name,
+                "description": metadata.get("description", ""),
+                "path": skill_file.relative_to(root).as_posix(),
+            }
+        )
+    return found
+
+
+def words(value: str) -> set[str]:
+    return set(WORD_RE.findall(value.lower().replace("_", "-").replace("/", "-")))
+
+
+def matching_skills(query: str, available: list[dict[str, str]]) -> list[dict[str, str]]:
+    query_words = words(query)
+    scored: list[tuple[int, str, dict[str, str]]] = []
+    for skill in available:
+        name_words = words(skill["name"].replace("-", " "))
+        description_words = words(skill["description"])
+        score = 3 * len(query_words & name_words) + len(query_words & description_words)
+        if skill["name"].lower() in query.lower():
+            score += 10
+        if score:
+            scored.append((-score, skill["name"], skill))
+    if not scored:
+        return []
+    best = -min(scored)[0]
+    cutoff = max(2, best - 1)
+    return [item[2] for item in sorted(scored) if -item[0] >= cutoff]
+
+
+def explicit_route(query: str, manifest: dict[str, Any], available: list[dict[str, str]]) -> tuple[list[dict[str, str]], list[str]] | None:
+    query_lower = query.lower()
+    by_name = {item["name"]: item for item in available}
+    for rule in manifest.get("routes", []):
+        if not isinstance(rule, dict):
+            raise AgentctlError("route rules must be objects")
+        all_terms = [str(value).lower() for value in rule.get("all", [])]
+        any_terms = [str(value).lower() for value in rule.get("any", [])]
+        if all(term in query_lower for term in all_terms) and (
+            not any_terms or any(term in query_lower for term in any_terms)
+        ):
+            names = rule.get("skills", [])
+            missing = [name for name in names if name not in by_name]
+            if missing:
+                raise AgentctlError(f"route names unavailable skills: {', '.join(missing)}")
+            return [by_name[name] for name in names], sorted(rule.get("profiles", []))
+    return None
+
+
+def route(query: str, manifest: dict[str, Any], available: list[dict[str, str]]) -> tuple[list[dict[str, str]], list[str]]:
+    explicit = explicit_route(query, manifest, available)
+    if explicit is not None:
+        return explicit
+    selected = matching_skills(query, available)
+    return selected, matching_profiles(query, selected, manifest)
+
+
+def validate_profile(name: str, profile: Any) -> dict[str, Any]:
+    if not isinstance(profile, dict):
+        raise AgentctlError(f"profile {name!r} must be an object")
+    for key in ("triggers", "skills", "checks", "provision"):
+        if key in profile and not isinstance(profile[key], list):
+            raise AgentctlError(f"profile {name!r} field {key!r} must be a list")
+    for section in ("checks", "provision"):
+        for index, entry in enumerate(profile.get(section, [])):
+            if not isinstance(entry, dict) or not isinstance(entry.get("argv"), list):
+                raise AgentctlError(f"profile {name!r} {section}[{index}] needs an argv list")
+            if not entry["argv"] or not all(isinstance(arg, str) for arg in entry["argv"]):
+                raise AgentctlError(f"profile {name!r} {section}[{index}] has invalid argv")
+    return profile
+
+
+def matching_profiles(query: str, selected_skills: Iterable[dict[str, str]], manifest: dict[str, Any]) -> list[str]:
+    query_lower = query.lower()
+    selected_names = {item["name"] for item in selected_skills}
+    matched: list[str] = []
+    for name, raw_profile in manifest["profiles"].items():
+        profile = validate_profile(name, raw_profile)
+        trigger_match = any(str(trigger).lower() in query_lower for trigger in profile.get("triggers", []))
+        patterns = [str(pattern) for pattern in profile.get("skills", [])]
+        skill_match = any(
+            candidate == pattern or (pattern.endswith("*") and candidate.startswith(pattern[:-1]))
+            for candidate in selected_names
+            for pattern in patterns
+        )
+        if trigger_match or skill_match:
+            matched.append(name)
+    return sorted(matched)
+
+
+def command_display(argv: list[str]) -> str:
+    return " ".join(json.dumps(arg) if re.search(r"\s", arg) else arg for arg in argv)
+
+
+def execute_commands(root: Path, commands: list[dict[str, Any]], dry_run: bool) -> bool:
+    for entry in commands:
+        argv = entry["argv"]
+        if dry_run:
+            print(f"would run: {command_display(argv)}")
+            continue
+        result = subprocess.run(argv, cwd=root, check=False)
+        if result.returncode:
+            raise AgentctlError(f"command failed ({result.returncode}): {command_display(argv)}")
+    return True
+
+
+def state_dir(root: Path) -> Path:
+    value = run_git(["rev-parse", "--git-path", "agentctl/profiles"], root).stdout.strip()
+    path = Path(value)
+    return path if path.is_absolute() else root / path
+
+
+def profile_digest(profile: dict[str, Any]) -> str:
+    encoded = json.dumps(profile, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def provision_profile(root: Path, name: str, profile: dict[str, Any], dry_run: bool) -> str:
+    digest = profile_digest(profile)
+    marker = state_dir(root) / f"{name}.json"
+    if marker.is_file():
+        try:
+            if read_json(marker).get("digest") == digest:
+                return "ready"
+        except AgentctlError:
+            pass
+    commands = profile.get("provision", [])
+    execute_commands(root, commands, dry_run)
+    if not dry_run:
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        marker.write_text(json.dumps({"digest": digest}, indent=2) + "\n", encoding="utf-8")
+    return "would-provision" if dry_run else "provisioned"
+
+
+def check_profile(root: Path, name: str, profile: dict[str, Any]) -> list[str]:
+    failures: list[str] = []
+    for entry in profile.get("checks", []):
+        result = subprocess.run(entry["argv"], cwd=root, text=True, capture_output=True, check=False)
+        if result.returncode:
+            failures.append(f"{name}: {command_display(entry['argv'])}")
+    return failures
+
+
+def output(value: Any, as_json: bool) -> None:
+    if as_json:
+        print(json.dumps(value, indent=2, sort_keys=True))
+
+
+def cmd_skills(args: argparse.Namespace, root: Path) -> int:
+    available = skills(root)
+    if args.json:
+        output(available, True)
+    else:
+        for skill in available:
+            suffix = f" - {skill['description']}" if skill["description"] else ""
+            print(f"{skill['name']}\t{skill['path']}{suffix}")
+    return 0
+
+
+def cmd_profiles(args: argparse.Namespace, root: Path) -> int:
+    _, manifest = load_manifest(root, args.manifest)
+    values = []
+    for name, raw_profile in sorted(manifest["profiles"].items()):
+        profile = validate_profile(name, raw_profile)
+        values.append({"name": name, "description": profile.get("description", "")})
+    if args.json:
+        output(values, True)
+    else:
+        for value in values:
+            print(f"{value['name']}\t{value['description']}")
+    return 0
+
+
+def cmd_route(args: argparse.Namespace, root: Path) -> int:
+    _, manifest = load_manifest(root, args.manifest)
+    available = skills(root)
+    selected, profile_names = route(args.query, manifest, available)
+    statuses: dict[str, str] = {}
+    if args.provision:
+        for name in profile_names:
+            profile = validate_profile(name, manifest["profiles"][name])
+            statuses[name] = provision_profile(root, name, profile, args.dry_run)
+    result = {"skills": selected, "profiles": profile_names, "provisioning": statuses}
+    if args.json:
+        output(result, True)
+    else:
+        print("skills: " + (", ".join(item["name"] for item in selected) or "none"))
+        print("profiles: " + (", ".join(profile_names) or "none"))
+        for name, status in statuses.items():
+            print(f"{name}: {status}")
+    return 0
+
+
+def harness_target(root: Path, manifest: dict[str, Any], harness: str, requested: str | None) -> Path:
+    if requested:
+        return root / relative_path(requested, "skill target")
+    harnesses = manifest.get("harnesses", {})
+    if not isinstance(harnesses, dict) or harness not in harnesses:
+        raise AgentctlError(
+            f"unknown harness {harness!r}; declare it in the manifest or pass --target"
+        )
+    entry = harnesses[harness]
+    if not isinstance(entry, dict) or not isinstance(entry.get("skills_dir"), str):
+        raise AgentctlError(f"harness {harness!r} needs a skills_dir")
+    return root / relative_path(entry["skills_dir"], f"harness {harness!r} skills_dir")
+
+
+def install_skills(root: Path, target: Path, selected: list[dict[str, str]], dry_run: bool) -> list[str]:
+    import shutil
+
+    installed: list[str] = []
+    for skill in selected:
+        source = (root / skill["path"]).parent
+        destination = target / skill["name"]
+        if dry_run:
+            print(f"would install skill: {skill['path']} -> {destination.relative_to(root)}")
+            installed.append(skill["name"])
+            continue
+        if destination.exists():
+            def tree_digest(path: Path) -> bytes:
+                digest = hashlib.sha256()
+                for entry in sorted(item for item in path.rglob("*") if item.is_file()):
+                    digest.update(entry.relative_to(path).as_posix().encode())
+                    digest.update(b"\0")
+                    digest.update(entry.read_bytes())
+                return digest.digest()
+            same = destination.is_dir() and tree_digest(destination) == tree_digest(source)
+            if same:
+                installed.append(skill["name"])
+                continue
+            shutil.rmtree(destination)
+        target.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(source, destination)
+        installed.append(skill["name"])
+    return installed
+
+
+def cmd_activate(args: argparse.Namespace, root: Path) -> int:
+    _, manifest = load_manifest(root, args.manifest)
+    selected, profile_names = route(args.query, manifest, skills(root))
+    target = harness_target(root, manifest, args.harness, args.target)
+    if (
+        not args.target
+        and target.parent.exists()
+        and os.statvfs(target.parent).f_flag & getattr(os, "ST_RDONLY", 1)
+    ):
+        target = root / ".agent-runtime" / "harnesses" / args.harness / "skills"
+        if not args.json:
+            print(f"read-only harness directory; using {target.relative_to(root)}")
+    installed = install_skills(root, target, selected, args.dry_run)
+    statuses: dict[str, str] = {}
+    if args.provision:
+        for name in profile_names:
+            profile = validate_profile(name, manifest["profiles"][name])
+            statuses[name] = provision_profile(root, name, profile, args.dry_run)
+    result = {
+        "harness": args.harness,
+        "target": target.relative_to(root).as_posix(),
+        "skills": installed,
+        "profiles": profile_names,
+        "provisioning": statuses,
+    }
+    if args.json:
+        output(result, True)
+    elif not args.dry_run:
+        print("installed skills: " + (", ".join(installed) or "none"))
+        print(f"target: {result['target']}")
+        for name, status in statuses.items():
+            print(f"{name}: {status}")
+    return 0
+
+
+def cmd_provision(args: argparse.Namespace, root: Path) -> int:
+    _, manifest = load_manifest(root, args.manifest)
+    try:
+        profile = validate_profile(args.profile, manifest["profiles"][args.profile])
+    except KeyError as exc:
+        raise AgentctlError(f"unknown dependency profile: {args.profile}") from exc
+    print(f"{args.profile}: {provision_profile(root, args.profile, profile, args.dry_run)}")
+    return 0
+
+
+def cmd_hooks(args: argparse.Namespace, root: Path) -> int:
+    if args.hooks_command != "install":
+        raise AgentctlError("a hooks command is required")
+    hooks = root / HOOKS_DIR
+    if not hooks.is_dir():
+        raise AgentctlError(f"missing versioned hooks directory: {HOOKS_DIR}")
+    if args.dry_run:
+        print(f"would set core.hooksPath to {HOOKS_DIR.as_posix()}")
+    else:
+        run_git(["config", "--local", "core.hooksPath", HOOKS_DIR.as_posix()], root)
+        print(f"core.hooksPath={HOOKS_DIR.as_posix()}")
+    return 0
+
+
+def cmd_check(args: argparse.Namespace, root: Path) -> int:
+    path, manifest = load_manifest(root, args.manifest)
+    failures: list[str] = []
+    selected_profiles = [args.profile] if args.profile else []
+    for name, raw_profile in manifest["profiles"].items():
+        if name not in selected_profiles:
+            continue
+        profile = validate_profile(name, raw_profile)
+        failures.extend(check_profile(root, name, profile))
+    configured = run_git(["config", "--local", "--get", "core.hooksPath"], root, check=False)
+    hooks_value = configured.stdout.strip()
+    if (root / HOOKS_DIR).is_dir() and hooks_value != HOOKS_DIR.as_posix():
+        failures.append(f"hooks: expected core.hooksPath={HOOKS_DIR.as_posix()}")
+    result = {
+        "root": ".",
+        "manifest": path.relative_to(root).as_posix(),
+        "skills": len(skills(root)),
+        "failures": failures,
+    }
+    if args.json:
+        output(result, True)
+    elif failures:
+        for failure in failures:
+            print(f"FAIL: {failure}")
+    else:
+        print("agent environment checks passed")
+    return 1 if failures else 0
+
+
+def parser() -> argparse.ArgumentParser:
+    common = argparse.ArgumentParser(add_help=False)
+    common.add_argument("--manifest", default=DEFAULT_MANIFEST.as_posix())
+    main = argparse.ArgumentParser(description=__doc__)
+    commands = main.add_subparsers(dest="command", required=True)
+    commands.add_parser("root", help="print the dynamically discovered repository root")
+    skill_parser = commands.add_parser("skills", help="list canonical repository skills")
+    skill_parser.add_argument("--json", action="store_true")
+    profile_parser = commands.add_parser("profiles", parents=[common], help="list dependency profiles")
+    profile_parser.add_argument("--json", action="store_true")
+    route_parser = commands.add_parser("route", parents=[common], help="inspect the skills and dependency profiles for a query")
+    route_parser.add_argument("query")
+    route_parser.add_argument("--json", action="store_true")
+    route_parser.add_argument("--dry-run", action="store_true")
+    route_parser.add_argument("--provision", action="store_true", help="provision matched dependency profiles")
+    activate_parser = commands.add_parser("activate", parents=[common], help="install only the skills and dependencies selected for a harness query")
+    activate_parser.add_argument("harness")
+    activate_parser.add_argument("query")
+    activate_parser.add_argument("--target", help="override the harness skill directory with a repository-relative path")
+    activate_parser.add_argument("--json", action="store_true")
+    activate_parser.add_argument("--dry-run", action="store_true")
+    activate_parser.add_argument("--provision", action="store_true", help="provision matched dependencies after installing skills")
+    provision_parser = commands.add_parser("provision", parents=[common], help="provision one named profile")
+    provision_parser.add_argument("profile")
+    provision_parser.add_argument("--dry-run", action="store_true")
+    hook_parser = commands.add_parser("hooks", help="configure versioned repository hooks")
+    hook_parser.add_argument("hooks_command", choices=["install"])
+    hook_parser.add_argument("--dry-run", action="store_true")
+    check_parser = commands.add_parser("check", parents=[common], help="check configuration and profile dependencies")
+    check_parser.add_argument("--json", action="store_true")
+    check_parser.add_argument("--profile", choices=["manuscript", "research", "verified-decks", "moose", "publication", "vscode"], help="also check one lazily provisioned dependency profile")
+    return main
+
+
+def main() -> int:
+    args = parser().parse_args()
+    try:
+        root = discover_root()
+        if args.command == "root":
+            print(root)
+            return 0
+        handlers = {
+            "skills": cmd_skills,
+            "profiles": cmd_profiles,
+            "route": cmd_route,
+            "activate": cmd_activate,
+            "provision": cmd_provision,
+            "hooks": cmd_hooks,
+            "check": cmd_check,
+        }
+        return handlers[args.command](args, root)
+    except (AgentctlError, OSError) as exc:
+        print(f"agentctl: {exc}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

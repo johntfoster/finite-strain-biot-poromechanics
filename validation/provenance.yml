@@ -1,0 +1,47 @@
+{
+  "commands": {
+    "build": "make build",
+    "figures": "make figures",
+    "mandel": "make mandel",
+    "paper": "make paper",
+    "reproduce": "make reproduce",
+    "tests": "make test",
+    "validate": "make validate"
+  },
+  "environment": {
+    "moose_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+    "moose_dev": "2026.02.20",
+    "moose_libmesh": "2026.02.18_f8a1758",
+    "moose_tools": "2026.02.16",
+    "pandas": "3.0.1",
+    "petsc": "3.24.4"
+  },
+  "schema_version": 1,
+  "sha256": {
+    "figures/mandel_biot_contours.pgf": "13150fdae7a87bd338b549b3509ba36781a1566d330b0ea46c5f1381a4bd0a92",
+    "figures/mandel_density_contours.pgf": "78278e8f884dd76847ea05f1f5ac570ab0225f4609c1d216bdc51de715a7e1d7",
+    "figures/mandel_displacements.pgf": "b4e75977d3712eb19b1d59a3e0f353a0801b8a1496715e2eb8733783f890a4f4",
+    "figures/mandel_finite_deformation.pgf": "29f1d51542baea3b4d435ac7ec929829801b215f261eee79d2b3c7568b261b87",
+    "figures/mandel_pressure_profiles.pgf": "b6d10751a86870c8c2ffe0aa635e618a426312cd0b57cd2ae653bf94f0b16571",
+    "moose/sync_manifest.json": "b0de1a23a720884a5088958201cc1bda3342f519f5777b123a36c0c9948d9b85",
+    "moose/sync_state.json": "28a31cc308bfd474f3caa7be3550ab6a50eeae3d64f8a509b3942be76086398b",
+    "paper/defs.tex": "b86e32ee847f8dd655925afe4a2737207edd51ceb8074dd1ee99cf53a9ff3284",
+    "paper/main.tex": "e54fde0735c5eca9a3f375e7ae76acda711241f2aa479760c6aa0d44efbb4db3",
+    "paper/sections/conclusions.tex": "1e308a27ba1d01ec212cfba7240e1d6c8c3333d478bb5602b600fc31a4b57230",
+    "paper/sections/finite_deformation_biot.tex": "5493359402a1844a0d6c9af0061ba5aac0400870cefed24bf1e64421c30d5836",
+    "paper/sections/implicit_ad_implementation.tex": "da4ac2bff99cbcbeab4a28c274edce8fd86cf86f7677a5573c87c5b89424f98d",
+    "paper/sections/introduction.tex": "75f9873627b676311f3226cc5afba917c7dd5a03d186e64703a3fa9287f229e2",
+    "paper/sections/mandel_verification.tex": "e7804ddc5877b47bde7ee60d289f85f7c31214e17d6f25fc694c66cb490dd383",
+    "scripts/curate_mandel_profiles.py": "d6374cd3c70dc678ea455547b54bc46a2862f669495e612406888441fae94e90",
+    "scripts/extract_mandel_density_contours.py": "17e2c7fe705310ebfb12ae573367f7f792fc8de04fa4e0f46f45f09ffb6cd3ff",
+    "scripts/plot_mandel_extended_results.py": "5ae9fa0a7ab5428ff4639e142bce31cc444c3e6d5db6f5627ddf4b0360af2b4b",
+    "scripts/update_validation_provenance.py": "ebc5bd68ad9e7689213639747e63557727566cda86147a02cc432388ce8b65c9",
+    "scripts/validate_repository.py": "0afaefd23539d24a5b63ad1647a33407234762cf721d46ca996fca84e32d915f",
+    "validation/mandel_biot_contours.csv": "b634d1a578cfeceead0fdd9eef93f33bfa8d4c100895830bcdd796d1e4439fc0",
+    "validation/mandel_density_contours.csv": "040dba2da62a3acc8178a6805c659cb8d30b9c4b9ec4ec206608b3a412469494",
+    "validation/mandel_displacement_profiles.csv": "6d427c7f261460c1ccff98ef2dfb9774a005487ea00b817e9fabda073cc7ebf4",
+    "validation/mandel_implicit_biot.yml": "315d3b93866cd8a8f2973d8fd65e3962898f519576a8da9393c81e5ff254ee14",
+    "validation/mandel_large_deformation.csv": "190e04385e7ad9ddcce36ccd48f8b0d66e14be3f1a9dbf2a28a0f6f1a7e4ecef",
+    "validation/mandel_pressure_profiles.csv": "7ddc7f8cc3c4f47ae3ff0f092fd08e8f897854126a8fdeff2d09ddaabf9a0dc5"
+  }
+}

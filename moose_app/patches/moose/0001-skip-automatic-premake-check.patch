@@ -1,0 +1,13 @@
+diff --git a/framework/moose.mk b/framework/moose.mk
+index ca916205..29c8bd2b 100644
+--- a/framework/moose.mk
++++ b/framework/moose.mk
+@@ -556,7 +556,7 @@ endif
+ # the rule can be appended by applications that require prebuild steps.
+ prebuild = prebuild
+ prebuild:: | $(moose_config)
+-	@-python3 $(FRAMEWORK_DIR)/../scripts/premake.py
++	@echo "Skipping premake check"
+ 
+ wasp_submodule_status $(moose_revision_header) $(moose_LIB): | prebuild
+ moose: wasp_submodule_status $(moose_revision_header) $(moose_LIB) $(pycapabilities_LIB)

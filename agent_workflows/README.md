@@ -1,18 +1,14 @@
-# Agent Workflows
+# Agent workflows
 
-This directory carries the agent-facing workflow used by the parent
-`multicomponent_reactive_flow` repository. These files route manuscript,
-implementation, validation, and simulator-setup work and keep paper claims tied
-to validated MOOSE interfaces.
+These files route work on the nonlinear-Biot manuscript, its minimal MOOSE
+implementation, and the Mandel verification package.
 
-- `decision_trees/request_router.md` -- first-pass routing.
-- `decision_trees/manuscript_edit.md` -- scoped manuscript edits.
-- `decision_trees/equation_number_lookup.md` -- rendered equation lookup.
-- `checklists/pre_edit_scope.md` -- pre-edit scope and traceability.
-- `checklists/citation_verification.md` -- source and BibTeX verification.
-- `checklists/post_edit_validation.md` -- post-edit validation.
-- `schemas/problem_spec.schema.json` -- structured simulation specification.
-- `runbooks/moose_failure_triage.md` -- layered MOOSE diagnosis.
+- `decision_trees/request_router.md` selects the immediate workflow.
+- `decision_trees/manuscript_edit.md` governs scoped manuscript edits.
+- `decision_trees/equation_number_lookup.md` resolves rendered equations.
+- `checklists/pre_edit_scope.md` and `post_edit_validation.md` protect scope and
+  traceability.
+- `checklists/citation_verification.md` governs source verification.
+- `runbooks/moose_failure_triage.md` diagnoses the solid-water Q2/Q1 solve.
 
-Do not put transient run output here. Durable workflow assets must point to the
-parent equations, the exact upstream MOOSE objects, and quantitative tests.
+Transient output does not belong in this directory.

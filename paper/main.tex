@@ -2,53 +2,77 @@
 
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,bm}
+\usepackage{array}
+\usepackage{authblk}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{lmodern}
 \usepackage{microtype}
+\usepackage{placeins}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,allcolors=blue]{hyperref}
 \usepackage[nameinlink,noabbrev]{cleveref}
 \input{paper/defs.tex}
 \graphicspath{{figures/}{../figures/}}
 
-\title{Implicit automatic differentiation of the nonlinear Biot coefficient\\
-in multicomponent finite-deformation poromechanics}
-\author{John T. Foster and collaborators}
-\date{Draft: \today}
+\title{A fixed-pressure Biot transform with spatial phase-mass balances\\
+for finite-deformation poromechanics}
+\author[1,2,3]{John T. Foster\thanks{Electronic address: \href{mailto:john.foster@utexas.edu}{john.foster@utexas.edu}}}
+\affil[1]{The Hildebrand Department of Petroleum \& Geosystems Engineering, The University of Texas at Austin, Austin, TX 78712, USA}
+\affil[2]{Department of Aerospace Engineering \& Engineering Mechanics, The University of Texas at Austin, Austin, TX 78712, USA}
+\affil[3]{The Oden Institute for Computational Engineering \& Science, The University of Texas at Austin, Austin, TX 78712, USA}
+\date{}
+\hypersetup{
+  pdftitle={A fixed-pressure Biot transform with spatial phase-mass balances for finite-deformation poromechanics},
+  pdfauthor={John T. Foster}
+}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-We derive and implement the nonlinear Biot coefficient appearing in the
-solid-reference specialization of a multicomponent, multiphase porous-medium
-theory. The coefficient is a constrained constitutive tangent. The intrinsic
-skeleton specific volume is formed from the registered solid-phase/component
-material conservation statements, and its derivative with respect to the
-skeleton Jacobian is evaluated at fixed equivalent pore pressure.
-Local phase, volume, and equation-of-state constraints are differentiated
-implicitly at each quadrature point.  The resulting dense tangent solve is
-carried out with automatic-differentiation scalars, allowing MOOSE to apply a
-second, outer chain rule through the state-dependent coefficient in the global
-Newton system. The implementation recovers the classical \(B=1-K/K_s\) limit
-and passes a coupled PETSc Jacobian test. We then calibrate a three-parameter
-crack-closure compliance law to the drained tangent moduli released by Lawal
-and Kim for HT14, SP14, and SP30 dunite specimens. Because their plotted
-coefficient is computed from those same drained moduli and the unjacketed
-modulus, the comparison is a calibration and constitutive-path verification,
-with coefficient root-mean-square errors between \(0.0053\) and \(0.0087\).
-The resulting workflow defines the numerical requirements for a
-pressure-controlled boundary-value solve and an independent or holdout
-validation study.
+The finite-deformation Biot coefficient measures the mineral-distension
+response to skeleton deformation at fixed pore pressure.  We
+separate this local constitutive derivative from phase mass conservation.
+Spatial solid mass balance evolves the bulk solid partial density, while a
+local constitutive update supplies the intrinsic solid state.  The solid volume
+fraction then follows algebraically from the partial and intrinsic densities.
+The nonlinear Biot coefficient is obtained by
+implicit differentiation of the complete local constitutive residual system
+at fixed intrinsic phase pressure and referential solid mass \(J\rho_s\).  The
+spatial water balance is closed by a
+barotropic pressure--density equation of state.  The Biot transform then maps
+the constitutive double-prime stress to the single-prime material stress and
+the total mixture stress while preserving their distinct energetic meanings.
+
+The solid-reference finite-element formulation uses quadratic displacement,
+continuous linear water pressure, and quadratic solid partial density.
+Automatic differentiation propagates the local constitutive residual
+derivatives, implicit tangent, Biot coefficient, derived volume fraction,
+and both phase-storage rates through the monolithic residual.  The elastic
+specialization supplies closed-form and centered-difference checks of the
+fixed-pressure constitutive tangent, and a PETSc
+finite-difference comparison checks the assembled Jacobian.
+A displacement-driven, small-load Mandel benchmark compares pressure and
+lateral displacement with the Cheng--Detournay plane-strain series.  The
+maximum plotted-profile pressure difference is \(1.956\times10^{-2}\) of the
+analytical pressure scale, and the maximum horizontal-displacement-profile
+difference is \(3.022\times10^{-4}\) of its scale.  A synthetic
+finite-deformation continuation to \(10\%\) platen compression decreases the
+spatially averaged coefficient from \(0.600\) to \(0.51417\).  These tests
+verify the balance-law and constitutive coupling for the stated single-solid,
+single-water elastic model; they do not constitute independent validation of
+the mineral equation of state.
 \end{abstract}
 
+\noindent\textbf{Keywords:} finite-deformation poromechanics; Biot coefficient;
+automatic differentiation; spatial mass balance; Mandel problem
+
 \input{paper/sections/introduction.tex}
-\input{paper/sections/formulation.tex}
-\input{paper/sections/implicit_ad.tex}
-\input{paper/sections/moose_implementation.tex}
-\input{paper/sections/pressure_experiment.tex}
-\input{paper/sections/results.tex}
-\input{paper/sections/discussion.tex}
+\input{paper/sections/finite_deformation_biot.tex}
+\input{paper/sections/implicit_ad_implementation.tex}
+\input{paper/sections/mandel_verification.tex}
 \input{paper/sections/conclusions.tex}
 
 \bibliographystyle{plainnat}
