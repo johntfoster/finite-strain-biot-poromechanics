@@ -9,7 +9,7 @@
 
 ## Manuscript
 
-- Read local and parent `main.tex` and `defs.tex`.
+- Read `paper/main.tex` and `paper/defs.tex`.
 - Resolve rendered equation numbers through current aux files.
 - Inspect labels, references, displayed equations, and locked regions.
 - Map notation changes through derivatives, state sets, restrictions, weak
@@ -17,11 +17,11 @@
 
 ## Implementation
 
-- Map each object to a parent-manuscript equation or reduction.
+- Run `tools/sync_biot_moose.py check` and map each object to a manuscript
+  equation or solid-water reduction.
 - Classify it as kernel, material, user object, action, BC, test, deck,
   postprocessor, or documentation.
-- Record added closures, linearizations, stabilization, variables, and weak-form
-  assumptions.
+- Record added closures, linearizations, variables, and weak-form assumptions.
 
 ## Validation
 

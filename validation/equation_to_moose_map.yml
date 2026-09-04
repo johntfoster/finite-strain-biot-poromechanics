@@ -1,79 +1,49 @@
-upstream_repository: /home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow
-paper_root: paper/main.tex
-entries:
-  - id: solid_component_material_storage
-    upstream_equations:
-      - eq:augmented_component_material_measure
-      - eq:MC_solid_component_material_mass
-      - eq:MC_solid_phase_material_mass
-    paper_equations:
-      - eq:summed-specific-volume
-      - eq:intrinsic-density
-    moose_objects:
-      - ADConstrainedSkeletonBiotMaterial
-    verification:
-      - moose_app/test/tests/nonlinear_biot_coefficient
-    notes:
-      - Uses the registered solid-phase/component sums directly.
-      - Intrinsic skeleton density is the reciprocal of intrinsic skeleton specific volume.
-  - id: fixed_pressure_legendre_tangent
-    upstream_equations:
-      - eq:MC_phase_pressure_specific_volume
-      - eq:MC_phase_legendre_transform
-      - eq:MC_phase_specific_volume_deformation_chain_rule
-      - eq:MC_phase_biot_coefficient
-    paper_equations:
-      - eq:nonlinear-biot
-      - eq:local-constraints
-      - eq:implicit-tangent
-    moose_objects:
-      - ADConstrainedSkeletonBiotMaterial
-    verification:
-      - analytic fixed-equivalent-pressure tangent
-      - centered finite-difference tangent
-      - intrinsic density/specific volume inverse consistency
-  - id: nonlinear_biot_stress
-    upstream_equations:
-      - eq:MC_phase_pk_biot_split
-      - eq:MC_phase_biot_split
-      - eq:solid_reference_effective_piola_stress
-      - eq:biot_limit_reference_momentum
-    paper_equations:
-      - eq:reference-biot-stress
-    moose_objects:
-      - ADReferenceSolidStressMaterial
-      - ADSolidReferenceKinematics
-      - ADEGReconstructedScalarMaterial
-    verification:
-      - constrained production PETSc Jacobian test
-      - Q2 displacement and P1+P0 EG equivalent-pressure tests
-  - id: classical_biot_limit
-    upstream_equations:
-      - eq:biot_limit_porosity_tangent_storage
-      - eq:linear_biot_limit
-      - eq:linear_biot_momentum
-      - eq:linear_biot_fluid_content
-    paper_equations:
-      - eq:classical-limit
-    verification:
-      - multi-amplitude 1D/2D/3D convergence to B=1-K/K_s
-      - B to 1 Terzaghi limit
-      - B to 0 equal-modulus limit
-      - storage and undrained identities
-  - id: lawal_kim_calibrated_path
-    upstream_equations:
-      - eq:MC_phase_biot_coefficient
-    paper_equations:
-      - eq:lawal-kim-alpha
-      - eq:crack-compliance
-      - eq:hydrostatic-constraint
-      - eq:grain-volume-constraint
-      - eq:pressure-path-tangent
-      - eq:finite-pressure-biot
-    moose_objects:
-      - ADConstrainedSkeletonBiotMaterial
-    evidence_class: calibration
-    notes:
-      - The drained-modulus data determine the fitted compliance parameters.
-      - The workbook Biot coefficient is calculated from the same drained modulus and unjacketed modulus.
-      - The current solve=false path verifies constitutive evaluation and implicit differentiation, not a pressure-controlled boundary-value solve.
+schema_version: 1
+scope: single-solid single-water finite-deformation Biot coefficient
+
+mappings:
+  - id: solid_kinematics
+    paper_equations: [eq:skeleton-kinematics]
+    moose_objects: [ADSolidReferenceKinematics]
+    tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_verification]
+
+  - id: solid_spatial_mass_balance
+    paper_equations: [eq:spatial-solid-mass-balance, eq:reference-solid-mass-balance, eq:solid-mass-weak-residual]
+    moose_objects: [ADBinarySolidSpatialMassMaterial, ADReferenceMaterialStorageRateTerm]
+    variables: [Q2 solid partial density stored in reference-normalized form]
+    tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_bdf2, mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
+
+  - id: local_mineral_state
+    paper_equations: [eq:general-local-constitutive-system, eq:local-material-mass-constraint, eq:elastic-local-constraints, eq:elastic-mineral-density]
+    moose_objects: [ADLocalElasticMineralBiotMaterial]
+    outputs: [elastic intrinsic solid density stored in reference-normalized form, solid volume fraction, material rates, constraint residuals and partial derivatives, closed-form Biot oracle]
+    tests: [mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
+
+  - id: fixed_pressure_biot_tangent
+    paper_equations: [eq:finite-deformation-biot-coefficient, eq:implicit-local-state-tangent, eq:constrained-mineral-jacobian-tangent, eq:general-implicit-biot-coefficient, eq:elastic-local-residual-jacobian, eq:elastic-finite-deformation-biot-coefficient]
+    moose_objects: [ADConstrainedSkeletonBiotMaterial, ADLocalElasticMineralBiotMaterial]
+    production_output: ADConstrainedSkeletonBiotMaterial supplies solid_biot_coefficient from the dense AD-valued implicit tangent
+    verification_oracle: ADLocalElasticMineralBiotMaterial supplies elastic_biot_closed_form under a separate property name
+    tests: [mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
+
+  - id: stress_and_momentum
+    paper_equations: [eq:total-first-piola-stress, eq:momentum-weak-residual]
+    moose_objects: [ADVolumetricBarotropicSkeletonStressMaterial, ADReferenceSolidStressMaterial, ADReferenceSolidMomentum]
+    tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_jacobian]
+
+  - id: water_mass_balance
+    paper_equations: [eq:reference-water-mass-balance, eq:barotropic-water-density, eq:water-pressure-weak-residual]
+    moose_objects: [ADBiotPressureStorageMaterial, ADReferenceMaterialStorageRateTerm]
+    time_discretization: AD time kernel using pressure, solid-volume-fraction, and displacement-gradient rates supplied by the selected MOOSE time integrator
+    tests: [mandel_water_q2_q1_bdf2, mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
+
+  - id: water_darcy_flux
+    paper_equations: [eq:reference-darcy-flux, eq:water-pressure-weak-residual]
+    moose_objects: [ADBiotDarcyReferenceFluxMaterial, ADReferenceComponentFluxTerm]
+    tests: [mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
+
+  - id: mandel_discretization
+    paper_equations: [eq:finite-element-spaces, eq:mandel-boundary-conditions]
+    variables: [Q2 displacement, continuous Q1 water pressure, Q2 solid partial density]
+    pressure_enrichment: false
+    tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]

@@ -1,158 +1,185 @@
 # AGENTS.md
 
-## Upstream foundation
+## Portable agent environment
 
-This is the companion derivation, implementation, and validation repository for
-the nonlinear Biot-coefficient specialization of the multicomponent reactive
-flow theory. Its authoritative parent repository is:
+- Treat this file as the sole universal entry point for agent work.
+- Resolve every operational path from the repository root. Never record a user
+  home directory, machine-specific checkout, or required sibling-repository
+  path in a tracked file.
+- At the first relevant query, run `tools/agentctl route "<query>"` and use the
+  smallest applicable skill and dependency profile.
+- Keep generated environments, caches, builds, and run output below ignored
+  runtime directories. Commit only source, instructions, tests, reference data,
+  and intentional publication artifacts.
 
-`/home/jfoster/projects/research/reactive_transport/multicomponent_reactive_flow`
+## Agent skill registration
 
-Use the parent repository's manuscript, notation, MOOSE implementation,
-validation practice, and agent workflow as the foundation for all work here.
-This repository must not use React/OpenClaw identity files, personal-agent
-bootstrap files, or a separate theory invented for this paper.
+- The canonical skills live in `agent_environment/skills/<name>/SKILL.md` and
+  are the single source of truth. Each harness discovery directory holds
+  one-way relative symlinks back to that source, so registered skills never
+  drift from the canonical files.
+- `agent_environment/dependencies.json` maps every harness to its discovery
+  directory: copilot -> `.github/skills`, codex -> `.codex/skills`, claude ->
+  `.claude/skills`, opencode -> `.opencode/skills`.
+- Register every canonical skill for a harness before relying on it there, and
+  re-register when switching harnesses (for example between Copilot and Codex)
+  or after a fresh checkout, because symlinks are not preserved by clone or
+  archive. From the repository root:
 
-## Project roadmap
+  ```sh
+  # DIR is the harness discovery directory, for example:
+  #   .github/skills  (Copilot)   .codex/skills  (Codex)
+  DIR=.github/skills
+  mkdir -p "$DIR"
+  for skill in agent_environment/skills/*/; do
+    name="$(basename "$skill")"
+    ln -sfn "../../agent_environment/skills/$name" "$DIR/$name"
+  done
+  ```
+
+- `ln -sfn` is idempotent and keeps the link one-way to the canonical source.
+  Do not copy skill content into a discovery directory and never make a harness
+  directory canonical.
+- After first registration, reload the harness (for Copilot, reload the VS Code
+  window) so discovery observes the links.
+
+## Project scope
 
 - Read `VISION.md` at the start of repository work.
-- Treat the three tracks as coupled work: derivation manuscript, MOOSE
-  implementation and quantitative validation, and agent-assisted simulation
-  workflow.
-- The active repository layout is:
-  - `paper/main.tex`, `paper/defs.tex`, `paper/sections/`, `all.bib` -- paper.
-  - `moose/` -- composable input fragments, experiment decks, and the manifest
-    of authoritative upstream MOOSE source used by the paper.
-  - `validation/` -- acceptance criteria, equation-to-code traceability,
-    reference data, and quantitative results.
-  - `agent_workflows/` -- routing, edit/validation checklists, schemas, and
-    MOOSE failure diagnosis inherited from the parent repository.
-  - `data/` and `references/` -- immutable sources, curated data, provenance,
-    and reading notes.
-- Use `agent_workflows/decision_trees/request_router.md` before work that is not
-  purely local. Use the narrower checklist, decision tree, schema, or runbook
-  whenever its trigger matches the request.
-- When a task touches more than one track, identify the immediate owner and the
-  downstream track requiring follow-up.
+- This repository owns the nonlinear-Biot manuscript, its figures, references,
+  validation records, manuscript tools, and agent skills.
+- The shared nonlinear-Biot MOOSE files are synchronized with the authoritative
+  general simulator repository. The manuscript and paper-specific workflow are
+  not downstream mirrors.
+- Classify work as manuscript, MOOSE implementation, validation, publication,
+  or cross-track work. State the immediate owner when a request crosses tracks.
 
 ## Manuscript source of truth
 
-- Treat `paper/main.tex` as the canonical root of this paper. Follow its input,
-  bibliography, macro, and package graph; section files are not standalone.
-- Treat the parent `main.tex`, `defs.tex`, and included sections as the source of
-  truth for the general multicomponent theory and accepted notation.
-- Read `paper/main.tex`, `paper/defs.tex`, the parent `main.tex`, and the parent
-  `defs.tex` before interpreting or changing derivations.
-- Prefer exact source evidence over memory, generated PDFs, notes, or plotted
-  results. Cite controlling source locations as `file:line` during audits.
-- Do not introduce helper symbols when the primitive variables from the parent
-  manuscript state the result clearly. In particular, use the summed Eq. (32)
-  variables directly; do not introduce `A` or `M_a^0` shorthand.
-- Number and descriptively label every displayed equation or identity added to
-  the manuscript.
-- Do not edit text between `% AGENT-LOCK-BEGIN` and `% AGENT-LOCK-END` unless
-  John explicitly names that material as the target.
+- Treat `paper/main.tex` as the canonical root and `paper/defs.tex` as its macro
+  file. Interpret `paper/sections/*.tex` only through that root.
+- Read `paper/main.tex` and `paper/defs.tex` before interpreting equations,
+  notation, labels, citations, or section-local prose.
+- Read `author_style_profile_2026-07-27.md` before editing prose, captions,
+  tables, documentation, or workflow instructions.
+- Prefer exact source evidence over memory, PDFs, generated files, or notes.
+  Cite manuscript findings as `file:line`.
+- If the user cites a rendered equation number, resolve it through
+  `paper/build/main.aux`; rebuild first when the auxiliary data are stale.
+- Verify external-paper equation and citation claims against the source PDF.
+  Store PDFs in `references/pdfs/`, notes in `references/notes/`, and generated
+  retrieval state in `.agent-runtime/research/`.
 
-## Operating checklist
+## Manuscript editing rules
 
-- At the start of every task, read `AGENTS.md` and `VISION.md`, classify the
-  task as manuscript theory, MOOSE implementation, validation, agent workflow,
-  or cross-track planning, and check `git status --short`.
-- Before any repository edit, read `author_style_profile_2026-07-27.md`.
-- If a rendered equation number is cited, resolve it through the active aux
-  files before answering or editing.
-- Before conceptual or derivational work, identify the exact parent-manuscript
-  equations, definitions, and assumptions that control the result.
-- When notation changes, propagate it through state sets, chain rules,
-  constitutive restrictions, weak forms, code properties, and validation
-  observables.
-- Make the smallest source change that handles the request and preserve
-  unrelated dirty-worktree changes.
-- After manuscript edits, rebuild from `paper/main.tex`, inspect warnings, and
-  visually inspect affected rendered pages.
+- Preserve TeX semantics, macro context, math mode, environment nesting,
+  labels, references, citations, and local definitions.
+- Number and descriptively label every displayed equation introduced by an
+  agent. Keep displays grammatical and punctuated.
+- Use `align` for multi-step equalities. Do not write several equality steps on
+  one numbered line.
+- Do not put multi-line aligned subenvironments inside one visible delimiter.
+  Continue delimiters across `align` rows with matching invisible delimiters.
+- Use automatic delimiter sizing; do not introduce manual `\big`, `\Big`, or
+  related sizing commands.
+- Do not introduce helper variables or shorthand unless the user approves the
+  new notation or it is essential to the requested result.
+- Treat text between `% AGENT-LOCK-BEGIN` and `% AGENT-LOCK-END` as protected
+  unless the user explicitly names it as an edit target.
+- Write for readers versed in continuum mechanics and poromechanics. State the
+  physical purpose, equation, local definitions, consequence, and limiting
+  interpretation in that order when practical.
+- State contributions positively. Remove drafting-history language and
+  rhetorical claims based on what another formulation lacks.
 
-## Technical scope and notation
+## Manuscript build
 
-- Derive the nonlinear Biot coefficient from the current multicomponent paper's
-  fixed-equivalent-pressure Legendre transform and the solid/component material
-  conservation constraints.
-- Form intrinsic skeleton specific volume from the registered solid phases and
-  components using the summed Eq. (32) storage directly:
-  `J_s sum(phi_a) / sum(J_s rho_a^alpha)`.
-- Distinguish intrinsic skeleton density from bulk solid partial density.
-- Evaluate the inner constitutive partial at fixed equivalent pore pressure and
-  declared held-fixed variables. Retain MOOSE AD on the resulting coefficient
-  so the outer global Newton chain rule includes its complete state dependence.
-- Use the parent paper's notation and definitions. The paper must distinguish a
-  definition, a derived restriction, a constitutive closure, a calibrated
-  parameter, and an independently predicted quantity.
-- The Lawal--Kim workbook coefficient is computed from the measured drained and
-  unjacketed moduli. A fit to those drained-modulus data is calibration, not an
-  independent validation of the Biot coefficient. State that limitation
-  wherever those curves are discussed.
+- After every manuscript-source edit, use the `latex-workshop-recompile` skill
+  and build from the repository root:
 
-## MOOSE implementation track
+  ```sh
+  latexmk -lualatex -interaction=nonstopmode -halt-on-error \
+    -outdir=paper/build paper/main.tex
+  ```
 
-- The production source remains in the parent `moose_app/`. This repository
-  records exact upstream files and revisions in `moose/source_manifest.yml` and
-  contains paper-specific composable input decks and validation scripts.
-- Map every MOOSE object, material property, residual, boundary condition, and
-  test to a parent-manuscript equation, assumption, or special-case reduction.
-- Use MOOSE automatic differentiation by default. Keep tensor kinematics,
-  constraint solves, state transformations, and implicit tangents in explicit
-  AD materials or user objects rather than hiding them in kernels.
-- Kernels remain residual objects that consume AD material properties.
-- Use Q2 Lagrange displacement and the parent repository's P1+P0 enriched
-  Galerkin equivalent-pressure construction for coupled mechanics/flow solves.
-- Use the validated include hierarchy and solid-reference kinematics from the
-  parent repository rather than one-off input decks.
-- Never use `std::pow()` with `ADReal`; use unqualified `pow()`.
+- Inspect warnings and visually inspect affected pages, especially displays
+  near page boundaries.
+- Keep all generated LaTeX output in `paper/build/`. Never commit auxiliary
+  files or generated PDFs from that directory.
 
-## Validation track
+## Shared MOOSE source contract
 
-- Every validation entry must state the governing reduction, variables,
-  observables, authoritative reference, tolerance, and pass/fail status.
-- Verify the implicit fixed-pressure tangent against analytic or centered
-  finite-difference derivatives and verify the outer AD path with a PETSc
-  Jacobian test.
-- Recover the classical `B = 1 - K/K_s` limit with shrinking perturbations and
-  verify intrinsic-density/specific-volume inverse consistency.
-- Separate implementation verification, constitutive calibration, holdout
-  prediction, and independent physical validation.
-- A pressure-path MOOSE material evaluation with `solve = false` is a
-  constitutive-path test, not a boundary-value simulation.
-- A genuine pressure-controlled experiment must solve the mechanics and state
-  variables from boundary conditions; it must not prescribe the fitted path.
-- Keep source data, generated outputs, and curated reference results distinct.
+- `moose/sync_manifest.json` lists every MOOSE source, header, Mandel deck,
+  verification driver, and framework patch shared with the authoritative
+  simulator repository. `moose/sync_state.json` records their common hashes.
+- Before editing a shared file, run:
 
-## Agent-assisted simulator workflow
+  ```sh
+  tools/sync_biot_moose.py check
+  ```
 
-- Treat input templates, parameter schemas, validation checks, run recipes,
-  postprocessing, and troubleshooting notes as versioned repository artifacts.
-- Generate decks from composable include fragments and structured problem
-  specifications whenever possible.
-- Before running a generated deck, validate variables, kernels, materials,
-  boundary conditions, units, mesh, executioner, outputs, and validation target.
-- Diagnose failed runs in the order given by
-  `agent_workflows/runbooks/moose_failure_triage.md`.
+- Agentic work may edit a shared MOOSE file in this repository. Before
+  reporting the edit complete, run:
 
-## Prose and LaTeX rules
+  ```sh
+  tools/sync_biot_moose.py push
+  ```
 
-- Apply `author_style_profile_2026-07-27.md` to manuscript text, captions,
-  tables, comments, documentation, and workflow material.
-- Write equation-forward prose for a continuum-mechanics and reservoir-
-  simulation audience. Define symbols at first substantive use.
-- Describe prior work affirmatively, then state what this paper derives or
-  implements. Do not establish novelty through negative positioning.
-- Preserve TeX semantics, macro context, labels, citations, and equation
-  grammar. Use automatic delimiters and aligned multi-step equations.
-- Never commit LaTeX build artifacts.
+  The push fails if the master copy changed from the recorded base. Resolve
+  that conflict explicitly; never overwrite either side silently.
+- After changing shared files in the master repository, refresh this repository
+  with `tools/sync_biot_moose.py pull`.
+- The local master location is supplied with `--master`, the
+  `BIOT_MOOSE_MASTER_ROOT` environment variable, or the ignored
+  `.agent-runtime/master_repository` pointer written by a successful pull.
+  A public clone remains reproducible without that checkout; synchronization
+  requires access to both repositories.
+- External contributions made without the master checkout remain Biot-side
+  patches until they are imported, tested, and re-exported through the master.
 
-## Required cross-track records
+## MOOSE implementation
 
-Keep these files aligned when a result becomes durable:
+- Before building or running `moose_app/`, use
+  `agent_environment/skills/setup-moose-conda/SKILL.md`. Run its non-mutating
+  diagnostic before setup, build, or test operations.
+- The formulation uses Q2 displacement, continuous Q1 water pressure, and the
+  solved solid intrinsic-density and volume-fraction states. The Mandel problem
+  has no pressure enrichment, reconstructed EG pressure material, EG facet
+  operator, or pressure stabilization.
+- Solve solid mass conservation and the mineral EOS as residual equations.
+  Compute the fixed-pressure implicit state tangent in
+  `ADConstrainedSkeletonBiotMaterial` while preserving its outer MOOSE AD
+  dependence.
+- Keep kernels as weak-form residual objects that consume AD material
+  properties. Keep constitutive constraints, tensor kinematics, and implicit
+  tangents in materials.
+- Map every MOOSE object and validation test to the equations and assumptions in
+  `validation/equation_to_moose_map.yml` and
+  `validation/theory_traceability.yml`.
+- Never weaken, skip, or redefine a verification test to obtain a pass.
+- Preserve unrelated dirty-worktree changes in both repositories.
 
-- `validation/equation_to_moose_map.yml`
-- `validation/theory_traceability.yml`
-- `validation/acceptance.yml`
-- `moose/source_manifest.yml`
+## Validation
+
+- Keep implementation verification, analytical Mandel comparison, numerical
+  convergence, finite-deformation discrimination, and physical validation
+  explicitly separated.
+- The required implementation checks are the local implicit-tangent analytical
+  and centered-difference comparisons, the PETSc Jacobian comparison, solid
+  mass and mineral-EOS residuals, and pressure/displacement comparison with the
+  analytical Mandel solution.
+- Water pressure and displacement comparisons are spatial profiles at several
+  times. Biot-coefficient and density contour figures use two-dimensional
+  spatial snapshots.
+- Source inputs, analytical reference data, generated run output, curated
+  results, and publication figures are distinct artifact classes.
+
+## Repository checks
+
+- Check `git status --short` before editing and preserve unrelated work.
+- Use repository-relative paths in instructions, scripts, manifests, and
+  configuration.
+- Run `tools/agentctl check --profile manuscript` for manuscript tooling and
+  `tools/sync_biot_moose.py check` for shared-source integrity.
+- For source edits, run the smallest focused test first, then broader validation
+  in proportion to risk.

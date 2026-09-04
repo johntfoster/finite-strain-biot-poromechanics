@@ -7,5 +7,5 @@
 5. Inspect references to the label before editing.
 6. Rebuild twice when numbering or references matter.
 
-Parent-manuscript equation numbers must be resolved in the parent repository's
-active build, not inferred from this paper's numbering.
+Equations attributed to an external source must be checked in the cited PDF;
+do not infer their numbering from this paper.

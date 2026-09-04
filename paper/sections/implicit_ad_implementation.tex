@@ -1,0 +1,182 @@
+\section{Constitutive update and finite-element implementation}
+\label{sec:implicit-ad-implementation}
+
+\subsection{Local fixed-pressure update}
+\label{sec:fixed-pressure-constrained-tangent}
+
+The additional global solid field is the partial density \(\rho_s\).  At a
+quadrature point, its referential value \(J\rho_s\) is passed to the
+constitutive update together with \(J\), the common intrinsic pressure \(p\),
+and the previous constitutive history \(\mc H_n\).  The current local
+constitutive state \(\mbf y\) contains the solid intrinsic density and any
+inelastic internal variables, but not the solid volume fraction.  It satisfies
+\begin{equation}
+ \mbf R(\mbf y;J,p,J\rho_s,\mc H_n)=\mbf0.
+ \label{eq:general-local-constitutive-system}
+\end{equation}
+The residual vector contains the intrinsic-pressure equation and the evolution
+and consistency equations required by the selected constitutive model.  For
+inelastic response, these additional equations may include a flow rule,
+hardening laws, and an active yield constraint.  The global solid balance
+determines \(J\rho_s\), the constitutive system determines \(\bar\rho_s\), and
+\eqref{eq:solid-volume-fraction-relation} then gives \(\phi_s\).  When a
+constitutive equation depends on volume fraction, \(\phi_s=\rho_s/\bar\rho_s\)
+is substituted before forming \(\mbf R\).  Thus its dependence on \(J\),
+\(J\rho_s\), and \(\mbf y\) is included by the chain rule without introducing a
+separate material-mass residual.  In the partial derivatives below, the product
+\(J\rho_s\) is treated as one independent constitutive argument and is held
+fixed as \(J\) varies.
+
+After the local update converges, differentiation of
+\eqref{eq:general-local-constitutive-system} at fixed \(p\), fixed
+\(J\rho_s\), and fixed previous history gives
+\begin{equation}
+ \left.\pder{\mbf y}{J}\right|_{p,J\rho_s,\mc H_n}
+ =-\left(\pder{\mbf R}{\mbf y}\right)^{-1}
+ \pder{\mbf R}{J}.
+ \label{eq:implicit-local-state-tangent}
+\end{equation}
+For a nonsmooth inelastic update, this derivative is formed on the active set
+selected by the converged return mapping.  Equation
+\eqref{eq:implicit-local-state-tangent} differentiates the converged residual
+system rather than the sequence of local Newton iterates.
+
+The mineral distension \(\bar J=\bar\rho_{s0}/\bar\rho_s\) is evaluated from
+the converged state.  Its constrained derivative follows by the chain rule,
+\begin{equation}
+ \left.\pder{\bar J}{J}\right|_{p,J\rho_s,\mc H_n}
+ =\pder{\bar J}{\mbf y}\mathbin{\cdot}
+  \left.\pder{\mbf y}{J}\right|_{p,J\rho_s,\mc H_n},
+ \label{eq:constrained-mineral-jacobian-tangent}
+\end{equation}
+and the general coefficient returned to the stress calculation is
+\begin{equation}
+ B
+ =1-\phi_{s0}
+ \left.\pder{\bar J}{J}\right|_{p,J\rho_s,\mc H_n}.
+ \label{eq:general-implicit-biot-coefficient}
+\end{equation}
+Thus an inelastic model changes \(B\) through every active component of
+\(\mbf y_J\), rather than through a prescribed elastic modulus ratio.
+
+The reported elastic calculations provide a closed-form test of this general
+path.  Their only local state variable is \(\mbf y=(\bar\rho_s)\), and its
+constitutive residual is
+\begin{equation}
+ R_e(\bar\rho_s;J,p)
+ =\ln\left(\frac{\bar\rho_s}{\bar\rho_{s0}}\right)
+ -\frac{1}{K_s}
+  \left(p-\frac{K\ln J}{\phi_{s0}J}\right)=0.
+ \label{eq:local-mineral-eos-constraint}
+\end{equation}
+The derivatives supplied to \eqref{eq:implicit-local-state-tangent} are
+\begin{equation}
+ \pder{R_e}{\bar\rho_s}=\frac{1}{\bar\rho_s},
+ \qquad
+ \pder{R_e}{J}
+ =\frac{K(1-\ln J)}{\phi_{s0}K_sJ^2}.
+ \label{eq:elastic-local-residual-derivatives}
+\end{equation}
+The scalar implicit tangent and
+\eqref{eq:constrained-mineral-jacobian-tangent} then give
+\begin{equation}
+ \left.\pder{\bar J}{J}\right|_{p,J\rho_s}
+ =\frac{K\,\bar J(1-\ln J)}{\phi_{s0}K_sJ^2},
+ \label{eq:elastic-mineral-jacobian-derivative}
+\end{equation}
+and therefore \eqref{eq:elastic-finite-deformation-biot-coefficient}.  The
+explicit elastic expression is used only as a verification oracle; the
+coefficient passed to momentum is obtained from the general dense solve.
+
+The implementation evaluates the local residual derivatives, the implicit solve
+in \eqref{eq:implicit-local-state-tangent}, and the chain rule in
+\eqref{eq:constrained-mineral-jacobian-tangent} with AD scalar operations.  The
+resulting \(B\) remains in the outer MOOSE AD graph, which retains its
+dependence on displacement, pressure, solid partial density, and constitutive
+history without a hand-coded finite-element Jacobian
+\citep{lindsayetal2021ad}.  Admissible states require \(J>0\),
+\(\bar\rho_s>0\), and \(0<\rho_s/\bar\rho_s<1\).
+
+\subsection{Weak residuals and approximation spaces}
+\label{sec:weak-residuals-and-spaces}
+
+Let \(\Omega_0\) be the solid reference domain and \(\dd V_0\) its volume
+measure.  Write the skeleton displacement as \(\mbf u=\mbf x-\mbf X\), and let
+\(\mbf w\), \(q\), and \(\eta\) be test functions for displacement, water
+pressure, and solid partial density, respectively.  With zero body
+force and the natural boundary terms omitted, the momentum residual is
+\begin{equation}
+ R_u(\mbf w)
+ =\int_{\Omega_0}
+ \nabla_{\mbf X}\mbf w:
+ \left(\mbf P^{\prime\prime}-BpJ\mbf F^{-T}\right)\dd V_0.
+ \label{eq:momentum-weak-residual}
+\end{equation}
+Multiplication of the water balance by \(q\) and integration of the relative
+flux term by parts gives
+\begin{equation}
+ R_p(q)
+ =\int_{\Omega_0}q
+ \frac{\partial}{\partial t}
+ \left[J(1-\phi_s)\bar\rho_f(p)\right]\dd V_0
+ -\int_{\Omega_0}
+ \nabla_{\mbf X}q\mathbin{\cdot}\mbf W_f\dd V_0.
+ \label{eq:water-pressure-weak-residual}
+\end{equation}
+The spatial solid mass balance, pulled back to \(\Omega_0\), gives the third
+global residual,
+\begin{equation}
+ R_{\rho_s}(\eta)
+ =\int_{\Omega_0}\eta
+ \frac{\partial}{\partial t}
+ \left(J\rho_s\right)\dd V_0
+ =\int_{\Omega_0}\eta
+ \left(\dot J\,\rho_s+J\dot\rho_s\right)\dd V_0.
+ \label{eq:solid-mass-weak-residual}
+\end{equation}
+The second equality is the continuous chain rule used by the reported time
+kernel.  It is equivalent to the spatial balance at the continuum level but is
+not, in general, an exact backward difference of \(J\rho_s\).  Retaining
+\(\rho_s\) as a global field keeps solid mass as a balance-law residual and
+permits spatially varying initial mass, phase sources, and reactive solid
+production.  For the source-free benchmark,
+\(J\rho_s=\rho_{s0}\) is also an independent
+discretization check.  The implementation stores \(\rho_s/\rho_{s0}\) for
+numerical conditioning; this constant scaling does not change the balance or
+introduce an additional continuum variable.
+
+The discrete spaces are
+\begin{equation}
+ \mbf u_h\in[\mathcal Q_2]^2,
+ \qquad
+ p_h\in\mathcal Q_1,
+ \qquad
+ \rho_{s,h}\in\mathcal Q_2.
+ \label{eq:finite-element-spaces}
+\end{equation}
+Here \(\mathcal Q_k\) is the continuous tensor-product polynomial space of
+degree \(k\) in each coordinate.  Backward Euler discretizes the reported
+calculations.  The solid kernel uses \(\dot J\) and \(\dot\rho_s\); the water
+kernel uses \(\dot J\), \(\dot p\), and the locally derived
+\(\dot\phi_s\).  A BDF2 regression exercises the
+same residual paths.  Conservative product differences and a time-refined
+global mass audit are separate verification targets because the chain-rule
+rates do not by themselves prove exact stepwise conservation.
+
+\subsection{Derivative verification}
+\label{sec:nested-automatic-differentiation}
+
+The production coefficient is computed by the general constrained material
+from \eqref{eq:implicit-local-state-tangent}--
+\eqref{eq:general-implicit-biot-coefficient}.  It is compared with the
+independently evaluated elastic expression
+\eqref{eq:elastic-finite-deformation-biot-coefficient} and with centered
+differences of \(\bar J\) with respect to \(J\) at fixed \(p\) and
+\(J\rho_s\).
+A PETSc finite-difference comparison of the assembled transient system tests
+the outer AD path through momentum, solid mass, water storage, and the Biot
+pressure term.  Across the four nonlinear states evaluated during the test
+step, the maximum relative Frobenius difference is
+\(3.8413\times10^{-8}\), and the maximum absolute Frobenius difference is
+\(1.9220\times10^{-6}\).  These checks distinguish the local fixed-pressure
+derivative from its propagation through the global Newton system.

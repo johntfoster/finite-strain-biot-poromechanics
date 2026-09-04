@@ -1,0 +1,378 @@
+\section{Single-solid, single-water finite-deformation equations}
+\label{sec:finite-deformation-biot}
+
+At time \(t\), the solid motion \(\bs\chi\) maps a reference position
+\(\mbf X\) to its current position \(\mbf x=\bs\chi(\mbf X,t)\).  The
+deformation gradient and solid-reference Jacobian are
+\begin{equation}
+ \mbf F=\nabla_{\mbf X}\mbf x,
+ \qquad
+ J=\det\mbf F>0.
+ \label{eq:skeleton-kinematics}
+\end{equation}
+The reference state is chosen with \(J_0=1\).  Here,
+\(\nabla_{\mbf X}\) denotes the gradient with respect to \(\mbf X\).
+Spatial balances use current mixture volume; their pull-backs use the solid
+reference configuration employed by the finite-element residuals.
+
+\subsection{Solid mass balance and solid state}
+\label{sec:solved-solid-state}
+
+Let \(\rho_s=\phi_s\bar\rho_s\) denote the solid partial density per unit
+current mixture volume, where \(\phi_s\) is the solid volume fraction and
+\(\bar\rho_s\) is the intrinsic solid density.  For a source-free solid moving
+with the skeleton velocity \(\mbf v_s\), its spatial mass balance is
+\begin{equation}
+ \left.\pder{\rho_s}{t}\right|_{\mbf x}
+ +\nabla_{\mbf x}\mathbin{\cdot}(\rho_s\mbf v_s)=0.
+ \label{eq:spatial-solid-mass-balance}
+\end{equation}
+Equivalently, with \(D_s/Dt\) denoting the material rate following the solid,
+\begin{equation}
+ \frac{D_s\rho_s}{Dt}
+ +\rho_s\nabla_{\mbf x}\mathbin{\cdot}\mbf v_s=0.
+ \label{eq:material-solid-mass-balance}
+\end{equation}
+Using \(\dot J=J\nabla_{\mbf x}\cdot\mbf v_s\), the pull-back to the solid
+reference configuration is
+\begin{equation}
+ \left.\pder{(J\rho_s)}{t}\right|_{\mbf X}=0,
+ \label{eq:reference-solid-mass-balance}
+\end{equation}
+where the subscript \(0\) denotes the reference value and \(J_0=1\).  For the
+uniform reference state, the source-free balance therefore gives
+\(J\rho_s=\rho_{s0}=\phi_{s0}\bar\rho_{s0}\).  The mineral distension measures
+the intrinsic solid volume change,
+\begin{equation}
+ \bar J
+ :=\frac{\bar\rho_{s0}}{\bar\rho_s},
+ \label{eq:distension}
+\end{equation}
+where \(\bar\rho_{s0}\) is the reference intrinsic solid density.
+
+The solid phase is closed by a Helmholtz free energy.  Let
+\(\psi_s(\mbf F,\bar\rho_s)\) be the solid free energy per unit mass, a general
+function of the skeleton deformation gradient and the intrinsic solid density;
+its deformation and density conjugates supply the intrinsic solid stress and
+pressure and are developed in Sec.~\ref{sec:intrinsic-pressure}.  Through the
+intrinsic pressure, the constitutive update supplies the intrinsic density.
+The partial-density definition gives the solid volume fraction as the derived
+quantity
+\begin{equation}
+ \phi_s=\frac{\rho_s}{\bar\rho_s}.
+ \label{eq:solid-volume-fraction-relation}
+\end{equation}
+For the source-free uniform reference state, substitution of
+\(J\rho_s=\phi_{s0}\bar\rho_{s0}\) and
+\(\bar\rho_s=\bar\rho_{s0}/\bar J\) reduces this identity to
+\(\phi_s=\phi_{s0}\bar J/J\).  The spatial balance evolves \(\rho_s\), and the
+constitutive update supplies \(\bar\rho_s\), equivalently \(\bar J\), so
+\eqref{eq:solid-volume-fraction-relation} recovers \(\phi_s\) locally.  With
+sources, reactions, or nonuniform initial mass, the same identity uses the
+current \(\rho_s\) without changing the local constitutive construction.
+
+\subsection{Intrinsic pressure and effective stress}
+\label{sec:intrinsic-pressure}
+
+The intrinsic solid pressure is the negative mean of the total intrinsic solid
+stress,
+\begin{equation}
+ \bar p_s
+ =-\frac{1}{3}\operatorname{tr}\bar{\bs\sigma}_s,
+ \label{eq:intrinsic-pressure-mean-stress}
+\end{equation}
+where \(\bar{\bs\sigma}_s\) is the total intrinsic solid Cauchy stress, the
+stress carried within the solid phase, and \(\operatorname{tr}\) denotes the
+trace.  Local pressure equilibrium between the phases sets
+\begin{equation}
+ p=\bar p_f=\bar p_s,
+ \label{eq:local-pressure-equilibrium}
+\end{equation}
+where \(p\) is the water pressure and \(\bar p_f\) is the intrinsic water
+pressure.  The mixture stress is the volume-fraction-weighted sum of the
+intrinsic stresses,
+\begin{equation}
+ \bs\sigma
+ =\phi_s\bar{\bs\sigma}_s+\phi_f\bar{\bs\sigma}_f,
+ \qquad
+ \bar{\bs\sigma}_f=-p\mbf I,
+ \label{eq:mixture-stress-split}
+\end{equation}
+where \(\phi_f=1-\phi_s\) and \(\mbf I\) is the identity tensor.
+
+The intrinsic stress and pressure are the deformation and density conjugates of
+the solid free energy per unit mass.  Let \(W_s=\bar\rho_{s0}\psi_s\) be the
+same energy per unit reference solid volume.  The deformation conjugate is
+\begin{equation}
+ \bar{\bs\sigma}_s
+ =\frac{1}{J}\pder{W_s}{\mbf F}\mbf F^T,
+ \label{eq:intrinsic-stress-free-energy}
+\end{equation}
+and the density conjugate, evaluated at fixed deformation gradient, is
+\begin{equation}
+ \bar p_s
+ =\bar\rho_s^2\left.\pder{\psi_s}{\bar\rho_s}\right|_{\mbf F}.
+ \label{eq:intrinsic-pressure-free-energy}
+\end{equation}
+The two expressions for \(\bar p_s\), the negative mean stress in
+\eqref{eq:intrinsic-pressure-mean-stress} and the density conjugate
+\eqref{eq:intrinsic-pressure-free-energy}, coincide for a conservative solid.
+The pressure equilibrium \eqref{eq:local-pressure-equilibrium} then eliminates
+the intrinsic solid density as \(\bar\rho_s(p,\mbf F)\), whose dependence on
+the skeleton deformation enters through the stress free energy.
+
+The total intrinsic stress separates into a fixed-density part and the fluid
+pressure.  Let \(\bar{\bs\sigma}^{\prime}_s\) be the single-prime intrinsic
+stress, the deformation conjugate of the solid energy at fixed intrinsic
+density, and let \(\bar{\bs\sigma}^{\prime\prime}_s\) be the double-prime
+intrinsic stress, its fixed-pressure Legendre counterpart.  The Legendre
+transform gives
+\begin{equation}
+ \bar{\bs\sigma}^{\prime}_s
+ =\bar{\bs\sigma}^{\prime\prime}_s+\frac{1-B}{\phi_s}p\mbf I,
+ \label{eq:primed-stress-transform}
+\end{equation}
+and the total intrinsic stress is
+\begin{equation}
+ \bar{\bs\sigma}_s
+ =\bar{\bs\sigma}^{\prime}_s-p\mbf I
+ =\bar{\bs\sigma}^{\prime\prime}_s+\frac{\phi_f-B}{\phi_s}p\mbf I.
+ \label{eq:intrinsic-stress-decomposition}
+\end{equation}
+The drained skeleton stress is the aggregate double-prime stress,
+\(\bs\sigma^{\prime\prime}=\phi_s\bar{\bs\sigma}^{\prime\prime}_s\), and the
+total mixture stress is
+\begin{equation}
+ \bs\sigma
+ =\bs\sigma^{\prime\prime}-Bp\mbf I.
+ \label{eq:total-cauchy-stress}
+\end{equation}
+At equilibrium, \eqref{eq:intrinsic-pressure-mean-stress} and
+\eqref{eq:intrinsic-stress-decomposition} give
+\(\operatorname{tr}\bar{\bs\sigma}^{\prime}_s=0\), so the single-prime
+intrinsic stress is deviatoric.  Because the free energy relates the intrinsic
+pressure to the solid density, plasticity enters through the drained skeleton
+stress \(\bs\sigma^{\prime\prime}\) while the decomposition itself remains
+valid.
+
+\subsection{Biot coefficient and momentum balance}
+\label{sec:biot-coefficient-and-momentum}
+
+In terms of the mineral distension in \eqref{eq:distension}, the
+finite-deformation Biot coefficient is
+\begin{equation}
+ B
+ =1-\phi_{s0}
+ \left.\pder{\bar J}{J}\right|_{p,J\rho_s}.
+ \label{eq:finite-deformation-biot-coefficient}
+\end{equation}
+This is the one-solid reduction of the fixed-pressure coefficient in the
+multicomponent theory and the binary-mixture coefficient of Foster and Xu
+\citep[eq.~(39)]{fosterxu2025}.  The coefficient differentiates the constrained
+constitutive state at fixed intrinsic pressure and fixed referential solid mass
+\(J\rho_s\).  A general solid free energy changes \(B\) through the
+fixed-pressure evolution of its density.  Internal variables and their
+return-mapping equations join the local system, and implicit differentiation
+then includes their response to \(J\).
+
+Let \(\bs\sigma^{\prime}\) denote the deformation-conjugate material stress in
+the pressure Legendre representation.  It is obtained from the drained stress
+through the Biot transform
+\begin{equation}
+ \bs\sigma^{\prime}
+ =\bs\sigma^{\prime\prime}+(1-B)p\mbf I.
+ \label{eq:single-prime-biot-transform}
+\end{equation}
+Thus a constitutive calculation formulated for
+\(\bs\sigma^{\prime\prime}\) reconstructs \(\bs\sigma^{\prime}\) before
+using a law whose stress argument is single-prime.  Adding the isotropic fluid
+stress gives the total mixture stress
+\(\bs\sigma=\bs\sigma^{\prime}-p\mbf I
+=\bs\sigma^{\prime\prime}-Bp\mbf I\), and the total first Piola stress is
+\begin{equation}
+ \mbf P
+ =\mbf P^{\prime\prime}-BpJ\mbf F^{-T}.
+ \label{eq:total-first-piola-stress}
+\end{equation}
+The quasi-static momentum balance on the solid reference configuration is
+\citep[eq.~(37)]{fosterxu2025}
+\begin{equation}
+ \nabla_{\mbf X}\mathbin{\cdot}\mbf P+J\rho\mbf g=\mbf0.
+ \label{eq:reference-momentum-balance}
+\end{equation}
+Here, \(\rho\) is the current mixture mass density, \(\mbf g\) is body-force
+acceleration, and \(\mbf0\) is the zero vector.  The elastic verification
+closure supplies \(\mbf P^{\prime\prime}\) in
+\eqref{eq:verification-effective-first-piola}.
+
+\subsection{Water storage and transport}
+\label{sec:water-storage-and-transport}
+
+The spatial source-free water mass balance is
+\begin{equation}
+ \left.\pder{(\phi_f\bar\rho_f)}{t}\right|_{\mbf x}
+ +\nabla_{\mbf x}\mathbin{\cdot}
+ \left(\phi_f\bar\rho_f\mbf v_s+\mbf w_f\right)=0,
+ \label{eq:spatial-water-mass-balance}
+\end{equation}
+where \(\mbf w_f\) is the water mass flux relative to the skeleton.  Pulling
+this balance back to the solid reference configuration gives
+\begin{equation}
+ \left.\frac{\partial}{\partial t}
+ \left(J\phi_f\bar\rho_f\right)\right|_{\mbf X}
+ +\nabla_{\mbf X}\mathbin{\cdot}\mbf W_f=0,
+ \label{eq:reference-water-mass-balance}
+\end{equation}
+where \(\phi_f=1-\phi_s\), \(\bar\rho_f\) is intrinsic water density, and
+\(\mbf W_f=J\mbf F^{-1}\mbf w_f\).
+
+Define the water bulk modulus by
+\(K_f=\bar\rho_f\,\mathrm{d}p/\mathrm{d}\bar\rho_f\).  Taking \(K_f\)
+constant and integrating from the reference state gives the pressure--density
+relation and its material time derivative,
+\begin{subequations}
+ \label{eq:barotropic-water-eos}
+ \begin{align}
+  \bar\rho_f(p)
+  &=\bar\rho_{f0}\exp\left(\frac{p-p_0}{K_f}\right),
+  \label{eq:barotropic-water-density}\\
+  \frac{\dot{\bar\rho}_f}{\bar\rho_f}
+  &=\frac{\dot p}{K_f}.
+  \label{eq:barotropic-water-density-rate}
+ \end{align}
+\end{subequations}
+Here \(p_0\) and \(\bar\rho_{f0}\) define the reference water state, and an
+overdot denotes \(\left.\partial/\partial t\right|_{\mbf X}\).  Substitution
+into \eqref{eq:reference-water-mass-balance} expands the accumulation rate into
+the rate of \(J(1-\phi_s)\) plus \(J(1-\phi_s)\dot p/K_f\).  The Lagrangian
+pore volume \(J\phi_f=J(1-\phi_s)\) \citep{biotwillis1957} is computed from
+the solid volume fraction field, so the water balance
+retains the complete nonlinear accumulation
+\(J(1-\phi_s)\bar\rho_f(p)\) at the continuous level.  The Biot
+coefficient enters momentum explicitly, while the same local solid response
+affects water accumulation through the solid volume fraction.
+
+For isotropic permeability \(\kappa\), water dynamic viscosity \(\mu_f\), and
+zero gravity, the pulled-back Darcy mass flux is
+\citep{sunostien2013}
+\begin{equation}
+ \mbf W_f
+ =-\bar\rho_f J\mbf F^{-1}
+ \frac{\kappa}{\mu_f}\mbf F^{-T}\nabla_{\mbf X}p.
+ \label{eq:reference-darcy-flux}
+\end{equation}
+Equations \eqref{eq:total-first-piola-stress},
+\eqref{eq:reference-water-mass-balance}, and
+\eqref{eq:reference-darcy-flux} retain the finite-deformation stress, storage,
+and transport maps used in the numerical residual.
+
+\subsection{Elastic verification closure}
+\label{sec:elastic-verification-closure}
+
+The reported calculations use an elastic mineral and an elastic skeleton.  The
+intrinsic stress follows from the deformation conjugate
+\eqref{eq:intrinsic-stress-free-energy}, while the intrinsic pressure is
+closed by a two-input split: a drained skeleton potential supplies the
+deformation response and a mineral pressure law supplies the intrinsic
+pressure.  A unified free energy of the additively separable form
+\(\psi_s(\mbf F,\bar\rho_s)=\psi_s^{\mathrm{sk}}(\mbf F)+\psi_s^{\mathrm d}(\bar\rho_s)\)
+is not used here, because its density and deformation conjugates are
+inconsistent for the pressure decomposition below; the skeleton and mineral
+responses therefore enter as separate constitutive inputs.  The zero-pressure
+skeleton potential is the decoupled compressible neo-Hookean form
+\begin{equation}
+ W_0(\mbf F)
+ =\frac{G}{2}\left(J^{-2/3}I_1-3\right)
+ +\frac{K}{2}(\ln J)^2,
+ \qquad I_1=\mbf F:\mbf F,
+ \label{eq:verification-skeleton-potential}
+\end{equation}
+where \(K\) and \(G\) are the drained skeleton bulk and shear moduli,
+respectively.  The zero-pressure skeleton Cauchy stress
+\(\bs\sigma_0=\frac{1}{J}\pder{W_0}{\mbf F}\mbf F^T\) has volumetric part
+\(\bs\sigma_0^{\mathrm{vol}}=K\ln J\,\mbf I/J\), whose mean normal stress is
+\(\frac{1}{3}\operatorname{tr}\bs\sigma_0=K\ln J/J\).  The mineral law sets
+the intrinsic pressure to the mineral pressure law plus the volumetric contact
+of the skeleton,
+\begin{equation}
+ \bar p_s
+ =\hat p_s^{\mathrm{min}}(\bar J,\bs\xi)
+ +\frac{1}{\phi_{s0}}\frac{1}{3}\operatorname{tr}\bs\sigma_0,
+ \label{eq:general-mineral-law}
+\end{equation}
+where \(\hat p_s^{\mathrm{min}}\) is the mineral pressure law and \(\bs\xi\)
+its internal variables.  The elastic mineral takes
+\(\hat p_s^{\mathrm{min}}=-K_s\ln\bar J\), where \(K_s\) is the mineral bulk
+modulus, giving
+\begin{equation}
+ \bar p_s
+ =-K_s\ln\bar J+\frac{1}{\phi_{s0}}\frac{1}{3}\operatorname{tr}\bs\sigma_0
+ =-K_s\ln\bar J+\frac{K\ln J}{\phi_{s0}J}.
+ \label{eq:elastic-mineral-pressure}
+\end{equation}
+Local equilibrium
+\eqref{eq:local-pressure-equilibrium} gives the elastic distension
+\begin{equation}
+ \bar J(p,J)
+ =\exp\left[-\frac{1}{K_s}\left(p-\frac{K\ln J}{\phi_{s0}J}\right)\right],
+ \qquad
+ \bar J_0(J)=\bar J(0,J),
+ \label{eq:verification-mineral-factors}
+\end{equation}
+so \(J<1\) decreases \(\bar J\) and increases the intrinsic solid density,
+\begin{equation}
+ \frac{\bar\rho_s}{\bar\rho_{s0}}=\frac{1}{\bar J(p,J)}.
+ \label{eq:elastic-mineral-density}
+\end{equation}
+Substitution into \eqref{eq:finite-deformation-biot-coefficient} gives the
+closed form
+\begin{equation}
+ B
+ =1-\frac{K\,\bar J(p,J)(1-\ln J)}{K_sJ^2},
+ \label{eq:elastic-finite-deformation-biot-coefficient}
+\end{equation}
+and hence \(B_0=1-K/K_s\) at \(J=1\) and \(p=0\).
+
+The fixed-pressure potential used by the verification is the zero-pressure
+potential evaluated along the elastic mineral path,
+\begin{equation}
+ W^{\prime\prime}(\mbf F,p)
+ =W_0(\mbf F)
+ +\phi_{s0}
+ \left\{K_s\left[\bar J_0(J)-\bar J(p,J)\right]-p\,\bar J(p,J)\right\}.
+ \label{eq:verification-fixed-pressure-potential}
+\end{equation}
+This is the coupled skeleton--mineral energy restricted to the
+EOS-selected specific-volume path; it reduces to \(W_0\) at \(p=0\).
+Differentiation at fixed \(p\), with
+\(\partial J/\partial\mbf F=J\mbf F^{-T}\), gives the double-prime first
+Piola--Kirchhoff stress
+\begin{equation}
+ \begin{aligned}
+ \mbf P^{\prime\prime}
+ ={}&GJ^{-2/3}\left(\mbf F-\frac{I_1}{3}\mbf F^{-T}\right)
+ +K\ln J\,\mbf F^{-T}\\
+ &-K(1-\ln J)
+ \left[\bar J(p,J)-\bar J_0(J)+\frac{p}{K_s}\bar J(p,J)\right]
+ \frac{\mbf F^{-T}}{J}.
+ \end{aligned}
+ \label{eq:verification-effective-first-piola}
+\end{equation}
+The pressure Legendre potential and its deformation-conjugate single-prime
+stress are
+\begin{align}
+ W^{\prime}(\mbf F,p)
+ &=W^{\prime\prime}(\mbf F,p)+\phi_{s0}p\,\bar J(p,J),
+ \label{eq:pressure-legendre-potential}\\
+ \mbf P^{\prime}
+ &=\mbf P^{\prime\prime}
+ +\phi_{s0}p\left.\pder{\bar J}{J}\right|_pJ\mbf F^{-T},
+ \label{eq:single-prime-first-piola-mineral-transform}\\
+ \mbf P^{\prime}
+ &=\mbf P^{\prime\prime}+(1-B)pJ\mbf F^{-T},
+ \label{eq:single-prime-first-piola-biot-transform}
+\end{align}
+where the last equality uses
+\(1-B=\phi_{s0}\left.\pder{\bar J}{J}\right|_p\), the energetic origin of
+the Biot transform.  The Mandel calculation sets \(\mbf g=\mbf0\) and uses
+\eqref{eq:verification-effective-first-piola} for \(\mbf P^{\prime\prime}\).

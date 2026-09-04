@@ -1,34 +1,36 @@
 # Vision
 
-This repository develops a companion paper to the multicomponent reactive flow
-theory. The paper derives and verifies the numerical evaluation of the
-finite-deformation nonlinear Biot coefficient, explains the nested implicit and
-automatic differentiation scheme used by MOOSE, and constructs reproducible
-pressure-controlled nonreacting studies.
+This repository develops a reproducible paper on the numerical evaluation of a
+finite-deformation Biot coefficient for a body containing one deformable solid
+and one water phase. The global fields are Q2 displacement, continuous Q1 water
+pressure, and Q2 solid partial density. Spatial solid mass balance evolves the
+partial density, while a general local constitutive update supplies intrinsic
+solid density, solid volume fraction, and any inelastic internal variables.
+Quadrature-point implicit differentiation of the complete local residual system
+supplies the fixed-pressure Biot coefficient. The elastic specialization is an
+analytical and centered-difference test of that general path. The
+water balance uses a barotropic pressure--density equation of state. The Biot
+transform maps the constitutive double-prime stress to the single-prime material
+stress and total mixture stress, and all local dependencies remain inside the
+automatic-differentiation graph used by the global MOOSE Newton solve.
 
-The parent multicomponent manuscript remains the source of truth for notation,
-material conservation, the fixed-equivalent-pressure Legendre transform, solid
-reference kinematics, and the nonlinear Biot stress split. This repository
-specializes those equations; it does not create an independent theory.
+The work has three coupled tracks:
 
-The work has three coordinated tracks:
+1. **Manuscript and publication.** Present the finite-deformation solid-water
+   equations, spatial phase-mass balances, general local update, elastic
+   verification specialization, Biot stress
+   transform, and automatic-differentiation implementation without reproducing
+   the general multicomponent derivation.
+2. **Implementation and verification.** Maintain a minimal MOOSE application
+   with Q2 displacement, continuous Q1 water pressure, Q2 solid partial density,
+   spatial solid and water mass conservation, the mineral and water equations
+   of state, and the nonlinear Biot coefficient.
+3. **Mandel benchmark.** Compare spatial water-pressure and displacement
+   profiles with the analytical Mandel solution and report two-dimensional
+   Biot-coefficient and density snapshots at several times. A finite-deformation
+   continuation demonstrates departure from the reference coefficient.
 
-1. **Derivation and publication.** Derive the constrained fixed-pressure
-   tangent directly from the registered solid-phase/component conservation,
-   volume, EOS, and equilibrium statements. Explain the inner local implicit
-   solve and the outer MOOSE AD chain rule.
-2. **MOOSE implementation and validation.** Trace the implementation to the
-   parent theory, verify the local tangent and global Jacobian, recover known
-   small-strain limits, and construct a genuine pressure-controlled Q2/EG
-   mechanics experiment.
-3. **Agent-assisted simulation workflow.** Reuse the parent repository's
-   composable input hierarchy, schemas, checks, and failure-triage workflow so
-   future agents can assemble auditable nonlinear-Biot experiments.
-
-Lawal and Kim's dunite data provide a pressure-dependent application. Their
-reported coefficient is calculated from measured drained and unjacketed
-moduli. Fitting the same drained-modulus data therefore supplies a constitutive
-calibration and implementation test, not independent validation. A defensible
-predictive study must use independent calibration data or a declared
-train/holdout design and must solve the pressure-controlled boundary-value
-problem rather than prescribe its deformation path.
+The repository must build the paper and reproduce its numerical evidence from
+a clean clone. It owns its manuscript workflow and agent skills. Shared MOOSE
+files remain synchronized with the authoritative general simulator repository
+through a hash-checked, conflict-detecting workflow.

@@ -1,33 +1,49 @@
-data_source:
-  article_doi: 10.1029/2025GL120883
-  dataset_doi: 10.5281/zenodo.20089570
-  figure: 3c
-  source_points: 46
-  formula_check_tolerance: 5.0e-15
-  status: passed
-constitutive_model:
-  name: exponential crack-closure compliance
-  equation: 1/K(P) = 1/K_inf + C_c exp(-P/P_c)
-  positive_tangent_required: true
-  calibration_target: measured drained tangent modulus K(P)
-  evidence_class: calibration
-moose_implicit_ad:
-  samples: [HT14, SP14, SP30]
-  maximum_implicit_tangent_error_tolerance: 2.0e-6
-  maximum_constraint_norm_tolerance: 2.0e-8
-  status: passed
-paper:
-  build_command: latexmk -lualatex -interaction=nonstopmode -halt-on-error -outdir=paper/build paper/main.tex
-  pages: 7
-  undefined_references: 0
-  status: passed
-interpretation:
-  lawal_kim_curve_status: calibrated constitutive-path comparison
-  independent_validation: false
-  reasons:
-    - the workbook coefficient is computed from the drained modulus used for calibration
-    - the current MOOSE pressure path uses solve=false and does not solve the hydrostatic boundary-value problem
-  required_next_steps:
-    - implement a pressure-controlled Q2 mechanics and P1+P0 EG pressure solve
-    - calibrate against independent volumetric-strain or microcrack observables, or declare train/holdout pressures before fitting
-    - predict held-out or independent Biot observations with a fixed acceptance tolerance
+schema_version: 1
+study: finite-deformation solid-water spatial-mass and fixed-pressure Biot verification
+evidence_class: implementation_verification_and_analytical_benchmark
+
+entries:
+  - id: ad_time_integrator_storage
+    governing_reduction: chain-rule time derivatives of the pulled-back solid and water accumulations
+    variables: [displacement, water pressure, solid partial density]
+    observables: [transient solves with backward Euler and BDF2, solid reference-mass drift]
+    authoritative_reference: paper/sections/finite_deformation_biot.tex
+    tolerance: backward-Euler and BDF2 smoke solves succeed; solid reference-mass drift L2 <= 1.0e-9
+    result: moose_app/test/tests/mandel_implicit_biot/tests
+    status: pass
+
+  - id: local_elastic_tangent
+    governing_reduction: general AD-valued implicit differentiation of the local material-mass and elastic mineral-EOS residuals at fixed intrinsic phase pressure and fixed referential solid mass J rho_s, with the elastic closed form used only as an oracle
+    variables: [solid-reference Jacobian, solid partial density, water pressure]
+    observables: [general constrained-material versus elastic-oracle Biot error, centered-difference Biot error, solid reference-mass drift, mineral-EOS residual]
+    authoritative_reference: paper/sections/finite_deformation_biot.tex
+    tolerance: Biot identity and mineral-EOS residual L2 <= 1.0e-12; solid reference-mass drift L2 <= 1.0e-9
+    result: validation/mandel_implicit_biot.yml
+    status: pass
+
+  - id: outer_ad_jacobian
+    governing_reduction: transient Q2 displacement, Q1 pressure, and Q2 solid partial-density residual with momentum, solid storage, water storage, and Darcy transport
+    variables: [displacement, water pressure, solid partial density]
+    observables: [PETSc AD-to-finite-difference Jacobian ratio at each Newton state]
+    authoritative_reference: moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i
+    tolerance: ratio <= 1.0e-7
+    result: moose_app/test/tests/mandel_implicit_biot/tests
+    status: pass
+
+  - id: mandel_pressure_and_displacement
+    governing_reduction: water-filled plane-strain Mandel consolidation obtained by linearizing the spatial solid partial-density balance, local mineral EOS, and exact J(1-phi_s)rho_f(p) balance
+    variables: [Q2 displacement, Q1 water pressure, Q2 solid partial density]
+    observables: [spatial pressure profiles, spatial displacement profiles, Mandel-Cryer pressure maximum, applied load, exact reference-water accumulation]
+    authoritative_reference: Cheng-Detournay analytical Mandel series
+    tolerance: pressure scale error <= 4.0e-2; side displacement error <= 8.0e-3; load error <= 3.0e-3
+    result: validation/mandel_implicit_biot.yml
+    status: pass
+
+  - id: finite_deformation_continuation
+    governing_reduction: ten-percent platen-compression continuation of the solid-water problem
+    variables: [displacement, water pressure, solid intrinsic density, solid volume fraction]
+    observables: [Biot coefficient departure, two-dimensional Biot field, two-dimensional solid-density field, mesh and time sensitivity, temporal decay of the referential-mass L2 diagnostic]
+    authoritative_reference: exact implicit-Biot identity evaluated along the solved path
+    tolerance: Biot identity and mineral-EOS residual L2 <= 1.0e-12; solid reference-mass L2 drift decreases when the backward-Euler step is halved; mesh and time sensitivity metrics are reported
+    result: validation/mandel_large_deformation.csv
+    status: pass

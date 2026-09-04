@@ -1,33 +1,21 @@
-# Agent Request Router
-
-Use this tree before repository work. It does not replace `AGENTS.md`,
-`VISION.md`, `paper/main.tex`, or `paper/defs.tex`.
-
-## Startup
+# Nonlinear Biot request router
 
 1. Read `AGENTS.md` and `VISION.md`.
-2. Classify the immediate owner as `theory-manuscript`,
-   `moose-implementation`, `validation`, `agent-workflow`, or
-   `cross-track-planning`.
-3. For notation, equations, labels, or references, read this paper's
-   `paper/main.tex` and `paper/defs.tex` and the parent manuscript's `main.tex`
-   and `defs.tex`.
+2. Check `git status --short`.
+3. For manuscript work, read `paper/main.tex`, `paper/defs.tex`, and the
+   relevant included section.
+4. For MOOSE work, run `tools/sync_biot_moose.py check`, read the setup skill,
+   and identify the controlling manuscript equation and validation gate.
 
-## Route
+| Request | Route |
+| --- | --- |
+| Interpret or revise manuscript text | manuscript source and narrative skill |
+| Rendered equation number | equation resolver, then source |
+| Citation or attributed equation | citation verifier and local source PDF |
+| Derivation or tangent audit | derivation auditor and implicit-AD section |
+| MOOSE material or kernel change | residual traceability and synchronization contract |
+| Mandel result or figure | analytical verifier, result provenance, and plotting script |
+| Build or reproduce | LaTeX or MOOSE setup skill, then repository validation |
 
-| Request | Primary route | Required companion |
-| --- | --- | --- |
-| Interpret a definition or equation | Source-based manuscript answer | Parent and local TeX sources |
-| Change manuscript prose or equations | Manuscript edit | `manuscript_edit.md` |
-| Rendered equation number | Equation lookup | `equation_number_lookup.md` |
-| Symbol or notation change | Propagation plan | `../checklists/pre_edit_scope.md` |
-| Citation, DOI, source support | Citation verification | `../checklists/citation_verification.md` |
-| MOOSE object or weak form | Implementation traceability | `validation/theory_traceability.yml` |
-| Validation or pressure experiment | Acceptance matrix | `validation/acceptance.yml` |
-| Input-deck generation | Structured problem specification | `../schemas/problem_spec.schema.json` |
-| Failed MOOSE run | Layered failure triage | `../runbooks/moose_failure_triage.md` |
-
-For implementation or validation, map each object and observable to a parent
-manuscript equation, assumption, or reduction. For underspecified simulation
-setups, ask only questions that change equations, closures, boundary or initial
-conditions, or the validation target.
+Do not route this repository through SPE, black-oil, reaction, phase-transfer,
+or enriched-Galerkin workflows.

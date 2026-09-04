@@ -16,7 +16,7 @@ MOOSE properties, validation observables, and limiting reductions.
 
 ## Edit rules
 
-- Preserve the parent manuscript notation.
+- Preserve the notation established in `paper/main.tex` and `paper/defs.tex`.
 - Do not introduce helper symbols when primitive variables suffice.
 - Number and descriptively label new displays.
 - Keep equations grammatical and use aligned steps for multiple equalities.

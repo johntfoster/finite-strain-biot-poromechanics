@@ -13,6 +13,8 @@
 
 - Confirm source-equation traceability for every changed MOOSE object.
 - Run the narrowest relevant optimized build and quantitative test.
+- Push shared changes with `tools/sync_biot_moose.py push` and confirm the
+  master/Biot hashes agree.
 - Update `validation/theory_traceability.yml` for durable changes or open gaps.
 
 ## Validation
@@ -23,5 +25,5 @@
 
 ## Agent workflow
 
-- Validate schema or template changes with a representative minimal example.
-- Keep object names and include fragments consistent with the parent MOOSE app.
+- Validate routing, path, or synchronization changes with a representative
+  local command.

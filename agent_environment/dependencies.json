@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "harnesses": {
+    "claude": {"skills_dir": ".claude/skills"},
+    "codex": {"skills_dir": ".codex/skills"},
+    "copilot": {"skills_dir": ".github/skills"},
+    "opencode": {"skills_dir": ".opencode/skills"}
+  },
+  "routes": [
+    {
+      "all": ["equation"],
+      "skills": ["latex-equation-integrity-checker", "latex-equation-resolver"],
+      "profiles": ["manuscript"]
+    },
+    {
+      "any": ["citation", "bibliography", "source paper"],
+      "skills": ["latex-citation-verifier", "canonical-reference-finder"],
+      "profiles": ["research"]
+    },
+    {
+      "any": ["build moose", "run moose", "moose application", "moose test", "kernel"],
+      "skills": ["setup-moose-conda", "moose-residual-traceability-planner"],
+      "profiles": ["moose"]
+    }
+  ],
+  "profiles": {
+    "manuscript": {
+      "description": "Biot manuscript interpretation, editing, equation resolution, notation, and narrative review.",
+      "triggers": ["manuscript", "latex", "equation", "notation", "derivation", "writing"],
+      "skills": ["latex-*", "manuscript-*"],
+      "checks": [{"argv": ["python3", "tools/check_dependency_profile.py", "manuscript"]}],
+      "provision": [{"argv": ["python3", "tools/provision_latex.py"]}]
+    },
+    "research": {
+      "description": "Research-PDF ingestion and citation verification.",
+      "triggers": ["research pdf", "source paper", "citation", "bibliography"],
+      "skills": ["latex-research-ingest", "latex-citation-verifier", "canonical-reference-finder"],
+      "checks": [{"argv": ["python3", "tools/check_dependency_profile.py", "research"]}],
+      "provision": [{"argv": ["python3", "tools/provision_python_profile.py", "research"]}]
+    },
+    "moose": {
+      "description": "Pinned MOOSE build, run, and nonlinear-Biot traceability workflow.",
+      "triggers": ["moose", "kernel", "finite element", "simulation", "run tests"],
+      "skills": ["moose-*", "setup-moose-*"],
+      "checks": [{"argv": ["python3", "tools/check_dependency_profile.py", "moose"]}],
+      "provision": [{"argv": ["agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh", "setup"]}]
+    },
+    "publication": {
+      "description": "Public-release preparation for the manuscript and reproducibility package.",
+      "triggers": ["submission", "release", "publish"],
+      "skills": [],
+      "checks": [{"argv": ["python3", "tools/check_dependency_profile.py", "publication"]}],
+      "provision": [{"argv": ["python3", "tools/provision_python_profile.py", "publication"]}]
+    }
+  }
+}
