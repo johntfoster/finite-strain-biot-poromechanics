@@ -9,9 +9,22 @@ import os
 
 import matplotlib
 matplotlib.use("Agg")
-# The matplotlib PGF backend needs a TeX engine; the repository toolchain has
-# lualatex (no xelatex/dvipng), so select it explicitly for .pgf emission.
-matplotlib.rcParams["pgf.texsystem"] = "lualatex"
+# Match the repository's manuscript-figure PGF conventions (see
+# plot_mandel_extended_results.py): rcfonts=False lets the \input'ed pgf inherit
+# the document fonts (lmodern), and lualatex is the installed TeX engine.
+matplotlib.rcParams.update(
+    {
+        "pgf.texsystem": "lualatex",
+        "pgf.rcfonts": False,
+        "font.family": "serif",
+        "font.size": 9.0,
+        "axes.labelsize": 9.0,
+        "axes.titlesize": 9.0,
+        "xtick.labelsize": 8.0,
+        "ytick.labelsize": 8.0,
+        "legend.fontsize": 8.0,
+    }
+)
 import matplotlib.pyplot as plt
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
