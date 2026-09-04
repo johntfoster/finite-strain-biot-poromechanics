@@ -9,6 +9,9 @@ import os
 
 import matplotlib
 matplotlib.use("Agg")
+# The matplotlib PGF backend needs a TeX engine; the repository toolchain has
+# lualatex (no xelatex/dvipng), so select it explicitly for .pgf emission.
+matplotlib.rcParams["pgf.texsystem"] = "lualatex"
 import matplotlib.pyplot as plt
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,6 +47,10 @@ ax2.grid(alpha=0.3)
 fig.tight_layout()
 fig.savefig(png_path, dpi=200)
 print("wrote", png_path)
-# Note: a manuscript-convention .pgf can be emitted with the matplotlib PGF
-# backend in an environment that provides a TeX engine
-# (matplotlib.backends.backend_pgf FigureCanvasPgf(...).print_pgf(...)).
+
+# Manuscript-convention .pgf (matplotlib PGF backend), consumed with \input{...}.
+from matplotlib.backends.backend_pgf import FigureCanvasPgf  # noqa: E402
+
+pgf_path = os.path.join(ROOT, "figures", "poroplastic_delta_b.pgf")
+FigureCanvasPgf(fig).print_pgf(pgf_path)
+print("wrote", pgf_path)
