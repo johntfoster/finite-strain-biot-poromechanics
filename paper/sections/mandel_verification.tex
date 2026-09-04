@@ -511,6 +511,68 @@ with mean stress into the compactive regime \citep{ingraham2017evolution}.
 \end{figure}
 \FloatBarrier
 
+\subsection{Drained sandstone hydrostatics as a compactive target}
+\label{sec:mandel-sandstone-comparison}
+
+Published drained measurements on high-porosity Castlegate sandstone
+\citep{ingraham2017evolution} supply a compactive reference for the
+pore-allocation mechanism of
+Sec.~\ref{sec:inelastic-plastic-driving-stress}.  Along drained hydrostatic
+paths the reported coefficient, obtained from unload--reload bulk moduli as
+\(\alpha=1-K/K_m\), decreases monotonically from about \(0.88\) at low mean
+stress to about \(0.80\) at \(140\)\,MPa effective, while the drained
+tangent modulus stiffens from about \(6\) to \(12\)\,GPa and the porosity
+falls from \(26\%\) to about \(14\%\) (post-test).
+\Cref{fig:sandstone-comparison} places those points against the coefficient
+of the present model and against two calibrations of the drained stiffening.
+
+The constant-modulus finite-strain coefficient \(B_{\mathrm{el}}(J)\) of
+Sec.~\ref{sec:elastic-verification-closure}, evaluated with the drained
+modulus fixed at its low-stress value, declines by less than \(0.01\) over the
+measured path (dashed curve): the elastic closure contains no drained
+stiffening, so it cannot reproduce the measured drop of about \(0.08\).  Two
+mutually consistent calibrations close that gap within the specimen scatter.
+One attributes the decline to a pressure-dependent drained tangent modulus
+\(K(P_{\mathrm{eff}})\) against a nearly fixed grain reference, so
+\(\alpha=1-K/K_m\) falls because the drained modulus stiffens faster than the
+unjacketed one.  The other attributes it to plastic porosity loss: a
+porosity-dependent drained modulus \(K(\phi)\) with compactive pore
+allocation \(a^p<1\) (the compaction branch \(\dot\eta\le0\) of
+\eqref{eq:distension-yield}) lowers the coefficient through
+\eqref{eq:poroplastic-biot-correction}, and the same law that reproduces
+\(\alpha(P)\) implies the monotone porosity reduction in
+\cref{fig:sandstone-comparison}, terminating at the independently measured
+post-test porosity.  The two readings cannot be separated by \(\alpha(P)\)
+alone; the compactive one is anchored by the porosity measurement.
+
+For the present model the comparison is therefore a target, not a validation.
+Reproducing it requires engaging the compactive branch of the
+pore-allocation mechanism together with a porosity- or pressure-dependent
+drained stiffness, a constitutive ingredient that the constant-modulus
+elastic closure used in the verification sections does not contain.  With that
+ingredient added, \cref{fig:sandstone-comparison} becomes a quantitative
+model--data check rather than a statement of the missing physics.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/sandstone_comparison.pgf}
+ \caption{Drained hydrostatic Castlegate sandstone
+ \citep{ingraham2017evolution}.  Left: measured Biot coefficient (circles;
+ effective mean stress is the applied mean stress minus 6.89\,MPa), the
+ constant-modulus finite-strain elastic coefficient of the present model over
+ the same nominal hydrostatic path (dashed), and a calibration of the
+ drained-modulus stiffening required to match the data (solid).  Right:
+ compactive (porosity-loss) reading of the same data: porosity
+ \(\phi(P)\) implied by a porosity-dependent drained modulus anchored at the
+ initial and post-test porosities (\(0.26\) and \(0.14\)), and the compactive
+ pore allocation \(a^p(P)=\phi_{s0}/(1-\phi)\), \(\phi_{s0}=0.74\); the
+ star marks the independently measured post-test porosity.  The calibrated
+ and porosity curves are not predictions of the present constant-modulus
+ model.}
+ \label{fig:sandstone-comparison}
+\end{figure}
+\FloatBarrier
+
 \subsection{Scope and reproducibility}
 \label{sec:mandel-scope-and-reproducibility}
 
