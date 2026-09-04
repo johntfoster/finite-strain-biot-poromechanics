@@ -41,16 +41,21 @@ compression continuation decreases the spatially averaged coefficient from
 \(0.600\) to \(0.51417\).  Together, the two calculations exercise
 finite-deformation momentum, solid mass conservation, mineral compressibility,
 nonlinear water accumulation, Darcy transport, and the nonlinear Biot transform in
-one monolithic solve.  The continuation is a synthetic demonstration rather
-than physical validation.
+one monolithic solve.  These reported results exercise the inactive-mechanism
+limit of the inelastic update of Sec.~\ref{sec:plastic-loading-incremental-rate}:
+with no active yield (\(\Delta\gamma=0\), \(a^p=1\)), the poroplastic return map
+collapses exactly onto the elastic closure above, which the agreement verifies.
+The ten-percent continuation is a synthetic demonstration rather than physical
+validation.
 
-The elastic mineral law supplies the closed-form verification case used here.  It also gives
-a storage coefficient that differs from the classical single-mineral Biot
-relation, so the Mandel comparison validates the discretization for this
-selected closure rather than the closure itself.  The present evidence is
-limited to a saturated, isothermal, homogeneous elastic solid--water test and
-the reported mesh/time sensitivity checks.  Applying the implemented general
-interface to a particular inelastic mineral requires its local residuals,
-history update, and active-set-consistent derivatives, while conservative
-time-discrete accumulation, systematic convergence studies, and independent
-physical validation remain future work.
+The paper's contribution is the inelastic construction itself: the aggregate
+elastic--plastic split with scalar pore allocation \(a^p\), the single-prime
+Drucker--Prager-type driving stress that requires the implicit coefficient, and
+the rate-independent backward-Euler return map embedded in the fixed-pressure
+automatic-differentiation local system of
+Sec.~\ref{sec:implicit-ad-implementation}.  The present evidence exercises the
+inactive-mechanism (elastic) limit of that system and verifies its collapse onto
+the closed-form elastic closure.  Activating yield in the local system, with
+inelastic compression demonstrations and the corresponding evolution of the
+coefficient, together with systematic convergence studies and independent
+physical validation, remains the next stage.
