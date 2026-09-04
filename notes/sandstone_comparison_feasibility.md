@@ -1,70 +1,73 @@
-# Sandstone comparison: A (feasibility) result and B (calibration) plan
+# Sandstone comparison: A (feasibility) result and B (calibration) status
 
 Date: 2026-09-04. Owner: nonlinear-Biot manuscript (experimental-comparison
-track).  Status: A completed (uncalibrated feasibility); B planned (see below).
-Data source: Ingraham et al. 2017 (Castle-gate sandstone), from the OSTI copy
-in `references/pdfs/` (watermarked manuscript; verify against the published
-version before any final comparison figure).
+track).  Data source: Ingraham et al. 2017, Castlegate sandstone, the PUBLISHED
+copy in `references/pdfs/ingraham-2017-biot-coefficient-high-mean-stresses-
+sandstone-published.pdf` (Elsevier, IJRMSS 96 (2017) 1-10,
+doi:10.1016/j.ijrmms.2017.04.004).  This resolves the earlier caveat that only a
+watermarked OSTI copy was available.
 
-## A - Feasibility model and overlay
+## B, step 1 - calibrated elastic pressure-stiffening model (DONE)
 
 Script: `scripts/poroplastic_sandstone_feasibility.py`.
-Overlay figure: `figures/sandstone_feasibility_overlay.png`.
+Figure: `figures/sandstone_feasibility_overlay.png`.
+Extraction detail: `notes/experimental_data_extraction.md` (authoritative
+published Table 3 hydrostatic rows).
 
-Model (single material point, drained hydrostatic, all idealizations stated in
-the script docstring):
-- Castle-gate-approximate parameters: phi0 = 0.74 (26% porosity), drained bulk
-  K0 = 7.5 GPa, grain modulus K_s = 55 GPa (so small-strain B0 = 1 - K0/K_s
-  ~ 0.86, matching the measured ~0.87).
-- Drained hydrostatic relation P_eff = -K0 ln(J); repo finite-deformation
-  elastic B_el(J); idealized compactive cap for P_eff > P_c with pore
-  allocation a^p = exp(-(P_eff-P_c)/K_pl) and B_pl = 1 - (1 - B_el)/a^p
-  (placeholder P_c = 80 MPa, K_pl = 1.5 GPa).
+Fit (P_eff in MPa = applied - 6.89; moduli in MPa), computed in the script from
+the authoritative table:
 
-Result (uncalibrated): B declines from ~0.864 at low stress to ~0.84
-(elastic-only) / ~0.84 (with cap) at ~140 MPa and ~0.79 / ~0.76 at ~270 MPa.
-Overlay on the extracted Ingraham hydrostatic points (B ~ 0.80-0.88 over
-~15-140 MPa effective, large specimen scatter): the model reproduces the
-monotone decrease and lies within the data band but is not yet discriminating,
-because (i) the data scatter is ~ +/-0.03, (ii) the drained bulk modulus K in
-the experiment stiffens strongly with mean stress (Table 3: ~6.9 -> 11.9 GPa
-over 22 -> 144 MPa), which is NOT yet in the model (constant K0), and (iii) the
-reliable data range ends near ~160 MPa effective.
+```
+Km(P_eff) = 51230 + 69.0  P_eff                    (unjacketed)
+K(P_eff)  =  5925 + 50.63 P_eff - 0.0602 P_eff^2   (drained tangent)
+alpha_el(P_eff) = 1 - K(P_eff)/Km(P_eff)
+```
 
-## B - Calibration plan (from Ingraham 2017)
+Result:
+- alpha0 (P_eff -> 0) = 0.884, consistent with the measured low-stress
+  cluster (~0.86-0.88).
+- The elastic stiffening model reproduces the measured hydrostatic alpha
+  decline (~0.87 -> ~0.80 over 15 -> 140 MPa effective) with RMS residual 0.008,
+  equal to the specimen scatter (~0.009).  No inelastic/compactive contribution
+  is required to explain alpha(P) on the drained hydrostatic path.
+- The constant-modulus repo elastic coefficient (B_el(J), fixed K0/Ks, drained
+  modulus does not stiffen) is nearly flat (B ~ 0.884 -> 0.881) and misses the
+  data with RMS 0.041 (about 5x worse).
 
-Parameters / targets:
-- phi0 = 0.74  (26 +/- 0.3% porosity).
-- Grain/unjacketed modulus K_s ~ K_m: Table 3 unjacketed values ~52-64 GPa over
-  the load path; take K_s ~ 55 GPa (or use the measured per-load K_m).
-- Small-strain Biot limit B0 ~ 0.87-0.88 -> drained K0 = (1-B0) K_s ~ 7-8 GPa.
-- Pressure-dependent drained bulk: fit K(P) from Table 3 "Bulk Modulus" vs mean
-  stress (~6.9 at 22 MPa to ~11.9 GPa at 144 MPa).  This stiffening is the
-  PRIMARY driver of the measured B decline and must enter the model (replace
-  the constant-K0 hydrostatic closure with a K(P) closure, self-consistently in
-  B_el).
-- Compactive (cap) onset P_c and plastic modulus K_pl: fit to the hydrostatic
-  volume-strain departure from the elastic K(P) trend; placeholders P_c ~
-  80-100 MPa, K_pl ~ 1-3 GPa.  In the current cone-DP MOOSE material pure
-  hydrostatic loading cannot activate yield, so reproducing the compactive part
-  requires the volumetric/cap mechanism (the manuscript's second yield surface)
-  in MOOSE.
-- Verification targets: B0 ~ 0.87; B(137 MPa eff) in the ~0.80-0.85 cluster;
-  monotone decline; porosity reduction from a^p if compactive.
+Conclusion (honesty, for the manuscript):
+1. The measured Castlegate hydrostatic alpha(P) decline is an ELASTIC
+   tangent-stiffening signature: the drained bulk modulus stiffens (5.9 ->
+   ~12 GPa) faster than the unjacketed modulus (52 -> 63 GPa).  This matches the
+   authors' own interpretation in the paper.
+2. The repository's constant-modulus finite-deformation elastic B_el(J) cannot
+   capture this, and the poroplastic pore-allocation a^p mechanism is NOT the
+   right tool for the pure hydrostatic alpha(P) path (an unload-loop alpha is an
+   elastic tangent quantity).  Matching Castlegate requires a pressure/state-
+   dependent drained bulk modulus as a separate, labeled constitutive
+   ingredient.
+3. The poroplastic B feedback remains the candidate for the genuinely
+   inelastic / deviatoric channel (single-element demonstration), not for this
+   hydrostatic data set.
 
-Steps:
-1. Add K(P) drained stiffening to the feasibility model and refit K0, K_s so
-   B(P) tracks the elastic decline; quantify how much of the measured decline
-   is elastic stiffening vs inelastic.
-2. Add the compactive/cap mechanism (a^p < 1) and fit P_c, K_pl to the
-   hydrostatic volume-strain data (endpoints only in the watermarked copy:
-   e.g., final volume strains ~0.057 for the most compacted hydrostatic
-   specimen; obtain the published stress-strain tables if available).
-3. Implement the same compactive branch + hydrostatic driver in the MOOSE
-   material and reproduce the feasibility overlay from the actual solver.
-4. Produce a labeled model-vs-data figure for the manuscript.
+## A - earlier feasibility model (superseded)
 
-Caveats (honesty): the freely available copy is watermarked and has no full
-hydrostatic stress-strain table; a defensible calibration needs the published
-version (and ideally independent measurements of drained K(P) and porosity
-loss).  Keep any comparison figure clearly labeled with the data provenance.
+The previous committed model used a constant drained K0 plus an idealized
+compactive cap (a^p < 1).  It was uncalibrated, lay inside the broad data band,
+and was not discriminating.  That model has been REPLACED by the calibrated
+elastic stiffening model above (B step 1); the constant-modulus curve in the new
+figure plays the role of the "no stiffening" reference.
+
+## Remaining B steps (revised)
+
+1. Decide, with the author, whether to add a pressure-stiffening drained
+   elastic law to the MOOSE model so the hydrostatic comparison becomes a true
+   model-vs-data check (a distinct ingredient from the poroplastic a^p
+   mechanism).  Until then, do NOT claim the poroplastic single-element model
+   reproduces the Ingraham hydrostatic alpha(P) data.
+2. If the compactive (cap) branch is pursued for Castlegate, fit it to the
+   PERMANENT volume strain (Fig. 3d / volume-strain data), not to alpha(P);
+   placeholders P_c, K_pl are not anchored by the hydrostatic alpha data.
+3. Any final comparison figure must state data provenance (published copy,
+   Table 3) and label elastic-stiffening vs inelastic mechanisms separately.
+   Produce the PGF variant (lualatex conventions) only when the figure enters
+   the manuscript.
