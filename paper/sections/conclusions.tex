@@ -53,9 +53,14 @@ elastic--plastic split with scalar pore allocation \(a^p\), the single-prime
 Drucker--Prager-type driving stress that requires the implicit coefficient, and
 the rate-independent backward-Euler return map embedded in the fixed-pressure
 automatic-differentiation local system of
-Sec.~\ref{sec:implicit-ad-implementation}.  The present evidence exercises the
+Sec.~\ref{sec:implicit-ad-implementation}.  The Mandel evidence exercises the
 inactive-mechanism (elastic) limit of that system and verifies its collapse onto
-the closed-form elastic closure.  Activating yield in the local system, with
-inelastic compression demonstrations and the corresponding evolution of the
-coefficient, together with systematic convergence studies and independent
-physical validation, remains the next stage.
+the closed-form elastic closure.  At the material level the inelastic update is
+now activated and verified separately: the single-point demonstration of
+Sec.~\ref{sec:poroplastic-demonstration} returns to the yield surface with
+\(a^p>1\), and the fixed-pressure correction
+\(B=1-(1-B_{\mathrm{el}})/a^p\) reproduces the elastic coefficient exactly
+when yield is inactive and raises the coefficient by up to \(0.061\) over the
+elastic value at \(30\%\) compression.  Extending this activated update to the
+coupled Mandel-scale boundary-value problem, with systematic convergence
+studies and independent physical validation, remains the next stage.

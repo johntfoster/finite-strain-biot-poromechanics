@@ -452,6 +452,63 @@ supplies the mineral-compression response and therefore accompanies the spatial
 evolution of \(B\).
 \FloatBarrier
 
+\subsection{Single-element poroplastic demonstration}
+\label{sec:poroplastic-demonstration}
+
+The activated inelastic update is demonstrated at a single material point
+under prescribed drained homogeneous compression.  The point is loaded by a
+uniform diagonal deformation gradient (uniaxial strain) and is otherwise the
+same drained skeleton and elastic mineral used in the Mandel calculations:
+\(K=1.0\ \mathrm{GPa}\), \(G=0.75\ \mathrm{GPa}\), \(K_s=2.5\
+\mathrm{GPa}\), \(\phi_{s0}=0.9\), with the ideal (constant-strength)
+Drucker--Prager surface \(M=0.2\), dilation slope \(\beta=0.4\).  The
+poroplastic return map of
+Sec.~\ref{sec:plastic-loading-incremental-rate} reduces, at constant
+strength, to the closed-form radial return for the increment \(\Delta\gamma\);
+the plastic pore allocation follows as
+\(a^p=\exp(\beta\Delta\gamma)\), and the fixed-pressure, fixed-history
+tangent with \(v=\bar J/a^p\) gives the coefficient correction
+\begin{equation}
+ B
+ =1-(1-B_{\mathrm{el}})/a^p,
+ \label{eq:poroplastic-biot-correction}
+\end{equation}
+where \(B_{\mathrm{el}}\) is the elastic coefficient of the same drained
+skeleton and mineral.
+
+Two checks verify the update.  First, with yield inactive (a large
+\(M\)), the return map collapses exactly onto the elastic response:
+\(\Delta\gamma=0\), \(a^p=1\), and \eqref{eq:poroplastic-biot-correction}
+gives \(B=B_{\mathrm{el}}\) (\emph{elastic collapse}, \(\Delta B=0\)).
+Second, with the surface active, the returned stress lands on the yield
+surface to a residual of order \(10^{-9}\) and the pore allocation obeys
+\(a^p=\exp(\beta\Delta\gamma)\).  \Cref{fig:poroplastic-delta-b} shows the
+effect of activating yield on the coefficient under increasing compression:
+the elastic coefficient \(B_{\mathrm{el}}\) decreases with finite strain,
+while \(B_{\mathrm{pl}}=1-(1-B_{\mathrm{el}})/a^p\) remains above it, with
+\(\Delta B=B_{\mathrm{pl}}-B_{\mathrm{el}}\) growing from \(0.005\) at
+\(5\%\) to \(0.061\) at \(30\%\) axial compression.  The single-point
+demonstration isolates the mechanism by which inelastic pore allocation
+modifies the coefficient that a constant or elastic-only \(B\) cannot
+produce; published drained hydrostatic measurements on high-porosity
+sandstone report a similar monotone decrease of the drained Biot coefficient
+with mean stress into the compactive regime \citep{ingraham2017evolution}.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/poroplastic_delta_b.pgf}
+ \caption{Single-point poroplastic demonstration under drained homogeneous
+ compression.  Left: elastic (\(B_{\mathrm{el}}\)) and
+ pore-allocation-corrected (\(B_{\mathrm{pl}}\)) Biot coefficients vs axial
+ compression over the range in which the elastic closed form is positive;
+ the dotted line marks the small-strain limit \(B_0=0.6\).  Right:
+ \(\Delta B=B_{\mathrm{pl}}-B_{\mathrm{el}}\), which grows with
+ compression as inelastic pore allocation (\(a^p>1\)) raises the
+ coefficient toward unity.}
+ \label{fig:poroplastic-delta-b}
+\end{figure}
+\FloatBarrier
+
 \subsection{Scope and reproducibility}
 \label{sec:mandel-scope-and-reproducibility}
 
@@ -469,9 +526,11 @@ Sec.~\ref{sec:inelastic-plastic-driving-stress}: with the isochoric
 true-plastic and scalar pore-allocation mechanisms active, the same implicit
 solve returns \(B\) from the active local system, and the poroplastic driving
 stress follows through
-\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\).  The inelastic
-demonstration and its verification are reported with the extended
-implementation.
+\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\).  The activated
+inelastic update is demonstrated at the single material point in
+Sec.~\ref{sec:poroplastic-demonstration}; the coupled, momentum-active
+Mandel-scale demonstration with the active set engaged remains the next
+extension.
 
 The source archive accompanying this article contains the MOOSE objects, input
 deck, verification driver, curated CSV files, and figure scripts.  From the
