@@ -107,13 +107,18 @@ Interpretation and honesty notes:
 
 ## Remaining B steps (revised)
 
-1. (Author decision) Formalize the compactive-cap calibration as a script +
-   overlay figure (elastic-fit vs compactive/porosity model vs data, with the
-   inferred phi(P) or a^p(P) panel), then implement the compactive (cap)
-   branch + hydrostatic driver in the MOOSE material
-   (`ADDruckerPragerPoroplasticBiotMaterial` currently carries only the
-   dilative cone; the volumetric surface f_v = p - p_y, compaction eta-dot <= 0
-   is in the manuscript theory, Sec. 2.4, but not yet in code).
+1. DONE (formalized): compactive-cap calibration script
+   `scripts/castlegate_compactive_calibration.py` and two-panel figure
+   `figures/sandstone_compactive_calibration.png` (panel a: data vs elastic
+   stiffening fit vs compactive porosity model - both reproduce alpha(P), RMS
+   0.008 / 0.009; panel b: inferred phi(P) and compactive a^p(P) with the
+   measured post-test porosity star).  Numbers echoed there: K_pl ~ 1.15 GPa,
+   P_y ~ 0 MPa effective, a^p 1.0 -> 0.86 at 173 MPa eff.
+   OPEN (author decision): implement the compactive (cap) branch + hydrostatic
+   driver in the MOOSE material (`ADDruckerPragerPoroplasticBiotMaterial`
+   currently carries only the dilative cone; the volumetric surface
+   f_v = p - p_y, compaction eta-dot <= 0 is in the manuscript theory,
+   Sec. 2.4, but not yet in code).
 2. Any final comparison figure must state data provenance (published copy,
    Table 1 + Table 3) and label the elastic vs compactive contributions.
    Produce the PGF variant (lualatex conventions) only when the figure enters
