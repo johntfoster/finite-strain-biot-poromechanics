@@ -25,6 +25,8 @@ mandel: test
 
 figures:
 	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_mandel_extended_results.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_poroplastic_delta_b.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_sandstone_comparison.py
 
 paper:
 	$(LATEXMK) -lualatex -interaction=nonstopmode -halt-on-error \
