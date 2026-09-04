@@ -59,6 +59,26 @@ and the general coefficient returned to the stress calculation is
 Thus an inelastic model changes \(B\) through every active component of
 \(\mbf y_J\), rather than through a prescribed elastic modulus ratio.
 
+The multiplicative structure of
+Sec.~\ref{sec:inelastic-plastic-driving-stress} identifies the inelastic
+variables that join \(\mbf y\): the isochoric true-plastic flow
+\(\bar{\mbf F}^p\) and the scalar plastic pore allocation \(a^p\), together
+with their hardening state.  Their flow, consistency, and hardening equations
+join \(\mbf R\); the update is the rate-independent backward-Euler return
+mapping of Sec.~\ref{sec:plastic-loading-incremental-rate}, so on the active
+set the discrete consistency \eqref{eq:discrete-consistency} is one scalar
+component of \(\mbf R\), and the active set itself is selected by the converged
+return mapping.  The local Jacobian \(\pder{\mbf R}{\mbf y}\) on the active
+set is formed by the same automatic differentiation that carries the global
+residual, so the fixed-pressure tangent
+\eqref{eq:implicit-local-state-tangent} is the exact algorithmic tangent of the
+inelastic update.  The plastic driving stress is the single-prime stress
+\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\), which therefore
+depends on the coefficient returned by the same implicit solve; the
+fixed-pressure tangent above closes that coupling.  The reported calculations
+exercise the inactive-mechanism limit \(\bar{\mbf F}^p=\mbf I\), \(a^p=1\), in
+which \(\mbf y=(\bar\rho_s)\).
+
 The reported elastic calculations provide a closed-form test of this general
 path.  Their only local state variable is \(\mbf y=(\bar\rho_s)\), and its
 constitutive residual is

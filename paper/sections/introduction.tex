@@ -67,7 +67,25 @@ The same residual-vector interface admits inelastic internal variables and an
 active-set-consistent tangent without assigning a balance law to a constitutive
 state.
 
-This paper has three objectives.  First, it states the single-solid,
+The distinction between fixed-pressure and fixed-intrinsic-density stress
+becomes decisive once the skeleton yields.  In poroplasticity the yield
+function and plastic potential are written in the single-prime effective
+stress \(\bs\sigma^{\prime}\), the deformation conjugate at fixed intrinsic
+density; the dissipation analysis of the multicomponent theory shows that the
+isochoric true-plastic mechanism is driven by the deviatoric part of
+\(\bs\sigma^{\prime}\) and the pore-allocation mechanism by its mean part
+\citep{fosterxu2025}.  Reconstructing that driving stress from the
+fixed-pressure skeleton stress,
+\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\), requires the
+coefficient \(B\), which is itself the fixed-pressure tangent of the active
+local system.  An implicit, history-dependent \(B\) is therefore not
+incidental bookkeeping but the object that makes a poroplasticity model with a
+compressible mineral well posed.  We give that construction for a solid whose
+inelastic response combines an isochoric true-plastic mechanism with a scalar
+plastic pore allocation, and we verify its elastic limit against the closed
+forms and the Mandel benchmark.
+
+This paper has four objectives.  First, it states the single-solid,
 single-water finite-deformation equations used by the implementation.  Second,
 it specifies the spatial solid and water mass balances, their reference
 pull-backs, the elastic mineral and water EOSs, and the fixed-pressure Biot
@@ -83,3 +101,12 @@ prescribed from that solution.  The independent benchmark observables are
 therefore pressure, lateral displacement, and recovered platen load.  The
 continuation is a synthetic discrimination test rather than physical
 validation.
+
+Fourth, it develops the inelastic construction introduced in the
+fixed-pressure theory: an isochoric true-plastic mechanism together with a
+scalar plastic pore allocation, whose driving stress is the single-prime
+stress \(\bs\sigma^{\prime}\) reconstructed from the fixed-pressure skeleton
+stress through the Biot coefficient returned by the active implicit solve.
+The elastic closure verifies the inactive-mechanism limit of that
+construction, and the inelastic demonstration is reported with the extended
+implementation.

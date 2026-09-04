@@ -16,15 +16,14 @@
 \input{paper/defs.tex}
 \graphicspath{{figures/}{../figures/}}
 
-\title{A fixed-pressure Biot transform with spatial phase-mass balances\\
-for finite-deformation poromechanics}
+\title{Implicit Biot coefficient and poroplastic flow in finite-deformation poromechanics}
 \author[1,2,3]{John T. Foster\thanks{Electronic address: \href{mailto:john.foster@utexas.edu}{john.foster@utexas.edu}}}
 \affil[1]{The Hildebrand Department of Petroleum \& Geosystems Engineering, The University of Texas at Austin, Austin, TX 78712, USA}
 \affil[2]{Department of Aerospace Engineering \& Engineering Mechanics, The University of Texas at Austin, Austin, TX 78712, USA}
 \affil[3]{The Oden Institute for Computational Engineering \& Science, The University of Texas at Austin, Austin, TX 78712, USA}
 \date{}
 \hypersetup{
-  pdftitle={A fixed-pressure Biot transform with spatial phase-mass balances for finite-deformation poromechanics},
+  pdftitle={Implicit Biot coefficient and poroplastic flow in finite-deformation poromechanics},
   pdfauthor={John T. Foster}
 }
 
@@ -32,19 +31,26 @@ for finite-deformation poromechanics}
 \maketitle
 
 \begin{abstract}
-The finite-deformation Biot coefficient measures the mineral-distension
-response to skeleton deformation at fixed pore pressure.  We
-separate this local constitutive derivative from phase mass conservation.
+The finite-deformation Biot coefficient measures the mineral-volume response to
+skeleton deformation at fixed pore pressure.  That fixed-pressure response also
+sets the stress available to drive plastic flow: the single-prime material
+stress \(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\) is the
+poroplastic driving stress, so a yield and flow rule for a solid with a
+compressible mineral cannot be evaluated until the coefficient \(B\) is known.
+We separate this local constitutive derivative from phase mass conservation.
 Spatial solid mass balance evolves the bulk solid partial density, while a
 local constitutive update supplies the intrinsic solid state.  The solid volume
 fraction then follows algebraically from the partial and intrinsic densities.
 The nonlinear Biot coefficient is obtained by
 implicit differentiation of the complete local constitutive residual system
-at fixed intrinsic phase pressure and referential solid mass \(J\rho_s\).  The
-spatial water balance is closed by a
-barotropic pressure--density equation of state.  The Biot transform then maps
-the constitutive double-prime stress to the single-prime material stress and
-the total mixture stress while preserving their distinct energetic meanings.
+at fixed intrinsic phase pressure and referential solid mass \(J\rho_s\).
+A multiplicative pore-scale split identifies the inelastic mechanisms that join
+that system: isochoric true-plastic flow of the solid material and a scalar
+plastic pore allocation that maps to the solid volume fraction.  Their flow,
+consistency, and hardening equations enter the local residual, so the implicit
+Biot tangent is formed on the active set selected by the converged return
+mapping; the elastic response is the inactive-mechanism limit.  The spatial
+water balance is closed by a barotropic pressure--density equation of state.
 
 The solid-reference finite-element formulation uses quadratic displacement,
 continuous linear water pressure, and quadratic solid partial density.
@@ -62,12 +68,14 @@ difference is \(3.022\times10^{-4}\) of its scale.  A synthetic
 finite-deformation continuation to \(10\%\) platen compression decreases the
 spatially averaged coefficient from \(0.600\) to \(0.51417\).  These tests
 verify the balance-law and constitutive coupling for the stated single-solid,
-single-water elastic model; they do not constitute independent validation of
-the mineral equation of state.
+single-water elastic model, which is the inactive-mechanism limit of the
+inelastic interface developed here; they do not constitute independent
+validation of the mineral equation of state.
 \end{abstract}
 
 \noindent\textbf{Keywords:} finite-deformation poromechanics; Biot coefficient;
-automatic differentiation; spatial mass balance; Mandel problem
+poroplasticity; plastic driving stress; automatic differentiation; spatial
+mass balance; Mandel problem
 
 \input{paper/sections/introduction.tex}
 \input{paper/sections/finite_deformation_biot.tex}

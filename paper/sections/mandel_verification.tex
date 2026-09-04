@@ -463,7 +463,15 @@ series formed from the same linearized storage law.  The ten-percent
 continuation is a synthetic discrimination test.  None of these calculations
 independently validates the mineral EOS, and the reported model is restricted
 to a saturated, isothermal, homogeneous, elastic body containing one solid and
-one water phase.
+one water phase.  That elastic model is the inactive-mechanism limit of the
+general interface in
+Sec.~\ref{sec:inelastic-plastic-driving-stress}: with the isochoric
+true-plastic and scalar pore-allocation mechanisms active, the same implicit
+solve returns \(B\) from the active local system, and the poroplastic driving
+stress follows through
+\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\).  The inelastic
+demonstration and its verification are reported with the extended
+implementation.
 
 The source archive accompanying this article contains the MOOSE objects, input
 deck, verification driver, curated CSV files, and figure scripts.  From the

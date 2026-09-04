@@ -1,4 +1,4 @@
-\section{Single-solid, single-water finite-deformation equations}
+ \section{Single-solid, single-water finite-deformation equations}
 \label{sec:finite-deformation-biot}
 
 At time \(t\), the solid motion \(\bs\chi\) maps a reference position
@@ -204,6 +204,381 @@ Here, \(\rho\) is the current mixture mass density, \(\mbf g\) is body-force
 acceleration, and \(\mbf0\) is the zero vector.  The elastic verification
 closure supplies \(\mbf P^{\prime\prime}\) in
 \eqref{eq:verification-effective-first-piola}.
+
+\subsection{Inelastic response and the plastic driving stress}
+\label{sec:inelastic-plastic-driving-stress}
+
+An inelastic solid is described by a multiplicative split of the skeleton
+deformation into a pore-allocation factor and the true deformation of the
+solid material,
+\begin{equation}
+ \mbf F=\mbf A\bar{\mbf F},
+ \qquad
+ J=a\bar J,
+ \qquad
+ a=\det\mbf A,
+ \qquad
+ \bar J=\det\bar{\mbf F},
+ \label{eq:inelastic-multiplicative-split}
+\end{equation}
+where \(\mbf A\) records the pore-space allocation and \(\bar{\mbf F}\) the
+true deformation of the solid phase.  True solid mass conservation makes
+\(\bar J\) coincide with the mineral volume ratio in
+\eqref{eq:distension}, so that the allocation factor
+\(a=J/\bar J=\phi_{s0}/\phi_s\) reproduces the solid volume fraction
+\eqref{eq:solid-volume-fraction-relation}.  Extending the distension and
+true-deformation split for porous media \citep{fosterxu2025}, each factor
+carries an elastic--plastic split,
+\begin{equation}
+ \mbf A=\mbf A^e\mbf A^p,
+ \qquad
+ \bar{\mbf F}=\bar{\mbf F}^e\bar{\mbf F}^p,
+ \label{eq:inelastic-kinematic-splits}
+\end{equation}
+so that the plastic factors \(\bar{\mbf F}^p\) and \(\mbf A^p\) are the stored
+internal variables and the elastic factors are the dependent arguments,
+\begin{equation}
+ \bar{\mbf F}^e=\bar{\mbf F}(\bar{\mbf F}^p)^{-1},
+ \qquad
+ \mbf A^e=\mbf A(\mbf A^p)^{-1},
+ \label{eq:inelastic-dependent-elastic-arguments}
+\end{equation}
+where the true-plastic flow is isochoric and the plastic allocation is
+spherical,
+\begin{equation}
+ \det\bar{\mbf F}^p=1,
+ \qquad
+ \mbf A^p=(a^p)^{1/3}\mbf I,
+ \label{eq:inelastic-plastic-isochoric-spherical}
+\end{equation}
+so that \(a=a^ea^p\).  The scalar plastic allocation \(a^p\) therefore records
+the inelastic contribution to the solid volume fraction through
+\(\phi_s=\phi_{s0}/a\), whereas the isochoric true-plastic flow leaves the
+intrinsic density unchanged; \(\bar\rho_s\) remains governed by the elastic
+true deformation \(\bar{\mbf F}^e\) and the mineral pressure law.
+
+The phase-level dissipation analysis identifies the material stress that
+drives each mechanism \citep{fosterxu2025}.  Plastic flow is conjugate to the
+single-prime stress \(\bs\sigma^{\prime}\), the deformation conjugate at fixed
+intrinsic density; the isochoric mechanism is driven by the deviatoric part of
+\(\bs\sigma^{\prime}\) mapped through the elastic true-deformation factor, and
+the scalar allocation mechanism by its mean part.  Because the single-prime
+stress is reconstructed from the fixed-pressure skeleton stress by
+\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\)
+\eqref{eq:single-prime-biot-transform}, a yield and flow rule formulated in
+\(\bs\sigma^{\prime}\) requires the Biot coefficient before the plastic
+response can be evaluated.  The coefficient itself depends on the active
+plastic state through the fixed-pressure derivative
+\eqref{eq:finite-deformation-biot-coefficient}.  For an inelastic solid the
+local constitutive system therefore augments the pressure equilibrium with the
+active yield, consistency, flow, and hardening equations, and the implicit
+differentiation in Sec.~\ref{sec:implicit-ad-implementation} supplies the
+consistent fixed-pressure tangent and hence \(B\).  The elastic closure in
+Sec.~\ref{sec:elastic-verification-closure} is the inactive-mechanism limit in
+which \(\bar{\mbf F}^p=\mbf I\) and \(a^p=1\).
+
+Because the allocation factors are spherical, the factors commute and assemble
+an aggregate elastic--plastic split of the skeleton deformation,
+\begin{equation}
+ \mbf F=\mbf F^e\mbf F^p,
+ \qquad
+ \mbf F^e=\mbf A^e\bar{\mbf F}^e,
+ \qquad
+ \mbf F^p=(a^p)^{1/3}\bar{\mbf F}^p,
+ \label{eq:aggregate-plastic-split}
+\end{equation}
+so that \(J=J^eJ^p\) with \(J^p=a^p\) and \(\det\bar{\mbf F}^p=1\).  The
+aggregate factor \(\mbf F^p\) is the plastic deformation observable in a drained
+test: its determinant \(a^p\) is the plastic pore allocation that changes the
+solid volume fraction through \(\phi_s=\phi_{s0}/a\), and its isochoric part
+\(\bar{\mbf F}^p\) records the deviatoric rearrangement.  The elastic factor
+\(\mbf F^e\) carries the drained (fixed-pressure) response, so a drained
+loading--unloading cycle measures \(\mbf F^e\) and \(\mbf F^p\) directly.
+
+Two stress measures therefore describe the inelastic response.  The drained
+skeleton stress \(\bs\sigma^{\prime\prime}\) is conjugate to the observable
+elastic deformation, is the quantity a drained experiment reports, and is the
+fixed-pressure stress entering momentum.  The dissipation analysis instead
+identifies the single-prime stress
+\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\) as the driving
+stress for plastic flow \citep{fosterxu2025}.  In the classical limit \(B=1\)
+the two coincide, which is why effective-stress yield and flow rules in the
+literature, calibrated against drained measurements, are phrased in what is
+here \(\bs\sigma^{\prime\prime}\).  For a compressible mineral the two differ,
+and the coefficient \(B\) maps between the observable and the driving
+formulation.
+
+For the cohesionless skeleton considered here, the isochoric and pore-allocation
+mechanisms share one activation.  At finite deformation the plastic power fixes
+the stress measures that drive them.  The single-prime intrinsic stress is the
+deformation conjugate of the solid energy at fixed intrinsic density,
+\begin{equation}
+ \bs\sigma'_s
+ =\rho_s
+ \left.\pder{\psi_s}{\bar{\mbf F}^e}\right|_{\mc X_s}
+ (\bar{\mbf F}^e)^T,
+ \label{eq:single-prime-kirchhoff-stress}
+\end{equation}
+a Kirchhoff-type current-configuration stress.  Because the isochoric
+true-plastic rate is conjugate to the deviatoric part of this stress mapped
+into the elastic true-deformation frame, the driving stress of the isochoric
+mechanism is the Mandel-type tensor
+\begin{equation}
+ \mbf S
+ =(\bar{\mbf F}^e)^{-1}
+ \operatorname{dev}\bs\sigma'_s\,
+ \bar{\mbf F}^e,
+ \qquad
+ \operatorname{tr}\mbf S=0 .
+ \label{eq:mandel-driving-stress}
+\end{equation}
+The scalar pore-allocation mechanism is instead driven by the mean stress
+\(\tfrac13\operatorname{tr}\bs\sigma'_s\).  Define the compressive mean and the
+equivalent shear stress by
+\begin{equation}
+ p
+ =-\frac{1}{3}\operatorname{tr}\bs\sigma'_s,
+ \qquad
+ q
+ =\sqrt{\tfrac32}\,\lVert\mbf S\rVert .
+ \label{eq:finite-plastic-stress-invariants}
+\end{equation}
+The remaining derivation states the plastic flow rules and the surface that
+selects them, following the two-mechanism construction of the multicomponent
+theory \citep{fosterxu2025} and its Drucker--Prager specialization in the
+companion theory.  Two scalar plastic rates describe the inelastic response:
+the isochoric (true-plastic) rate \(\dot\gamma\ge0\), and the pore-allocation
+(volumetric) rate \(\dot\eta=\dot a^p/a^p\), with \(\dot\eta>0\) a dilation and
+\(\dot\eta<0\) a compaction.  With the isochoric rate aligned
+with its driving stress,
+\begin{equation}
+ \dot{\bar{\mbf F}}^p(\bar{\mbf F}^p)^{-1}
+ =\dot\gamma\,\mbf N',
+ \qquad
+ \mbf N'=\frac{3}{2}\frac{\mbf S}{q},
+ \label{eq:isochoric-flow-direction}
+\end{equation}
+the trace of \(\mbf N'\) vanishes, so \(\det\bar{\mbf F}^p=1\) is preserved,
+and \(\operatorname{tr}[\mbf S\,\dot{\bar{\mbf F}}^p(\bar{\mbf F}^p)^{-1}]
+=q\dot\gamma\).  The plastic power is therefore
+\begin{equation}
+ \mc D^p
+ =q\dot\gamma-p\dot\eta,
+ \label{eq:plastic-power}
+\end{equation}
+where the first term is the deviatoric power of the isochoric mechanism and the
+second is the pressure power of the pore-allocation mechanism (the pressure
+resists dilation and drives compaction).
+
+The dissipation analysis supplies two independent plastic mechanisms and the
+driving stresses for each \citep{fosterxu2025}.  In the uncoupled, associated
+specialization each mechanism is separately dissipative and has its own yield
+condition, advancing at its own rate \(\dot\gamma\) or \(\dot\eta\).  The
+isochoric true-plastic mechanism yields on the deviatoric condition and flows
+in the direction of \eqref{eq:isochoric-flow-direction},
+\begin{equation}
+ f_d=q-q_y\le0,
+ \qquad
+ \dot\gamma\ge0,
+ \qquad
+ \dot\gamma f_d=0,
+ \qquad
+ \mc D^p_d=q\dot\gamma\ge0,
+ \label{eq:isochoric-yield}
+\end{equation}
+where \(q_y\) is the constant shear strength.  The pore-allocation mechanism
+yields on the volumetric condition and, on its compressive (compaction) branch,
+\(\dot\eta\le0\),
+\begin{equation}
+ f_v=p-p_y\le0,
+ \qquad
+ \dot\eta\le0,
+ \qquad
+ \mc D^p_v=-p\dot\eta\ge0,
+ \label{eq:distension-yield}
+\end{equation}
+where \(p_y\) is the constant compaction strength.  Under monotone compressive
+loading the independent response sits at the corner \(q=q_y\), \(p=p_y\), with
+the imposed volume reduction accommodated by plastic pore collapse rather than
+by dilation, and the combined plastic rate is not normal to either surface.
+
+A Drucker--Prager-type response is obtained by coupling the two mechanisms
+through a shared rate constraint together with a stress-dependent dissipation,
+following the thermomechanical construction of Collins and Houlsby
+\citep[see][]{fosterxu2025}.  The shared rate constraint is the dilatancy rule
+that locks the volumetric plastic rate to the isochoric one,
+\begin{equation}
+ \dot\eta=\beta\dot\gamma,
+ \qquad
+ \beta\ge0 .
+ \label{eq:dilatancy-constraint}
+\end{equation}
+Physically it states that shear rearrangement of a frictional skeleton is
+accompanied by a proportional volume change of slope \(\beta\) (the dilation
+angle), so the two mechanisms advance under the single rate \(\dot\gamma\).
+The accompanying stress-dependent dissipation assigns to each unit of shear
+rate a cost proportional to the compressive mean stress,
+\begin{equation}
+ \mc R(p;\dot\gamma,\dot\eta)
+ =\mu p\dot\gamma,
+ \qquad
+ \mu\ge0 ,
+ \label{eq:stress-dependent-dissipation}
+\end{equation}
+admissible only for the rate pairs satisfying
+\eqref{eq:dilatancy-constraint}.  A stress state can then sit on the yield
+boundary only if no admissible plastic rate performs more work than this
+dissipation.  Substituting \eqref{eq:plastic-power} and
+\eqref{eq:dilatancy-constraint} into that admissibility inequality gives
+\begin{equation}
+ (q-\beta p)\dot\gamma\le\mu p\dot\gamma
+ \quad\text{for all }\dot\gamma\ge0
+ \qquad\Longleftrightarrow\qquad
+ f=q-Mp\le0,
+ \quad
+ M=\mu+\beta .
+ \label{eq:dp-yield}
+\end{equation}
+The single surface \eqref{eq:dp-yield} is the Drucker--Prager condition, with
+yield slope \(M=\mu+\beta\).  On the surface the plastic rate follows by
+normality in the single rate coordinate, \(\dot\eta=\beta\dot\gamma\), i.e. in
+tensor form
+\begin{equation}
+ \dot{\mbf F}^p(\mbf F^p)^{-1}
+ =\dot\gamma\left(\frac{3}{2}\frac{\mbf S}{q}+\frac{\beta}{3}\mbf I\right),
+ \qquad
+ \dot\gamma\ge0,
+ \qquad
+ \dot\gamma f=0,
+ \label{eq:dp-flow}
+\end{equation}
+and the dissipation on the surface is
+\begin{equation}
+ \mc D^p
+ =q\dot\gamma-p\beta\dot\gamma
+ =\mu p\dot\gamma\ge0 .
+ \label{eq:dp-dissipation}
+\end{equation}
+Equations \eqref{eq:dp-yield}--\eqref{eq:dp-dissipation} are the coupled
+Drucker--Prager-type model.  Because the flow direction follows from the
+plastic potential \(g=q-\beta p\) (dilation slope \(\beta\)) whereas the yield
+surface has slope \(M=\mu+\beta\), the model is non-associated whenever
+\(\mu>0\); the frictional part \(\mu\) supplies the dissipation and the
+difference \(M-\beta=\mu\) is the non-associativity.
+
+The rate in \eqref{eq:dp-flow} is the total plastic deformation rate of the
+skeleton, \(\dot{\mbf F}^p(\mbf F^p)^{-1}\), the quantity observable in a
+drained test.  The two internal mechanisms are not separately observable: they
+are projected onto this single surface and rate, and once the aggregate
+rate is known the internal fields are reconstructed from the aggregate split
+\eqref{eq:aggregate-plastic-split}.  Taking the determinant of
+\eqref{eq:dp-flow} gives the pore-allocation rate and the isochoric factor,
+\begin{equation}
+ \frac{\dot a^p}{a^p}
+ =\operatorname{tr}\left[\dot{\mbf F}^p(\mbf F^p)^{-1}\right]
+ =\beta\dot\gamma,
+ \qquad
+ a^p=\det\mbf F^p,
+ \qquad
+ \bar{\mbf F}^p=(a^p)^{-1/3}\mbf F^p,
+ \label{eq:reconstruct-pore-allocation}
+\end{equation}
+with \(\det\bar{\mbf F}^p=1\), which is the dilation rate
+\eqref{eq:dilatancy-constraint} expressed through the aggregate factor.  The
+plastic pore allocation changes the solid volume fraction through
+\(\phi_s=\phi_{s0}/a\) with \(a=a^ea^p\).  At small strain
+\(\bar{\mbf F}^e\to\mbf I\) and the intrinsic and aggregate single-prime
+stresses coincide with \(\bs\sigma'=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\),
+so \eqref{eq:dp-yield}--\eqref{eq:dp-dissipation} reduce to the conventional
+Cauchy Drucker--Prager form \(q'-Mp'\le0\) with
+\(q'=\sqrt{\tfrac32}\,\lVert\operatorname{dev}\bs\sigma'\rVert\) and
+\(p'=-\tfrac13\operatorname{tr}\bs\sigma'\).  Because
+\(\operatorname{dev}\bs\sigma'=\operatorname{dev}\bs\sigma^{\prime\prime}\) and
+\(p'=p^{\prime\prime}-(1-B)p\), that reduced form reads in the drained
+observables as
+\begin{equation}
+ f=q'-M\big[p^{\prime\prime}-(1-B)p\big]\le0,
+ \qquad
+ p^{\prime\prime}=-\tfrac13\operatorname{tr}\bs\sigma^{\prime\prime},
+ \label{eq:dp-yield-observable}
+\end{equation}
+which exposes the explicit Biot correction omitted by a \(B=1\) or
+fixed-elastic-\(B\) approximation.  At finite deformation that correction
+enters through the single-prime Kirchhoff/Mandel measures of
+\eqref{eq:single-prime-kirchhoff-stress}--\eqref{eq:finite-plastic-stress-invariants};
+forming them requires the elastic true deformation \(\bar{\mbf F}^e\), which
+therefore joins the inelastic local state together with \(a^p\) and the
+hardening variables.
+
+The Biot coefficient is the system coefficient of
+\eqref{eq:finite-deformation-biot-coefficient},
+\(B=1-\phi_{s0}\,\partial\bar J/\partial J|_{p,J\rho_s,\mc H_n}\); the phase
+form of the multicomponent theory reduces to this same coefficient in the
+single-solid limit and therefore need not be carried separately
+\citep{fosterxu2025}.  Because \(B\) is the fixed-pressure tangent of the
+active local system, evaluating the yield and flow of the poroplastic skeleton
+requires the implicit coefficient; the local system and its active-set tangent
+are developed in Sec.~\ref{sec:implicit-ad-implementation}.
+
+\subsection{Plastic loading and the incremental rate}
+\label{sec:plastic-loading-incremental-rate}
+
+Loading and unloading of the Drucker--Prager-type surface obey the
+complementarity (Kuhn--Tucker) conditions
+\begin{equation}
+ \dot\gamma\ge0,
+ \qquad
+ f\le0,
+ \qquad
+ \dot\gamma f=0,
+ \label{eq:kuhn-tucker}
+\end{equation}
+together with the consistency condition during plastic loading,
+\begin{equation}
+ \dot f=0
+ \quad\text{whenever}\quad \dot\gamma>0 .
+ \label{eq:consistency-dot-f}
+\end{equation}
+The response is elastic when \(f<0\), and also when \(f=0\) but the trial
+stress rate would move the stress inside the surface (unloading, \(\dot f<0\)).
+When \(f=0\) and loading continues, the complementarity conditions leave
+\(\dot\gamma\) undetermined; it is fixed by the consistency condition
+\eqref{eq:consistency-dot-f}.  Because the flow rule \eqref{eq:dp-flow} changes
+the plastic state, which enters the stress through the elastic relation and the
+coefficient \(B\), the consistency condition is an equation for \(\dot\gamma\),
+not a prescribed value.
+
+The model is rate independent: the complementarity and consistency above are
+rate conditions that select the instantaneous \(\dot\gamma\), but no viscous
+or overstress regularization replaces the consistency condition
+\eqref{eq:consistency-dot-f}.  In the time-discrete calculations reported below
+(backward Euler) the unknown of the plastic update is the increment
+\(\Delta\gamma=\int\dot\gamma\,\dd t\), and the update is a standard
+elastic-predictor/return-mapping step:
+advance the state with \(\Delta\gamma=0\) (plastic factors frozen) and evaluate
+the trial driving stress; if the trial satisfies \(f\le0\) the step is elastic
+and \(\Delta\gamma=0\); otherwise the discrete consistency condition
+\begin{equation}
+ f\big(\bs\sigma'(\Delta\gamma),\,p(\Delta\gamma),\,\mc H_{n+1}\big)=0
+ \label{eq:discrete-consistency}
+\end{equation}
+is solved for \(\Delta\gamma\ge0\), with the state advanced by the integrated
+flow rule \eqref{eq:dp-flow} and the reconstruction
+\eqref{eq:reconstruct-pore-allocation}.  Because the driving stress is the
+single-prime stress \(\bs\sigma'=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\), the
+discrete consistency \eqref{eq:discrete-consistency} couples to the coefficient
+\(B\), which is itself the fixed-pressure tangent of the active local system.
+The implementation therefore does not solve \eqref{eq:discrete-consistency} for
+\(\Delta\gamma\) in isolation; it enters as one scalar component of the local
+residual system of Sec.~\ref{sec:implicit-ad-implementation} on the active set.
+That system is solved by Newton's method with the residual and its Jacobian
+evaluated in automatic-differentiation (AD) types, so the algorithmic tangent
+is obtained exactly and consistently with the global residual; no hand
+differentiation of the return mapping is required.  The converged iterate
+returns the plastic state, the stress, and \(B\), and the AD derivatives retain
+the result in the global Jacobian.  The elastic verification closure in
+Sec.~\ref{sec:elastic-verification-closure} is the limit \(\Delta\gamma=0\) of
+this update.
 
 \subsection{Water storage and transport}
 \label{sec:water-storage-and-transport}
