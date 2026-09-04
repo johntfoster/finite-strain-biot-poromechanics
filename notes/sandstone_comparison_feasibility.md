@@ -57,17 +57,64 @@ and was not discriminating.  That model has been REPLACED by the calibrated
 elastic stiffening model above (B step 1); the constant-modulus curve in the new
 figure plays the role of the "no stiffening" reference.
 
+## B, step 2 - compactive (plastic) porosity-loss interpretation (DONE, calibrated)
+
+Author directive (2026-09-04): "fit the plasticity model also."  The published
+paper provides the needed plastic anchor that alpha(P) alone does not: initial
+porosity 26 +/- 0.3% and Table 1 POST-TEST porosity (permanent compaction)
+- hydrostatic 4ac21 (failure at ~180 MPa applied / ~173 MPa effective) -> 14%,
+  CMS/CSS specimens -> 12-16%, unjacketed 4ac37 -> 22% (near zero effective
+  stress, so near-initial).
+
+Hypothesis tested: the measured drained stiffening K(P) (5.9 -> ~12 GPa) is
+CARRIED BY plastic porosity loss, i.e., drained tangent K = K(porosity), and the
+porosity is set by compactive (cap) plastic flow a^p < 1.  Anchor a
+porosity-modulus law to the two independent endpoints and check consistency
+against every intermediate unload K:
+
+```
+K(phi)  = 31880 exp(-6.47 phi)  MPa   (K0=5.9 GPa at phi0=0.26; ~12.9 GPa at phi=0.14)
+Km(phi) = 80652 exp(-1.745 phi) MPa   (Km 52 -> 63 GPa; much weaker porosity sensitivity)
+```
+
+Result: the porosity-only law reproduces the measured alpha(P)
+(alpha = 1 - K(phi)/Km(phi), RMS ~0.006, same as the direct K(P)/Km(P) fit),
+and the inferred porosity path is smooth and monotone along the hydrostatic
+path (0.245 at 15 MPa eff -> 0.153 at 137 MPa eff), ending at 0.140 at the
+failure point - i.e. EXACTLY the independently measured post-test porosity
+(0.14 for the hydrostatic specimen 4ac21).
+
+Compactive pore allocation (phi_s = phi_s0/a^p with phi_s0 = 0.74):
+  a^p: 1.0 -> ~0.97 (15 MPa eff) -> ~0.92 (70) -> ~0.87 (137).
+Fitting the repo cap form a^p = exp(-(P_eff - P_y)/K_pl):
+  yield onset P_y ~ 0-10 MPa effective (compactive from the start),
+  plastic modulus K_pl ~ 1.0-1.15 GPa.
+These are physical for high-porosity Castlegate (cataclastic/compactive flow
+beginning at low mean stress) and land close to the earlier placeholders
+(P_c ~ 80-100 MPa was too high; the alpha data place onset much lower).
+
+Interpretation and honesty notes:
+- The compactive (a^p < 1) branch lowers B = 1 - (1-B_el)/a^p, i.e. the
+  Castlegate direction, complementing the dilative single-element demo
+  (a^p > 1, Delta B > 0) already in the manuscript.
+- NOT unique: a reversible stress-stiffening law at fixed porosity could also
+  reproduce K(P); but the porosity-loss version is anchored by the independent
+  post-test porosity and yields a physically smooth phi(P).  State this when
+  the comparison is written up.
+- Still missing for a uniquely identified hardening law: the volume-strain PATH
+  (Fig. 3d), i.e., porosity vs stress between the endpoints.  If needed,
+  digitize Fig. 3d for the hydrostatic specimen.
+
 ## Remaining B steps (revised)
 
-1. Decide, with the author, whether to add a pressure-stiffening drained
-   elastic law to the MOOSE model so the hydrostatic comparison becomes a true
-   model-vs-data check (a distinct ingredient from the poroplastic a^p
-   mechanism).  Until then, do NOT claim the poroplastic single-element model
-   reproduces the Ingraham hydrostatic alpha(P) data.
-2. If the compactive (cap) branch is pursued for Castlegate, fit it to the
-   PERMANENT volume strain (Fig. 3d / volume-strain data), not to alpha(P);
-   placeholders P_c, K_pl are not anchored by the hydrostatic alpha data.
-3. Any final comparison figure must state data provenance (published copy,
-   Table 3) and label elastic-stiffening vs inelastic mechanisms separately.
+1. (Author decision) Formalize the compactive-cap calibration as a script +
+   overlay figure (elastic-fit vs compactive/porosity model vs data, with the
+   inferred phi(P) or a^p(P) panel), then implement the compactive (cap)
+   branch + hydrostatic driver in the MOOSE material
+   (`ADDruckerPragerPoroplasticBiotMaterial` currently carries only the
+   dilative cone; the volumetric surface f_v = p - p_y, compaction eta-dot <= 0
+   is in the manuscript theory, Sec. 2.4, but not yet in code).
+2. Any final comparison figure must state data provenance (published copy,
+   Table 1 + Table 3) and label the elastic vs compactive contributions.
    Produce the PGF variant (lualatex conventions) only when the figure enters
    the manuscript.
