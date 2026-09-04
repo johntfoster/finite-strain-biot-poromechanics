@@ -21,6 +21,15 @@ nonlinear Biot repository, read `AGENTS.md`, `VISION.md`,
 If the repository has `agent_workflows/checklists/citation_verification.md`,
 read and follow it. Treat it as the local audit contract.
 
+## Manuscript formatting requirements
+
+- Every bibliography DOI in the compiled manuscript PDF must be a clickable
+  link to `https://dx.doi.org/<doi>`.  This repository implements that with the
+  `\doi` macro in `paper/defs.tex`
+  (`\providecommand{\doi}[1]{\href{https://dx.doi.org/#1}{#1}}`); verification
+  should confirm the links survive a `latexmk` build and flag any plain-text
+  DOI that bypasses the macro.
+
 ## Workflow
 
 1. Locate the cited claim.

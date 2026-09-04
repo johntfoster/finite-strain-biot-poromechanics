@@ -5,3 +5,9 @@
 \newcommand{\heldfixed}[1]{\mathrel{\big|}_{#1}}
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\dd}{\,\mathrm d}
+
+% Bibliography DOI rendering (hyperref): every DOI is a clickable link to
+% https://dx.doi.org/<doi> so references resolve directly.  plainnat emits
+% \doi{...}; this preamble definition wins because the .bbl uses
+% \providecommand.
+\providecommand{\doi}[1]{\href{https://dx.doi.org/#1}{#1}}
