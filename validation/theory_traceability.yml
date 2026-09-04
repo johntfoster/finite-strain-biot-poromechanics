@@ -29,6 +29,15 @@ implementation:
   total_stress:
     object: ADReferenceSolidStressMaterial
     role: apply the nonlinear Biot pressure contribution to the first Piola stress
+  poroplastic_driving_stress:
+    objects: [ADDruckerPragerPoroplasticBiotMaterial]
+    role: ideal Drucker-Prager return map on the single-prime Kirchhoff stress tau' = P''F^T + (1-B)pJ I; scalar plastic pore allocation a^p = exp(beta*Delta_gamma); rate independent (backward-Euler radial return); inactive branch elastic
+  poroplastic_biot_correction:
+    object: ADPoroplasticBiotCoefficientMaterial
+    role: plastic pore-allocation correction B = 1 - (1 - B_el)/a^p to the elastic constrained coefficient
+  prescribed_deformation_helper:
+    object: ADConstantDeformationGradientMaterial
+    role: single-element material-test helper prescribing a uniform diagonal F (test support only)
 
 evidence:
   local_elastic_tangent: validation/mandel_implicit_biot.yml
@@ -38,9 +47,10 @@ evidence:
   finite_deformation_biot: validation/mandel_large_deformation.csv
   finite_deformation_biot_field: validation/mandel_biot_contours.csv
   finite_deformation_density_field: validation/mandel_density_contours.csv
+  poroplastic_delta_b: validation/poroplastic_delta_b.csv
 
 classification:
   implementation_verification: [solid_spatial_mass_balance, local_elastic_tangent, outer_ad_jacobian]
   analytical_benchmark: [analytical_mandel, analytical_displacements]
-  synthetic_discrimination: [finite_deformation_biot, finite_deformation_biot_field, finite_deformation_density_field]
+  synthetic_discrimination: [finite_deformation_biot, finite_deformation_biot_field, finite_deformation_density_field, poroplastic_delta_b]
   independent_physical_validation: []

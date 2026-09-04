@@ -47,3 +47,22 @@ mappings:
     variables: [Q2 displacement, continuous Q1 water pressure, Q2 solid partial density]
     pressure_enrichment: false
     tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
+
+  - id: poroplastic_return_mapping
+    paper_equations: [eq:single-prime-kirchhoff-stress, eq:finite-plastic-stress-invariants, eq:dp-yield, eq:dp-flow, eq:dp-dissipation, eq:reconstruct-pore-allocation, eq:dp-yield-observable, eq:kuhn-tucker, eq:consistency-dot-f, eq:discrete-consistency]
+    moose_objects: [ADDruckerPragerPoroplasticBiotMaterial]
+    outputs: [plastic pore allocation a^p, plastic increment Delta_gamma, yield function f, mean effective pressure p', equivalent shear stress q', returned single-prime Kirchhoff stress]
+    notes: rate-independent ideal Drucker-Prager radial return on tau' = P''F^T + (1-B)pJ I; inactive branch collapses to the elastic trial (a^p = 1, Delta_gamma = 0)
+    tests: [poroplastic_delta_b_elastic, poroplastic_delta_b, poroplastic_delta_b_20, poroplastic_delta_b_30]
+
+  - id: poroplastic_biot_correction
+    paper_equations: [eq:finite-deformation-biot-coefficient, eq:general-implicit-biot-coefficient, eq:reconstruct-pore-allocation, eq:elastic-finite-deformation-biot-coefficient]
+    moose_objects: [ADPoroplasticBiotCoefficientMaterial]
+    output: B = 1 - (1 - B_el)/a^p from the fixed-pressure, fixed-history tangent with v = Jbar/a^p; Delta B = B - B_el
+    tests: [poroplastic_delta_b_elastic, poroplastic_delta_b, poroplastic_delta_b_20, poroplastic_delta_b_30]
+
+  - id: prescribed_deformation_helper
+    paper_equations: [eq:skeleton-kinematics]
+    moose_objects: [ADConstantDeformationGradientMaterial]
+    role: single-element material-test helper prescribing a uniform diagonal F (test support only, not used in production solves)
+    tests: []
