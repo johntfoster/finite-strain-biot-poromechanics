@@ -14,3 +14,6 @@
 .libs/
 .previous_test_results.json
 /nonlinear_biot_ad.yaml
+
+# Poroplastic single-element test run outputs
+test/tests/poroplastic_biot/*_out.csv
