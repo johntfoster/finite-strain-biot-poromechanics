@@ -48,7 +48,9 @@ Checks:
   `moose_app/test/tests/poroplastic_biot/poroplastic_delta_b.i` at each
   compression; see `scripts/plot_poroplastic_delta_b.py`.
 - Figure: `figures/poroplastic_delta_b.png` (B_el vs B_pl, and Delta B, vs
-  axial compression).
+  axial compression).  Script: `scripts/plot_poroplastic_delta_b.py`.
+- Registered the single-element decks in the MOOSE harness:
+  `moose_app/test/tests/poroplastic_biot/tests` (RunApp).
 - Range caveat: in this single-element uniaxial-strain regime the elastic
   closed form B_el crosses zero near ~35% compression; the physically
   meaningful demonstration range is compression <= ~30%.
