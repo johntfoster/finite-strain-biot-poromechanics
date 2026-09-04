@@ -109,3 +109,35 @@ B follows from the fixed-pressure tangent of this converged system (repo eq. 37)
 
 10/20/30% platen-compression continuation studies and the Delta-B-vs-elastic
 figure; provenance/records update; sharing the new source through the master.
+
+## 7. M3 (B feedback) - design, verified constraint, route decision
+
+Status: planned; verified M1/M2 (commit d6d538d).  M3 = make B a function of the
+plastic pore allocation a^p through the constrained local-system tangent, then
+verify E-1 (a^p=1 reproduces elastic B) and demonstrate Delta B = B_plastic -
+B_elastic under compression.
+
+VERIFIED CONSTRAINT: `ADLocalElasticMineralBiotMaterial` and
+`ADConstrainedSkeletonBiotMaterial` are BOTH in `moose/sync_manifest.json`
+(shared with the authoritative simulator master).  Editing their phi_s / residual
+semantics to absorb a^p triggers the AGENTS.md shared-source contract
+(`tools/sync_biot_moose.py check` before, `push` after) and edits the sibling
+master repo.  Do not modify them without that workflow.
+
+M3 routes:
+- Route A-additive (recommended): new app-local (non-shared) self-contained
+  material that supersedes the local-state + B role for the poroplastic branch:
+  defines ratio = exp((p+q_s)/K_s), phi_s = phi_s0*r/(ratio*a^p) (spec decision
+  #1: a^p maps to phi_s, plastic distension = inelastic porosity mechanism),
+  material-mass and mineral-EOS residuals including a^p, and computes
+  B = 1 - phi_s0*dv/dJ at fixed (p, J rho_s, a^p) using the same v = J*phi_s/Sum
+  tangent formula as the shared generic material.  New deck wires this material
+  (not the shared chain).  E-1: set a^p=1 and compare B against the shared
+  elastic chain / closed-form oracle in a single element; then a^p>1 gives B(a^p).
+- Route shared-edit (cross-repo, only with approval): thread a^p into the shared
+  local-state material phi_s/residuals, extend the generic constraint/state
+  lists, run the sync check -> edit -> push workflow against the master checkout.
+
+Decision needed before implementing M3: Route A-additive (app-local, no master
+repo touch) vs Route shared-edit (needs master checkout + sync push).  Route A
+is recommended for the Delta-B demonstration and keeps shared files byte-identical.
