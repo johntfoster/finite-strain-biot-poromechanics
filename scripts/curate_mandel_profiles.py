@@ -10,7 +10,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SAMPLE_TIMES = (0.014, 0.046, 0.094, 0.206, 0.398)
+# One profile at the Mandel-Cryer overshoot peak (0.02 s) followed by later
+# decay profiles; all are members of the fine-early reported time sequence.
+SAMPLE_TIMES = (0.02, 0.046, 0.094, 0.206, 0.398)
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:

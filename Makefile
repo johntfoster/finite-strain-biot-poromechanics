@@ -26,6 +26,9 @@ mandel: test
 figures:
 	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_mandel_extended_results.py
 	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_poroplastic_delta_b.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_poroplastic_b_feedback.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_poroplastic_load_unload.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_tensorial_load_unload.py
 	MPLCONFIGDIR=.agent-runtime/matplotlib $(PYTHON) scripts/plot_sandstone_comparison.py
 
 paper:

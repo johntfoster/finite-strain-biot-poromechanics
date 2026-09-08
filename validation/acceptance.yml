@@ -47,3 +47,39 @@ entries:
     tolerance: Biot identity and mineral-EOS residual L2 <= 1.0e-12; solid reference-mass L2 drift decreases when the backward-Euler step is halved; mesh and time sensitivity metrics are reported
     result: validation/mandel_large_deformation.csv
     status: pass
+
+  - id: poroplastic_b_feedback
+    governing_reduction: canonical stateful tensorial engine (ADTensorialPoroplasticBiotMaterial, M = 0.6, beta = 0.4) on a single element under monotonic drained compression to a target axial stretch at a prescribed nonzero uniform pore pressure; the pore-allocation-corrected coefficient B = 1 - (1 - B_el)/a^p is carried in the single-prime driving stress through (1-B)p J I, with a frozen-elastic (B = B_el) reference pass isolating the coefficient feedback
+    variables: [uniform prescribed axial compression, uniform pore pressure]
+    observables: [corrected coefficient B, elastic coefficient B_el, coupled and frozen-elastic plastic pore allocation and increment]
+    authoritative_reference: paper/sections/mandel_verification.tex (single-element poroplastic demonstration)
+    tolerance: B > B_el and a^p < a_p_ref at nonzero pore pressure; the plastic-increment over-prediction of the frozen-elastic reference grows with pore pressure at fixed compression and widens with compression at fixed pore pressure
+    result: moose_app/test/tests/poroplastic_biot/tests (poroplastic_b_feedback), validation/poroplastic_b_feedback.csv, validation/scripts/check_poroplastic_b_feedback.py
+    status: pass
+
+  - id: poroplastic_general_path
+    governing_reduction: general fixed-history fixed-pressure Biot tangent of the active plastic local system obtained by the AD dense solve (ADConstrainedSkeletonBiotMaterial) from the route-A local residuals of ADPlasticStateBiotMaterial (phi_s = phi_s0*r/(ratio*a^p)) with a^p frozen at the value accumulated by the canonical stateful tensorial engine; pure AD, no finite differences
+    variables: [uniform prescribed axial compression, drained pore pressure, frozen canonical plastic pore allocation]
+    observables: [general-path coefficient B_general, reduced coefficient B_reduced = 1 - (1 - B_el)/a^p, elastic coefficient B_el, plastic pore allocation a^p]
+    authoritative_reference: paper/sections/implicit_ad_implementation.tex (Sec. 3, local fixed-pressure tangent), paper/sections/mandel_verification.tex (single-element poroplastic demonstration)
+    tolerance: |B_general - B_reduced| <= 1.0e-9 over the drained compression sweep (machine precision); both equal the stateful-engine coefficient (|B_reduced - B_stateful| <= 1.0e-6)
+    result: validation/poroplastic_general_path.csv, validation/scripts/check_poroplastic_general_path.py
+    status: pass
+
+  - id: poroplastic_unload_branch
+    governing_reduction: unload-branch coefficient after monotonic plastic loading to the canonical peak allocation a^p = 1.031877 (20% compression): the plastic pore allocation is frozen at the peak, and the fixed-history fixed-pressure tangent is evaluated by pure AD (ADPlasticStateBiotMaterial residuals + ADConstrainedSkeletonBiotMaterial dense solve) at a reduced compression
+    variables: [uniform prescribed axial compression (unload), frozen canonical plastic pore allocation]
+    observables: [unload coefficient B_unload, virgin elastic B_el, monotonic-load coefficient, frozen a^p]
+    authoritative_reference: paper/sections/mandel_verification.tex (single-element poroplastic demonstration); Brown-Korringa / Rice-Cleary / Ingraham unload-reload definition of alpha
+    tolerance: B_unload = 1 - (1 - B_el)/a^p at the frozen peak to CSV precision; B_unload > B_el at every unload compression
+    result: validation/poroplastic_load_unload.csv, validation/scripts/check_poroplastic_load_unload.py
+    status: pass
+
+  - id: poroplastic_tensorial_load_unload
+    governing_reduction: canonical stateful multiplicative ideal Drucker-Prager material on a single element under load-unload-reload axial stretch: F = F^e F^p with stored plastic history; elastic trial on F^e = F (F^p_n)^-1 and radial return on the full tensorial Kirchhoff stress; exact symmetric matrix-exponential update of F^p
+    variables: [uniform prescribed axial stretch (load 0 to 20%, unload to 10%, reload to 20%), drained pore pressure]
+    observables: [plastic pore allocation a^p = det(F^p), plastic increment Delta_gamma, coefficient B = 1 - (1 - B_el)/a^p]
+    authoritative_reference: paper/sections/mandel_verification.tex (single-element poroplastic demonstration); multiplicative plasticity (Simo-Hughes) return-mapping update
+    tolerance: loading produces Delta_gamma > 0 and a^p > 1; on the unload branch Delta_gamma = 0 and a^p is frozen at the peak (immediate elastic reversal) to CSV precision; reloading re-yields at the stored peak; the elastic-limit variant (M = 100) collapses to a^p = 1, Delta_gamma = 0, B = B_el; the peak a^p is path independent as the step is refined
+    result: validation/tensorial_load_unload.csv, validation/scripts/check_tensorial_load_unload.py, moose_app/test/tests/poroplastic_biot/tests (poroplastic_tensorial_load_unload)
+    status: pass
