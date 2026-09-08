@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reproduce — Nonlinear-Biot AD</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      Nonlinear-Biot AD
+      <span class="tag">Finite-deformation Biot coefficient · spatial mass balances</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="mandel.html">Mandel benchmark</a>
+      <a href="poroplastic.html">Poroplastic Biot</a>
+      <a href="sandstone.html">Sandstone</a>
+      <a href="moose-catalog.html">MOOSE catalog</a>
+      <a href="reproduction.html" class="active">Reproduce</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="breadcrumbs"><a href="index.html">Home</a> / Reproduce</div>
+
+    <section class="section">
+      <h1>Reproducing the manuscript results</h1>
+      <p class="lead">
+        Everything needed to rebuild the application, run the verification, regenerate the
+        figures, and rebuild the manuscript from a clean clone. The one-shot entry point is
+        <a href="../scripts/reproduce_all.sh"><code>scripts/reproduce_all.sh</code></a>, which runs
+        the complete pipeline end to end.
+      </p>
+      <div class="callout ok">
+        Requirements are pinned by
+        <a href="../agent_environment/skills/setup-moose-conda/SKILL.md">the MOOSE conda setup skill</a>
+        (MOOSE commit <code>abafb58b67a6037c6723ffeb19647c84484466da</code> and the tested conda
+        package versions).
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>One-shot script</h2>
+      <pre><code>./scripts/reproduce_all.sh</code></pre>
+      <p class="lead">The script performs the steps below in order and stops on the first failure.</p>
+    </section>
+
+    <section class="section">
+      <h2>Step-by-step commands</h2>
+
+      <h3>0 · Inspect or provision the environment</h3>
+      <pre><code>agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh status
+agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh setup   # only when provisioning is needed</code></pre>
+
+      <h3>1 · Shared-source integrity check</h3>
+      <pre><code>tools/sync_biot_moose.py check</code></pre>
+
+      <h3>2 · Build the MOOSE application</h3>
+      <pre><code>make build</code></pre>
+
+      <h3>3 · Run all MOOSE tests (Mandel + poroplastic)</h3>
+      <pre><code>make test
+cd moose_app
+../agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
+  python3 ../.agent-runtime/moose/python/run_tests --no-color -j1 --re=poroplastic
+cd ..</code></pre>
+
+      <h3>4 · Regenerate the poroplastic validation data</h3>
+      <pre><code>agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
+  python3 validation/scripts/curate_poroplastic_delta_b.py
+agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
+  python3 validation/scripts/check_poroplastic_general_path.py
+agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
+  python3 validation/scripts/check_poroplastic_load_unload.py
+agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
+  python3 validation/scripts/check_poroplastic_b_feedback.py
+agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
+  python3 validation/scripts/check_tensorial_load_unload.py</code></pre>
+
+      <h3>5 · Mandel analytical + AD verification</h3>
+      <pre><code>make mandel</code></pre>
+
+      <h3>6 · Regenerate all figures</h3>
+      <pre><code>make figures</code></pre>
+
+      <h3>7 · Build the manuscript</h3>
+      <pre><code>make paper</code></pre>
+
+      <h3>8 · Provenance hashes and repository validation</h3>
+      <pre><code>make provenance
+make validate</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Canonical Make targets</h2>
+      <table>
+        <thead><tr><th>Target</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>make reproduce</code></td><td><code>sync-check → test → mandel → figures → paper → provenance → validate</code></td></tr>
+          <tr><td><code>make build</code></td><td>Build the MOOSE app inside the conda environment</td></tr>
+          <tr><td><code>make test</code></td><td>Run the Mandel MOOSE tests</td></tr>
+          <tr><td><code>make mandel</code></td><td>Run the full analytical + AD Mandel verification</td></tr>
+          <tr><td><code>make figures</code></td><td>Regenerate every figure with matplotlib (PGF + PNG/PDF)</td></tr>
+          <tr><td><code>make paper</code></td><td>Build the PDF manuscript with latexmk + lualatex</td></tr>
+          <tr><td><code>make provenance</code></td><td>Regenerate content hashes into <code>validation/provenance.yml</code></td></tr>
+          <tr><td><code>make validate</code></td><td>Fail-closed repository audit</td></tr>
+          <tr><td><code>make sync-check</code></td><td>Check shared MOOSE source integrity</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <a href="index.html">Home</a> · <a href="moose-catalog.html">MOOSE catalog</a>
+  </div>
+</footer>
+</body>
+</html>
