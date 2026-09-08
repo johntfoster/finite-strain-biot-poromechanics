@@ -206,3 +206,40 @@ tr:last-child td { border-bottom: 0; }
 
 h2 .anchor, h3 .anchor { color: var(--muted); text-decoration: none; }
 h2 .anchor:hover, h3 .anchor:hover { color: var(--accent); }
+
+/* ---------- Source viewer ---------- */
+.source-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.source-toolbar h1 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  word-break: break-all;
+}
+.toolbar-actions { display: flex; align-items: center; gap: 8px; }
+.toolbar-actions .btn {
+  background: #eef2f7;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  font-size: 0.82rem;
+}
+.toolbar-actions .btn:hover { background: #e2e8f0; }
+
+pre.source-code {
+  background: #0d1117;
+  border-radius: var(--radius);
+  padding: 0;
+  margin: 0;
+}
+pre.source-code code {
+  display: block;
+  padding: 18px;
+  overflow-x: auto;
+}

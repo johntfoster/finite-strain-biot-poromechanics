@@ -41,67 +41,67 @@
       <h2>Materials</h2>
       <ul class="file-list">
         <li>
-          <a href="../moose_app/src/materials/ADSolidReferenceKinematics.C">ADSolidReferenceKinematics</a>
+          <a href="source.html?f=../moose_app/src/materials/ADSolidReferenceKinematics.C">ADSolidReferenceKinematics</a>
           <span class="desc">Deformation gradient <code>F</code>, Jacobian <code>J</code>, <code>J̇</code>, <code>F⁻¹</code>, and <code>J F⁻ᵀ</code> from the displacement gradients.</span>
           <span class="why">Why: the solid-reference kinematics consumed by every pull-back and the Biot transform.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C">ADLocalElasticMineralBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C">ADLocalElasticMineralBiotMaterial</a>
           <span class="desc">Elastic mineral state: intrinsic solid density, solid volume fraction, constraint residuals and partial derivatives, plus a closed-form Biot oracle.</span>
           <span class="why">Why: the elastic verification specialization and independent oracle.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C">ADConstrainedSkeletonBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C">ADConstrainedSkeletonBiotMaterial</a>
           <span class="desc">Solves the AD-valued implicit local tangent at fixed pressure and fixed referential solid mass; returns the production Biot coefficient.</span>
           <span class="why">Why: the production fixed-pressure Biot tangent.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C">ADVolumetricBarotropicSkeletonStressMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C">ADVolumetricBarotropicSkeletonStressMaterial</a>
           <span class="desc">Pressure-coupled effective skeleton stress from the volumetric barotropic potential.</span>
           <span class="why">Why: supplies the double-prime stress <code>P″</code>.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADReferenceSolidStressMaterial.C">ADReferenceSolidStressMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADReferenceSolidStressMaterial.C">ADReferenceSolidStressMaterial</a>
           <span class="desc">Applies the inverse Biot transform to <code>P″</code> and assembles the total first Piola stress.</span>
           <span class="why">Why: forms the total mixture stress for momentum.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C">ADBinarySolidSpatialMassMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C">ADBinarySolidSpatialMassMaterial</a>
           <span class="desc">Source-free solid partial-density balance pulled to the reference; normalized referential solid mass and its AD rate.</span>
           <span class="why">Why: closes the spatial solid mass balance.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADBiotPressureStorageMaterial.C">ADBiotPressureStorageMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADBiotPressureStorageMaterial.C">ADBiotPressureStorageMaterial</a>
           <span class="desc">Exact single-water mass storage <code>J(1−φ<sub>s</sub>)ρ̄<sub>f</sub>(p)</code> and its AD time rate.</span>
           <span class="why">Why: the water accumulation without a prescribed storage modulus.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C">ADBiotDarcyReferenceFluxMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C">ADBiotDarcyReferenceFluxMaterial</a>
           <span class="desc">Pulls the Q1 pressure-gradient Darcy mass flux to the reference configuration.</span>
           <span class="why">Why: the reference Darcy flux for the water balance.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADTensorialPoroplasticBiotMaterial.C">ADTensorialPoroplasticBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADTensorialPoroplasticBiotMaterial.C">ADTensorialPoroplasticBiotMaterial</a>
           <span class="desc">Stateful multiplicative ideal Drucker–Prager return mapping (<code>F = Fᵉ Fᵖ</code>) with exact symmetric matrix exponential; stores <code>Fᵖ</code> and <code>aᵖ</code>.</span>
           <span class="why">Why: the canonical inelastic update for the poroplastic demonstrations.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADPlasticStateBiotMaterial.C">ADPlasticStateBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADPlasticStateBiotMaterial.C">ADPlasticStateBiotMaterial</a>
           <span class="desc">Route-A local residual provider for the fixed-history, fixed-pressure plastic tangent with <code>aᵖ</code> frozen.</span>
           <span class="why">Why: feeds the general AD tangent for the poroplastic oracle checks.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADPoroplasticBiotCoefficientMaterial.C">ADPoroplasticBiotCoefficientMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADPoroplasticBiotCoefficientMaterial.C">ADPoroplasticBiotCoefficientMaterial</a>
           <span class="desc">Plastic pore-allocation correction <code>B = 1 − (1 − B<sub>el</sub>)/aᵖ</code>.</span>
           <span class="why">Why: the reduced route-A closure used as a reference.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADDruckerPragerPoroplasticBiotMaterial.C">ADDruckerPragerPoroplasticBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADDruckerPragerPoroplasticBiotMaterial.C">ADDruckerPragerPoroplasticBiotMaterial</a>
           <span class="desc">Scalar Drucker–Prager poroplastic return mapping on the single-prime Kirchhoff stress, with optional <code>biot_feedback</code> fixed-point iteration.</span>
           <span class="why">Why: the scalar prototype for the feedback comparisons.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADConstantDeformationGradientMaterial.C">ADConstantDeformationGradientMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADConstantDeformationGradientMaterial.C">ADConstantDeformationGradientMaterial</a>
           <span class="desc">Prescribes a uniform diagonal <code>F</code> (optionally time-ramped).</span>
           <span class="why">Why: drives single-element material tests without a displacement solve.</span>
         </li>
@@ -112,22 +112,22 @@
       <h2>Kernels</h2>
       <ul class="file-list">
         <li>
-          <a href="../moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C">ADReferenceMaterialStorageRateTerm</a>
+          <a href="source.html?f=../moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C">ADReferenceMaterialStorageRateTerm</a>
           <span class="desc">Atomic conservative storage rate supplied as an AD reference-rate property (time kernel).</span>
           <span class="why">Why: assembles the time derivatives of the solid and water accumulations.</span>
         </li>
         <li>
-          <a href="../moose_app/src/kernels/ADReferenceComponentFluxTerm.C">ADReferenceComponentFluxTerm</a>
+          <a href="source.html?f=../moose_app/src/kernels/ADReferenceComponentFluxTerm.C">ADReferenceComponentFluxTerm</a>
           <span class="desc">Atomic weak-divergence term for one named reference component flux.</span>
           <span class="why">Why: assembles the Darcy transport term.</span>
         </li>
         <li>
-          <a href="../moose_app/src/kernels/ADMaterialPropertyResidual.C">ADMaterialPropertyResidual</a>
+          <a href="source.html?f=../moose_app/src/kernels/ADMaterialPropertyResidual.C">ADMaterialPropertyResidual</a>
           <span class="desc">Weak algebraic residual using an AD material property.</span>
           <span class="why">Why: assembles the local constraint residuals into the Newton system.</span>
         </li>
         <li>
-          <a href="../moose_app/src/kernels/ADReferenceSolidMomentum.C">ADReferenceSolidMomentum</a>
+          <a href="source.html?f=../moose_app/src/kernels/ADReferenceSolidMomentum.C">ADReferenceSolidMomentum</a>
           <span class="desc">Quasi-static solid-skeleton momentum component on the reference configuration.</span>
           <span class="why">Why: the momentum residual for displacement.</span>
         </li>
@@ -138,17 +138,17 @@
       <h2>Postprocessors &amp; application</h2>
       <ul class="file-list">
         <li>
-          <a href="../moose_app/src/postprocessors/ADMaterialScalarL2Error.C">ADMaterialScalarL2Error</a>
+          <a href="source.html?f=../moose_app/src/postprocessors/ADMaterialScalarL2Error.C">ADMaterialScalarL2Error</a>
           <span class="desc">Element-integral L2 error of a material property against an analytical function.</span>
           <span class="why">Why: reports the Biot-identity, mineral-EOS, and referential-mass diagnostics.</span>
         </li>
         <li>
-          <a href="../moose_app/src/base/NonlinearBiotADApp.C">NonlinearBiotADApp</a>
+          <a href="source.html?f=../moose_app/src/base/NonlinearBiotADApp.C">NonlinearBiotADApp</a>
           <span class="desc">Application object registering all materials, kernels, and postprocessors.</span>
           <span class="why">Why: the minimal MOOSE application entry point.</span>
         </li>
         <li>
-          <a href="../moose_app/src/main.C">main.C</a>
+          <a href="source.html?f=../moose_app/src/main.C">main.C</a>
           <span class="desc">Standard MOOSE <code>main</code> entry point.</span>
           <span class="why">Why: the executable.</span>
         </li>
@@ -159,9 +159,9 @@
       <h2>Traceability</h2>
       <p class="lead">
         The mapping from manuscript equations to these MOOSE objects is recorded in
-        <a href="../validation/equation_to_moose_map.yml">equation_to_moose_map.yml</a>, and the
+        <a href="source.html?f=../validation/equation_to_moose_map.yml">equation_to_moose_map.yml</a>, and the
         theory-to-implementation trace in
-        <a href="../validation/theory_traceability.yml">theory_traceability.yml</a>.
+        <a href="source.html?f=../validation/theory_traceability.yml">theory_traceability.yml</a>.
       </p>
     </section>
   </div>
