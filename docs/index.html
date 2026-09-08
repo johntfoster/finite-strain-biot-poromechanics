@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nonlinear-Biot AD — Examples &amp; Reproduction</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      Nonlinear-Biot AD
+      <span class="tag">Finite-deformation Biot coefficient · spatial mass balances</span>
+    </a>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="mandel.html">Mandel benchmark</a>
+      <a href="poroplastic.html">Poroplastic Biot</a>
+      <a href="sandstone.html">Sandstone</a>
+      <a href="moose-catalog.html">MOOSE catalog</a>
+      <a href="reproduction.html">Reproduce</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Repository audit &amp; example documentation</h1>
+    <p>
+      A browsable guide to every worked example in this repository: the MOOSE
+      implementation files, the input decks that drive them, the Python scripts
+      that generate the publication figures, the figures themselves, and the
+      exact commands to reproduce the manuscript results.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="reproduction.html">Full reproduction commands</a>
+      <a class="btn ghost" href="moose-catalog.html">Browse every MOOSE object</a>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="container">
+
+    <section class="section">
+      <h2>What this repository computes</h2>
+      <p class="lead">
+        The work evaluates a <strong>finite-deformation Biot coefficient</strong> for a body
+        containing one deformable solid and one water phase. Global fields are
+        <strong>Q2 displacement</strong>, continuous <strong>Q1 water pressure</strong>, and
+        <strong>Q2 solid partial density</strong>. A spatial solid mass balance evolves the
+        partial density, a general local constitutive update supplies the intrinsic solid
+        density and solid volume fraction, and quadrature-point implicit differentiation of
+        the complete local residual system supplies the fixed-pressure Biot coefficient.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>The three worked examples</h2>
+      <div class="grid">
+
+        <div class="card">
+          <h3><a href="mandel.html">1 · Water-filled Mandel benchmark</a></h3>
+          <p>
+            The plane-strain Mandel consolidation problem solved with the implicit-AD Biot
+            coefficient, compared against the analytical Cheng–Detournay solution, with a
+            finite-deformation continuation that reports the departure of the Biot
+            coefficient from its reference value.
+          </p>
+          <div class="links">
+            <span class="badge moose">10+ MOOSE objects</span>
+            <span class="badge deck">2 input decks</span>
+            <span class="badge script">3 scripts</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><a href="poroplastic.html">2 · Poroplastic Biot coefficient</a></h3>
+          <p>
+            Single-element demonstrations of the stateful multiplicative ideal
+            Drucker–Prager return mapping and the plastic pore-allocation correction
+            <code>B = 1 − (1 − B<sub>el</sub>)/a<sup>p</sup></code>: elastic collapse,
+            ΔB vs. compression, the implicit-coefficient feedback at pore pressure, the
+            general fixed-history tangent, and the load–unload–reload loop.
+          </p>
+          <div class="links">
+            <span class="badge moose">4 MOOSE materials</span>
+            <span class="badge deck">11 input decks</span>
+            <span class="badge script">5 plot scripts</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><a href="sandstone.html">3 · Castlegate sandstone comparison</a></h3>
+          <p>
+            A drained-sandstone hydrostatic comparison against published Ingraham et al.
+            (2017) Castlegate data, identifying the pressure-/porosity-dependent drained
+            modulus needed for a quantitative compactive match.
+          </p>
+          <div class="links">
+            <span class="badge script">3 scripts</span>
+            <span class="badge data">published data</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Repository map</h2>
+      <table>
+        <thead><tr><th>Path</th><th>Contents</th></tr></thead>
+        <tbody>
+          <tr><td><code>paper/</code></td><td>Canonical LaTeX manuscript (root <code>paper/main.tex</code>)</td></tr>
+          <tr><td><code>moose_app/</code></td><td>Minimal standalone MOOSE application and focused tests</td></tr>
+          <tr><td><code>moose_app/include/…</code>, <code>src/…</code></td><td>MOOSE object implementations (materials, kernels, postprocessors, app)</td></tr>
+          <tr><td><code>moose_app/test/tests/…</code></td><td>Input decks (<code>.i</code>) and test specifications (<code>tests</code>)</td></tr>
+          <tr><td><code>scripts/</code></td><td>Figure, extraction, provenance, and repository-validation tools</td></tr>
+          <tr><td><code>validation/</code></td><td>Curated comparison data, traceability maps, and check scripts</td></tr>
+          <tr><td><code>figures/</code></td><td>Publication figures (PNG / PGF / PDF)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Reproducing everything</h2>
+      <p class="lead">
+        The canonical one-shot entry point is <code>make reproduce</code>. A complete
+        script that additionally regenerates the poroplastic validation data is provided
+        at <a href="../scripts/reproduce_all.sh"><code>scripts/reproduce_all.sh</code></a>.
+        See the <a href="reproduction.html">reproduction page</a> for the step-by-step commands.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    Finite-deformation nonlinear-Biot repository · generated documentation ·
+    <a href="../paper/main.tex">manuscript source</a> ·
+    <a href="../README.md">README</a>
+  </div>
+</footer>
+</body>
+</html>

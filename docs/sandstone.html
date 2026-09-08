@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sandstone comparison — Nonlinear-Biot AD</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      Nonlinear-Biot AD
+      <span class="tag">Finite-deformation Biot coefficient · spatial mass balances</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="mandel.html">Mandel benchmark</a>
+      <a href="poroplastic.html">Poroplastic Biot</a>
+      <a href="sandstone.html" class="active">Sandstone</a>
+      <a href="moose-catalog.html">MOOSE catalog</a>
+      <a href="reproduction.html">Reproduce</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="breadcrumbs"><a href="index.html">Home</a> / Sandstone comparison</div>
+
+    <section class="section">
+      <h1>3 · Castlegate sandstone comparison</h1>
+      <p class="lead">
+        A drained-sandstone hydrostatic study that positions this paper's model against the
+        published <strong>Ingraham et al. (2017)</strong> Castlegate sandstone data. It
+        quantifies the constitutive ingredient — a pressure- and porosity-dependent drained
+        bulk modulus — that a quantitative compactive match would require, and interprets the
+        measured porosity loss as the plastic pore-allocation branch
+        <code>aᵖ = φ<sub>s0</sub>/(1 − φ)</code>.
+      </p>
+      <div class="callout warn">
+        This is a <strong>feasibility / calibration</strong> study, not material-specific
+        physical validation. The red curve in panel (a) and all of panel (b) calibrate
+        ingredients that are <em>not yet</em> in the constant-modulus model; they identify the
+        required extension.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Python scripts</h2>
+      <ul class="file-list">
+        <li>
+          <a href="../scripts/poroplastic_sandstone_feasibility.py">poroplastic_sandstone_feasibility.py</a>
+          <span class="desc">Calibrated material-point model (step 1): fits <code>K<sub>m</sub>(P)</code> and <code>K(P)</code> to the published hydrostatic rows and shows the elastic pressure-stiffening coefficient <code>α<sub>el</sub>(P) = 1 − K(P)/K<sub>m</sub>(P)</code> reproduces the measured decline.</span>
+        </li>
+        <li>
+          <a href="../scripts/castlegate_compactive_calibration.py">castlegate_compactive_calibration.py</a>
+          <span class="desc">Compactive (cap) plasticity calibration (step 2): anchors a porosity-only drained law to the measured endpoints and infers <code>φ(P)</code> and <code>aᵖ(P)</code>.</span>
+        </li>
+        <li>
+          <a href="../scripts/plot_sandstone_comparison.py">plot_sandstone_comparison.py</a>
+          <span class="desc">Manuscript figure: measured drained hydrostatic coefficient vs. the paper's constant-modulus elastic coefficient and the calibrated stiffening model.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Figures</h2>
+      <figure>
+        <img src="assets/img/sandstone_comparison.png" alt="Sandstone comparison">
+        <figcaption>Drained sandstone hydrostatics as a compactive target, positioned against this paper's model.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/sandstone_compactive_calibration.png" alt="Sandstone compactive calibration">
+        <figcaption>Compactive calibration: porosity loss and plastic pore allocation inferred from the published data.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/sandstone_feasibility_overlay.png" alt="Sandstone feasibility overlay">
+        <figcaption>Feasibility overlay of the elastic pressure-stiffening fit against the published Table 3 data.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section">
+      <h2>Reference data</h2>
+      <ul class="file-list">
+        <li>
+          <a href="https://dx.doi.org/10.1016/j.ijrmms.2017.04.004">Ingraham et al. (2017) — publisher DOI</a>
+          <span class="desc">Published source (IJRMSS 96 (2017) 1–10) used for Tables 1 and 3. The local PDF copy lives in the gitignored <code>references/pdfs/</code> directory.</span>
+        </li>
+      </ul>
+      <p class="lead">The calibration logic is documented in
+        <a href="../notes/experimental_literature_review.md">experimental_literature_review.md</a> and
+        <a href="../notes/sandstone_comparison_feasibility.md">sandstone_comparison_feasibility.md</a>.</p>
+    </section>
+
+    <section class="section">
+      <h2>Reproduce</h2>
+      <pre><code>make figures   # runs plot_sandstone_comparison.py (plus the other figure scripts)</code></pre>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <a href="index.html">Home</a> · <a href="moose-catalog.html">MOOSE catalog</a> ·
+    <a href="reproduction.html">Reproduce</a>
+  </div>
+</footer>
+</body>
+</html>
