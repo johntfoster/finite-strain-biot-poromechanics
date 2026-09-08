@@ -52,27 +52,27 @@
       <h2>MOOSE implementation files</h2>
       <ul class="file-list">
         <li>
-          <a href="../moose_app/src/materials/ADTensorialPoroplasticBiotMaterial.C">ADTensorialPoroplasticBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADTensorialPoroplasticBiotMaterial.C">ADTensorialPoroplasticBiotMaterial</a>
           <span class="desc">Stateful multiplicative ideal Drucker–Prager return mapping. Forms the elastic trial <code>Fᵉ<sub>tr</sub> = F (Fᵖ<sub>n</sub>)⁻¹</code>, reconstructs the single-prime Kirchhoff stress, and performs the radial return with exact symmetric matrix exponential; stores <code>Fᵖ</code> and <code>aᵖ = det Fᵖ</code>.</span>
           <span class="why">Why: the canonical inelastic update that produces the plastic pore allocation used by the coefficient correction; inactive/elastic steps freeze the plastic state (immediate elastic unloading, reload re-yields).</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADPlasticStateBiotMaterial.C">ADPlasticStateBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADPlasticStateBiotMaterial.C">ADPlasticStateBiotMaterial</a>
           <span class="desc">Local-state residual provider for the fixed-history, fixed-pressure tangent of the active poroplastic branch: route-A mapping <code>φ<sub>s</sub> = φ<sub>s0</sub> r/(ratio·aᵖ)</code> with <code>aᵖ</code> frozen (non-AD), publishing the two local residuals and their partials for the dense AD solve.</span>
           <span class="why">Why: supplies the residuals consumed by the general tangent so the general path can be verified against the reduced closed form.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADPoroplasticBiotCoefficientMaterial.C">ADPoroplasticBiotCoefficientMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADPoroplasticBiotCoefficientMaterial.C">ADPoroplasticBiotCoefficientMaterial</a>
           <span class="desc">Plastic pore-allocation correction <code>B = 1 − (1 − B<sub>el</sub>)/aᵖ</code> read from the elastic oracle and the stored allocation.</span>
           <span class="why">Why: the reduced route-A closure that the general AD path and the stateful engine are checked against.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADDruckerPragerPoroplasticBiotMaterial.C">ADDruckerPragerPoroplasticBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADDruckerPragerPoroplasticBiotMaterial.C">ADDruckerPragerPoroplasticBiotMaterial</a>
           <span class="desc">Earlier scalar Drucker–Prager return mapping on the single-prime Kirchhoff stress with the surface <code>f = q′ − M p′</code>, including the optional <code>biot_feedback</code> fixed-point iteration.</span>
           <span class="why">Why: the predecessor scalar prototype retained for the drained compression and feedback comparisons.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADConstantDeformationGradientMaterial.C">ADConstantDeformationGradientMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADConstantDeformationGradientMaterial.C">ADConstantDeformationGradientMaterial</a>
           <span class="desc">Prescribes a uniform diagonal deformation gradient <code>F = diag(λ<sub>t</sub>, λ<sub>a</sub>, λ<sub>o</sub>)</code> (optionally time-ramped).</span>
           <span class="why">Why: drives the single-element material tests without a displacement solve.</span>
         </li>
@@ -84,17 +84,17 @@
       <table>
         <thead><tr><th>Deck</th><th>What it demonstrates</th></tr></thead>
         <tbody>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_elastic.i"><code>poroplastic_delta_b_elastic.i</code></a></td><td>E-1 collapse: with yield inactive (<code>M = 100</code>) the stateful engine reduces exactly to the elastic response (<code>aᵖ = 1</code>, <code>Δγ = 0</code>, <code>ΔB = 0</code>).</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b.i"><code>poroplastic_delta_b.i</code></a></td><td>Drained monotonic compression to 10% with the mechanism active (<code>M = 0.6</code>): <code>aᵖ &gt; 1</code> and <code>B = 1 − (1 − B<sub>el</sub>)/aᵖ &gt; B<sub>el</sub></code>.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_20.i"><code>poroplastic_delta_b_20.i</code></a></td><td>The same correction at 20% axial compression.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_30.i"><code>poroplastic_delta_b_30.i</code></a></td><td>The same correction at 30% axial compression.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_sweep.i"><code>poroplastic_delta_b_sweep.i</code></a></td><td>Monotonic drained compression to 35%, supplying <code>B<sub>el</sub></code>, <code>aᵖ</code>, and <code>B</code> over the whole range used by the ΔB figure.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_b_feedback.i"><code>poroplastic_b_feedback.i</code></a></td><td>Nonzero pore pressure: the corrected coefficient enters the driving stress through <code>(1−B) p J I</code>; a frozen-elastic reference pass isolates the coefficient feedback.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_general_path.i"><code>poroplastic_general_path.i</code></a></td><td>General fixed-history fixed-pressure tangent (pure AD) with <code>aᵖ</code> frozen at the canonical value — verified equal to <code>B = 1 − (1 − B<sub>el</sub>)/aᵖ</code>.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_unload_tangent.i"><code>poroplastic_unload_tangent.i</code></a></td><td>Unload-branch (frozen-history) coefficient at reduced compression after loading to the peak allocation <code>aᵖ = 1.031877</code>.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/tensorial_load_unload.i"><code>tensorial_load_unload.i</code></a></td><td>Load–unload–reload axial stretch: plastic flow on load, immediate elastic unload with <code>aᵖ</code> frozen, re-yield at the stored peak.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_elastic.i"><code>poroplastic_elastic.i</code></a></td><td>Virgin elastic single-element baseline.</td></tr>
-          <tr><td><a href="../moose_app/test/tests/poroplastic_biot/poroplastic_compression.i"><code>poroplastic_compression.i</code></a></td><td>Simple drained monotonic compression smoke run.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_elastic.i"><code>poroplastic_delta_b_elastic.i</code></a></td><td>E-1 collapse: with yield inactive (<code>M = 100</code>) the stateful engine reduces exactly to the elastic response (<code>aᵖ = 1</code>, <code>Δγ = 0</code>, <code>ΔB = 0</code>).</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b.i"><code>poroplastic_delta_b.i</code></a></td><td>Drained monotonic compression to 10% with the mechanism active (<code>M = 0.6</code>): <code>aᵖ &gt; 1</code> and <code>B = 1 − (1 − B<sub>el</sub>)/aᵖ &gt; B<sub>el</sub></code>.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_20.i"><code>poroplastic_delta_b_20.i</code></a></td><td>The same correction at 20% axial compression.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_30.i"><code>poroplastic_delta_b_30.i</code></a></td><td>The same correction at 30% axial compression.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_sweep.i"><code>poroplastic_delta_b_sweep.i</code></a></td><td>Monotonic drained compression to 35%, supplying <code>B<sub>el</sub></code>, <code>aᵖ</code>, and <code>B</code> over the whole range used by the ΔB figure.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_b_feedback.i"><code>poroplastic_b_feedback.i</code></a></td><td>Nonzero pore pressure: the corrected coefficient enters the driving stress through <code>(1−B) p J I</code>; a frozen-elastic reference pass isolates the coefficient feedback.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_general_path.i"><code>poroplastic_general_path.i</code></a></td><td>General fixed-history fixed-pressure tangent (pure AD) with <code>aᵖ</code> frozen at the canonical value — verified equal to <code>B = 1 − (1 − B<sub>el</sub>)/aᵖ</code>.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_unload_tangent.i"><code>poroplastic_unload_tangent.i</code></a></td><td>Unload-branch (frozen-history) coefficient at reduced compression after loading to the peak allocation <code>aᵖ = 1.031877</code>.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/tensorial_load_unload.i"><code>tensorial_load_unload.i</code></a></td><td>Load–unload–reload axial stretch: plastic flow on load, immediate elastic unload with <code>aᵖ</code> frozen, re-yield at the stored peak.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_elastic.i"><code>poroplastic_elastic.i</code></a></td><td>Virgin elastic single-element baseline.</td></tr>
+          <tr><td><a href="source.html?f=../moose_app/test/tests/poroplastic_biot/poroplastic_compression.i"><code>poroplastic_compression.i</code></a></td><td>Simple drained monotonic compression smoke run.</td></tr>
           <tr><td><a href="../moose_app/test/tests/poroplastic_biot/tests"><code>tests</code></a></td><td>The MOOSE test specification with the per-deck acceptance requirements.</td></tr>
         </tbody>
       </table>
@@ -104,43 +104,43 @@
       <h2>Python scripts that produce the results and figures</h2>
       <ul class="file-list">
         <li>
-          <a href="../validation/scripts/curate_poroplastic_delta_b.py">curate_poroplastic_delta_b.py</a>
+          <a href="source.html?f=../validation/scripts/curate_poroplastic_delta_b.py">curate_poroplastic_delta_b.py</a>
           <span class="desc">Runs the monotonic compression sweep and curates <code>validation/poroplastic_delta_b.csv</code>.</span>
         </li>
         <li>
-          <a href="../validation/scripts/check_poroplastic_general_path.py">check_poroplastic_general_path.py</a>
+          <a href="source.html?f=../validation/scripts/check_poroplastic_general_path.py">check_poroplastic_general_path.py</a>
           <span class="desc">Runs the general-path deck and verifies <code>B_reduced = B_general</code> to machine precision; curates <code>poroplastic_general_path.csv</code>.</span>
         </li>
         <li>
-          <a href="../validation/scripts/check_poroplastic_load_unload.py">check_poroplastic_load_unload.py</a>
+          <a href="source.html?f=../validation/scripts/check_poroplastic_load_unload.py">check_poroplastic_load_unload.py</a>
           <span class="desc">Runs the unload-branch deck and curates <code>poroplastic_load_unload.csv</code>.</span>
         </li>
         <li>
-          <a href="../validation/scripts/check_poroplastic_b_feedback.py">check_poroplastic_b_feedback.py</a>
+          <a href="source.html?f=../validation/scripts/check_poroplastic_b_feedback.py">check_poroplastic_b_feedback.py</a>
           <span class="desc">Runs the feedback deck over pressure and compression scans; curates <code>poroplastic_b_feedback.csv</code>.</span>
         </li>
         <li>
-          <a href="../validation/scripts/check_tensorial_load_unload.py">check_tensorial_load_unload.py</a>
+          <a href="source.html?f=../validation/scripts/check_tensorial_load_unload.py">check_tensorial_load_unload.py</a>
           <span class="desc">Runs the load–unload–reload deck and verifies the elastic-unload / re-yield gates; curates <code>tensorial_load_unload.csv</code>.</span>
         </li>
         <li>
-          <a href="../scripts/plot_poroplastic_delta_b.py">plot_poroplastic_delta_b.py</a>
+          <a href="source.html?f=../scripts/plot_poroplastic_delta_b.py">plot_poroplastic_delta_b.py</a>
           <span class="desc">Plots ΔB vs. compression.</span>
         </li>
         <li>
-          <a href="../scripts/plot_poroplastic_b_feedback.py">plot_poroplastic_b_feedback.py</a>
+          <a href="source.html?f=../scripts/plot_poroplastic_b_feedback.py">plot_poroplastic_b_feedback.py</a>
           <span class="desc">Plots the implicit-coefficient feedback (corrected vs. elastic coefficient and the plastic-increment over-prediction).</span>
         </li>
         <li>
-          <a href="../scripts/plot_poroplastic_load_unload.py">plot_poroplastic_load_unload.py</a>
+          <a href="source.html?f=../scripts/plot_poroplastic_load_unload.py">plot_poroplastic_load_unload.py</a>
           <span class="desc">Plots the load–unload branch coefficients.</span>
         </li>
         <li>
-          <a href="../scripts/plot_tensorial_load_unload.py">plot_tensorial_load_unload.py</a>
+          <a href="source.html?f=../scripts/plot_tensorial_load_unload.py">plot_tensorial_load_unload.py</a>
           <span class="desc">Plots the stateful tensorial load–unload–reload loop (<code>aᵖ</code> and <code>B</code>).</span>
         </li>
         <li>
-          <a href="../scripts/sweep_poroplastic_b_feedback.py">sweep_poroplastic_b_feedback.py</a>
+          <a href="source.html?f=../scripts/sweep_poroplastic_b_feedback.py">sweep_poroplastic_b_feedback.py</a>
           <span class="desc">Standalone sweep driver for the feedback deck (companion to the check script).</span>
         </li>
       </ul>

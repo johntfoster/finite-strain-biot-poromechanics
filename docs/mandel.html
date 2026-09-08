@@ -52,72 +52,72 @@
       <p>Every object this problem depends on, with its role in the solve.</p>
       <ul class="file-list">
         <li>
-          <a href="../moose_app/src/materials/ADSolidReferenceKinematics.C">ADSolidReferenceKinematics</a>
+          <a href="source.html?f=../moose_app/src/materials/ADSolidReferenceKinematics.C">ADSolidReferenceKinematics</a>
           <span class="desc">Computes the deformation gradient <code>F</code>, its Jacobian <code>J</code>, the material rate <code>J̇</code>, <code>F⁻¹</code>, and <code>J F⁻ᵀ</code> from the displacement gradients.</span>
           <span class="why">Why: supplies the solid-reference kinematics that every pull-back and the Biot stress transform consume.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C">ADLocalElasticMineralBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C">ADLocalElasticMineralBiotMaterial</a>
           <span class="desc">Elastic mineral state: intrinsic solid density, solid volume fraction, material-mass and mineral-EOS residuals, their partial derivatives, and a closed-form Biot oracle.</span>
           <span class="why">Why: the verification specialization of the local constitutive update; its closed-form coefficient independently cross-checks the general tangent.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C">ADConstrainedSkeletonBiotMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C">ADConstrainedSkeletonBiotMaterial</a>
           <span class="desc">Solves the dense AD-valued implicit local tangent at fixed intrinsic phase pressure and fixed referential solid mass, returning the production Biot coefficient.</span>
           <span class="why">Why: the production path — the fixed-pressure Biot coefficient <code>B = 1 − φ<sub>s0</sub> d(J̄/a<sup>p</sup>)/dJ</code> used by the momentum balance.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C">ADVolumetricBarotropicSkeletonStressMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C">ADVolumetricBarotropicSkeletonStressMaterial</a>
           <span class="desc">Pressure-coupled effective skeleton stress from the volumetric barotropic potential <code>W₀ = μ/2(J<sup>−2/3</sup>I₁ − 3) + K<sub>sk</sub>/2 (ln J)²</code>.</span>
           <span class="why">Why: produces the double-prime first Piola stress <code>P″</code> entering the Biot transform.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADReferenceSolidStressMaterial.C">ADReferenceSolidStressMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADReferenceSolidStressMaterial.C">ADReferenceSolidStressMaterial</a>
           <span class="desc">Applies the inverse Biot transform to <code>P″</code> and assembles the total first Piola stress with the nonlinear pressure contribution.</span>
           <span class="why">Why: forms the total mixture stress that the momentum residual integrates.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C">ADBinarySolidSpatialMassMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C">ADBinarySolidSpatialMassMaterial</a>
           <span class="desc">Source-free single-component solid partial-density balance pulled to the solid reference; exposes the normalized referential solid mass and its AD rate.</span>
           <span class="why">Why: closes the spatial solid mass balance <code>d(Jρ<sub>s</sub>)/dt = 0</code> that evolves the partial-density field.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADBiotPressureStorageMaterial.C">ADBiotPressureStorageMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADBiotPressureStorageMaterial.C">ADBiotPressureStorageMaterial</a>
           <span class="desc">Exact single-water mass storage pulled to the reference: <code>J(1−φ<sub>s</sub>)ρ̄<sub>f</sub>(p)</code> and its complete AD material time rate.</span>
           <span class="why">Why: supplies the water accumulation without a prescribed Biot storage modulus.</span>
         </li>
         <li>
-          <a href="../moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C">ADBiotDarcyReferenceFluxMaterial</a>
+          <a href="source.html?f=../moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C">ADBiotDarcyReferenceFluxMaterial</a>
           <span class="desc">Pulls the Q1 pressure-gradient Darcy mass flux to the solid reference configuration.</span>
           <span class="why">Why: provides the reference Darcy flux for the water-pressure weak residual.</span>
         </li>
         <li>
-          <a href="../moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C">ADReferenceMaterialStorageRateTerm</a>
+          <a href="source.html?f=../moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C">ADReferenceMaterialStorageRateTerm</a>
           <span class="desc">Atomic conservative storage rate as an AD reference-rate property (time kernel).</span>
           <span class="why">Why: assembles the time derivative of both the solid and water accumulations.</span>
         </li>
         <li>
-          <a href="../moose_app/src/kernels/ADReferenceComponentFluxTerm.C">ADReferenceComponentFluxTerm</a>
+          <a href="source.html?f=../moose_app/src/kernels/ADReferenceComponentFluxTerm.C">ADReferenceComponentFluxTerm</a>
           <span class="desc">Atomic weak-divergence term for one named reference component flux.</span>
           <span class="why">Why: assembles the Darcy transport term in the water balance.</span>
         </li>
         <li>
-          <a href="../moose_app/src/kernels/ADReferenceSolidMomentum.C">ADReferenceSolidMomentum</a>
+          <a href="source.html?f=../moose_app/src/kernels/ADReferenceSolidMomentum.C">ADReferenceSolidMomentum</a>
           <span class="desc">Quasi-static solid-skeleton momentum component on the reference configuration.</span>
           <span class="why">Why: the momentum residual for the displacement field.</span>
         </li>
         <li>
-          <a href="../moose_app/src/kernels/ADMaterialPropertyResidual.C">ADMaterialPropertyResidual</a>
+          <a href="source.html?f=../moose_app/src/kernels/ADMaterialPropertyResidual.C">ADMaterialPropertyResidual</a>
           <span class="desc">Weak algebraic residual using an AD material property.</span>
           <span class="why">Why: assembles the local constraint residuals into the global Newton system.</span>
         </li>
         <li>
-          <a href="../moose_app/src/postprocessors/ADMaterialScalarL2Error.C">ADMaterialScalarL2Error</a>
+          <a href="source.html?f=../moose_app/src/postprocessors/ADMaterialScalarL2Error.C">ADMaterialScalarL2Error</a>
           <span class="desc">Element-integral L2 error of a material property against an analytical function.</span>
           <span class="why">Why: reports the Biot-identity, mineral-EOS, and referential-mass diagnostics used by the acceptance gates.</span>
         </li>
         <li>
-          <a href="../moose_app/src/base/NonlinearBiotADApp.C">NonlinearBiotADApp</a>
+          <a href="source.html?f=../moose_app/src/base/NonlinearBiotADApp.C">NonlinearBiotADApp</a>
           <span class="desc">Application object that registers every material, kernel, and postprocessor.</span>
           <span class="why">Why: the executable entry point of the minimal MOOSE application.</span>
         </li>
@@ -128,11 +128,11 @@
       <h2>Input decks</h2>
       <ul class="file-list">
         <li>
-          <a href="../moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i">mandel_water_q2_q1.i</a>
+          <a href="source.html?f=../moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i">mandel_water_q2_q1.i</a>
           <span class="desc">The full water-filled plane-strain Mandel problem: Q2 displacement, continuous Q1 pressure, Q2 solid partial density, pulled-back accumulations, and the fixed-pressure elastic Biot tangent.</span>
         </li>
         <li>
-          <a href="../moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i">implicit_biot_q2_q1_jacobian.i</a>
+          <a href="source.html?f=../moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i">implicit_biot_q2_q1_jacobian.i</a>
           <span class="desc">The PETSc Jacobian-tester deck that verifies the outer automatic-differentiation Jacobian against finite differences.</span>
         </li>
         <li>
@@ -146,19 +146,19 @@
       <h2>Python scripts that produce the results and figures</h2>
       <ul class="file-list">
         <li>
-          <a href="../validation/scripts/check_mandel_implicit_biot.py">check_mandel_implicit_biot.py</a>
+          <a href="source.html?f=../validation/scripts/check_mandel_implicit_biot.py">check_mandel_implicit_biot.py</a>
           <span class="desc">Runs the Mandel deck on coarse/fine/finer meshes and time steps, evaluates the analytical pressure/displacement agreement, Biot identity, centered-difference tangent, solid-mass drift, and mineral-EOS residual, and reports the acceptance gates.</span>
         </li>
         <li>
-          <a href="../scripts/curate_mandel_profiles.py">curate_mandel_profiles.py</a>
+          <a href="source.html?f=../scripts/curate_mandel_profiles.py">curate_mandel_profiles.py</a>
           <span class="desc">Curates the publication pressure, displacement, and large-deformation profile CSVs from MOOSE line-sampler output.</span>
         </li>
         <li>
-          <a href="../scripts/extract_mandel_density_contours.py">extract_mandel_density_contours.py</a>
+          <a href="source.html?f=../scripts/extract_mandel_density_contours.py">extract_mandel_density_contours.py</a>
           <span class="desc">Extracts the solved intrinsic-solid-density ratio and Biot-coefficient fields at element centers from the Exodus output.</span>
         </li>
         <li>
-          <a href="../scripts/plot_mandel_extended_results.py">plot_mandel_extended_results.py</a>
+          <a href="source.html?f=../scripts/plot_mandel_extended_results.py">plot_mandel_extended_results.py</a>
           <span class="desc">Plots the Mandel displacements and the finite-deformation Biot response (profiles, contours, and departure curve).</span>
         </li>
       </ul>
@@ -191,7 +191,7 @@
     <section class="section">
       <h2>Validation data</h2>
       <ul class="file-list">
-        <li><a href="../validation/mandel_implicit_biot.yml">mandel_implicit_biot.yml</a><span class="desc">Curated verification summary (tolerances, metrics, gates).</span></li>
+        <li><a href="source.html?f=../validation/mandel_implicit_biot.yml">mandel_implicit_biot.yml</a><span class="desc">Curated verification summary (tolerances, metrics, gates).</span></li>
         <li><a href="../validation/mandel_pressure_profiles.csv">mandel_pressure_profiles.csv</a><span class="desc">Analytical-vs-computed pressure profiles.</span></li>
         <li><a href="../validation/mandel_displacement_profiles.csv">mandel_displacement_profiles.csv</a><span class="desc">Analytical-vs-computed displacement profiles.</span></li>
         <li><a href="../validation/mandel_large_deformation.csv">mandel_large_deformation.csv</a><span class="desc">Finite-deformation continuation data.</span></li>

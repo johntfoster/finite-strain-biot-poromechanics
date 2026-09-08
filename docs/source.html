@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Source viewer — Nonlinear-Biot AD</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/vendor/github-dark.min.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      Nonlinear-Biot AD
+      <span class="tag">Finite-deformation Biot coefficient · spatial mass balances</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="mandel.html">Mandel benchmark</a>
+      <a href="poroplastic.html">Poroplastic Biot</a>
+      <a href="sandstone.html">Sandstone</a>
+      <a href="moose-catalog.html">MOOSE catalog</a>
+      <a href="reproduction.html">Reproduce</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="breadcrumbs"><a href="index.html">Home</a> / Source</div>
+
+    <section class="section">
+      <div class="source-toolbar">
+        <h1 id="file-title">Loading…</h1>
+        <div class="toolbar-actions">
+          <span id="lang-badge" class="badge">…</span>
+          <a id="raw-link" class="btn ghost" href="#" target="_blank" rel="noopener">Raw</a>
+          <button id="copy-btn" class="btn ghost" type="button">Copy</button>
+        </div>
+      </div>
+      <pre class="source-code"><code id="code">Loading file…</code></pre>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <a href="index.html">Home</a> · <a href="moose-catalog.html">MOOSE catalog</a>
+  </div>
+</footer>
+
+<script src="assets/vendor/highlight.min.js"></script>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var file = params.get('f') || 'moose_app/src/main.C';
+  var code = document.getElementById('code');
+  var title = document.getElementById('file-title');
+  var raw = document.getElementById('raw-link');
+  var badge = document.getElementById('lang-badge');
+  var copyBtn = document.getElementById('copy-btn');
+
+  var langMap = {
+    c: 'cpp', h: 'cpp', cpp: 'cpp', cc: 'cpp', cxx: 'cpp', hpp: 'cpp',
+    i: 'ini',
+    py: 'python',
+    yml: 'yaml', yaml: 'yaml',
+    sh: 'bash', bash: 'bash',
+    json: 'json', md: 'markdown', tex: 'latex'
+  };
+  function languageOf(path) {
+    var ext = path.split('.').pop().toLowerCase();
+    return langMap[ext] || 'plaintext';
+  }
+
+  var lang = languageOf(file);
+  title.textContent = file;
+  badge.textContent = lang;
+  raw.href = file;
+
+  fetch(file, { cache: 'no-store' })
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    })
+    .then(function (text) {
+      code.textContent = text;
+      code.className = 'language-' + lang;
+      if (window.hljs) hljs.highlightElement(code);
+    })
+    .catch(function (err) {
+      code.textContent = 'Could not load "' + file + '": ' + err + '. ' +
+        'On a local file:// preview, the viewer cannot fetch sibling files; ' +
+        'open the site over HTTP (e.g. the deployed GitHub Pages URL).';
+      badge.textContent = 'error';
+    });
+
+  copyBtn.addEventListener('click', function () {
+    navigator.clipboard.writeText(code.textContent).then(function () {
+      copyBtn.textContent = 'Copied';
+      setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+    });
+  });
+})();
+</script>
+</body>
+</html>
