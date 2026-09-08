@@ -29,6 +29,7 @@ protected:
   const Real _transverse_stretch;
   const Real _axial_stretch;
   const Real _out_of_plane_stretch;
+  const VariableValue * _axial_var; // optional time-ramped axial stretch
 
   ADMaterialProperty<RankTwoTensor> & _F;
   ADMaterialProperty<Real> & _J;

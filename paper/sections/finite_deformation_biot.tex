@@ -653,8 +653,14 @@ pressure.  A unified free energy of the additively separable form
 \(\psi_s(\mbf F,\bar\rho_s)=\psi_s^{\mathrm{sk}}(\mbf F)+\psi_s^{\mathrm d}(\bar\rho_s)\)
 is not used here, because its density and deformation conjugates are
 inconsistent for the pressure decomposition below; the skeleton and mineral
-responses therefore enter as separate constitutive inputs.  The zero-pressure
-skeleton potential is the decoupled compressible neo-Hookean form
+responses therefore enter as separate constitutive inputs.  The elastic state
+of this closure is the inactive-mechanism limit of the aggregate split
+\eqref{eq:aggregate-plastic-split}, in which \(\bar{\mbf F}^p=\mbf I\) and
+\(a^p=1\), so the plastic factor is the identity, \(\mbf F^p=\mbf I\), and
+the elastic factor is the total deformation, \(\mbf F^e=\mbf F\).  The
+drained skeleton potential is therefore a function of \(\mbf F\).  The
+zero-pressure skeleton potential is the decoupled compressible neo-Hookean
+form
 \begin{equation}
  W_0(\mbf F)
  =\frac{G}{2}\left(J^{-2/3}I_1-3\right)
@@ -666,19 +672,14 @@ where \(K\) and \(G\) are the drained skeleton bulk and shear moduli,
 respectively.  The zero-pressure skeleton Cauchy stress
 \(\bs\sigma_0=\frac{1}{J}\pder{W_0}{\mbf F}\mbf F^T\) has volumetric part
 \(\bs\sigma_0^{\mathrm{vol}}=K\ln J\,\mbf I/J\), whose mean normal stress is
-\(\frac{1}{3}\operatorname{tr}\bs\sigma_0=K\ln J/J\).  The mineral law sets
-the intrinsic pressure to the mineral pressure law plus the volumetric contact
-of the skeleton,
-\begin{equation}
- \bar p_s
- =\hat p_s^{\mathrm{min}}(\bar J,\bs\xi)
- +\frac{1}{\phi_{s0}}\frac{1}{3}\operatorname{tr}\bs\sigma_0,
- \label{eq:general-mineral-law}
-\end{equation}
-where \(\hat p_s^{\mathrm{min}}\) is the mineral pressure law and \(\bs\xi\)
-its internal variables.  The elastic mineral takes
-\(\hat p_s^{\mathrm{min}}=-K_s\ln\bar J\), where \(K_s\) is the mineral bulk
-modulus, giving
+\(\frac{1}{3}\operatorname{tr}\bs\sigma_0=K\ln J/J\).  The intrinsic pressure
+of the elastic mineral is the sum of its compression law and the volumetric
+contact of the skeleton.  The mineral compression law is logarithmic in the
+mineral volume ratio, \(-K_s\ln\bar J\), with \(K_s\) the mineral bulk
+modulus, and the volumetric contact is the mean normal skeleton stress per unit
+reference solid volume,
+\(\frac{1}{\phi_{s0}}\frac{1}{3}\operatorname{tr}\bs\sigma_0
+=\frac{K\ln J}{\phi_{s0}J}\).  The intrinsic pressure is therefore
 \begin{equation}
  \bar p_s
  =-K_s\ln\bar J+\frac{1}{\phi_{s0}}\frac{1}{3}\operatorname{tr}\bs\sigma_0

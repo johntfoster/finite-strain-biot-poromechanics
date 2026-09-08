@@ -1,14 +1,10 @@
-# Elastic collapse (yield inactive, M = 100) of the canonical stateful
-# tensorial engine.
-# Canonical stateful multiplicative ideal Drucker-Prager first-loading
-# demonstration (ADTensorialPoroplasticBiotMaterial): single element, drained
-# (p = 0), axial stretch ramped in time from 1.0 to 0.8 over t in
-# [0,1] at M = 100, dilation beta = 0.4.  The stored plastic factor F^p
-# (det F^p = a^p) accumulates along the path; the reported coefficient
-#   B = 1 - (1 - B_el)/a^p
-# uses the total-J elastic coefficient B_el of the same drained skeleton and
-# mineral (route-A convention), so Delta B = B - B_el > 0 with the mechanism
-# active.  Yield inactive (large M): a^p = 1, Delta_gamma = 0, B = B_el (Delta B = 0).
+# Canonical tensorial load-unload-reload demonstration.
+# Stateful multiplicative ideal Drucker-Prager return mapping
+# (ADTensorialPoroplasticBiotMaterial): F = F^e F^p, elastic trial on
+# F^e = F (F^p_n)^-1, radial return updating F^p; unloading inside the yield
+# surface freezes the plastic state (immediate elastic reversal) and reloading
+# re-yields from the stored state.  Single element, drained (p = 0), axial
+# stretch ramped in time: 1.0 -> 0.8 (load) -> 1.0 (unload) -> 0.8 (reload).
 
 [Mesh]
   type = GeneratedMesh
@@ -27,12 +23,20 @@
     family = LAGRANGE
     order = FIRST
   []
+  [r]
+    family = LAGRANGE
+    order = FIRST
+  []
 []
 
 [Kernels]
   [p_diffusion]
     type = Diffusion
     variable = p
+  []
+  [r_diffusion]
+    type = Diffusion
+    variable = r
   []
 []
 
@@ -43,9 +47,20 @@
     boundary = 'left right bottom top'
     value = 0
   []
+  [r_one]
+    type = DirichletBC
+    variable = r
+    boundary = 'left right bottom top'
+    value = 1
+  []
 []
 
 [ICs]
+  [r_ic]
+    type = ConstantIC
+    variable = r
+    value = 1
+  []
   [axial_ic]
     type = ConstantIC
     variable = axial_aux
@@ -56,17 +71,13 @@
 [Functions]
   [axial]
     type = PiecewiseLinear
-    x = '0 1'
-    y = '1 0.8'
+    x = '0 1 2 3'
+    y = '1 0.8 0.9 0.8'
   []
 []
 
 [AuxVariables]
   [axial_aux]
-    family = MONOMIAL
-    order = CONSTANT
-  []
-  [b_el]
     family = MONOMIAL
     order = CONSTANT
   []
@@ -78,11 +89,19 @@
     family = MONOMIAL
     order = CONSTANT
   []
-  [b]
+  [yield_f]
     family = MONOMIAL
     order = CONSTANT
   []
-  [db]
+  [mean_p]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+  [q]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+  [b]
     family = MONOMIAL
     order = CONSTANT
   []
@@ -95,11 +114,6 @@
     function = axial
     execute_on = 'INITIAL TIMESTEP_BEGIN'
   []
-  [b_el_aux]
-    type = ADMaterialRealAux
-    variable = b_el
-    property = plastic_elastic_biot_coefficient
-  []
   [a_p_aux]
     type = ADMaterialRealAux
     variable = a_p
@@ -110,16 +124,25 @@
     variable = dgamma
     property = plastic_multiplier_increment
   []
+  [yield_f_aux]
+    type = ADMaterialRealAux
+    variable = yield_f
+    property = plastic_yield_function
+  []
+  [mean_p_aux]
+    type = ADMaterialRealAux
+    variable = mean_p
+    property = plastic_mean_effective_pressure
+  []
+  [q_aux]
+    type = ADMaterialRealAux
+    variable = q
+    property = plastic_equivalent_shear_stress
+  []
   [b_aux]
     type = ADMaterialRealAux
     variable = b
     property = poroplastic_biot_coefficient
-  []
-  [db_aux]
-    type = ParsedAux
-    variable = db
-    expression = 'b - b_el'
-    coupled_variables = 'b b_el'
   []
 []
 
@@ -138,7 +161,7 @@
     skeleton_bulk_modulus = 1.0e9
     mineral_bulk_modulus = 2.5e9
     reference_solid_volume_fraction = 0.9
-    dp_friction_slope = 100
+    dp_friction_slope = 0.6
     dp_dilation_slope = 0.4
     dp_cohesion = 0.0
   []
@@ -149,10 +172,6 @@
     type = ElementAverageValue
     variable = axial_aux
   []
-  [b_el_avg]
-    type = ElementAverageValue
-    variable = b_el
-  []
   [a_p_avg]
     type = ElementAverageValue
     variable = a_p
@@ -161,20 +180,28 @@
     type = ElementAverageValue
     variable = dgamma
   []
+  [yield_f_avg]
+    type = ElementAverageValue
+    variable = yield_f
+  []
+  [mean_p_avg]
+    type = ElementAverageValue
+    variable = mean_p
+  []
+  [q_avg]
+    type = ElementAverageValue
+    variable = q
+  []
   [b_avg]
     type = ElementAverageValue
     variable = b
-  []
-  [db_avg]
-    type = ElementAverageValue
-    variable = db
   []
 []
 
 [Executioner]
   type = Transient
   start_time = 0
-  end_time = 1
+  end_time = 3
   dt = 0.02
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_hypre_type'
@@ -184,5 +211,5 @@
 [Outputs]
   csv = true
   execute_on = 'TIMESTEP_END'
-  time_step_interval = 2
+  time_step_interval = 5
 []

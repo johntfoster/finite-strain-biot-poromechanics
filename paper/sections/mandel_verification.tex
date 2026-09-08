@@ -223,12 +223,16 @@ most \(1.5067\times10^{-5}p_{\mathrm{scale}}\) and displacement by
 \subsection{Numerical comparison}
 \label{sec:mandel-numerical-comparison}
 
-The reported calculation uses a \(40\)-by-\(4\) mesh of nine-node quadrilateral
-(QUAD9) elements and backward-Euler time-step size
-\(\Delta t=0.002\ \mathrm{s}\).  Water pressure is sampled along
-\(Y=0.05\ \mathrm{m}\).  In \cref{fig:mandel-pressure-profiles}, solid curves
-are \eqref{eq:mandel-pressure-series}; open circles are the finite-element
-solution.
+The benchmark error and convergence measures use a \(40\)-by-\(4\) mesh of
+nine-node quadrilaterals (QUAD9) with uniform backward-Euler steps
+\(\Delta t=0.002\ \mathrm{s}\).  The profile panels use the same mesh with
+backward-Euler steps that begin at \(\Delta t=0.001\ \mathrm{s}\) and grow to
+\(0.016\ \mathrm{s}\), refining the early transient so that the pressure
+overshoot in \cref{fig:mandel-pressure-profiles} is resolved.  Water pressure
+is sampled along \(Y=0.05\ \mathrm{m}\).  In
+\cref{fig:mandel-pressure-profiles}, solid curves are
+\eqref{eq:mandel-pressure-series}; open circles are the finite-element
+solution at five profile times.
 
 \begin{figure}[ht]
  \centering
@@ -236,20 +240,25 @@ solution.
  \caption{Water pressure as a function of distance from the undrained center
  at five times.  Solid curves are the Cheng--Detournay analytical series, and
  open circles are Q2/Q1 finite-element values on the reported mesh with
- \(\Delta t=0.002\ \mathrm{s}\).}
+ backward-Euler steps that begin at \(\Delta t=0.001\ \mathrm{s}\) and grow to
+ \(0.016\ \mathrm{s}\).  The dashed line marks the instantaneous undrained
+ pressure \(p_0\); the \(t=0.02\ \mathrm{s}\) profile rises above \(p_0\) near
+ the undrained center and falls below it toward the drained edge, the
+ Mandel--Cryer overshoot that precedes drainage-driven decay.}
  \label{fig:mandel-pressure-profiles}
 \end{figure}
 
 The profiles reproduce the transient concentration of pressure near the
 undrained center and the zero-pressure condition at the drained edge.  Across
 the five plotted times, the maximum nodal pressure difference is
-\(1.9563\times10^{-2}\) of the analytical pressure scale
+\(9.3103\times10^{-3}\) of the analytical pressure scale
 \begin{equation}
  p_{\mathrm{scale}}
  =\frac{P_0B_{\mathrm{Sk}}(1+\nu_u)}{3}.
  \label{eq:mandel-pressure-scale}
 \end{equation}
-The complete reported history also compares pressure at
+The complete reported history of the uniform \(\Delta t=0.002\ \mathrm{s}\)
+benchmark run also compares pressure at
 \(X=0,0.3,0.8\ \mathrm{m}\); its maximum normalized difference is
 \(2.8221\times10^{-2}\).
 
@@ -267,10 +276,11 @@ open circles are the Q2 finite-element solution.
  \caption{Horizontal displacement as a function of \(X\) and vertical
  displacement as a function of \(Y\) at five times in the small-load Mandel
  verification.  Solid curves are the Cheng--Detournay series, and open circles
- are Q2 finite-element values on the reported mesh with
- \(\Delta t=0.002\ \mathrm{s}\).  The horizontal profile is an independent
- benchmark observable; the vertical profile confirms reproduction of the
- prescribed analytical platen displacement.}
+ are Q2 finite-element values on the reported mesh with the same early-refined
+ backward-Euler time sequence used in
+ \cref{fig:mandel-pressure-profiles}.  The horizontal profile is an
+ independent benchmark observable; the vertical profile confirms reproduction
+ of the prescribed analytical platen displacement.}
  \label{fig:mandel-displacements}
 \end{figure}
 \FloatBarrier
@@ -305,11 +315,11 @@ the analogous maximum differences divided by \(P_0a/G\) and \(P_0b/G\).
   \(3.8413\times10^{-8}\) \\
   Departure from \(B_0=0.6\) & \(4.0793\times10^{-5}\) \\
   Horizontal-displacement profile difference divided by \(P_0a/G\) &
-  \(3.0219\times10^{-4}\) \\
+  \(4.8927\times10^{-4}\) \\
   Vertical-displacement profile difference divided by \(P_0b/G\) &
-  \(1.0860\times10^{-13}\) \\
+  \(1.4330\times10^{-13}\) \\
   Plotted-profile pressure difference divided by
-  \(p_{\mathrm{scale}}\) & \(1.9563\times10^{-2}\) \\
+  \(p_{\mathrm{scale}}\) & \(9.3103\times10^{-3}\) \\
   Complete-history pressure difference divided by
   \(p_{\mathrm{scale}}\) & \(2.8221\times10^{-2}\) \\
   Applied-load relative difference & \(1.5254\times10^{-3}\) \\
@@ -334,9 +344,13 @@ pressure differences at \(X=0,0.3,0.8\ \mathrm m\) over coincident output
 times, normalized by \(p_{\mathrm{scale}}\).  These pairwise comparisons are
 sensitivity checks, not estimates of an asymptotic convergence order.  The
 analytical pressure metric uses the same three locations over the complete
-history, whereas the plotted-profile metric uses all plotted nodes at the five
-figure times.  The applied-load metric is the maximum relative difference of
-the recovered vertical nominal stress from \(-P_0\) over the complete history.
+The pressure and displacement profile metrics use all plotted nodes at the
+five figure times of the early-refined profile run.  The complete-history,
+applied-load, and refinement metrics use the uniform
+\(\Delta t=0.002\ \mathrm{s}\) benchmark run at
+\(X=0,0.3,0.8\ \mathrm{m}\).  The applied-load metric is the maximum relative
+difference of the recovered vertical nominal stress from \(-P_0\) over the
+complete history.
 
 The referential solid-mass drift and elastic mineral-law residual in
 \cref{tab:mandel-verification-results} verify the spatial balance and local
@@ -461,35 +475,38 @@ uniform diagonal deformation gradient (uniaxial strain) and is otherwise the
 same drained skeleton and elastic mineral used in the Mandel calculations:
 \(K=1.0\ \mathrm{GPa}\), \(G=0.75\ \mathrm{GPa}\), \(K_s=2.5\
 \mathrm{GPa}\), \(\phi_{s0}=0.9\), with the ideal (constant-strength)
-Drucker--Prager surface \(M=0.2\), dilation slope \(\beta=0.4\).  The
-poroplastic return map of
-Sec.~\ref{sec:plastic-loading-incremental-rate} reduces, at constant
-strength, to the closed-form radial return for the increment \(\Delta\gamma\);
-the plastic pore allocation follows as
-\(a^p=\exp(\beta\Delta\gamma)\), and the fixed-pressure, fixed-history
-tangent with \(v=\bar J/a^p\) gives the coefficient correction
+Drucker--Prager surface \(M=0.6\), dilation slope \(\beta=0.4\).  The
+material integrates the multiplicative return map of
+Sec.~\ref{sec:plastic-loading-incremental-rate} in its stateful form: the
+aggregate plastic factor \(\mbf F^p\) of
+Sec.~\ref{sec:inelastic-plastic-driving-stress} is stored as history, each
+increment forms the elastic trial on \(\mbf F^e=\mbf F\,(\mbf F^p_n)^{-1}\),
+and when the ideal Drucker--Prager trial stress lies outside the surface a
+radial return updates \(\mbf F^p\).  The plastic pore allocation is the
+accumulated volume factor \(a^p=\det\mbf F^p\), and the fixed-pressure,
+fixed-history tangent with \(v=\bar J/a^p\) gives the coefficient correction
 \begin{equation}
  1-B=\frac{1-B_{\mathrm{el}}}{a^p},
  \label{eq:poroplastic-biot-correction}
 \end{equation}
 where \(B_{\mathrm{el}}\) is the elastic coefficient of the same drained
-skeleton and mineral: plastic pore allocation divides the elastic Biot
-deficit \(1-B_{\mathrm{el}}\), so an active mechanism with \(a^p>1\) drives
-the coefficient toward unity, while the inactive limit \(a^p=1\) returns
-\(B=B_{\mathrm{el}}\).
+skeleton and mineral evaluated at the current deformation: plastic pore
+allocation divides the elastic Biot deficit \(1-B_{\mathrm{el}}\), so an
+active mechanism with \(a^p>1\) drives the coefficient toward unity, while
+the inactive limit \(a^p=1\) returns \(B=B_{\mathrm{el}}\).
 
 Two checks verify the update.  First, with yield inactive (a large
-\(M\)), the return map collapses exactly onto the elastic response:
+\(M\)), the stateful return map collapses exactly onto the elastic response:
 \(\Delta\gamma=0\), \(a^p=1\), and \eqref{eq:poroplastic-biot-correction}
 gives \(B=B_{\mathrm{el}}\) (\emph{elastic collapse}, \(\Delta B=0\)).
 Second, with the surface active, the returned stress lands on the yield
-surface to a residual of order \(10^{-9}\) and the pore allocation obeys
-\(a^p=\exp(\beta\Delta\gamma)\).  \Cref{fig:poroplastic-delta-b} shows the
-effect of activating yield on the coefficient under increasing compression:
-the elastic coefficient \(B_{\mathrm{el}}\) decreases with finite strain,
-while \(B_{\mathrm{pl}}=1-(1-B_{\mathrm{el}})/a^p\) remains above it, with
-\(\Delta B=B_{\mathrm{pl}}-B_{\mathrm{el}}\) growing from \(0.005\) at
-\(5\%\) to \(0.061\) at \(30\%\) axial compression.  The single-point
+surface to a residual of order \(10^{-9}\).
+\Cref{fig:poroplastic-delta-b} shows the effect of activating yield on the
+coefficient along a monotonic drained compression ramp: the elastic
+coefficient \(B_{\mathrm{el}}\) decreases with finite strain, while
+\(B_{\mathrm{pl}}=1-(1-B_{\mathrm{el}})/a^p\) remains above it, with
+\(\Delta B=B_{\mathrm{pl}}-B_{\mathrm{el}}\) growing from \(0.003\) at
+\(5\%\) to \(0.043\) at \(30\%\) axial compression.  The single-point
 demonstration isolates the mechanism by which inelastic pore allocation
 modifies the coefficient that a constant or elastic-only \(B\) cannot
 produce; published drained hydrostatic measurements on high-porosity
@@ -511,65 +528,157 @@ with mean stress into the compactive regime \citep{ingraham2017evolution}.
 \end{figure}
 \FloatBarrier
 
-\subsection{Drained sandstone hydrostatics as a compactive target}
-\label{sec:mandel-sandstone-comparison}
-
-Published drained measurements on high-porosity Castlegate sandstone
-\citep{ingraham2017evolution} supply a compactive reference for the
-pore-allocation mechanism of
-Sec.~\ref{sec:inelastic-plastic-driving-stress}.  Along drained hydrostatic
-paths the reported coefficient, obtained from unload--reload bulk moduli as
-\(\alpha=1-K/K_m\), decreases monotonically from about \(0.88\) at low mean
-stress to about \(0.80\) at \(140\)\,MPa effective, while the drained
-tangent modulus stiffens from about \(6\) to \(12\)\,GPa and the porosity
-falls from \(26\%\) to about \(14\%\) (post-test).
-\Cref{fig:sandstone-comparison} places those points against the coefficient
-of the present model and against two calibrations of the drained stiffening.
-
-The constant-modulus finite-strain coefficient \(B_{\mathrm{el}}(J)\) of
-Sec.~\ref{sec:elastic-verification-closure}, evaluated with the drained
-modulus fixed at its low-stress value, declines by less than \(0.01\) over the
-measured path (dashed curve): the elastic closure contains no drained
-stiffening, so it cannot reproduce the measured drop of about \(0.08\).  Two
-mutually consistent calibrations close that gap within the specimen scatter.
-One attributes the decline to a pressure-dependent drained tangent modulus
-\(K(P_{\mathrm{eff}})\) against a nearly fixed grain reference, so
-\(\alpha=1-K/K_m\) falls because the drained modulus stiffens faster than the
-unjacketed one.  The other attributes it to plastic porosity loss: a
-porosity-dependent drained modulus \(K(\phi)\) with compactive pore
-allocation \(a^p<1\) (the compaction branch \(\dot\eta\le0\) of
-\eqref{eq:distension-yield}) lowers the coefficient through
-\eqref{eq:poroplastic-biot-correction}, and the same law that reproduces
-\(\alpha(P)\) implies the monotone porosity reduction in
-\cref{fig:sandstone-comparison}, terminating at the independently measured
-post-test porosity.  The two readings cannot be separated by \(\alpha(P)\)
-alone; the compactive one is anchored by the porosity measurement.
-
-For the present model the comparison is therefore a target, not a validation.
-Reproducing it requires engaging the compactive branch of the
-pore-allocation mechanism together with a porosity- or pressure-dependent
-drained stiffness, a constitutive ingredient that the constant-modulus
-elastic closure used in the verification sections does not contain.  With that
-ingredient added, \cref{fig:sandstone-comparison} becomes a quantitative
-model--data check rather than a statement of the missing physics.
+Because the engine stores the aggregate plastic factor as history, unloading
+is elastic and reloading re-yields from the stored state, so the coefficient
+is history dependent at the material point.
+\Cref{fig:tensorial-load-unload} reports a drained load--unload--reload loop
+at the same point: monotonic compression to \(20\%\) raises the pore
+allocation to \(a^p=1.0319\); unloading to \(10\%\) is immediately elastic,
+with \(a^p\) frozen at the peak and \(\Delta\gamma=0\), so the coefficient
+recovers along the elastic branch; reloading above the stored state re-yields
+at the peak.  The allocation frozen on the unloading branch is the value that
+enters \eqref{eq:poroplastic-biot-correction} there.
 
 \begin{figure}[ht]
  \centering
- \input{figures/sandstone_comparison.pgf}
- \caption{Drained hydrostatic Castlegate sandstone
- \citep{ingraham2017evolution}.  Left: measured Biot coefficient (circles;
- effective mean stress is the applied mean stress minus 6.89\,MPa), the
- constant-modulus finite-strain elastic coefficient of the present model over
- the same nominal hydrostatic path (dashed), and a calibration of the
- drained-modulus stiffening required to match the data (solid).  Right:
- compactive (porosity-loss) reading of the same data: porosity
- \(\phi(P)\) implied by a porosity-dependent drained modulus anchored at the
- initial and post-test porosities (\(0.26\) and \(0.14\)), and the compactive
- pore allocation \(a^p(P)=\phi_{s0}/(1-\phi)\), \(\phi_{s0}=0.74\); the
- star marks the independently measured post-test porosity.  The calibrated
- and porosity curves are not predictions of the present constant-modulus
- model.}
- \label{fig:sandstone-comparison}
+ \input{figures/tensorial_load_unload.pgf}
+ \caption{Stateful load--unload--reload loop of the multiplicative return map
+ at a drained single point.  The plastic pore allocation
+ \(a^p=\det\mbf F^p\) (left axis) rises during loading and is frozen during
+ unloading, when the elastic trial lies inside the yield surface
+ (\(\Delta\gamma=0\), immediate elastic reversal); reloading re-yields at the
+ stored peak.  The coefficient \(B\) (right axis) carries the frozen
+ allocation on the elastic unloading branch.}
+ \label{fig:tensorial-load-unload}
+\end{figure}
+\FloatBarrier
+
+\subsection{Implicit-coefficient feedback at nonzero pore pressure}
+\label{sec:poroplastic-b-feedback}
+
+The coefficient in the single-prime reconstruction is not inert once the
+mechanism is active.  Because the driving stress
+\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\) contains the
+coefficient through the isotropic term \((1-B)p\), the trial stress, the
+returned increment, and the pore allocation all depend on \(B\); the implicit
+coefficient \(B=1-(1-B_{\mathrm{el}})/a^p\) of
+\eqref{eq:poroplastic-biot-correction} and the plastic state are therefore
+coupled: the coefficient in the driving stress and the returned state must be
+consistent whenever the pore pressure is nonzero.  The single-element
+material carries the pore-allocation-corrected coefficient in the single-prime
+reconstruction at the current plastic state and reports, in a companion pass,
+the same return with the coefficient held at its elastic value
+\(B_{\mathrm{el}}\) while the mechanism is otherwise unchanged.  The
+comparison isolates the consequence of using the implicit coefficient in the
+driving stress rather than the elastic coefficient that a formulation
+neglecting the inelastic correction would carry.
+
+\Cref{fig:poroplastic-b-feedback} reports the demonstration for the same
+drained skeleton and mineral as
+Sec.~\ref{sec:poroplastic-demonstration} (\(K=1.0\,\mathrm{GPa}\),
+\(G=0.75\,\mathrm{GPa}\), \(K_s=2.5\,\mathrm{GPa}\),
+\(\phi_{s0}=0.9\)) with the stateful ideal Drucker--Prager engine
+(\(M=0.6\), dilation slope \(\beta=0.4\)) under monotonic compression to
+\(20\%\) at a prescribed nonzero pore pressure.  At \(150\,\mathrm{MPa}\)
+pore pressure the coefficient carried in the driving stress is \(B=0.4006\),
+above the elastic \(B_{\mathrm{el}}=0.3640\), and the returned pore
+allocation \(a^p=1.0612\) falls below the frozen-elastic reference
+\(1.0632\): holding the coefficient at its elastic value over-predicts the
+plastic dilation.  The split grows with pore pressure: at \(400\,\mathrm{MPa}\)
+the corrected coefficient reaches \(0.4953\) against the elastic \(0.4245\),
+and the frozen-elastic reference over-predicts the plastic increment by about
+\(3.3\%\) (left panel).  At the drained origin \(p=0\) the corrected
+coefficient already exceeds the elastic coefficient at the same compression
+(in the left scan, \(B=0.3455\) against \(B_{\mathrm{el}}=0.3247\) at
+\(20\%\)): the drained compression alone activates the mechanism, so \(a^p>1\)
+without any pore-pressure contribution.  What the frozen-elastic comparison
+isolates is the feedback of the corrected coefficient through the isotropic
+term \((1-B)p\mbf I\), which vanishes at \(p=0\), where the coupled and
+frozen-elastic increments coincide, and grows with pore pressure.  At fixed
+\(200\,\mathrm{MPa}\) pore pressure the coefficient split widens with
+compression and the over-prediction grows from about \(1.2\%\) at \(5\%\)
+compression to about \(1.9\%\) near \(35\%\), within the range in which the
+elastic coefficient remains positive (right panel).  The demonstration is a
+material-point statement that the implicit coefficient of
+\eqref{eq:poroplastic-biot-correction} cannot be replaced by the elastic ratio
+once the mechanism is active; the coupled, momentum-active finite-element
+demonstration remains the next extension.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/poroplastic_b_feedback.pgf}
+ \caption{Feedback of the pore-allocation-corrected poroplastic coefficient
+ into the plastic response at nonzero pore pressure.  Left: pore-pressure scan
+ at \(20\%\) axial compression; right: axial-compression scan at
+ \(200\,\mathrm{MPa}\) pore pressure.  In each panel the corrected
+ coefficient \(B=1-(1-B_{\mathrm{el}})/a^p\) (solid) and the elastic
+ coefficient \(B_{\mathrm{el}}\) (dashed) are read on the left axis, and the
+ right axis gives the percent by which the frozen-elastic
+ (\(B=B_{\mathrm{el}}\)) reference over-predicts the plastic increment
+ \(\Delta\gamma\) (markers).  The corrected--elastic split and the
+ over-prediction grow with pore pressure and with compression.}
+ \label{fig:poroplastic-b-feedback}
+\end{figure}
+\FloatBarrier
+
+\subsection{Verification of the poroplastic coefficient}
+\label{sec:poroplastic-verification}
+
+The reduced coefficient \eqref{eq:poroplastic-biot-correction} is the
+fixed-history, fixed-pressure tangent of the active plastic local system, not
+an imposed formula.  Two single-element checks verify that claim with the same
+drained skeleton and mineral and the same ideal Drucker--Prager surface used
+in Sec.~\ref{sec:poroplastic-demonstration}.
+
+First, the general-path oracle.  The local residual construction of
+Sec.~\ref{sec:implicit-ad-implementation} is specialized to the active plastic
+branch: the implicit state is the intrinsic density ratio and the solid volume
+fraction, the plastic pore allocation enters the volume fraction as a frozen
+factor (route A of the implementation, history held fixed), and the
+material-mass and mineral-EOS residuals with their partial derivatives are
+formed in automatic differentiation.  The dense AD solve of
+Sec.~\ref{sec:implicit-ad-implementation} then returns the coefficient
+\(B_{\mathrm{general}}\) directly from \(\partial\bar J/\partial J\) at
+fixed \(p\), \(J\rho_s\), and history, with \(a^p\) frozen at the value the
+stateful engine accumulates at the same compression.  Over drained
+compressions from \(5\%\) to \(30\%\), with \(a^p\) from \(1.0074\) to
+\(1.0506\), this general coefficient agrees with the reduced closed form
+\(B=1-(1-B_{\mathrm{el}})/a^p\) to machine precision (maximum difference
+\(1.4\times10^{-16}\)) and with the coefficient the stateful engine reports
+at the same state to \(10^{-9}\).  At \(20\%\) compression, for example,
+\(a^p=1.0319\) and \(B_{\mathrm{el}}=0.32467\), and both the general-path
+and the reduced coefficient are \(B=0.34553\).  The reduced formula is
+therefore the fixed-pressure tangent returned by the implicit local solve.
+
+Second, the unloading branch.  Because the coefficient is measured
+experimentally from unload--reload bulk moduli, the relevant quantity is the
+tangent on an unloading branch, at which the plastic pore allocation is frozen
+at the value reached during loading.  \Cref{fig:poroplastic-load-unload}
+reports a drained single-point load--unload loop: monotonic loading to
+\(20\%\) compression raises the allocation to \(a^p=1.0319\) and carries the
+coefficient from the elastic \(0.32467\) to \(0.34553\); unloading to lower
+compression holds the allocation frozen, so the coefficient at a reduced
+compression is \(B=1-(1-B_{\mathrm{el}})/a^p\) evaluated with the frozen peak
+allocation, which lies above both the virgin elastic coefficient and the
+monotonic-loading value at the same compression.  At \(10\%\) compression
+after unloading from \(20\%\), the unload coefficient is \(0.4978\), against
+the virgin elastic \(0.48182\) and the monotonic-loading \(0.48954\).  The
+coefficient measured on the unloading branch is therefore history-dependent:
+it is the fixed-pressure tangent at the current plastic state, not the elastic
+modulus ratio.
+
+\begin{figure}[ht]
+ \centering
+ \input{figures/poroplastic_load_unload.pgf}
+ \caption{Unload-branch coefficient after drained plastic loading to
+ \(20\%\) compression.  The dashed curve is the virgin elastic coefficient
+ \(B_{\mathrm{el}}\), the solid curve the monotonic-loading coefficient
+ \(B=1-(1-B_{\mathrm{el}})/a^p\), and the markers the unloading branch with
+ the plastic pore allocation frozen at its peak value: the coefficient
+ measured on unloading is the fixed-history, fixed-pressure tangent at the
+ plastic state and differs from the elastic coefficient at the same
+ compression.}
+ \label{fig:poroplastic-load-unload}
 \end{figure}
 \FloatBarrier
 
@@ -594,7 +703,11 @@ stress follows through
 inelastic update is demonstrated at the single material point in
 Sec.~\ref{sec:poroplastic-demonstration}; the coupled, momentum-active
 Mandel-scale demonstration with the active set engaged remains the next
-extension.
+extension.  The material-level machinery is itself verified in
+Sec.~\ref{sec:poroplastic-verification}: automatic differentiation shows that
+the reduced coefficient is the fixed-pressure tangent of the active local
+system and that the coefficient on an unloading branch is the fixed-history
+value, which differs from the elastic coefficient.
 
 The source archive accompanying this article contains the MOOSE objects, input
 deck, verification driver, curated CSV files, and figure scripts.  From the

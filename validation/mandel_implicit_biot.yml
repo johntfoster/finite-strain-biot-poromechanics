@@ -13,8 +13,8 @@ metrics:
   maximum_pressure_normalized_error: 0.028221423721293732
   maximum_side_displacement_relative_error: 0.004589731892243235
   maximum_top_displacement_relative_error: 0.0007412408964986999
-  maximum_horizontal_displacement_profile_normalized_error: 0.00030218928703562705
-  maximum_vertical_displacement_profile_normalized_error: 1.0860021174984198e-13
+  maximum_horizontal_displacement_profile_normalized_error: 0.0004892730913417969
+  maximum_vertical_displacement_profile_normalized_error: 1.433020928076666e-13
   maximum_load_relative_error: 0.001525360593499936
   maximum_biot_reference_error: 0.000040792557689961484
   maximum_biot_identity_l2: 4.3941728940372e-17
@@ -28,6 +28,14 @@ metrics:
   maximum_finer_temporal_refinement_pressure_difference: 0.013135962768457654
   analytical_12_vs_128_root_pressure_difference: 1.5066513062860393e-05
   analytical_12_vs_128_root_displacement_difference_m: 5.351299403930158e-12
+profile_figure:
+  classification: early-refined small-load profile run for the publication figure
+  mesh: [40, 4]
+  time_stepping: backward-Euler steps beginning at 0.001 s and growing to 0.016 s to 0.702 s
+  profile_times_seconds: [0.02, 0.046, 0.094, 0.206, 0.398]
+  pressure_profile_line_y_m: 0.05
+  maximum_plotted_pressure_profile_normalized_error: 0.009310284966486882
+  mandel_cryer_overshoot_demonstrated_at_seconds: 0.02
 finite_deformation_continuation:
   classification: synthetic finite-deformation implementation demonstration
   result: validation/mandel_large_deformation.csv

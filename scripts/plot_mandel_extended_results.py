@@ -168,6 +168,19 @@ def plot_pressure(rows: list[dict[str, float]], output: Path) -> None:
     )
     analytical_coordinates = [WIDTH * index / 400.0 for index in range(401)]
     figure, axis = plt.subplots(figsize=(5.98, 3.88), constrained_layout=True)
+    # Instantaneous undrained uniform pressure p0 = P0 B_Sk (1+nu_u)/3.  Its
+    # level marks the initial pressure that the early-time profile rises above
+    # (the Mandel-Cryer overshoot near the undrained center).
+    _, undrained_poisson, _, skempton = mandel_parameters()
+    initial_kpa = LOAD * skempton * (1.0 + undrained_poisson) / (3.0 * 1000.0)
+    axis.axhline(initial_kpa, color="0.4", linestyle="--", linewidth=1.0)
+    axis.text(
+        0.01,
+        initial_kpa + 0.45,
+        r"$p_0$ (initial undrained)",
+        fontsize=7.5,
+        color="0.2",
+    )
     for color, time in zip(colors, times):
         numerical = [row for row in rows if math.isclose(row["time"], time)]
         numerical.sort(key=lambda row: row["x"])

@@ -60,13 +60,22 @@ now activated and verified separately: the single-point demonstration of
 Sec.~\ref{sec:poroplastic-demonstration} returns to the yield surface with
 \(a^p>1\), and the fixed-pressure correction
 \(B=1-(1-B_{\mathrm{el}})/a^p\) reproduces the elastic coefficient exactly
-when yield is inactive and raises the coefficient by up to \(0.061\) over the
-elastic value at \(30\%\) compression.  Extending this activated update to the
-coupled Mandel-scale boundary-value problem, with systematic convergence
-studies and independent physical validation, remains the next stage.  The
-drained sandstone hydrostatics of
-Sec.~\ref{sec:mandel-sandstone-comparison} identify the concrete extension
-that physical validation requires: the measured decline of the drained
-coefficient is carried by drained stiffening, so reproducing it calls for a
-porosity- or pressure-dependent drained modulus together with the compactive
-branch of the pore-allocation mechanism.
+when yield is inactive and raises the coefficient by up to \(0.043\) over the
+elastic value at \(30\%\) compression.  At nonzero pore pressure that
+correction is not inert: the implicit coefficient feeds back into the plastic
+driving stress through the \((1-B)p\mbf I\) term of the Biot transform, and
+the material-level demonstration of
+Sec.~\ref{sec:poroplastic-b-feedback} shows that holding the coefficient at
+its elastic value over-predicts the plastic increment (by about \(3\%\) at
+\(400\,\mathrm{MPa}\) pore pressure and \(20\%\) compression in the
+reported range).  The material-level machinery is itself verified in
+Sec.~\ref{sec:poroplastic-verification}: the general-path oracle shows by
+automatic differentiation that the reduced coefficient
+\(B=1-(1-B_{\mathrm{el}})/a^p\) is the fixed-pressure tangent of the active
+local system, and the unload-branch check shows the coefficient measured on
+an unloading branch is the fixed-history tangent at the plastic state, which
+differs from the elastic coefficient.  The next stage is the coupled,
+momentum-active demonstration of this
+activated update at the finite-element scale, together with the convergence
+and Jacobian checks that accompany it.  Independent
+physical validation against a particular rock is a separate stage.

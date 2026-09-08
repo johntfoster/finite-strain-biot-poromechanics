@@ -1,14 +1,22 @@
-# Elastic collapse (yield inactive, M = 100) of the canonical stateful
-# tensorial engine.
-# Canonical stateful multiplicative ideal Drucker-Prager first-loading
-# demonstration (ADTensorialPoroplasticBiotMaterial): single element, drained
-# (p = 0), axial stretch ramped in time from 1.0 to 0.8 over t in
-# [0,1] at M = 100, dilation beta = 0.4.  The stored plastic factor F^p
-# (det F^p = a^p) accumulates along the path; the reported coefficient
-#   B = 1 - (1 - B_el)/a^p
-# uses the total-J elastic coefficient B_el of the same drained skeleton and
-# mineral (route-A convention), so Delta B = B - B_el > 0 with the mechanism
-# active.  Yield inactive (large M): a^p = 1, Delta_gamma = 0, B = B_el (Delta B = 0).
+# Canonical implicit-coefficient feedback at nonzero pore pressure.
+# Single element driven by the stateful multiplicative tensorial engine
+# (ADTensorialPoroplasticBiotMaterial, M = 0.6, beta = 0.4) under drained
+# uniaxial-strain compression to 20% axial compression (axial stretch ramped
+# 1.0 -> 0.8 over t in [0,1]) at a prescribed NONZERO uniform pore pressure.
+# The single-prime driving stress tau' = tau'' + (1 - B) p J I contains the
+# pore-allocation-corrected coefficient B = 1 - (1 - B_el)/a^p (> B_el), so
+# the coefficient and the plastic state are coupled: the returned pore
+# allocation a^p and increment Delta_gamma carry the feedback of the corrected
+# coefficient through the isotropic term (1 - B) p J I.
+#
+# A frozen-elastic reference pass (same run structure with the elastic
+# coefficient B_el held in the single-prime reconstruction via
+# use_elastic_coefficient_in_trial = true) is produced by the driver that
+# curates this deck, isolating the coefficient feedback.
+#
+# SWEEP ANCHORS (substituted by validation/scripts/check_poroplastic_b_feedback.py):
+#   'value = 1.5e8'  : uniform pore pressure p0
+#   'y = \'1 0.8\''  : axial ramp target (axial stretch at end of load)
 
 [Mesh]
   type = GeneratedMesh
@@ -37,11 +45,11 @@
 []
 
 [BCs]
-  [p_zero]
+  [p_value]
     type = DirichletBC
     variable = p
     boundary = 'left right bottom top'
-    value = 0
+    value = 1.5e8
   []
 []
 
@@ -82,10 +90,6 @@
     family = MONOMIAL
     order = CONSTANT
   []
-  [db]
-    family = MONOMIAL
-    order = CONSTANT
-  []
 []
 
 [AuxKernels]
@@ -115,12 +119,6 @@
     variable = b
     property = poroplastic_biot_coefficient
   []
-  [db_aux]
-    type = ParsedAux
-    variable = db
-    expression = 'b - b_el'
-    coupled_variables = 'b b_el'
-  []
 []
 
 [Materials]
@@ -138,7 +136,7 @@
     skeleton_bulk_modulus = 1.0e9
     mineral_bulk_modulus = 2.5e9
     reference_solid_volume_fraction = 0.9
-    dp_friction_slope = 100
+    dp_friction_slope = 0.6
     dp_dilation_slope = 0.4
     dp_cohesion = 0.0
   []
@@ -165,9 +163,9 @@
     type = ElementAverageValue
     variable = b
   []
-  [db_avg]
+  [p_avg]
     type = ElementAverageValue
-    variable = db
+    variable = p
   []
 []
 
@@ -184,5 +182,5 @@
 [Outputs]
   csv = true
   execute_on = 'TIMESTEP_END'
-  time_step_interval = 2
+  time_step_interval = 1
 []

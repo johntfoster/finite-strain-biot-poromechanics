@@ -25,10 +25,19 @@
  * branch is the closed-form discrete consistency f(tau'(Delta_gamma))=0.
  * Inactive branch: Delta_gamma = 0, a^p = 1, stress = trial (elastic).
  *
- * Prototype scope (documented): valid for first loading from a virgin plastic
- * state (F^p_n = I) on the drained neo-Hookean skeleton; elastic moduli in the
- * return map are the drained G and K_sk; the coupling of the plastic state back
- * into the constrained Biot coefficient is a follow-up milestone.
+ * The coefficient entering the single-prime reconstruction is either an
+ * external property (biot_coefficient_name, the default) or, with
+ * biot_feedback = true, the implicit poroplastic coefficient
+ *   B = 1 - (1 - B_el)/a^p
+ * solved consistently with the return map: B enters the trial mean pressure
+ * through (1-B) p J, the returned allocation a^p = exp(beta Delta_gamma)
+ * corrects B, so the pair (Delta_gamma, B) is obtained by a fixed-point
+ * iteration when the pore pressure p is nonzero.  When biot_feedback is on the
+ * material also reports a frozen-elastic reference pass (the same return with
+ * B held at the elastic coefficient B_el), whose outputs separate the effect
+ * of the implicit-B feedback from the plastic mechanism itself.  The
+ * prototypical scope (first loading from a virgin plastic state, drained
+ * skeleton) is unchanged.
  */
 class ADDruckerPragerPoroplasticBiotMaterial : public Material
 {
@@ -46,8 +55,13 @@ protected:
   const ADMaterialProperty<RankTwoTensor> & _F;
   const ADMaterialProperty<Real> & _J;
   const ADMaterialProperty<RankTwoTensor> & _effective_first_piola;
-  const ADMaterialProperty<Real> & _biot_coefficient;
+  const ADMaterialProperty<Real> * _biot_coefficient; // external B (default path)
+  const ADMaterialProperty<Real> * _elastic_biot;     // elastic coefficient B_el (feedback)
   const ADVariableValue & _pressure;
+
+  const bool _biot_feedback;      // solve B = 1 - (1 - B_el)/a^p with the return
+  const Real _feedback_tol;       // fixed-point tolerance (raw value)
+  const unsigned int _feedback_max_it;
 
   const Real _shear_modulus;   // drained isochoric shear modulus G
   const Real _skeleton_bulk;   // drained skeleton bulk modulus K_sk
@@ -61,4 +75,11 @@ protected:
   ADMaterialProperty<Real> & _mean_effective_pressure;   // p' (compressive +)
   ADMaterialProperty<Real> & _equivalent_shear_stress;   // q'
   ADMaterialProperty<RankTwoTensor> & _effective_kirchhoff_stress; // tau' returned
+  ADMaterialProperty<Real> & _biot_used;   // B used in the single-prime reconstruction
+  // Frozen-elastic (B = B_el) reference pass, filled when biot_feedback is on.
+  ADMaterialProperty<Real> & _a_p_ref;
+  ADMaterialProperty<Real> & _dgamma_ref;
+  ADMaterialProperty<Real> & _mean_p_ref;
+  ADMaterialProperty<Real> & _q_ref;
+  MaterialProperty<Real> & _a_p_value; // a^p as a plain value (frozen history)
 };

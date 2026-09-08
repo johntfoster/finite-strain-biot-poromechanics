@@ -1,14 +1,14 @@
-# Elastic collapse (yield inactive, M = 100) of the canonical stateful
-# tensorial engine.
+# Canonical delta-B vs compression sweep (0-35%) from one monotonic run
+# of the stateful tensorial engine.
 # Canonical stateful multiplicative ideal Drucker-Prager first-loading
 # demonstration (ADTensorialPoroplasticBiotMaterial): single element, drained
-# (p = 0), axial stretch ramped in time from 1.0 to 0.8 over t in
-# [0,1] at M = 100, dilation beta = 0.4.  The stored plastic factor F^p
+# (p = 0), axial stretch ramped in time from 1.0 to 0.65 over t in
+# [0,1] at M = 0.6, dilation beta = 0.4.  The stored plastic factor F^p
 # (det F^p = a^p) accumulates along the path; the reported coefficient
 #   B = 1 - (1 - B_el)/a^p
 # uses the total-J elastic coefficient B_el of the same drained skeleton and
 # mineral (route-A convention), so Delta B = B - B_el > 0 with the mechanism
-# active.  Yield inactive (large M): a^p = 1, Delta_gamma = 0, B = B_el (Delta B = 0).
+# active.  Source of the poroplastic_delta_b.csv sweep and figure.
 
 [Mesh]
   type = GeneratedMesh
@@ -56,8 +56,12 @@
 [Functions]
   [axial]
     type = PiecewiseLinear
-    x = '0 1'
-    y = '1 0.8'
+    # Monotonic axial ramp 1 -> 0.65 over t in [0, 1.4]; the straight line
+    # passes through axial 0.95, 0.90, ..., 0.65 at t = 0.2, 0.4, ..., 1.4,
+    # so with dt = 0.02 the output rows land exactly on the sampled axial
+    # stretches of the curated sweep.
+    x = '0 1.4'
+    y = '1 0.65'
   []
 []
 
@@ -138,7 +142,7 @@
     skeleton_bulk_modulus = 1.0e9
     mineral_bulk_modulus = 2.5e9
     reference_solid_volume_fraction = 0.9
-    dp_friction_slope = 100
+    dp_friction_slope = 0.6
     dp_dilation_slope = 0.4
     dp_cohesion = 0.0
   []
@@ -174,7 +178,7 @@
 [Executioner]
   type = Transient
   start_time = 0
-  end_time = 1
+  end_time = 1.4
   dt = 0.02
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_hypre_type'
@@ -184,5 +188,5 @@
 [Outputs]
   csv = true
   execute_on = 'TIMESTEP_END'
-  time_step_interval = 2
+  time_step_interval = 1
 []

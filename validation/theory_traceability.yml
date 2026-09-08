@@ -30,11 +30,17 @@ implementation:
     object: ADReferenceSolidStressMaterial
     role: apply the nonlinear Biot pressure contribution to the first Piola stress
   poroplastic_driving_stress:
-    objects: [ADDruckerPragerPoroplasticBiotMaterial]
-    role: ideal Drucker-Prager return map on the single-prime Kirchhoff stress tau' = P''F^T + (1-B)pJ I; scalar plastic pore allocation a^p = exp(beta*Delta_gamma); rate independent (backward-Euler radial return); inactive branch elastic
+    objects: [ADTensorialPoroplasticBiotMaterial]
+    role: canonical stateful multiplicative ideal Drucker-Prager return map on the single-prime Kirchhoff stress tau' = P''F^T + (1-B)pJ I with stored plastic history (F = F^e F^p, a^p = det F^p); radial return with exact symmetric matrix exponential; inactive branch elastic and unloading elastic with the plastic state frozen; at nonzero pore pressure the single-prime reconstruction carries the pore-allocation-corrected coefficient B = 1 - (1 - B_el)/a^p (frozen-elastic reference available via use_elastic_coefficient_in_trial)
   poroplastic_biot_correction:
-    object: ADPoroplasticBiotCoefficientMaterial
-    role: plastic pore-allocation correction B = 1 - (1 - B_el)/a^p to the elastic constrained coefficient
+    object: ADTensorialPoroplasticBiotMaterial
+    role: plastic pore-allocation correction B = 1 - (1 - B_el)/a^p to the total-J elastic coefficient of the same drained skeleton and mineral
+  poroplastic_general_tangent:
+    objects: [ADPlasticStateBiotMaterial, ADConstrainedSkeletonBiotMaterial]
+    role: general fixed-history fixed-pressure tangent of the active plastic local system by AD (route-A phi_s with a^p frozen at the canonical stateful allocation), verifying B_general = B = 1 - (1 - B_el)/a^p equals the stateful-engine coefficient
+  poroplastic_tensorial_stateful:
+    objects: [ADTensorialPoroplasticBiotMaterial]
+    role: canonical stateful multiplicative ideal Drucker-Prager return map with stored plastic history; elastic trial on F^e = F (F^p_n)^-1 and radial return on the full tensorial Kirchhoff stress; exact symmetric matrix exponential updates F^p so unloading is immediately elastic (a^p frozen) and reloading re-yields at the stored peak
   prescribed_deformation_helper:
     object: ADConstantDeformationGradientMaterial
     role: single-element material-test helper prescribing a uniform diagonal F (test support only)
@@ -48,9 +54,13 @@ evidence:
   finite_deformation_biot_field: validation/mandel_biot_contours.csv
   finite_deformation_density_field: validation/mandel_density_contours.csv
   poroplastic_delta_b: validation/poroplastic_delta_b.csv
+  poroplastic_b_feedback: validation/poroplastic_b_feedback.csv
+  poroplastic_general_path: validation/poroplastic_general_path.csv
+  poroplastic_load_unload: validation/poroplastic_load_unload.csv
+  poroplastic_tensorial_load_unload: validation/tensorial_load_unload.csv
 
 classification:
-  implementation_verification: [solid_spatial_mass_balance, local_elastic_tangent, outer_ad_jacobian]
+  implementation_verification: [solid_spatial_mass_balance, local_elastic_tangent, outer_ad_jacobian, poroplastic_general_path]
   analytical_benchmark: [analytical_mandel, analytical_displacements]
-  synthetic_discrimination: [finite_deformation_biot, finite_deformation_biot_field, finite_deformation_density_field, poroplastic_delta_b]
+  synthetic_discrimination: [finite_deformation_biot, finite_deformation_biot_field, finite_deformation_density_field, poroplastic_delta_b, poroplastic_b_feedback, poroplastic_load_unload, poroplastic_tensorial_load_unload]
   independent_physical_validation: []

@@ -1,7 +1,13 @@
-# Single-element demonstration of the plastic pore-allocation correction to B:
-#   B_pl = 1 - (1 - B_el)/a^p   (route A, M3)
-# Prescribed 10% axial compression, drained (p=0), active DP return (M=0.2).
-# Outputs: elastic B_el, a^p, Delta_gamma, B_pl, Delta B = B_pl - B_el.
+# Canonical delta-B demonstration at 20% axial compression.
+# Canonical stateful multiplicative ideal Drucker-Prager first-loading
+# demonstration (ADTensorialPoroplasticBiotMaterial): single element, drained
+# (p = 0), axial stretch ramped in time from 1.0 to 0.8 over t in
+# [0,1] at M = 0.6, dilation beta = 0.4.  The stored plastic factor F^p
+# (det F^p = a^p) accumulates along the path; the reported coefficient
+#   B = 1 - (1 - B_el)/a^p
+# uses the total-J elastic coefficient B_el of the same drained skeleton and
+# mineral (route-A convention), so Delta B = B - B_el > 0 with the mechanism
+# active.  
 
 [Mesh]
   type = GeneratedMesh
@@ -20,20 +26,12 @@
     family = LAGRANGE
     order = FIRST
   []
-  [r]
-    family = LAGRANGE
-    order = FIRST
-  []
 []
 
 [Kernels]
   [p_diffusion]
     type = Diffusion
     variable = p
-  []
-  [r_diffusion]
-    type = Diffusion
-    variable = r
   []
 []
 
@@ -44,23 +42,29 @@
     boundary = 'left right bottom top'
     value = 0
   []
-  [r_one]
-    type = DirichletBC
-    variable = r
-    boundary = 'left right bottom top'
+[]
+
+[ICs]
+  [axial_ic]
+    type = ConstantIC
+    variable = axial_aux
     value = 1
   []
 []
 
-[ICs]
-  [r_ic]
-    type = ConstantIC
-    variable = r
-    value = 1
+[Functions]
+  [axial]
+    type = PiecewiseLinear
+    x = '0 1'
+    y = '1 0.8'
   []
 []
 
 [AuxVariables]
+  [axial_aux]
+    family = MONOMIAL
+    order = CONSTANT
+  []
   [b_el]
     family = MONOMIAL
     order = CONSTANT
@@ -73,7 +77,7 @@
     family = MONOMIAL
     order = CONSTANT
   []
-  [b_pl]
+  [b]
     family = MONOMIAL
     order = CONSTANT
   []
@@ -83,62 +87,17 @@
   []
 []
 
-[Materials]
-  [const_f]
-    type = ADConstantDeformationGradientMaterial
-    transverse_stretch = 1.0
-    axial_stretch = 0.8
-    out_of_plane_stretch = 1.0
-  []
-  [double_prime]
-    type = ADVolumetricBarotropicSkeletonStressMaterial
-    equivalent_pressure = p
-    shear_modulus = 0.75e9
-    skeleton_bulk_modulus = 1.0e9
-    mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
-  []
-  [local_elastic]
-    type = ADLocalElasticMineralBiotMaterial
-    pressure = p
-    solid_spatial_mass_ratio = r
-    mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
-    biot_coefficient_name = elastic_biot_closed_form
-  []
-  [const_biot]
-    type = ADGenericConstantMaterial
-    prop_names = solid_biot_coefficient
-    prop_values = 0.6
-  []
-  [jdot_zero]
-    type = ADGenericConstantMaterial
-    prop_names = solid_reference_J_dot
-    prop_values = 0
-  []
-  [dp]
-    type = ADDruckerPragerPoroplasticBiotMaterial
-    pressure = p
-    shear_modulus = 0.75e9
-    skeleton_bulk_modulus = 1.0e9
-    dp_friction_slope = 0.2
-    dp_dilation_slope = 0.4
-    dp_cohesion = 0.0
-  []
-  [b_correct]
-    type = ADPoroplasticBiotCoefficientMaterial
-    elastic_biot_coefficient_name = elastic_biot_closed_form
-    plastic_pore_allocation_name = plastic_pore_allocation
-    biot_coefficient_name = poroplastic_biot_coefficient
-    biot_delta_name = poroplastic_biot_delta
-  []
-[]
-
 [AuxKernels]
+  [axial_aux]
+    type = FunctionAux
+    variable = axial_aux
+    function = axial
+    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  []
   [b_el_aux]
     type = ADMaterialRealAux
     variable = b_el
-    property = elastic_biot_closed_form
+    property = plastic_elastic_biot_coefficient
   []
   [a_p_aux]
     type = ADMaterialRealAux
@@ -150,19 +109,45 @@
     variable = dgamma
     property = plastic_multiplier_increment
   []
-  [b_pl_aux]
+  [b_aux]
     type = ADMaterialRealAux
-    variable = b_pl
+    variable = b
     property = poroplastic_biot_coefficient
   []
   [db_aux]
-    type = ADMaterialRealAux
+    type = ParsedAux
     variable = db
-    property = poroplastic_biot_delta
+    expression = 'b - b_el'
+    coupled_variables = 'b b_el'
+  []
+[]
+
+[Materials]
+  [const_f]
+    type = ADConstantDeformationGradientMaterial
+    transverse_stretch = 1.0
+    axial_stretch = 1.0
+    out_of_plane_stretch = 1.0
+    axial_stretch_variable = axial_aux
+  []
+  [tensorial]
+    type = ADTensorialPoroplasticBiotMaterial
+    pressure = p
+    shear_modulus = 0.75e9
+    skeleton_bulk_modulus = 1.0e9
+    mineral_bulk_modulus = 2.5e9
+    reference_solid_volume_fraction = 0.9
+    dp_friction_slope = 0.6
+    dp_dilation_slope = 0.4
+    dp_cohesion = 0.0
   []
 []
 
 [Postprocessors]
+  [compression]
+    type = ElementAverageValue
+    variable = axial_aux
+  []
   [b_el_avg]
     type = ElementAverageValue
     variable = b_el
@@ -175,9 +160,9 @@
     type = ElementAverageValue
     variable = dgamma
   []
-  [b_pl_avg]
+  [b_avg]
     type = ElementAverageValue
-    variable = b_pl
+    variable = b
   []
   [db_avg]
     type = ElementAverageValue
@@ -186,7 +171,10 @@
 []
 
 [Executioner]
-  type = Steady
+  type = Transient
+  start_time = 0
+  end_time = 1
+  dt = 0.02
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
@@ -194,5 +182,6 @@
 
 [Outputs]
   csv = true
-  execute_on = timestep_end
+  execute_on = 'TIMESTEP_END'
+  time_step_interval = 2
 []
