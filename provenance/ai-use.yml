@@ -37,6 +37,18 @@
       "provider": "OpenAI",
       "model_versions": null,
       "model_versions_status": "unknown_not_consistently_recorded"
+    },
+    {
+      "name": "GitHub Copilot",
+      "provider": "GitHub",
+      "model_versions": null,
+      "model_versions_status": "unknown_not_consistently_recorded"
+    },
+    {
+      "name": "OpenClaw",
+      "provider": "OpenClaw",
+      "model_versions": null,
+      "model_versions_status": "unknown_not_consistently_recorded"
     }
   ]
 }

@@ -12,6 +12,37 @@
   runtime directories. Commit only source, instructions, tests, reference data,
   and intentional publication artifacts.
 
+## Commit messages as process logs
+
+- Every commit carries the full development narrative, not just a one-line
+  summary. The one-line header remains a concise summary; the commit body
+  records how the repository moved from the previous commit to this one.
+- Before committing, synthesize **every session chat used to develop the
+  change since the previous commit** (GitHub Copilot, Codex, OpenClaw, or any
+  other agent harness, on any machine). Use commit and message timestamps to
+  select the window, and prefer sessions whose repository path or working
+  directory matches this repository.
+- Use these six body sections, in this order, with substantive content beneath
+  every heading:
+  1. `Summary`
+  2. `What changed & why`
+  3. `Alternatives considered`
+  4. `Dead ends & backtracks`
+  5. `Open questions`
+  6. `Next steps`
+- If a commit window has no recoverable session trace, say so explicitly
+  instead of fabricating a narrative. Use the diff and verification record for
+  the factual change summary, and identify which historical reasoning is
+  unavailable.
+- Sanitize the body. Never include credentials, personal information, or
+  private conversation content. Record decisions and technical reasoning, not
+  a transcript.
+- Draft the body from the session history before writing the header so both
+  describe the same change. The `commit-msg` hook validates structure and
+  nonempty sections; it does not synthesize or invent the history.
+- Install the tracked hooks after every fresh clone or worktree with
+  `tools/agentctl hooks install`.
+
 ## Agent skill registration
 
 - The canonical skills live in `agent_environment/skills/<name>/SKILL.md` and

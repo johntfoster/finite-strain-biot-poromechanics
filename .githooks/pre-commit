@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+repository_root=$(git rev-parse --show-toplevel)
+cd "$repository_root"
+
+pending_date=$(date +%Y-%m-%d)
+python3 tools/update_ai_disclosure.py --pending-date "$pending_date"
+git add -- provenance/AI_USE.md provenance/ai_use_statement.tex
+python3 tools/update_ai_disclosure.py --check --pending-date "$pending_date"
