@@ -207,7 +207,14 @@ ADTensorialPoroplasticBiotMaterial::computeQpProperties()
     q_out = q_tr - 3.0 * _shear_modulus * dg;
     p_out = p_tr + _skeleton_bulk * _dilation_slope * dg;
 
-    // Flow increment in the aggregate plastic frame:
+    // Flow increment in the aggregate plastic frame.  The update
+    //   F^p_new = exp(W) F^p_old
+    // is the compact form of the two-mechanism split of the manuscript
+    // (F^p = (a^p)^{1/3} \bar F^p): the spherical part W_sp = (beta dg/3) I
+    // contributes the volumetric factor exp(beta dg) = a^p_new/a^p_old, while
+    // the traceless part A = dev(W) drives the isochoric rearrangement of
+    // \bar F^p.  Because the spherical factor commutes with the isochoric one,
+    // the single aggregate exponential is exact (no approximation).
     //   W = dg * ( (3/2) dev(tau'_tr)/q_tr + (beta/3) I ).
     ADRankTwoTensor Ndev = dev_tr;
     if (raw_value(q_tr) > 1.0e-30)
