@@ -94,6 +94,11 @@
 - Render every bibliography DOI as a clickable link to
   `https://dx.doi.org/<doi>` in the compiled PDF (see the `\doi` macro in
   `paper/defs.tex`). Never emit a plain-text, non-hyperlinked DOI.
+- A plotted quantity, figure set, or figure filename is consumed in three
+  places at once: the generating script under `scripts/`, the manuscript
+  figures under `figures/` and `paper/`, and the website under `docs/`.
+  Change all three together in one coordinated edit; never update only the
+  script or only the figure.
 
 ## Manuscript build
 
