@@ -172,8 +172,7 @@ def audit_manuscript() -> None:
         "figures/mandel_pressure_profiles.pgf",
         "figures/mandel_displacements.pgf",
         "figures/mandel_finite_deformation.pgf",
-        "figures/mandel_biot_contours.pgf",
-        "figures/mandel_density_contours.pgf"
+        "figures/mandel_normalized_biot_contours.pgf"
     ]
     for name in required:
         require((ROOT / name).is_file(), f"missing manuscript resource: {name}")

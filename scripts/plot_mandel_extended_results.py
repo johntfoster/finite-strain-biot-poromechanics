@@ -34,7 +34,6 @@ SMALL_LOAD_CSV = ROOT / "validation/mandel_displacement_profiles.csv"
 PRESSURE_CSV = ROOT / "validation/mandel_pressure_profiles.csv"
 LARGE_DEFORMATION_CSV = ROOT / "validation/mandel_large_deformation.csv"
 BIOT_CONTOUR_CSV = ROOT / "validation/mandel_biot_contours.csv"
-DENSITY_CONTOUR_CSV = ROOT / "validation/mandel_density_contours.csv"
 
 ROOT_COUNT = 12
 
@@ -323,6 +322,7 @@ def plot_spatial_contours(
     colorbar_label: str,
     output: Path,
     limits: tuple[float, float] | None = None,
+    scale: float = 1.0,
 ) -> None:
     times = sorted({row["time"] for row in rows})
     x_centers = sorted({row["X"] for row in rows})
@@ -330,7 +330,7 @@ def plot_spatial_contours(
     x_edges = [WIDTH * index / len(x_centers) for index in range(len(x_centers) + 1)]
     y_edges = [HEIGHT * index / len(y_centers) for index in range(len(y_centers) + 1)]
     values = {
-        (row["time"], row["X"], row["Y"]): row[value_key]
+        (row["time"], row["X"], row["Y"]): scale * row[value_key]
         for row in rows
     }
     minimum = min(values.values()) if limits is None else limits[0]
@@ -391,22 +391,14 @@ def plot_spatial_contours(
     plt.close(figure)
 
 
-def plot_biot_contours(rows: list[dict[str, float]], output: Path) -> None:
+def plot_normalized_biot_contours(rows: list[dict[str, float]], output: Path) -> None:
     plot_spatial_contours(
         rows,
         "biot_coefficient",
-        r"Biot coefficient, $B$",
+        r"normalized Biot coefficient, $B/B_0$",
         output,
-        limits=(0.51, B0),
-    )
-
-
-def plot_density_contours(rows: list[dict[str, float]], output: Path) -> None:
-    plot_spatial_contours(
-        rows,
-        "intrinsic_solid_density_ratio",
-        r"normalized intrinsic solid density, $\bar\rho_s/\bar\rho_{s0}$",
-        output,
+        limits=(0.85, 1.0),
+        scale=1.0 / B0,
     )
 
 
@@ -416,30 +408,25 @@ def main() -> int:
     parser.add_argument("--small-load-csv", type=Path, default=SMALL_LOAD_CSV)
     parser.add_argument("--large-deformation-csv", type=Path, default=LARGE_DEFORMATION_CSV)
     parser.add_argument("--biot-contour-csv", type=Path, default=BIOT_CONTOUR_CSV)
-    parser.add_argument("--density-contour-csv", type=Path, default=DENSITY_CONTOUR_CSV)
     parser.add_argument("--pressure-output", type=Path, default=ROOT / "figures/mandel_pressure_profiles.pdf")
     parser.add_argument("--displacement-output", type=Path, default=ROOT / "figures/mandel_displacements.pdf")
     parser.add_argument("--finite-deformation-output", type=Path, default=ROOT / "figures/mandel_finite_deformation.pdf")
-    parser.add_argument("--biot-contour-output", type=Path, default=ROOT / "figures/mandel_biot_contours.pdf")
-    parser.add_argument("--density-contour-output", type=Path, default=ROOT / "figures/mandel_density_contours.pdf")
+    parser.add_argument("--normalized-biot-contour-output", type=Path, default=ROOT / "figures/mandel_normalized_biot_contours.pdf")
     args = parser.parse_args()
 
     pressure_rows = read_rows(args.pressure_csv)
     small_rows = read_profile_rows(args.small_load_csv)
     large_rows = read_rows(args.large_deformation_csv)
     contour_rows = read_rows(args.biot_contour_csv)
-    density_contour_rows = read_rows(args.density_contour_csv)
     plot_pressure(pressure_rows, args.pressure_output)
     plot_small_load(small_rows, args.displacement_output)
     plot_large_deformation(large_rows, args.finite_deformation_output)
-    plot_biot_contours(contour_rows, args.biot_contour_output)
-    plot_density_contours(density_contour_rows, args.density_contour_output)
+    plot_normalized_biot_contours(contour_rows, args.normalized_biot_contour_output)
 
     print(args.pressure_output)
     print(args.displacement_output)
     print(args.finite_deformation_output)
-    print(args.biot_contour_output)
-    print(args.density_contour_output)
+    print(args.normalized_biot_contour_output)
     print(f"maximum platen compression: {max(-row['top_displacement'] / HEIGHT for row in large_rows):.6f}")
     print(f"maximum lateral expansion: {max(row['side_displacement'] / WIDTH for row in large_rows):.6f}")
     print(f"final average Biot coefficient: {large_rows[-1]['biot_average']:.9f}")
