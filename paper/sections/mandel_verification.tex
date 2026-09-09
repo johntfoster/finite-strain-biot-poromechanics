@@ -417,53 +417,30 @@ the same quantities by \(3.2489\times10^{-3}\) and
 lateral-displacement differences are \(3.1895\times10^{-6}\) and
 \(3.2938\times10^{-5}\).
 
-\Cref{fig:mandel-biot-contours} resolves the spatial range in
-\cref{fig:mandel-finite-deformation} at six times.  The plotted field is the
-elementwise projection of the calculated coefficient on the solid
-reference coordinates.
+\Cref{fig:mandel-normalized-biot-contours} resolves the spatial range in
+\cref{fig:mandel-finite-deformation} at six times by plotting the normalized
+Biot coefficient \(B/B_0\).  The plotted field is the elementwise projection of
+the calculated coefficient divided by its reference value \(B_0=0.6\) on the
+solid reference coordinates.
 
 \begin{figure}[ht]
  \centering
- \input{figures/mandel_biot_contours.pgf}
- \caption{Biot-coefficient distribution during the finite-deformation Mandel
- continuation.  All panels use the same color scale.  The coefficient is
- initially uniform, develops its largest reduction near the drained boundary
- at \(X=1\ \mathrm{m}\) during the displacement ramp, and approaches a nearly
- uniform field during the hold.  The vertical plotting scale is enlarged
+ \input{figures/mandel_normalized_biot_contours.pgf}
+ \caption{Normalized Biot-coefficient distribution during the finite-deformation
+ Mandel continuation.  All panels use the same color scale.  The coefficient
+ starts uniform at \(B/B_0=1\), develops its largest reduction near the drained
+ boundary at \(X=1\ \mathrm{m}\) during the displacement ramp, and approaches a
+ nearly uniform field during the hold.  The vertical plotting scale is enlarged
  relative to the specimen aspect ratio to show the through-height field.}
- \label{fig:mandel-biot-contours}
+ \label{fig:mandel-normalized-biot-contours}
 \end{figure}
 \FloatBarrier
 
 The homogeneous material, rigid platen, and symmetry conditions produce a
 coefficient field that is uniform through the height.  Its horizontal gradient
 is largest near the end of the displacement ramp.  Drainage during the hold
-reduces this gradient while the coefficient approaches its final value.
-
-The corresponding normalized intrinsic solid density in
-\cref{fig:mandel-density-contours} is \(\bar\rho_s/\bar\rho_{s0}\), evaluated
-by the local elastic mineral law.  Each panel samples the material field at the
-QUAD9 element centers used for the coefficient field.
-
-\begin{figure}[ht]
- \centering
- \input{figures/mandel_density_contours.pgf}
- \caption{Normalized intrinsic solid density during the finite-deformation Mandel
- continuation at the times used in \cref{fig:mandel-biot-contours}.  All
- panels use the same color scale.  Compression increases
- \(\bar\rho_s/\bar\rho_{s0}\)
- from its reference value of one to a maximum of \(1.05509\) near the end of
- the displacement ramp.  During the hold, the field approaches the final
- range \(1.03864\leq\bar\rho_s/\bar\rho_{s0}\leq1.03919\).  The vertical plotting scale is
- enlarged relative to the specimen aspect ratio.}
- \label{fig:mandel-density-contours}
-\end{figure}
-\FloatBarrier
-
-The density increase is greatest near the undrained center during the ramp.
-Drainage reduces the horizontal gradient during the hold.  This local state
-supplies the mineral-compression response and therefore accompanies the spatial
-evolution of \(B\).
+reduces this gradient while \(B/B_0\) approaches the final range
+\(0.85581\leq B/B_0\leq0.85730\).
 \FloatBarrier
 
 \subsection{Single-element poroplastic demonstration}
