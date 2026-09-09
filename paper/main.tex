@@ -31,55 +31,33 @@
 \maketitle
 
 \begin{abstract}
-The finite-deformation Biot coefficient measures the mineral-volume response to
-skeleton deformation at fixed pore pressure.  That fixed-pressure response also
-sets the stress available to drive plastic flow: the single-prime material
-stress \(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\) is the
-poroplastic driving stress, so a yield and flow rule for a solid with a
-compressible mineral cannot be evaluated until the coefficient \(B\) is known.
-We separate this local constitutive derivative from phase mass conservation.
-Spatial solid mass balance evolves the bulk solid partial density, while a
-local constitutive update supplies the intrinsic solid state.  The solid volume
-fraction then follows algebraically from the partial and intrinsic densities.
-The nonlinear Biot coefficient is obtained by
-implicit differentiation of the complete local constitutive residual system
-at fixed intrinsic phase pressure and referential solid mass \(J\rho_s\).
-A multiplicative pore-scale split identifies the inelastic mechanisms that join
-that system: isochoric true-plastic flow of the solid material and a scalar
-plastic pore allocation that maps to the solid volume fraction.  Their flow,
-consistency, and hardening equations enter the local residual, so the implicit
-Biot tangent is formed on the active set selected by the converged return
-mapping; the elastic response is the inactive-mechanism limit.  The spatial
-water balance is closed by a barotropic pressure--density equation of state.
+Pore pressure couples deformation and plastic flow in a saturated porous solid
+through the Biot coefficient.  For a compressible mineral, this coefficient
+connects the drained skeleton stress to the stress that drives inelastic
+deformation.  Its evolution therefore changes both the mechanical response
+and the subsequent plastic flow.  We develop an implicit constitutive
+construction of the finite-deformation Biot coefficient and its coupling to
+poroplasticity.  The coefficient follows from the mineral-volume response to
+skeleton deformation at fixed intrinsic phase pressure and referential solid
+mass.  Implicit differentiation of the complete local constitutive residual
+system evaluates this response on the active set selected by the converged
+return mapping.  A multiplicative split separates isochoric true-plastic flow
+from plastic pore allocation, which changes the solid volume fraction and
+carries the deformation history into the coefficient.
 
-The solid-reference finite-element formulation uses quadratic displacement,
-continuous linear water pressure, and quadratic solid partial density.
-Automatic differentiation propagates the local constitutive residual
-derivatives, implicit tangent, Biot coefficient, derived volume fraction,
-and both phase-storage rates through the monolithic residual.  The elastic
-specialization supplies closed-form and centered-difference checks of the
-fixed-pressure constitutive tangent, and a PETSc
-finite-difference comparison checks the assembled Jacobian.
-A displacement-driven, small-load Mandel benchmark compares pressure and
-lateral displacement with the Cheng--Detournay plane-strain series.  The
-maximum plotted-profile pressure difference is \(1.956\times10^{-2}\) of the
-analytical pressure scale, and the maximum horizontal-displacement-profile
-difference is \(3.022\times10^{-4}\) of its scale.  A synthetic
-finite-deformation continuation to \(10\%\) platen compression decreases the
-spatially averaged coefficient from \(0.600\) to \(0.51417\).  Activating the
-inelastic mechanism at a drained material point returns the stress to the
-plastic yield surface with pore allocation \(a^p>1\) and raises the
-coefficient by up to \(0.043\) over the elastic value at \(30\%\)
-compression, illustrating the history dependence that a constant or
-elastic-only coefficient cannot express.  At nonzero pore pressure that
-coefficient feeds back into the poroplastic driving stress: holding it at the
-elastic value over-predicts the plastic increment by about three percent at
-\(400\,\mathrm{MPa}\) pore pressure and \(20\%\) compression.  These tests
-verify the balance-law and constitutive coupling for the stated single-solid,
-single-water elastic model, which is the inactive-mechanism limit of the
-inelastic interface developed here; they do not independently validate the
-mineral equation of state, and the material-level inelastic demonstration does
-not independently validate a particular plastic constitutive law.
+The finite-element formulation couples this local update to spatial solid and
+water mass conservation and momentum balance.  Automatic differentiation
+retains the dependence of the constitutive state and implicit Biot tangent in
+the global Newton Jacobian.  Analytical and finite-difference checks verify
+the elastic constitutive tangent and its global propagation, while the Mandel
+problem tests pressure and displacement against the analytical solution.
+A finite-deformation continuation demonstrates the evolution of the
+coefficient under compression.  Material-point calculations show how plastic
+pore allocation changes the coefficient and how that change feeds back into
+plastic flow at nonzero pore pressure.  These results establish the
+constitutive coupling and verify its elastic finite-element limit and
+material-level inelastic response.  Coupled finite-element verification with
+active plastic flow and physical validation remain subsequent steps.
 \end{abstract}
 
 \noindent\textbf{Keywords:} finite-deformation poromechanics; Biot coefficient;
