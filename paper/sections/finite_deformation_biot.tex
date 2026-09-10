@@ -1,754 +1,440 @@
- \section{Single-solid, single-water finite-deformation equations}
+% !TeX root = ../main.tex
+\section{Deformation, distention, and pressure coupling}
 \label{sec:finite-deformation-biot}
 
-At time \(t\), the solid motion \(\bs\chi\) maps a reference position
-\(\mbf X\) to its current position \(\mbf x=\bs\chi(\mbf X,t)\).  The
-deformation gradient and solid-reference Jacobian are
-\begin{equation}
- \mbf F=\nabla_{\mbf X}\mbf x,
- \qquad
- J=\det\mbf F>0.
- \label{eq:skeleton-kinematics}
-\end{equation}
-The reference state is chosen with \(J_0=1\).  Here,
-\(\nabla_{\mbf X}\) denotes the gradient with respect to \(\mbf X\).
-Spatial balances use current mixture volume; their pull-backs use the solid
-reference configuration employed by the finite-element residuals.
+A saturated porous solid changes volume through deformation of its constituent
+material and through changes in pore volume.  These mechanisms enter the stress
+and the phase balances through different quantities.  We first identify those
+quantities and then obtain the Biot coefficient from the mineral-volume
+response at fixed pore pressure.
 
-\subsection{Solid mass balance and solid state}
+\subsection{Solid motion and phase mass}
 \label{sec:solved-solid-state}
 
-Let \(\rho_s=\phi_s\bar\rho_s\) denote the solid partial density per unit
-current mixture volume, where \(\phi_s\) is the solid volume fraction and
-\(\bar\rho_s\) is the intrinsic solid density.  For a source-free solid moving
-with the skeleton velocity \(\mbf v_s\), its spatial mass balance is
+Let the solid motion map a reference position \(\mbf X\) to
+\(\mbf x=\bs\chi(\mbf X,t)\).  Its deformation gradient and solid-reference
+Jacobian are
 \begin{equation}
- \left.\pder{\rho_s}{t}\right|_{\mbf x}
- +\nabla_{\mbf x}\mathbin{\cdot}(\rho_s\mbf v_s)=0.
- \label{eq:spatial-solid-mass-balance}
+ \mbf F=\nabla_{\mbf X}\bs\chi,
+ \qquad J=\det\mbf F>0.
+ \label{eq:skeleton-kinematics}
 \end{equation}
-Equivalently, with \(D_s/Dt\) denoting the material rate following the solid,
-\begin{equation}
- \frac{D_s\rho_s}{Dt}
- +\rho_s\nabla_{\mbf x}\mathbin{\cdot}\mbf v_s=0.
- \label{eq:material-solid-mass-balance}
-\end{equation}
-Using \(\dot J=J\nabla_{\mbf x}\cdot\mbf v_s\), the pull-back to the solid
-reference configuration is
-\begin{equation}
- \left.\pder{(J\rho_s)}{t}\right|_{\mbf X}=0,
- \label{eq:reference-solid-mass-balance}
-\end{equation}
-where the subscript \(0\) denotes the reference value and \(J_0=1\).  For the
-uniform reference state, the source-free balance therefore gives
-\(J\rho_s=\rho_{s0}=\phi_{s0}\bar\rho_{s0}\).  The mineral distension measures
-the intrinsic solid volume change,
-\begin{equation}
- \bar J
- :=\frac{\bar\rho_{s0}}{\bar\rho_s},
- \label{eq:distension}
-\end{equation}
-where \(\bar\rho_{s0}\) is the reference intrinsic solid density.
-
-The solid phase is closed by a Helmholtz free energy.  Let
-\(\psi_s(\mbf F,\bar\rho_s)\) be the solid free energy per unit mass, a general
-function of the skeleton deformation gradient and the intrinsic solid density;
-its deformation and density conjugates supply the intrinsic solid stress and
-pressure and are developed in Sec.~\ref{sec:intrinsic-pressure}.  Through the
-intrinsic pressure, the constitutive update supplies the intrinsic density.
-The partial-density definition gives the solid volume fraction as the derived
-quantity
-\begin{equation}
- \phi_s=\frac{\rho_s}{\bar\rho_s}.
- \label{eq:solid-volume-fraction-relation}
-\end{equation}
-For the source-free uniform reference state, substitution of
-\(J\rho_s=\phi_{s0}\bar\rho_{s0}\) and
-\(\bar\rho_s=\bar\rho_{s0}/\bar J\) reduces this identity to
-\(\phi_s=\phi_{s0}\bar J/J\).  The spatial balance evolves \(\rho_s\), and the
-constitutive update supplies \(\bar\rho_s\), equivalently \(\bar J\), so
-\eqref{eq:solid-volume-fraction-relation} recovers \(\phi_s\) locally.  With
-sources, reactions, or nonuniform initial mass, the same identity uses the
-current \(\rho_s\) without changing the local constitutive construction.
-
-\subsection{Intrinsic pressure and effective stress}
-\label{sec:intrinsic-pressure}
-
-The intrinsic solid pressure is the negative mean of the total intrinsic solid
-stress,
-\begin{equation}
- \bar p_s
- =-\frac{1}{3}\operatorname{tr}\bar{\bs\sigma}_s,
- \label{eq:intrinsic-pressure-mean-stress}
-\end{equation}
-where \(\bar{\bs\sigma}_s\) is the total intrinsic solid Cauchy stress, the
-stress carried within the solid phase, and \(\operatorname{tr}\) denotes the
-trace.  Local pressure equilibrium between the phases sets
-\begin{equation}
- p=\bar p_f=\bar p_s,
- \label{eq:local-pressure-equilibrium}
-\end{equation}
-where \(p\) is the water pressure and \(\bar p_f\) is the intrinsic water
-pressure.  The mixture stress is the volume-fraction-weighted sum of the
-intrinsic stresses,
-\begin{equation}
- \bs\sigma
- =\phi_s\bar{\bs\sigma}_s+\phi_f\bar{\bs\sigma}_f,
- \qquad
- \bar{\bs\sigma}_f=-p\mbf I,
- \label{eq:mixture-stress-split}
-\end{equation}
-where \(\phi_f=1-\phi_s\) and \(\mbf I\) is the identity tensor.
-
-The intrinsic stress and pressure are the deformation and density conjugates of
-the solid free energy per unit mass.  Let \(W_s=\bar\rho_{s0}\psi_s\) be the
-same energy per unit reference solid volume.  The deformation conjugate is
-\begin{equation}
- \bar{\bs\sigma}_s
- =\frac{1}{J}\pder{W_s}{\mbf F}\mbf F^T,
- \label{eq:intrinsic-stress-free-energy}
-\end{equation}
-and the density conjugate, evaluated at fixed deformation gradient, is
-\begin{equation}
- \bar p_s
- =\bar\rho_s^2\left.\pder{\psi_s}{\bar\rho_s}\right|_{\mbf F}.
- \label{eq:intrinsic-pressure-free-energy}
-\end{equation}
-The two expressions for \(\bar p_s\), the negative mean stress in
-\eqref{eq:intrinsic-pressure-mean-stress} and the density conjugate
-\eqref{eq:intrinsic-pressure-free-energy}, coincide for a conservative solid.
-The pressure equilibrium \eqref{eq:local-pressure-equilibrium} then eliminates
-the intrinsic solid density as \(\bar\rho_s(p,\mbf F)\), whose dependence on
-the skeleton deformation enters through the stress free energy.
-
-The total intrinsic stress separates into a fixed-density part and the fluid
-pressure.  Let \(\bar{\bs\sigma}^{\prime}_s\) be the single-prime intrinsic
-stress, the deformation conjugate of the solid energy at fixed intrinsic
-density, and let \(\bar{\bs\sigma}^{\prime\prime}_s\) be the double-prime
-intrinsic stress, its fixed-pressure Legendre counterpart.  The Legendre
-transform gives
-\begin{equation}
- \bar{\bs\sigma}^{\prime}_s
- =\bar{\bs\sigma}^{\prime\prime}_s+\frac{1-B}{\phi_s}p\mbf I,
- \label{eq:primed-stress-transform}
-\end{equation}
-and the total intrinsic stress is
-\begin{equation}
- \bar{\bs\sigma}_s
- =\bar{\bs\sigma}^{\prime}_s-p\mbf I
- =\bar{\bs\sigma}^{\prime\prime}_s+\frac{\phi_f-B}{\phi_s}p\mbf I.
- \label{eq:intrinsic-stress-decomposition}
-\end{equation}
-The drained skeleton stress is the aggregate double-prime stress,
-\(\bs\sigma^{\prime\prime}=\phi_s\bar{\bs\sigma}^{\prime\prime}_s\), and the
-total mixture stress is
-\begin{equation}
- \bs\sigma
- =\bs\sigma^{\prime\prime}-Bp\mbf I.
- \label{eq:total-cauchy-stress}
-\end{equation}
-At equilibrium, \eqref{eq:intrinsic-pressure-mean-stress} and
-\eqref{eq:intrinsic-stress-decomposition} give
-\(\operatorname{tr}\bar{\bs\sigma}^{\prime}_s=0\), so the single-prime
-intrinsic stress is deviatoric.  Because the free energy relates the intrinsic
-pressure to the solid density, plasticity enters through the drained skeleton
-stress \(\bs\sigma^{\prime\prime}\) while the decomposition itself remains
-valid.
-
-\subsection{Biot coefficient and momentum balance}
-\label{sec:biot-coefficient-and-momentum}
-
-In terms of the mineral distension in \eqref{eq:distension}, the
-finite-deformation Biot coefficient is
-\begin{equation}
- B
- =1-\phi_{s0}
- \left.\pder{\bar J}{J}\right|_{p,J\rho_s}.
- \label{eq:finite-deformation-biot-coefficient}
-\end{equation}
-This is the one-solid reduction of the fixed-pressure coefficient in the
-multicomponent theory and the binary-mixture coefficient of Foster and Xu
-\citep[eq.~(39)]{fosterxu2025}.  The coefficient differentiates the constrained
-constitutive state at fixed intrinsic pressure and fixed referential solid mass
-\(J\rho_s\).  A general solid free energy changes \(B\) through the
-fixed-pressure evolution of its density.  Internal variables and their
-return-mapping equations join the local system, and implicit differentiation
-then includes their response to \(J\).
-
-Let \(\bs\sigma^{\prime}\) denote the deformation-conjugate material stress in
-the pressure Legendre representation.  It is obtained from the drained stress
-through the Biot transform
-\begin{equation}
- \bs\sigma^{\prime}
- =\bs\sigma^{\prime\prime}+(1-B)p\mbf I.
- \label{eq:single-prime-biot-transform}
-\end{equation}
-Thus a constitutive calculation formulated for
-\(\bs\sigma^{\prime\prime}\) reconstructs \(\bs\sigma^{\prime}\) before
-using a law whose stress argument is single-prime.  Adding the isotropic fluid
-stress gives the total mixture stress
-\(\bs\sigma=\bs\sigma^{\prime}-p\mbf I
-=\bs\sigma^{\prime\prime}-Bp\mbf I\), and the total first Piola stress is
-\begin{equation}
- \mbf P
- =\mbf P^{\prime\prime}-BpJ\mbf F^{-T}.
- \label{eq:total-first-piola-stress}
-\end{equation}
-The quasi-static momentum balance on the solid reference configuration is
-\citep[eq.~(37)]{fosterxu2025}
-\begin{equation}
- \nabla_{\mbf X}\mathbin{\cdot}\mbf P+J\rho\mbf g=\mbf0.
- \label{eq:reference-momentum-balance}
-\end{equation}
-Here, \(\rho\) is the current mixture mass density, \(\mbf g\) is body-force
-acceleration, and \(\mbf0\) is the zero vector.  The elastic verification
-closure supplies \(\mbf P^{\prime\prime}\) in
-\eqref{eq:verification-effective-first-piola}.
-
-\subsection{Inelastic response and the plastic driving stress}
-\label{sec:inelastic-plastic-driving-stress}
-
-An inelastic solid is described by a multiplicative split of the skeleton
-deformation into a pore-allocation factor and the true deformation of the
-solid material,
+Following Drumheller \citep[Sec.~3]{drumheller2000}, we separate the true
+motion of the solid material from the distention gradient,
 \begin{equation}
  \mbf F=\mbf A\bar{\mbf F},
- \qquad
- J=a\bar J,
- \qquad
- a=\det\mbf A,
- \qquad
- \bar J=\det\bar{\mbf F},
+ \qquad \bar J=\det\bar{\mbf F},
+ \qquad a=\det\mbf A,
+ \qquad J=a\bar J.
  \label{eq:inelastic-multiplicative-split}
 \end{equation}
-where \(\mbf A\) records the pore-space allocation and \(\bar{\mbf F}\) the
-true deformation of the solid phase.  True solid mass conservation makes
-\(\bar J\) coincide with the mineral volume ratio in
-\eqref{eq:distension}, so that the allocation factor
-\(a=J/\bar J=\phi_{s0}/\phi_s\) reproduces the solid volume fraction
-\eqref{eq:solid-volume-fraction-relation}.  Extending the distension and
-true-deformation split for porous media \citep{fosterxu2025}, each factor
-carries an elastic--plastic split,
+Here \(\bar{\mbf F}\) is the true-deformation gradient, \(\bar J\) is the
+true-deformation Jacobian, \(\mbf A\) is the distention gradient, and \(a\)
+is the distention.  We choose a reference state with \(J_0=\bar J_0=a_0=1\).
+The true-deformation Jacobian measures intrinsic solid volume change;
+distention describes how that material occupies mixture volume.
+
+Let \(\bar\rho_s\) be the solid intrinsic density and \(\phi_s\) its volume
+fraction.  The partial density per unit current mixture volume is
 \begin{equation}
- \mbf A=\mbf A^e\mbf A^p,
- \qquad
+ \rho_s=\phi_s\bar\rho_s.
+ \label{eq:solid-volume-fraction-relation}
+\end{equation}
+For a source-free solid moving with velocity \(\mbf v_s\), mass conservation
+in spatial and solid-reference forms is
+\begin{align}
+ \left.\pder{\rho_s}{t}\right|_{\mbf x}
+ +\nabla_{\mbf x}\mathbin{\cdot}(\rho_s\mbf v_s)&=0,
+ \label{eq:spatial-solid-mass-balance}\\
+ \left.\pder{(J\rho_s)}{t}\right|_{\mbf X}&=0.
+ \label{eq:reference-solid-mass-balance}
+\end{align}
+For the uniform reference state used here,
+\(J\rho_s=\rho_{s0}=\phi_{s0}\bar\rho_{s0}\).  The true motion preserves
+mineral mass, giving
+\begin{equation}
+ \bar J\equiv\frac{\bar\rho_{s0}}{\bar\rho_s},
+ \qquad \phi_s=\frac{\phi_{s0}\bar J}{J},
+ \qquad \phi_s a=\phi_{s0}.
+ \label{eq:distension}
+\end{equation}
+Thus the intrinsic density determines true volume change, while the ratio of
+partial to intrinsic density determines the solid volume fraction.  Saturation
+then gives the water volume fraction \(\phi_f=1-\phi_s\).
+
+\subsection{Pressure and the two effective stresses}
+\label{sec:intrinsic-pressure}
+
+Let \(\psi_s\) denote the solid free energy per unit mass, with skeleton
+deformation, intrinsic density, and constitutive internal state as its
+arguments.  Local equilibrium identifies the density conjugate with the pore
+pressure \citep[eq.~(27c)]{fosterxu2025},
+\begin{equation}
+ p=\bar p_f=\bar p_s
+ =\bar\rho_s^2\left.\pder{\psi_s}{\bar\rho_s}\right|_{\mbf F},
+ \label{eq:local-pressure-equilibrium}
+\end{equation}
+where \(\bar p_f\) and \(\bar p_s\) are the intrinsic water and solid
+thermodynamic pressures, respectively, and any internal variables are held
+fixed.  The grain pressure \(\bar p_g\) is defined as the negative mean
+intrinsic solid stress and also contains the contribution of skeleton
+deformation.  Consequently, pressure equilibrium does not require
+the effective solid stress to be deviatoric.
+
+Write \(W_s=\rho_{s0}\psi_s\) per unit reference mixture volume.  In terms
+of \(\bar J\), the density conjugacy becomes
+\begin{equation}
+ p=-\frac{1}{\phi_{s0}}
+ \left.\pder{W_s}{\bar J}\right|_{\mbf F}.
+ \label{eq:intrinsic-pressure-free-energy}
+\end{equation}
+The independent arguments of \(W_s\) are \(\mbf F\) and
+\(\bar\rho_s\), equivalently \(\mbf F\) and \(\bar J\), with internal
+variables held fixed.  Solving this pressure relation determines
+\(\bar J(\mbf F,p)\).  Denote \(W_s\) evaluated on that state by
+\(W^{\prime\prime}(\mbf F,p)\).  The pressure Legendre transform replaces
+the intrinsic-density argument by pressure and defines the potential
+\begin{equation}
+ W^{\prime}(\mbf F,p)
+ =W^{\prime\prime}(\mbf F,p)+\phi_{s0}p\bar J(\mbf F,p).
+ \label{eq:pressure-legendre-potential}
+\end{equation}
+The single-prime first Piola stress is the deformation derivative of
+\(W_s\) at fixed intrinsic density, equivalently the derivative of the
+transformed potential \(W^{\prime}\) at fixed pressure.  The density-response
+terms cancel in the latter derivative by
+\eqref{eq:intrinsic-pressure-free-energy}.  The double-prime stress differentiates \(W^{\prime\prime}\) at
+fixed pressure \citep[eqs.~(34)--(36)]{fosterxu2025}:
+\begin{align}
+ \mbf P^{\prime}
+ &=\left.\pder{W_s}{\mbf F}\right|_{\bar J}
+ ,\label{eq:single-prime-fixed-density-conjugate}\\
+ \mbf P^{\prime}&=\left.\pder{W^{\prime}}{\mbf F}\right|_p,
+ \label{eq:single-prime-energy-conjugate}\\
+ \mbf P^{\prime\prime}
+ &=\left.\pder{W^{\prime\prime}}{\mbf F}\right|_p.
+ \label{eq:double-prime-energy-conjugate}
+\end{align}
+Internal variables remain fixed in these constitutive derivatives.
+
+\subsection{The finite-deformation Biot coefficient}
+\label{sec:biot-coefficient-and-momentum}
+
+For the isotropic volume response considered here, the fixed-state dependence
+of \(\bar J\) on deformation is through \(J\).  Differentiating
+\eqref{eq:pressure-legendre-potential} gives
+\begin{equation}
+ \mbf P^{\prime}
+ =\mbf P^{\prime\prime}
+ +\phi_{s0}p\left.\pder{\bar J}{J}\right|_{p,J\rho_s}
+ J\mbf F^{-T}.
+ \label{eq:single-prime-first-piola-mineral-transform}
+\end{equation}
+The corresponding Biot coefficient is
+\begin{equation}
+ B=1-\phi_{s0}\left.\pder{\bar J}{J}\right|_{p,J\rho_s}.
+ \label{eq:finite-deformation-biot-coefficient}
+\end{equation}
+This is the one-solid coefficient that we derived in Foster and Xu
+\citep[eq.~(39)]{fosterxu2025}.  It measures the fraction of a skeleton-volume
+increment available to change pore volume when pressure, referential solid
+mass, and the current internal state are fixed.  An incompressible mineral
+has \(\bar J=1\) and \(B=1\).
+
+Pushing the stresses forward gives
+\begin{align}
+ \bs\sigma^{\prime}
+ &=\bs\sigma^{\prime\prime}+(1-B)p\mbf I,
+ \label{eq:single-prime-biot-transform}\\
+ \bs\sigma
+ &=\bs\sigma^{\prime}-p\mbf I,
+ \label{eq:total-cauchy-single-prime}\\
+ \bs\sigma
+ &=\bs\sigma^{\prime\prime}-Bp\mbf I.
+ \label{eq:total-cauchy-stress}
+\end{align}
+Here \(\bs\sigma^{\prime}=J^{-1}\mbf P^{\prime}\mbf F^T\), with the same
+push-forward for the double-prime stress, and \(\mbf I\) is the identity
+tensor.  The total first Piola stress and quasi-static balance are
+\begin{gather}
+ \mbf P=\mbf P^{\prime\prime}-BpJ\mbf F^{-T},
+ \label{eq:total-first-piola-stress}\\
+ \nabla_{\mbf X}\mathbin{\cdot}\mbf P+J\rho\mbf g=\mbf0,
+ \label{eq:reference-momentum-balance}
+\end{gather}
+where \(\rho\) is total mixture density and \(\mbf g\) is body-force
+acceleration.  The same coefficient that enters the total stress also
+connects the drained response to the single-prime stress.  This connection
+becomes consequential when the latter supplies the work conjugate for
+plastic flow.
+
+\section{Poroplastic constitutive response}
+\label{sec:inelastic-plastic-driving-stress}
+
+We choose an isotropic constitutive model to examine how irreversible
+changes in distention enter the pressure coupling.  The matched logarithmic skeleton and mineral laws yield a closed-form
+coefficient at each current plastic state.  The
+multiplicative kinematics follow Drumheller; the mineral EOS, yield
+surface, and dilation rule specified below are constitutive choices.
+
+\subsection{Plastic distention and mineral compression}
+
+We specialize the solid mixture energy to one nonreacting constituent at
+constant temperature, with spherical distention and isochoric true-plastic
+flow.  The elastic and plastic factors satisfy
+\begin{equation}
  \bar{\mbf F}=\bar{\mbf F}^e\bar{\mbf F}^p,
+ \qquad \mbf A=\mbf A^e\mbf A^p,
+ \qquad \det\bar{\mbf F}^p=1,
+ \qquad
+ \mbf A^e=(a^e)^{1/3}\mbf I,
+ \qquad \mbf A^p=(a^p)^{1/3}\mbf I.
  \label{eq:inelastic-kinematic-splits}
 \end{equation}
-so that the plastic factors \(\bar{\mbf F}^p\) and \(\mbf A^p\) are the stored
-internal variables and the elastic factors are the dependent arguments,
-\begin{equation}
- \bar{\mbf F}^e=\bar{\mbf F}(\bar{\mbf F}^p)^{-1},
- \qquad
- \mbf A^e=\mbf A(\mbf A^p)^{-1},
- \label{eq:inelastic-dependent-elastic-arguments}
-\end{equation}
-where the true-plastic flow is isochoric and the plastic allocation is
-spherical,
-\begin{equation}
- \det\bar{\mbf F}^p=1,
- \qquad
- \mbf A^p=(a^p)^{1/3}\mbf I,
- \label{eq:inelastic-plastic-isochoric-spherical}
-\end{equation}
-so that \(a=a^ea^p\).  The scalar plastic allocation \(a^p\) therefore records
-the inelastic contribution to the solid volume fraction through
-\(\phi_s=\phi_{s0}/a\), whereas the isochoric true-plastic flow leaves the
-intrinsic density unchanged; \(\bar\rho_s\) remains governed by the elastic
-true deformation \(\bar{\mbf F}^e\) and the mineral pressure law.
-
-The phase-level dissipation analysis identifies the material stress that
-drives each mechanism \citep{fosterxu2025}.  Plastic flow is conjugate to the
-single-prime stress \(\bs\sigma^{\prime}\), the deformation conjugate at fixed
-intrinsic density; the isochoric mechanism is driven by the deviatoric part of
-\(\bs\sigma^{\prime}\) mapped through the elastic true-deformation factor, and
-the scalar allocation mechanism by its mean part.  Because the single-prime
-stress is reconstructed from the fixed-pressure skeleton stress by
-\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\)
-\eqref{eq:single-prime-biot-transform}, a yield and flow rule formulated in
-\(\bs\sigma^{\prime}\) requires the Biot coefficient before the plastic
-response can be evaluated.  The coefficient itself depends on the active
-plastic state through the fixed-pressure derivative
-\eqref{eq:finite-deformation-biot-coefficient}.  For an inelastic solid the
-local constitutive system therefore augments the pressure equilibrium with the
-active yield, consistency, flow, and hardening equations, and the implicit
-differentiation in Sec.~\ref{sec:implicit-ad-implementation} supplies the
-consistent fixed-pressure tangent and hence \(B\).  The elastic closure in
-Sec.~\ref{sec:elastic-verification-closure} is the inactive-mechanism limit in
-which \(\bar{\mbf F}^p=\mbf I\) and \(a^p=1\).
-
-Because the allocation factors are spherical, the factors commute and assemble
-an aggregate elastic--plastic split of the skeleton deformation,
+The spherical plastic factor commutes with the true elastic deformation,
+giving the aggregate decomposition
 \begin{equation}
  \mbf F=\mbf F^e\mbf F^p,
- \qquad
- \mbf F^e=\mbf A^e\bar{\mbf F}^e,
- \qquad
- \mbf F^p=(a^p)^{1/3}\bar{\mbf F}^p,
+ \qquad \mbf F^e=(a^e)^{1/3}\bar{\mbf F}^e,
+ \qquad \mbf F^p=(a^p)^{1/3}\bar{\mbf F}^p,
+ \qquad \det\mbf F^p=a^p.
  \label{eq:aggregate-plastic-split}
 \end{equation}
-so that \(J=J^eJ^p\) with \(J^p=a^p\) and \(\det\bar{\mbf F}^p=1\).  The
-aggregate factor \(\mbf F^p\) is the plastic deformation observable in a drained
-test: its determinant \(a^p\) is the plastic pore allocation that changes the
-solid volume fraction through \(\phi_s=\phi_{s0}/a\), and its isochoric part
-\(\bar{\mbf F}^p\) records the deviatoric rearrangement.  The elastic factor
-\(\mbf F^e\) carries the drained (fixed-pressure) response, so a drained
-loading--unloading cycle measures \(\mbf F^e\) and \(\mbf F^p\) directly.
+Consequently, \(J^e=\det\mbf F^e=J/a^p\).  True mass conservation and
+isochoric true-plastic flow give
+\(\det\bar{\mbf F}^e=\bar J=\bar\rho_{s0}/\bar\rho_s\), so that
+\(J^e=a^e\bar J\).  Elastic skeleton volume is thus divided between
+distention of the porous structure and compression of the mineral.
 
-Two stress measures therefore describe the inelastic response.  The drained
-skeleton stress \(\bs\sigma^{\prime\prime}\) is conjugate to the observable
-elastic deformation, is the quantity a drained experiment reports, and is the
-fixed-pressure stress entering momentum.  The dissipation analysis instead
-identifies the single-prime stress
-\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\) as the driving
-stress for plastic flow \citep{fosterxu2025}.  In the classical limit \(B=1\)
-the two coincide, which is why effective-stress yield and flow rules in the
-literature, calibrated against drained measurements, are phrased in what is
-here \(\bs\sigma^{\prime\prime}\).  For a compressible mineral the two differ,
-and the coefficient \(B\) maps between the observable and the driving
-formulation.
-
-For the cohesionless skeleton considered here, the isochoric and pore-allocation
-mechanisms share one activation.  At finite deformation the plastic power fixes
-the stress measures that drive them.  The single-prime intrinsic stress is the
-deformation conjugate of the solid energy at fixed intrinsic density,
-\begin{equation}
- \bs\sigma'_s
- =\rho_s
- \left.\pder{\psi_s}{\bar{\mbf F}^e}\right|_{\mc X_s}
- (\bar{\mbf F}^e)^T,
- \label{eq:single-prime-kirchhoff-stress}
-\end{equation}
-a Kirchhoff-type current-configuration stress.  Because the isochoric
-true-plastic rate is conjugate to the deviatoric part of this stress mapped
-into the elastic true-deformation frame, the driving stress of the isochoric
-mechanism is the Mandel-type tensor
-\begin{equation}
- \mbf S
- =(\bar{\mbf F}^e)^{-1}
- \operatorname{dev}\bs\sigma'_s\,
- \bar{\mbf F}^e,
- \qquad
- \operatorname{tr}\mbf S=0 .
- \label{eq:mandel-driving-stress}
-\end{equation}
-The scalar pore-allocation mechanism is instead driven by the mean stress
-\(\tfrac13\operatorname{tr}\bs\sigma'_s\).  Define the compressive mean and the
-equivalent shear stress by
-\begin{equation}
- p
- =-\frac{1}{3}\operatorname{tr}\bs\sigma'_s,
- \qquad
- q
- =\sqrt{\tfrac32}\,\lVert\mbf S\rVert .
- \label{eq:finite-plastic-stress-invariants}
-\end{equation}
-The remaining derivation states the plastic flow rules and the surface that
-selects them, following the two-mechanism construction of the multicomponent
-theory \citep{fosterxu2025} and its Drucker--Prager specialization in the
-companion theory.  Two scalar plastic rates describe the inelastic response:
-the isochoric (true-plastic) rate \(\dot\gamma\ge0\), and the pore-allocation
-(volumetric) rate \(\dot\eta=\dot a^p/a^p\), with \(\dot\eta>0\) a dilation and
-\(\dot\eta<0\) a compaction.  With the isochoric rate aligned
-with its driving stress,
-\begin{equation}
- \dot{\bar{\mbf F}}^p(\bar{\mbf F}^p)^{-1}
- =\dot\gamma\,\mbf N',
- \qquad
- \mbf N'=\frac{3}{2}\frac{\mbf S}{q},
- \label{eq:isochoric-flow-direction}
-\end{equation}
-the trace of \(\mbf N'\) vanishes, so \(\det\bar{\mbf F}^p=1\) is preserved,
-and \(\operatorname{tr}[\mbf S\,\dot{\bar{\mbf F}}^p(\bar{\mbf F}^p)^{-1}]
-=q\dot\gamma\).  The plastic power is therefore
-\begin{equation}
- \mc D^p
- =q\dot\gamma-p\dot\eta,
- \label{eq:plastic-power}
-\end{equation}
-where the first term is the deviatoric power of the isochoric mechanism and the
-second is the pressure power of the pore-allocation mechanism (the pressure
-resists dilation and drives compaction).
-
-The dissipation analysis supplies two independent plastic mechanisms and the
-driving stresses for each \citep{fosterxu2025}.  In the uncoupled, associated
-specialization each mechanism is separately dissipative and has its own yield
-condition, advancing at its own rate \(\dot\gamma\) or \(\dot\eta\).  The
-isochoric true-plastic mechanism yields on the deviatoric condition and flows
-in the direction of \eqref{eq:isochoric-flow-direction},
-\begin{equation}
- f_d=q-q_y\le0,
- \qquad
- \dot\gamma\ge0,
- \qquad
- \dot\gamma f_d=0,
- \qquad
- \mc D^p_d=q\dot\gamma\ge0,
- \label{eq:isochoric-yield}
-\end{equation}
-where \(q_y\) is the constant shear strength.  The pore-allocation mechanism
-yields on the volumetric condition and, on its compressive (compaction) branch,
-\(\dot\eta\le0\),
-\begin{equation}
- f_v=p-p_y\le0,
- \qquad
- \dot\eta\le0,
- \qquad
- \mc D^p_v=-p\dot\eta\ge0,
- \label{eq:distension-yield}
-\end{equation}
-where \(p_y\) is the constant compaction strength.  Under monotone compressive
-loading the independent response sits at the corner \(q=q_y\), \(p=p_y\), with
-the imposed volume reduction accommodated by plastic pore collapse rather than
-by dilation, and the combined plastic rate is not normal to either surface.
-
-A Drucker--Prager-type response is obtained by coupling the two mechanisms
-through a shared rate constraint together with a stress-dependent dissipation,
-following the thermomechanical construction of Collins and Houlsby
-\citep[see][]{fosterxu2025}.  The shared rate constraint is the dilatancy rule
-that locks the volumetric plastic rate to the isochoric one,
-\begin{equation}
- \dot\eta=\beta\dot\gamma,
- \qquad
- \beta\ge0 .
- \label{eq:dilatancy-constraint}
-\end{equation}
-Physically it states that shear rearrangement of a frictional skeleton is
-accompanied by a proportional volume change of slope \(\beta\) (the dilation
-angle), so the two mechanisms advance under the single rate \(\dot\gamma\).
-The accompanying stress-dependent dissipation assigns to each unit of shear
-rate a cost proportional to the compressive mean stress,
-\begin{equation}
- \mc R(p;\dot\gamma,\dot\eta)
- =\mu p\dot\gamma,
- \qquad
- \mu\ge0 ,
- \label{eq:stress-dependent-dissipation}
-\end{equation}
-admissible only for the rate pairs satisfying
-\eqref{eq:dilatancy-constraint}.  A stress state can then sit on the yield
-boundary only if no admissible plastic rate performs more work than this
-dissipation.  Substituting \eqref{eq:plastic-power} and
-\eqref{eq:dilatancy-constraint} into that admissibility inequality gives
-\begin{equation}
- (q-\beta p)\dot\gamma\le\mu p\dot\gamma
- \quad\text{for all }\dot\gamma\ge0
- \qquad\Longleftrightarrow\qquad
- f=q-Mp\le0,
- \quad
- M=\mu+\beta .
- \label{eq:dp-yield}
-\end{equation}
-The single surface \eqref{eq:dp-yield} is the Drucker--Prager condition, with
-yield slope \(M=\mu+\beta\).  On the surface the plastic rate follows by
-normality in the single rate coordinate, \(\dot\eta=\beta\dot\gamma\), i.e. in
-tensor form
-\begin{equation}
- \dot{\mbf F}^p(\mbf F^p)^{-1}
- =\dot\gamma\left(\frac{3}{2}\frac{\mbf S}{q}+\frac{\beta}{3}\mbf I\right),
- \qquad
- \dot\gamma\ge0,
- \qquad
- \dot\gamma f=0,
- \label{eq:dp-flow}
-\end{equation}
-and the dissipation on the surface is
-\begin{equation}
- \mc D^p
- =q\dot\gamma-p\beta\dot\gamma
- =\mu p\dot\gamma\ge0 .
- \label{eq:dp-dissipation}
-\end{equation}
-Equations \eqref{eq:dp-yield}--\eqref{eq:dp-dissipation} are the coupled
-Drucker--Prager-type model.  Because the flow direction follows from the
-plastic potential \(g=q-\beta p\) (dilation slope \(\beta\)) whereas the yield
-surface has slope \(M=\mu+\beta\), the model is non-associated whenever
-\(\mu>0\); the frictional part \(\mu\) supplies the dissipation and the
-difference \(M-\beta=\mu\) is the non-associativity.
-
-The rate in \eqref{eq:dp-flow} is the total plastic deformation rate of the
-skeleton, \(\dot{\mbf F}^p(\mbf F^p)^{-1}\), the quantity observable in a
-drained test.  The two internal mechanisms are not separately observable: they
-are projected onto this single surface and rate, and once the aggregate
-rate is known the internal fields are reconstructed from the aggregate split
-\eqref{eq:aggregate-plastic-split}.  Taking the determinant of
-\eqref{eq:dp-flow} gives the pore-allocation rate and the isochoric factor,
-\begin{equation}
- \frac{\dot a^p}{a^p}
- =\operatorname{tr}\left[\dot{\mbf F}^p(\mbf F^p)^{-1}\right]
- =\beta\dot\gamma,
- \qquad
- a^p=\det\mbf F^p,
- \qquad
- \bar{\mbf F}^p=(a^p)^{-1/3}\mbf F^p,
- \label{eq:reconstruct-pore-allocation}
-\end{equation}
-with \(\det\bar{\mbf F}^p=1\), which is the dilation rate
-\eqref{eq:dilatancy-constraint} expressed through the aggregate factor.  The
-plastic pore allocation changes the solid volume fraction through
-\(\phi_s=\phi_{s0}/a\) with \(a=a^ea^p\).  At small strain
-\(\bar{\mbf F}^e\to\mbf I\) and the intrinsic and aggregate single-prime
-stresses coincide with \(\bs\sigma'=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\),
-so \eqref{eq:dp-yield}--\eqref{eq:dp-dissipation} reduce to the conventional
-Cauchy Drucker--Prager form \(q'-Mp'\le0\) with
-\(q'=\sqrt{\tfrac32}\,\lVert\operatorname{dev}\bs\sigma'\rVert\) and
-\(p'=-\tfrac13\operatorname{tr}\bs\sigma'\).  Because
-\(\operatorname{dev}\bs\sigma'=\operatorname{dev}\bs\sigma^{\prime\prime}\) and
-\(p'=p^{\prime\prime}-(1-B)p\), that reduced form reads in the drained
-observables as
-\begin{equation}
- f=q'-M\big[p^{\prime\prime}-(1-B)p\big]\le0,
- \qquad
- p^{\prime\prime}=-\tfrac13\operatorname{tr}\bs\sigma^{\prime\prime},
- \label{eq:dp-yield-observable}
-\end{equation}
-which exposes the explicit Biot correction omitted by a \(B=1\) or
-fixed-elastic-\(B\) approximation.  At finite deformation that correction
-enters through the single-prime Kirchhoff/Mandel measures of
-\eqref{eq:single-prime-kirchhoff-stress}--\eqref{eq:finite-plastic-stress-invariants};
-forming them requires the elastic true deformation \(\bar{\mbf F}^e\), which
-therefore joins the inelastic local state together with \(a^p\) and the
-hardening variables.
-
-The Biot coefficient is the system coefficient of
-\eqref{eq:finite-deformation-biot-coefficient},
-\(B=1-\phi_{s0}\,\partial\bar J/\partial J|_{p,J\rho_s,\mc H_n}\); the phase
-form of the multicomponent theory reduces to this same coefficient in the
-single-solid limit and therefore need not be carried separately
-\citep{fosterxu2025}.  Because \(B\) is the fixed-pressure tangent of the
-active local system, evaluating the yield and flow of the poroplastic skeleton
-requires the implicit coefficient; the local system and its active-set tangent
-are developed in Sec.~\ref{sec:implicit-ad-implementation}.
-
-\subsection{Plastic loading and the incremental rate}
-\label{sec:plastic-loading-incremental-rate}
-
-Loading and unloading of the Drucker--Prager-type surface obey the
-complementarity (Kuhn--Tucker) conditions
-\begin{equation}
- \dot\gamma\ge0,
- \qquad
- f\le0,
- \qquad
- \dot\gamma f=0,
- \label{eq:kuhn-tucker}
-\end{equation}
-together with the consistency condition during plastic loading,
-\begin{equation}
- \dot f=0
- \quad\text{whenever}\quad \dot\gamma>0 .
- \label{eq:consistency-dot-f}
-\end{equation}
-The response is elastic when \(f<0\), and also when \(f=0\) but the trial
-stress rate would move the stress inside the surface (unloading, \(\dot f<0\)).
-When \(f=0\) and loading continues, the complementarity conditions leave
-\(\dot\gamma\) undetermined; it is fixed by the consistency condition
-\eqref{eq:consistency-dot-f}.  Because the flow rule \eqref{eq:dp-flow} changes
-the plastic state, which enters the stress through the elastic relation and the
-coefficient \(B\), the consistency condition is an equation for \(\dot\gamma\),
-not a prescribed value.
-
-The model is rate independent: the complementarity and consistency above are
-rate conditions that select the instantaneous \(\dot\gamma\), but no viscous
-or overstress regularization replaces the consistency condition
-\eqref{eq:consistency-dot-f}.  In the time-discrete calculations reported below
-(backward Euler) the unknown of the plastic update is the increment
-\(\Delta\gamma=\int\dot\gamma\,\dd t\), and the update is a standard
-elastic-predictor/return-mapping step:
-advance the state with \(\Delta\gamma=0\) (plastic factors frozen) and evaluate
-the trial driving stress; if the trial satisfies \(f\le0\) the step is elastic
-and \(\Delta\gamma=0\); otherwise the discrete consistency condition
-\begin{equation}
- f\big(\bs\sigma'(\Delta\gamma),\,p(\Delta\gamma),\,\mc H_{n+1}\big)=0
- \label{eq:discrete-consistency}
-\end{equation}
-is solved for \(\Delta\gamma\ge0\), with the state advanced by the integrated
-flow rule \eqref{eq:dp-flow} and the reconstruction
-\eqref{eq:reconstruct-pore-allocation}.  Because the driving stress is the
-single-prime stress \(\bs\sigma'=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\), the
-discrete consistency \eqref{eq:discrete-consistency} couples to the coefficient
-\(B\), which is itself the fixed-pressure tangent of the active local system.
-The implementation therefore does not solve \eqref{eq:discrete-consistency} for
-\(\Delta\gamma\) in isolation; it enters as one scalar component of the local
-residual system of Sec.~\ref{sec:implicit-ad-implementation} on the active set.
-That system is solved by Newton's method with the residual and its Jacobian
-evaluated in automatic-differentiation (AD) types, so the algorithmic tangent
-is obtained exactly and consistently with the global residual; no hand
-differentiation of the return mapping is required.  The converged iterate
-returns the plastic state, the stress, and \(B\), and the AD derivatives retain
-the result in the global Jacobian.  The elastic verification closure in
-Sec.~\ref{sec:elastic-verification-closure} is the limit \(\Delta\gamma=0\) of
-this update.
-
-\subsection{Water storage and transport}
-\label{sec:water-storage-and-transport}
-
-The spatial source-free water mass balance is
-\begin{equation}
- \left.\pder{(\phi_f\bar\rho_f)}{t}\right|_{\mbf x}
- +\nabla_{\mbf x}\mathbin{\cdot}
- \left(\phi_f\bar\rho_f\mbf v_s+\mbf w_f\right)=0,
- \label{eq:spatial-water-mass-balance}
-\end{equation}
-where \(\mbf w_f\) is the water mass flux relative to the skeleton.  Pulling
-this balance back to the solid reference configuration gives
-\begin{equation}
- \left.\frac{\partial}{\partial t}
- \left(J\phi_f\bar\rho_f\right)\right|_{\mbf X}
- +\nabla_{\mbf X}\mathbin{\cdot}\mbf W_f=0,
- \label{eq:reference-water-mass-balance}
-\end{equation}
-where \(\phi_f=1-\phi_s\), \(\bar\rho_f\) is intrinsic water density, and
-\(\mbf W_f=J\mbf F^{-1}\mbf w_f\).
-
-Define the water bulk modulus by
-\(K_f=\bar\rho_f\,\mathrm{d}p/\mathrm{d}\bar\rho_f\).  Taking \(K_f\)
-constant and integrating from the reference state gives the pressure--density
-relation and its material time derivative,
-\begin{subequations}
- \label{eq:barotropic-water-eos}
- \begin{align}
-  \bar\rho_f(p)
-  &=\bar\rho_{f0}\exp\left(\frac{p-p_0}{K_f}\right),
-  \label{eq:barotropic-water-density}\\
-  \frac{\dot{\bar\rho}_f}{\bar\rho_f}
-  &=\frac{\dot p}{K_f}.
-  \label{eq:barotropic-water-density-rate}
- \end{align}
-\end{subequations}
-Here \(p_0\) and \(\bar\rho_{f0}\) define the reference water state, and an
-overdot denotes \(\left.\partial/\partial t\right|_{\mbf X}\).  Substitution
-into \eqref{eq:reference-water-mass-balance} expands the accumulation rate into
-the rate of \(J(1-\phi_s)\) plus \(J(1-\phi_s)\dot p/K_f\).  The Lagrangian
-pore volume \(J\phi_f=J(1-\phi_s)\) \citep{biotwillis1957} is computed from
-the solid volume fraction field, so the water balance
-retains the complete nonlinear accumulation
-\(J(1-\phi_s)\bar\rho_f(p)\) at the continuous level.  The Biot
-coefficient enters momentum explicitly, while the same local solid response
-affects water accumulation through the solid volume fraction.
-
-For isotropic permeability \(\kappa\), water dynamic viscosity \(\mu_f\), and
-zero gravity, the pulled-back Darcy mass flux is
-\citep{sunostien2013}
-\begin{equation}
- \mbf W_f
- =-\bar\rho_f J\mbf F^{-1}
- \frac{\kappa}{\mu_f}\mbf F^{-T}\nabla_{\mbf X}p.
- \label{eq:reference-darcy-flux}
-\end{equation}
-Equations \eqref{eq:total-first-piola-stress},
-\eqref{eq:reference-water-mass-balance}, and
-\eqref{eq:reference-darcy-flux} retain the finite-deformation stress, storage,
-and transport maps used in the numerical residual.
-
-\subsection{Elastic verification closure}
+\subsection{Matched logarithmic skeleton and mineral laws}
 \label{sec:elastic-verification-closure}
+\label{sec:numerical-solid-eos}
 
-The reported calculations use an elastic mineral and an elastic skeleton.  The
-intrinsic stress follows from the deformation conjugate
-\eqref{eq:intrinsic-stress-free-energy}, while the intrinsic pressure is
-closed by a two-input split: a drained skeleton potential supplies the
-deformation response and a mineral pressure law supplies the intrinsic
-pressure.  A unified free energy of the additively separable form
-\(\psi_s(\mbf F,\bar\rho_s)=\psi_s^{\mathrm{sk}}(\mbf F)+\psi_s^{\mathrm d}(\bar\rho_s)\)
-is not used here, because its density and deformation conjugates are
-inconsistent for the pressure decomposition below; the skeleton and mineral
-responses therefore enter as separate constitutive inputs.  The elastic state
-of this closure is the inactive-mechanism limit of the aggregate split
-\eqref{eq:aggregate-plastic-split}, in which \(\bar{\mbf F}^p=\mbf I\) and
-\(a^p=1\), so the plastic factor is the identity, \(\mbf F^p=\mbf I\), and
-the elastic factor is the total deformation, \(\mbf F^e=\mbf F\).  The
-drained skeleton potential is therefore a function of \(\mbf F\).  The
-zero-pressure skeleton potential is the decoupled compressible neo-Hookean
-form
+Let \(K\) and \(K_s\) be the reference drained skeleton and mineral bulk
+moduli, with \(0<K<\phi_{s0}K_s\).  We prescribe the same logarithmic
+volumetric form for the drained skeleton and the mineral.  At fixed plastic
+state, their mean stresses satisfy
+\begin{align}
+ \left.\frac13\tr\bs\tau^{\prime\prime}\right|_{p=0}
+ &=K\ln J^e,
+ \label{eq:drained-volumetric-energy-derivative}\\
+ \bar p_g=-\frac13\tr\bar{\bs\sigma}_s
+ &=-\frac{K_s\ln\bar J}{\bar J}.
+ \label{eq:matched-logarithmic-mineral-stress}
+\end{align}
+Here \(\bs\tau^{\prime\prime}=J\bs\sigma^{\prime\prime}\) is the
+Kirchhoff stress formed with the total mixture Jacobian.  In the elastic
+specialization, \(J^e=J\), and the mean skeleton Cauchy stress is
+\(K\ln J/J\), matching the mineral's logarithmic Cauchy-stress form.
+The mechanical grain pressure \(\bar p_g\) is distinct from the
+thermodynamic pressure \(\bar p_s=p\).
+The mineral tangent modulus is \(K_s(1-\ln\bar J)/\bar J\), so \(K_s\)
+is its reference value.
+
+The solid stress trace relates the two volume changes.  Volume weighting
+of the intrinsic phase stresses gives
 \begin{equation}
- W_0(\mbf F)
- =\frac{G}{2}\left(J^{-2/3}I_1-3\right)
- +\frac{K}{2}(\ln J)^2,
- \qquad I_1=\mbf F:\mbf F,
- \label{eq:verification-skeleton-potential}
+ \frac13\tr\bs\tau^{\prime}
+ =\phi_{s0}\left(p\bar J+K_s\ln\bar J\right).
+ \label{eq:constitutive-single-prime-mineral-trace}
 \end{equation}
-where \(K\) and \(G\) are the drained skeleton bulk and shear moduli,
-respectively.  The zero-pressure skeleton Cauchy stress
-\(\bs\sigma_0=\frac{1}{J}\pder{W_0}{\mbf F}\mbf F^T\) has volumetric part
-\(\bs\sigma_0^{\mathrm{vol}}=K\ln J\,\mbf I/J\), whose mean normal stress is
-\(\frac{1}{3}\operatorname{tr}\bs\sigma_0=K\ln J/J\).  The intrinsic pressure
-of the elastic mineral is the sum of its compression law and the volumetric
-contact of the skeleton.  The mineral compression law is logarithmic in the
-mineral volume ratio, \(-K_s\ln\bar J\), with \(K_s\) the mineral bulk
-modulus, and the volumetric contact is the mean normal skeleton stress per unit
-reference solid volume,
-\(\frac{1}{\phi_{s0}}\frac{1}{3}\operatorname{tr}\bs\sigma_0
-=\frac{K\ln J}{\phi_{s0}J}\).  The intrinsic pressure is therefore
+On the drained path this fixes
+\(\bar J=(J^e)^{K/(\phi_{s0}K_s)}\).  Equality of the mixed derivatives
+of the pressure Legendre potential extends that path to finite pressure;
+Appendix~\ref{sec:stress-trace-biot-construction} gives the integration.
+Holding the current plastic state fixed gives the scalar mineral equation
 \begin{equation}
- \bar p_s
- =-K_s\ln\bar J+\frac{1}{\phi_{s0}}\frac{1}{3}\operatorname{tr}\bs\sigma_0
- =-K_s\ln\bar J+\frac{K\ln J}{\phi_{s0}J}.
- \label{eq:elastic-mineral-pressure}
-\end{equation}
-Local equilibrium
-\eqref{eq:local-pressure-equilibrium} gives the elastic distension
-\begin{equation}
- \bar J(p,J)
- =\exp\left[-\frac{1}{K_s}\left(p-\frac{K\ln J}{\phi_{s0}J}\right)\right],
- \qquad
- \bar J_0(J)=\bar J(0,J),
+ \boxed{
+ K_s\ln\bar J
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p\bar J
+ -\frac{K}{\phi_{s0}}\ln J^e=0.}
  \label{eq:verification-mineral-factors}
 \end{equation}
-so \(J<1\) decreases \(\bar J\) and increases the intrinsic solid density,
+Once its positive root is found, mass conservation gives
+\(\bar\rho_s=\bar\rho_{s0}/\bar J\) and
+\(\phi_s=\phi_{s0}\bar J/J\).  Written as local pressure equilibrium,
+the same equation is
 \begin{equation}
- \frac{\bar\rho_s}{\bar\rho_{s0}}=\frac{1}{\bar J(p,J)}.
- \label{eq:elastic-mineral-density}
+ \bar p_s(\bar\rho_s,J^e)
+ =\frac{(K/\phi_{s0})\ln J^e-K_s\ln\bar J}
+ {\left(1-K/(\phi_{s0}K_s)\right)\bar J}=p.
+ \label{eq:elastic-mineral-pressure}
 \end{equation}
-Substitution into \eqref{eq:finite-deformation-biot-coefficient} gives the
-closed form
+For \(p\geq0\), the scalar residual is strictly increasing from negative
+to positive infinity, and its positive root is unique.  At negative pressure,
+we continue the drained branch with
+\(K_s+(1-K/(\phi_{s0}K_s))p\bar J>0\).
+We also require \(0<\bar J<\exp(1)\) and \(0<\phi_s<1\).
+
+\subsection{Closed-form coefficient from implicit differentiation}
+
+The derivative defining \(B\) fixes pore pressure, referential solid mass,
+and the current plastic configuration.  Because \(J^e=J/a^p\),
+\(\partial\ln J^e/\partial J=1/J\) under this constraint.
+Differentiating \eqref{eq:verification-mineral-factors} therefore gives
+\begin{align}
+ \left[\frac{K_s}{\bar J}
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p\right]
+ \left.\pder{\bar J}{J}\right|_{p,J\rho_s,\mbf F^p}
+ &=\frac{K}{\phi_{s0}J},
+ \label{eq:solid-pressure-implicit-tangent}\\
+ \left.\pder{\bar J}{J}\right|_{p,J\rho_s,\mbf F^p}
+ &=\frac{K\bar J}
+ {\phi_{s0}J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]}.
+ \label{eq:solid-density-eos-tangent}
+\end{align}
+Substitution into the definition of \(B\) yields
 \begin{equation}
- B
- =1-\frac{K\,\bar J(p,J)(1-\ln J)}{K_sJ^2},
+ \boxed{B=1-\frac{K\bar J}
+ {J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]}.}
+ \label{eq:poroplastic-biot-correction}
+\end{equation}
+This is a closed-form expression in the current states \(J\), \(p\), and
+\(\bar J\): evaluating the coefficient requires no state derivatives or
+additional tangent solve.  The mineral state itself remains the solution of
+\eqref{eq:verification-mineral-factors}.  Plastic history enters through
+\(J^e=J/a^p\) in that equation, while the coefficient's denominator
+contains total \(J\), because its defining derivative is with respect to
+total volume.
+
+For a virgin elastic state, the same expression is evaluated with
+\(\bar J(p,J)\):
+\begin{equation}
+ B_{\mathrm{el}}(p,J)
+ =1-\frac{K\bar J(p,J)}
+ {J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J(p,J)\right]}.
  \label{eq:elastic-finite-deformation-biot-coefficient}
 \end{equation}
-and hence \(B_0=1-K/K_s\) at \(J=1\) and \(p=0\).
+At \(J=\bar J=1\) and \(p=0\), both expressions recover
+\(B_0=1-K/K_s\) \citep{biotwillis1957}.  At fixed total volume and pressure,
+increased plastic distention reduces \(J^e\) and \(\bar J\) on the stable
+branch, and hence increases \(B\).  This dependence follows from the
+specified constitutive laws and provides a direct link between stored
+plastic volume change and subsequent pressure coupling.
 
-The fixed-pressure potential used by the verification is the zero-pressure
-potential evaluated along the elastic mineral path,
-\begin{equation}
- W^{\prime\prime}(\mbf F,p)
- =W_0(\mbf F)
- +\phi_{s0}
- \left\{K_s\left[\bar J_0(J)-\bar J(p,J)\right]-p\,\bar J(p,J)\right\}.
- \label{eq:verification-fixed-pressure-potential}
-\end{equation}
-This is the coupled skeleton--mineral energy restricted to the
-EOS-selected specific-volume path; it reduces to \(W_0\) at \(p=0\).
-Differentiation at fixed \(p\), with
-\(\partial J/\partial\mbf F=J\mbf F^{-T}\), gives the double-prime first
-Piola--Kirchhoff stress
-\begin{equation}
- \begin{aligned}
- \mbf P^{\prime\prime}
- ={}&GJ^{-2/3}\left(\mbf F-\frac{I_1}{3}\mbf F^{-T}\right)
- +K\ln J\,\mbf F^{-T}\\
- &-K(1-\ln J)
- \left[\bar J(p,J)-\bar J_0(J)+\frac{p}{K_s}\bar J(p,J)\right]
- \frac{\mbf F^{-T}}{J}.
- \end{aligned}
- \label{eq:verification-effective-first-piola}
-\end{equation}
-The pressure Legendre potential and its deformation-conjugate single-prime
-stress are
+\subsection{Compatible energy and stress}
+
+The stress trace construction also determines an energy consistent with
+local pressure equilibrium.  With a neo-Hookean isochoric response of shear
+modulus \(G\), a potential per unit original mixture reference volume is
 \begin{align}
- W^{\prime}(\mbf F,p)
- &=W^{\prime\prime}(\mbf F,p)+\phi_{s0}p\,\bar J(p,J),
- \label{eq:pressure-legendre-potential}\\
- \mbf P^{\prime}
- &=\mbf P^{\prime\prime}
- +\phi_{s0}p\left.\pder{\bar J}{J}\right|_pJ\mbf F^{-T},
- \label{eq:single-prime-first-piola-mineral-transform}\\
- \mbf P^{\prime}
- &=\mbf P^{\prime\prime}+(1-B)pJ\mbf F^{-T},
- \label{eq:single-prime-first-piola-biot-transform}
+ W_s(\mbf F^e,\bar J)
+ &=\frac{G}{2}\left[(J^e)^{-2/3}\tr(\mbf F^e(\mbf F^e)^T)-3\right]
+ +\frac K2(\ln J^e)^2 \notag\\
+ &\quad+\frac{\phi_{s0}K_s}{2\left(1-K/(\phi_{s0}K_s)\right)}
+ \left[\ln\bar J-\frac{K}{\phi_{s0}K_s}\ln J^e\right]^2.
+ \label{eq:coupled-skeleton-mineral-energy}
 \end{align}
-where the last equality uses
-\(1-B=\phi_{s0}\left.\pder{\bar J}{J}\right|_p\), the energetic origin of
-the Biot transform.  The Mandel calculation sets \(\mbf g=\mbf0\) and uses
-\eqref{eq:verification-effective-first-piola} for \(\mbf P^{\prime\prime}\).
+Its derivative \(-\phi_{s0}^{-1}\partial W_s/\partial\bar J\) gives
+\eqref{eq:elastic-mineral-pressure}.  Evaluating this energy on the mineral
+root and taking the pressure Legendre transform gives
+\begin{align}
+ W^{\prime\prime}(\mbf F^e,p)
+ &=\frac{G}{2}\left[(J^e)^{-2/3}\tr(\mbf F^e(\mbf F^e)^T)-3\right]
+ +\frac K2(\ln J^e)^2 \notag\\
+ &\quad+\frac{\phi_{s0}}{2K_s}
+ \left(1-\frac{K}{\phi_{s0}K_s}\right)(p\bar J)^2,
+ \label{eq:verification-fixed-pressure-potential}\\
+ W^{\prime}(\mbf F^e,p)
+ &=W^{\prime\prime}(\mbf F^e,p)+\phi_{s0}p\bar J.
+ \label{eq:constitutive-pressure-legendre-energy}
+\end{align}
+Their fixed-pressure deformation derivatives include the dependence of
+\(\bar J\) on \(J^e\).  The resulting single-prime Kirchhoff stress is
+\begin{equation}
+ \bs\tau^{\prime}
+ =G(J^e)^{-2/3}\operatorname{dev}\left(\mbf F^e(\mbf F^e)^T\right)
+ +K\left(\ln J^e+\frac{p\bar J}{K_s}\right)\mbf I.
+ \label{eq:matched-logarithmic-single-prime-stress}
+\end{equation}
+The Biot transform gives the double-prime stress,
+\begin{align}
+ \bs\tau^{\prime\prime}
+ &=G(J^e)^{-2/3}\operatorname{dev}\left(\mbf F^e(\mbf F^e)^T\right)
+ \notag\\
+ &\quad+K\left\{\ln J^e+
+ \frac{\left(1-\dfrac{K}{\phi_{s0}K_s}\right)(p\bar J)^2}
+ {K_s\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]}
+ \right\}\mbf I.
+ \label{eq:matched-logarithmic-double-prime-stress}
+\end{align}
+Dividing by total \(J\) gives the corresponding Cauchy stresses.  The
+pressure correction to the double-prime stress vanishes quadratically near
+the reference state.  The single-prime stress supplies the work conjugate
+for the plastic update below.
+
+\subsection{Work conjugacy, yield, and flow}
+\label{sec:plastic-loading-incremental-rate}
+
+Plastic flow changes \(\mbf F^e\) at fixed total deformation.  The
+single-prime Kirchhoff stress and the deviatoric stress in the intermediate
+configuration are
+\begin{align}
+ \bs\tau^{\prime}
+ &=\mbf P^{\prime}\mbf F^T,
+ \label{eq:kirchhoff-stress-definition}\\
+ \bs\tau^{\prime}&=\mbf P^{\prime\prime}\mbf F^T+(1-B)pJ\mbf I,
+ \label{eq:single-prime-kirchhoff-stress}\\
+ \mbf S&=(\mbf F^e)^T
+ \operatorname{dev}\bs\tau^{\prime}(\mbf F^e)^{-T}.
+ \label{eq:mandel-driving-stress}
+\end{align}
+For the isotropic energy, \(\mbf S\) is symmetric.  Define the
+compression-positive mean and equivalent shear stresses by
+\begin{equation}
+ p^{\prime}=-\frac{1}{3}\tr\bs\tau^{\prime},
+ \qquad q=\sqrt{\frac{3}{2}\mbf S:\mbf S}.
+ \label{eq:finite-plastic-stress-invariants}
+\end{equation}
+The prime distinguishes the plastic mean-stress argument from pore pressure
+\(p\).  We choose the Drucker--Prager surface and dilation rule
+\begin{align}
+ f&=q-Mp^{\prime}-c\leq0,
+ \label{eq:dp-yield-observable}\\
+ \dot{\mbf F}^p(\mbf F^p)^{-1}
+ &=\dot\gamma\left(\frac{3\mbf S}{2q}+\frac{\beta}{3}\mbf I\right),
+ \label{eq:dp-flow}\\
+ \dot\gamma&\geq0,
+ \qquad \dot\gamma f=0.
+ \label{eq:plastic-complementarity}
+\end{align}
+Here \(M\) is the friction slope, \(c\) is cohesion, and \(\beta\) is the
+dilation slope, with \(0\leq\beta\leq M\) and \(c\geq0\).  We consider
+the smooth cone branch \(q>0\).  Taking the trace of the flow rule gives
+\begin{equation}
+ \frac{\dot a^p}{a^p}=\beta\dot\gamma.
+ \label{eq:reconstruct-pore-allocation}
+\end{equation}
+The remaining plastic factor is isochoric.  On the yield surface, the
+plastic dissipation per unit reference volume is
+\begin{align}
+ \mc D^p&=\dot\gamma(q-\beta p^{\prime}),
+ \label{eq:plastic-power}\\
+ \mc D^p&=\dot\gamma\left[c+(M-\beta)p^{\prime}\right]\geq0.
+ \label{eq:plastic-dissipation-on-yield}
+\end{align}
+The inequality follows from \(q\geq0\), the yield condition, and the stated
+parameter restrictions.  These equations specify a dilative model without
+hardening; pore-collapse, cap, and apex mechanisms require additional
+constitutive branches.
+
+Over a load increment, introduce the symmetric plastic flow increment
+\(\mbf W\) and solve
+\begin{align}
+ \mbf F^p_{n+1}&=\exp(\mbf W)\mbf F^p_n,
+ \label{eq:plastic-exponential-update}\\
+ \mbf W&=\Delta\gamma\left(
+ \frac{3\mbf S_{n+1}}{2q_{n+1}}+\frac{\beta}{3}\mbf I\right),
+ \label{eq:implicit-plastic-flow-increment}\\
+ f_{n+1}&=0
+ \quad\text{on the active branch}.
+ \label{eq:discrete-consistency}
+\end{align}
+This exponential update evaluates the flow direction at the returned state.
+The elastic trial uses \(\mbf F^p_n\); an admissible trial leaves the history
+unchanged.  An active trial requires a coupled solve for the six independent
+components of \(\mbf W\) and \(\Delta\gamma\).  At every local iteration,
+\(\mbf F^e\), intrinsic density, \(B\), and stress are recomputed from the
+same candidate state.  The determinant identity
+\(a^p_{n+1}=a^p_n\exp(\beta\Delta\gamma)\) provides an independent check
+of this update.

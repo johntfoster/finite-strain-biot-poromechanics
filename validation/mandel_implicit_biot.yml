@@ -7,66 +7,87 @@ discretization:
   pressure: continuous Q1 Lagrange
   solid_partial_density: continuous Q2 Lagrange
   pressure_enrichment: false
-  fine_mesh: [40, 4]
+  fine_mesh:
+  - 40
+  - 4
   fine_time_step_seconds: 0.002
 metrics:
-  maximum_pressure_normalized_error: 0.028221423721293732
-  maximum_side_displacement_relative_error: 0.004589731892243235
-  maximum_top_displacement_relative_error: 0.0007412408964986999
-  maximum_horizontal_displacement_profile_normalized_error: 0.0004892730913417969
-  maximum_vertical_displacement_profile_normalized_error: 1.433020928076666e-13
-  maximum_load_relative_error: 0.001525360593499936
-  maximum_biot_reference_error: 0.000040792557689961484
-  maximum_biot_identity_l2: 4.3941728940372e-17
-  maximum_biot_centered_difference_l2: 1.050679322998e-08
-  maximum_referential_solid_mass_drift_l2: 4.8753609702705e-10
-  maximum_mineral_eos_residual_l2: 2.2383716359994e-17
-  mandel_cryer_pressure_increase: 0.021730746228057596
-  mandel_cryer_peak_time_seconds: 0.018
-  maximum_spatial_refinement_pressure_difference: 0.0027094087323559202
-  maximum_temporal_refinement_pressure_difference: 0.02149425293437488
-  maximum_finer_temporal_refinement_pressure_difference: 0.013135962768457654
-  analytical_12_vs_128_root_pressure_difference: 1.5066513062860393e-05
-  analytical_12_vs_128_root_displacement_difference_m: 5.351299403930158e-12
+  maximum_pressure_normalized_error: 0.037105783118342596
+  maximum_side_displacement_relative_error: 0.006488620273675091
+  maximum_top_displacement_relative_error: 0.0011251386372235607
+  maximum_load_relative_error: 0.0023756394890999946
+  maximum_biot_reference_error: 8.881586539999375e-06
+  maximum_biot_identity_l2: 5.0453270632174e-17
+  maximum_biot_centered_difference_l2: 1.5465381929664e-12
+  maximum_referential_solid_mass_drift_l2: 4.395190319756e-10
+  maximum_mineral_eos_residual_l2: 2.5087361421713e-17
+  mandel_cryer_pressure_increase: 0.027381295374126147
+  mandel_cryer_peak_time_seconds: 0.014
+  maximum_spatial_refinement_pressure_difference: 0.002490604417530413
+  maximum_temporal_refinement_pressure_difference: 0.027250147816057804
+  maximum_finer_temporal_refinement_pressure_difference: 0.016862133119018647
+  analytical_12_vs_128_root_pressure_difference: 4.429042450450072e-07
+  analytical_12_vs_128_root_displacement_difference_m: 2.160643166550218e-13
+  maximum_horizontal_displacement_profile_normalized_error: 0.0006794105099495397
+  maximum_vertical_displacement_profile_normalized_error: 1.144765028214187e-13
 profile_figure:
   classification: early-refined small-load profile run for the publication figure
-  mesh: [40, 4]
-  time_stepping: backward-Euler steps beginning at 0.001 s and growing to 0.016 s to 0.702 s
-  profile_times_seconds: [0.02, 0.046, 0.094, 0.206, 0.398]
+  mesh:
+  - 40
+  - 4
+  time_stepping: backward-Euler steps beginning at 0.001 s and growing to 0.016 s
+    to 0.702 s
+  profile_times_seconds:
+  - 0.02
+  - 0.046
+  - 0.094
+  - 0.206
+  - 0.398
   pressure_profile_line_y_m: 0.05
-  maximum_plotted_pressure_profile_normalized_error: 0.009310284966486882
+  maximum_plotted_pressure_profile_normalized_error: 0.00980093176682384
   mandel_cryer_overshoot_demonstrated_at_seconds: 0.02
 finite_deformation_continuation:
   classification: synthetic finite-deformation implementation demonstration
   result: validation/mandel_large_deformation.csv
   spatial_biot_field: validation/mandel_biot_contours.csv
   spatial_density_field: validation/mandel_density_contours.csv
-  spatial_field_times_seconds: [0.0, 0.046, 0.094, 0.206, 0.398, 0.702]
-  mesh: [40, 4]
+  spatial_field_times_seconds:
+  - 0.0
+  - 0.046
+  - 0.094
+  - 0.206
+  - 0.398
+  - 0.702
+  mesh:
+  - 40
+  - 4
   pressure_enrichment: false
-  platen_history: linear ramp to ten-percent compression over 0.2 seconds, followed by a hold to 0.702 seconds
+  platen_history: linear ramp to ten-percent compression over 0.2 seconds, followed
+    by a hold to 0.702 seconds
   metrics:
-    maximum_platen_compression_over_height: 0.1
-    maximum_lateral_expansion_over_width: 0.03679468984281
-    final_lateral_expansion_over_width: 0.027204092415354
-    final_biot_minimum: 0.51360255434187
-    final_biot_average: 0.51417410820727
-    final_biot_maximum: 0.51450277385234
-    maximum_intrinsic_solid_density_ratio: 1.05509217159
-    final_intrinsic_solid_density_ratio_range: [1.03863500727, 1.03919021716]
-    final_average_biot_relative_departure_from_reference: 0.143043152987883
-    maximum_biot_identity_l2: 3.2763279895298e-17
-    maximum_referential_solid_mass_drift_l2: 2.7675134128686e-05
-    maximum_mineral_eos_residual_l2: 2.1153822656986e-17
-    final_vertical_nominal_stress_pa: -215268940.13558
+    maximum_platen_compression_over_height: 0.09999999999999999
+    maximum_lateral_expansion_over_width: 0.040393510476404
+    final_lateral_expansion_over_width: 0.02701778152189
+    final_biot_minimum: 0.58209924671994
+    final_biot_average: 0.58219459009679
+    final_biot_maximum: 0.58224939716739
+    maximum_intrinsic_solid_density_ratio: 1.0423357803498645
+    final_intrinsic_solid_density_ratio_range:
+    - 1.035646668462602
+    - 1.0357094381429115
+    final_average_biot_relative_departure_from_reference: 0.02967568317201667
+    maximum_biot_identity_l2: 4.7701433804565e-17
+    maximum_referential_solid_mass_drift_l2: 2.7851894967969e-05
+    maximum_mineral_eos_residual_l2: 2.4323174568337e-17
+    final_vertical_nominal_stress_pa: -214958859.88189
   sensitivity:
     spatial_20x2_vs_40x4_at_dt_0p002:
-      maximum_pressure_difference_over_peak: 1.9648219055412472e-04
-      maximum_average_biot_difference: 5.891596639995278e-06
+      maximum_pressure_difference_over_peak: 0.00016367710768814837
+      maximum_average_biot_difference: 3.992804380015258e-06
     temporal_dt_0p004_vs_0p002_on_40x4:
-      maximum_pressure_difference_over_peak: 3.248881900322377e-03
-      maximum_average_biot_difference: 5.6934768440042305e-05
-      coarse_maximum_referential_solid_mass_drift_l2: 5.5393678735054e-05
+      maximum_pressure_difference_over_peak: 0.003283046274353241
+      maximum_average_biot_difference: 3.563407927997808e-05
+      coarse_maximum_referential_solid_mass_drift_l2: 5.5726726702768e-05
 reproduction:
   build: make build
   tests: make test

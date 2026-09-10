@@ -43,7 +43,7 @@ G = 0.75e9
 KS = 2.5e9
 KF = 8.0e9
 POROSITY = 0.1
-B0 = 0.6
+B0 = 1.0 - K / KS
 MOBILITY = 1.5e-9
 WIDTH = 1.0
 HEIGHT = 0.1
@@ -55,6 +55,11 @@ def save_figure(figure, output: Path) -> None:
     pgf_output = output.with_suffix(".pgf")
     if pgf_output != output:
         figure.savefig(pgf_output)
+    if output.parent.resolve() == ROOT / "figures":
+        figure.savefig(output.with_suffix(".png"), dpi=180)
+        site_output = ROOT / "docs/assets/img" / output.with_suffix(".png").name
+        site_output.parent.mkdir(parents=True, exist_ok=True)
+        figure.savefig(site_output, dpi=180)
 
 
 def read_rows(path: Path) -> list[dict[str, float]]:
@@ -79,7 +84,7 @@ def read_profile_rows(path: Path) -> list[dict[str, float | str]]:
 
 
 def mandel_parameters() -> tuple[float, float, float, float]:
-    storage_modulus = 1.0 / ((1.0 - POROSITY) / KS + POROSITY / KF)
+    storage_modulus = 1.0 / ((1.0 - POROSITY) / KS - K / KS**2 + POROSITY / KF)
     undrained_bulk_modulus = K + B0**2 * storage_modulus
     poisson = (3.0 * K - 2.0 * G) / (2.0 * (3.0 * K + G))
     undrained_poisson = (3.0 * undrained_bulk_modulus - 2.0 * G) / (
@@ -397,7 +402,7 @@ def plot_normalized_biot_contours(rows: list[dict[str, float]], output: Path) ->
         "biot_coefficient",
         r"normalized Biot coefficient, $B/B_0$",
         output,
-        limits=(0.85, 1.0),
+        limits=(0.965, 1.01),
         scale=1.0 / B0,
     )
 

@@ -1,90 +1,81 @@
+% !TeX root = ../main.tex
 \section{Introduction}
 \label{sec:introduction}
 
-Deformation of a saturated porous solid redistributes pore fluid and changes
-the stress carried by the skeleton.  When the mineral is compressible, the
-Biot coefficient determines how pore pressure enters that stress.  At finite
-deformation, the coefficient evolves with the constitutive state, and plastic
-changes in pore volume carry the loading history into its value.  This
-evolution also affects the stress that drives further plastic flow.  We
-develop an implicit construction that couples the finite-deformation Biot
-coefficient to the local poroplastic update and retains its constitutive
-dependence in a monolithic finite-element formulation.
+Plastic deformation changes the pore volume of a saturated solid and the
+elastic response of its skeleton.  When the mineral is compressible, it also
+changes how pore pressure contributes to stress.  The Biot coefficient must
+then follow the constitutive state through loading and unloading.  Its value
+enters the stress that drives further plastic flow, so the coefficient and
+plastic state must be evaluated together.  We derive a closed-form
+finite-deformation coefficient for matched logarithmic skeleton and mineral
+laws, incorporate it into an implicit poroplastic update, and verify the
+constitutive and finite-element derivatives.
 
-The physical role of the coefficient follows from the distinction between
-the drained skeleton stress and the plastic driving stress.  Foster and Xu
-identify the Biot effective stress \(\bs\sigma^{\prime\prime}\) and the
-Terzaghi effective stress \(\bs\sigma^{\prime}\) as the fixed-pressure and
-fixed-density effective stresses of a finite-deformation solid--water mixture
-\citep{fosterxu2025}.  They are related by
-\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\), where
-\(B\) is the Biot coefficient, \(p\) is the pore pressure, and \(\mbf I\)
-is the identity tensor.  The drained response supplies the Biot effective
-stress, while the dissipation of inelastic deformation identifies the
-Terzaghi effective stress as the plastic driving stress
-\citep{drumheller2000}.  For a compressible mineral at nonzero pore pressure,
-the term \((1-B)p\mbf I\) therefore enters the evaluation of yield and flow.
-The incompressible-mineral limit recovers \(B=1\), in which the two stresses
-coincide.
+The distinction between mineral volume and mixture volume is central to the
+construction.  Drumheller separates the true deformation of a constituent
+from the distention that describes its occupation of mixture volume
+\citep{drumheller2000}.  In Foster and Xu, we expressed the finite-deformation
+Biot coefficient through the change of intrinsic solid volume with skeleton
+volume at fixed pore pressure \citep{fosterxu2025}.  That pressure transformation
+relates the double-prime, fixed-pressure effective stress to the single-prime,
+fixed-density effective stress.  For the constitutive model considered here,
+the latter supplies the work conjugate for plastic deformation.  Consequently,
+evolution of the Biot coefficient affects both the total mixture stress and
+the evaluation of yield and flow.
 
-The finite-deformation coefficient measures the change of mineral distension
-with skeleton Jacobian at fixed pore pressure \citep{fosterxu2025}.  Its
-small-strain limit recovers the familiar relation between the drained
-skeleton and mineral bulk moduli \citep{biotwillis1957}.  Here, we evaluate
-the finite-deformation derivative by implicit differentiation of the complete
-local constitutive residual system at fixed intrinsic phase pressure,
-referential solid mass, and previous constitutive history.  The inelastic
-construction combines isochoric true-plastic flow of the solid material with
-a scalar plastic pore allocation that changes the solid volume fraction.
-Their flow, consistency, and hardening equations enter the local system, and
-the converged return mapping selects the active set for differentiation.
-The coefficient and plastic state are coupled: the coefficient determines the
-pore-pressure contribution to the driving stress, and the plastic state
-determines the constitutive response from which the coefficient is obtained.
-The resulting coefficient carries the effect of plastic pore allocation into
-subsequent loading and unloading.  Measurements of a stress-dependent Biot
-coefficient during drained sandstone compaction provide a related
-experimental context \citep{ingraham2017evolution}.
+The reference coefficient recovers the familiar relation between skeleton and
+mineral bulk moduli \citep{biotwillis1957}.  At a plastically deformed state,
+its value depends on the current elastic response and stored distention.
+Measurements during sandstone compaction provide experimental motivation for
+such state dependence \citep{ingraham2017evolution}.  Those measurements
+identify an elastic unloading coefficient; the effective-stress coefficient
+appropriate to failure is a separate constitutive question.  We therefore
+specify the plastic energy and flow assumptions explicitly and examine their
+consequences without fitting the model to a particular rock.
 
-The numerical formulation connects this local constitutive response to the
-phase balances.  Spatial solid mass conservation evolves the bulk solid
-partial density, and the local constitutive update supplies the solid
-intrinsic density.  Their ratio gives the solid volume fraction.  The water
-balance uses this evolving pore volume together with a barotropic
-pressure--density equation of state.  Thus the same constitutive state enters
-both the stress and fluid accumulation.  A consistent global Newton
-linearization must retain these dependencies together with the derivatives
-of the implicit Biot tangent.
+The first contribution is a closed-form coefficient in the current volume,
+pore pressure, and mineral state.  We initially set out to compute the
+coefficient by implicit automatic differentiation of the local constitutive
+constraints.  Analytical elimination of that tangent for matched logarithmic
+stress laws revealed that the state derivatives could be removed entirely.
+The resulting expression retains the finite-deformation dependence and
+recovers the reference relation between bulk moduli.  Only the scalar mineral
+state equation remains to be solved.
 
-Automatic differentiation provides the connection between the local update
-and the finite-element residual.  Residual evaluators templated on scalar
-type supply coupled finite-strain poromechanics Jacobians
-\citep{sunostien2013}, and the Multiphysics Object Oriented Simulation
-Environment (MOOSE) provides this residual-based approach through automatic
-differentiation \citep{gastonetal2009moose,lindsayetal2021ad}.  Consistent
-algorithmic tangents connect local material updates to the global Newton
-method \citep{simotaylor1985,miehe1996}, while large-deformation porous-material
-formulations couple skeleton deformation, fluid transport, and constitutive
-state evolution \citep{hongetal2008,macminnetal2016,dehghanizilian2021}.
-We use an automatic-differentiation-valued local linear solve to obtain the
-fixed-pressure constitutive tangent and preserve its outer dependence in
-the global Jacobian.  The central computational contribution is this
-propagation of the implicitly defined Biot coefficient through the coupled
-stress and phase-balance residuals.
+The second contribution is a differentiable poroplastic implementation of
+this coefficient.  Solid mass and the mineral EOS determine intrinsic density
+and volume fraction at each candidate plastic state.  The return mapping
+updates plastic distention and uses the closed-form coefficient in the
+single-prime driving stress.  The global Newton derivative retains all of
+these current-state dependencies.  The constitutive derivative defining the
+coefficient holds the current plastic state fixed; the algorithmic derivative
+advancing that state includes its evolution.  An independent implicit tangent
+solve and centered differences verify the analytical elimination.
 
-We first state the finite-deformation solid--water equations and develop the
-inelastic constitutive construction.  We then describe the local implicit
-update and its finite-element implementation in
-Sec.~\ref{sec:implicit-ad-implementation}.  The elastic specialization
-provides analytical and centered-difference checks of the local tangent,
-and a PETSc finite-difference comparison checks the assembled Jacobian.
-The Mandel problem tests spatial water-pressure and displacement profiles
-against the analytical plane-strain solution of Cheng and Detournay
-\citep{chengdetournay1988}.  A separate finite-deformation continuation
-shows how compression changes the coefficient.  Material-point calculations
-then demonstrate the effect of plastic pore allocation on the coefficient,
-its persistence on unloading, and its feedback into plastic flow at nonzero
-pore pressure.  The boundary-value calculations verify the elastic limit;
-the activated inelastic response is verified at the material level.
-Verification of a coupled boundary-value problem with active plastic flow
-and physical validation against a particular material remain subsequent steps.
+This construction connects established developments in constitutive
+linearization and coupled porous-material simulation.  Consistent tangents
+differentiate the discrete material update used by the nonlinear solver
+\citep{simotaylor1985,miehe1996}.  Automatic differentiation (AD) supplies coupled
+finite-strain poromechanics Jacobians from residual evaluations
+\citep{sunostien2013}, and MOOSE supports AD-valued local calculations within
+its finite-element assembly \citep{lindsayetal2021ad}.  Large-deformation
+models of gels and porous solids describe the accompanying coupling between
+material deformation and fluid transport \citep{hongetal2008,macminnetal2016},
+while multiscale formulations evolve effective poroelastic properties with
+microstructure \citep{dehghanizilian2021}.  Here the coefficient is calculated
+directly from the constrained mineral state and carried through the local
+plastic solve and outer AD calculation.
+
+We first establish the kinematics and pressure transformation, then specify a
+multiplicative poroplastic model with isochoric true-plastic flow and scalar
+plastic distention.  An implicit exponential return mapping supplies the
+updated state.  Material-point calculations examine history dependence,
+unloading, and feedback at nonzero pressure, with independent checks of mass,
+energy-derived stress, flow, yield, and derivatives.  The elastic specialization
+is then embedded in solid and water mass conservation and momentum balance.
+Spatial pressure and displacement comparisons with the Mandel solution test
+the coupled finite-element formulation \citep{chengdetournay1988}, and a
+finite-deformation continuation resolves the evolving coefficient field.
+This separates the verified active constitutive response from the coupled
+elastic benchmark and from subsequent physical validation.

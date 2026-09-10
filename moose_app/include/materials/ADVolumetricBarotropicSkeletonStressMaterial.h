@@ -8,11 +8,11 @@
  *
  * The zero-pressure skeleton potential is
  *   W_0 = mu/2 (J^(-2/3) I_1 - 3) + K_sk/2 (ln J)^2.
- * The mineral-density closure uses
- *   q_s(J) = -K_sk ln(J)/(phi_s0 J),
- * so its small-strain Biot limit is B_0=1-K_sk/K_s.  The pressure-dependent
- * contribution is the fixed-equivalent-pressure derivative of the same
- * double-prime potential used by the constrained Biot transform.
+ * The matched mineral law gives the implicit volume z=barJ through
+ * Ks ln(z)+(1-K/(phi_s0 Ks)) p z-K/phi_s0 ln(J)=0.
+ * The pressure-dependent potential is phi_s0(1-K/(phi_s0 Ks))(pz)^2/(2Ks).
+ * Its fixed-pressure derivative supplies the double-prime stress, retaining
+ * the AD dependence of the implicit mineral volume.
  */
 class ADVolumetricBarotropicSkeletonStressMaterial : public Material
 {

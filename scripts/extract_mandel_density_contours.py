@@ -8,12 +8,18 @@ import csv
 import math
 from pathlib import Path
 
-from netCDF4 import Dataset
+try:
+    from netCDF4 import Dataset
+except ImportError:
+    # MOOSE writes classic NetCDF Exodus files, also supported by SciPy.
+    from functools import partial
+    from scipy.io import netcdf_file
+
+    Dataset = partial(netcdf_file, mmap=False)
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TIMES = (0.0, 0.046, 0.094, 0.206, 0.398, 0.702)
-REFERENCE_SOLID_VOLUME_FRACTION = 0.9
 SKELETON_TO_MINERAL_BULK_MODULUS_RATIO = 0.4
 
 
@@ -41,20 +47,20 @@ def extract_rows(
             for index, name in enumerate(names, start=1)
             if name.startswith("solid_intrinsic_density_ratio")
         ]
-        volume_fraction_matches = [
+        biot_matches = [
             index
             for index, name in enumerate(names, start=1)
-            if name == "solid_volume_fraction_state"
+            if name == "biot_coefficient_state"
         ]
-        if len(density_matches) != 1 or len(volume_fraction_matches) != 1:
+        if len(density_matches) != 1 or len(biot_matches) != 1:
             raise ValueError(
-                "expected one elemental intrinsic-density and volume-fraction variable; "
-                f"found density={density_matches}, volume_fraction={volume_fraction_matches} "
+                "expected one elemental intrinsic-density and Biot coefficient variable; "
+                f"found density={density_matches}, biot={biot_matches} "
                 f"in {names}"
             )
         density_values = dataset.variables[f"vals_elem_var{density_matches[0]}eb1"]
-        volume_fraction_values = dataset.variables[
-            f"vals_elem_var{volume_fraction_matches[0]}eb1"
+        biot_values = dataset.variables[
+            f"vals_elem_var{biot_matches[0]}eb1"
         ]
         times = dataset.variables["time_whole"][:]
         x_coordinates = dataset.variables["coordx"][:]
@@ -89,24 +95,14 @@ def extract_rows(
                             "time": 0.0,
                             "X": x_coordinate,
                             "Y": y_coordinate,
-                            "biot_coefficient": 0.6,
+                            "biot_coefficient": 1.0 - SKELETON_TO_MINERAL_BULK_MODULUS_RATIO,
                         }
                     )
                 continue
             time_index = find_time_index(times, selected_time)
             for element_index, x_coordinate, y_coordinate in centers:
                 density_ratio = float(density_values[time_index, element_index])
-                solid_volume_fraction = float(
-                    volume_fraction_values[time_index, element_index]
-                )
-                jacobian = REFERENCE_SOLID_VOLUME_FRACTION / (
-                    solid_volume_fraction * density_ratio
-                )
-                biot_coefficient = 1.0 - (
-                    SKELETON_TO_MINERAL_BULK_MODULUS_RATIO
-                    * (1.0 - math.log(jacobian))
-                    / (density_ratio * jacobian**2)
-                )
+                biot_coefficient = float(biot_values[time_index, element_index])
                 density_rows.append(
                     {
                         "time": selected_time,
@@ -149,11 +145,11 @@ def main() -> int:
     rows, biot_rows = extract_rows(args.exodus, selected_times)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=tuple(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=tuple(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     with args.biot_output.open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=tuple(biot_rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=tuple(biot_rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(biot_rows)
 

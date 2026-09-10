@@ -13,17 +13,20 @@
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,allcolors=blue]{hyperref}
 \usepackage[nameinlink,noabbrev]{cleveref}
-\input{paper/defs.tex}
+% Permit builds from the repository root and from paper/ (LaTeX Workshop).
+\newcommand{\paperinput}[1]{\IfFileExists{paper/#1}{\input{paper/#1}}{\input{#1}}}
+\newcommand{\figureinput}[1]{\IfFileExists{figures/#1}{\input{figures/#1}}{\input{../figures/#1}}}
+\paperinput{defs.tex}
 \graphicspath{{figures/}{../figures/}}
 
-\title{Implicit Biot coefficient and poroplastic flow in finite-deformation poromechanics}
+\title{A closed-form Biot coefficient for finite-deformation poroplasticity}
 \author[1,2,3]{John T. Foster\thanks{Electronic address: \href{mailto:john.foster@utexas.edu}{john.foster@utexas.edu}}}
 \affil[1]{The Hildebrand Department of Petroleum \& Geosystems Engineering, The University of Texas at Austin, Austin, TX 78712, USA}
 \affil[2]{Department of Aerospace Engineering \& Engineering Mechanics, The University of Texas at Austin, Austin, TX 78712, USA}
 \affil[3]{The Oden Institute for Computational Engineering \& Science, The University of Texas at Austin, Austin, TX 78712, USA}
 \date{}
 \hypersetup{
-  pdftitle={Implicit Biot coefficient and poroplastic flow in finite-deformation poromechanics},
+  pdftitle={A closed-form Biot coefficient for finite-deformation poroplasticity},
   pdfauthor={John T. Foster}
 }
 
@@ -31,45 +34,47 @@
 \maketitle
 
 \begin{abstract}
-Pore pressure couples deformation and plastic flow in a saturated porous solid
-through the Biot coefficient.  For a compressible mineral, this coefficient
-connects the drained skeleton stress to the stress that drives inelastic
-deformation.  Its evolution therefore changes both the mechanical response
-and the subsequent plastic flow.  We develop an implicit constitutive
-construction of the finite-deformation Biot coefficient and its coupling to
-poroplasticity.  The coefficient follows from the mineral-volume response to
-skeleton deformation at fixed intrinsic phase pressure and referential solid
-mass.  Implicit differentiation of the complete local constitutive residual
-system evaluates this response on the active set selected by the converged
-return mapping.  A multiplicative split separates isochoric true-plastic flow
-from plastic pore allocation, which changes the solid volume fraction and
-carries the deformation history into the coefficient.
+Plastic deformation changes the pore volume of a saturated solid and the
+constitutive response through which pore pressure enters stress.  We develop
+a closed-form finite-deformation Biot coefficient for matched logarithmic
+skeleton and mineral laws.  Implicit differentiation of solid mass and the
+mineral equation of state at fixed pressure and current plastic configuration
+eliminates the state derivatives, leaving an explicit expression in current
+volume, pressure, and intrinsic solid density.  The mineral state requires
+only a scalar constitutive solve.
+A multiplicative split separates isochoric true-plastic flow from plastic
+distention.  An implicit exponential return mapping updates these mechanisms
+and recomputes the mineral state, coefficient, and driving stress together.
+Automatic differentiation retains their active dependence in the outer
+Newton Jacobian.
 
-The finite-element formulation couples this local update to spatial solid and
-water mass conservation and momentum balance.  Automatic differentiation
-retains the dependence of the constitutive state and implicit Biot tangent in
-the global Newton Jacobian.  Analytical and finite-difference checks verify
-the elastic constitutive tangent and its global propagation, while the Mandel
-problem tests pressure and displacement against the analytical solution.
-A finite-deformation continuation demonstrates the evolution of the
-coefficient under compression.  Material-point calculations show how plastic
-pore allocation changes the coefficient and how that change feeds back into
-plastic flow at nonzero pore pressure.  These results establish the
-constitutive coupling and verify its elastic finite-element limit and
-material-level inelastic response.  Coupled finite-element verification with
-active plastic flow and physical validation remain subsequent steps.
+Independent checks verify mass conservation, the mineral EOS, energy-derived
+stress, plastic flow, yield consistency, and both constitutive and algorithmic
+derivatives.  Material-point calculations demonstrate a history-dependent
+coefficient on unloading and feedback into plastic flow at nonzero pore
+pressure.  The elastic specialization is coupled to solid and water mass
+conservation and momentum balance and tested against the Mandel solution.
+A finite-deformation continuation resolves the evolving coefficient field.
+The results establish a consistent computational connection between mineral
+compressibility, plastic distention, and pressure coupling, with physical
+validation and active coupled-flow verification remaining subsequent steps.
 \end{abstract}
 
 \noindent\textbf{Keywords:} finite-deformation poromechanics; Biot coefficient;
 poroplasticity; plastic driving stress; automatic differentiation; spatial
 mass balance; Mandel problem
 
-\input{paper/sections/introduction.tex}
-\input{paper/sections/finite_deformation_biot.tex}
-\input{paper/sections/implicit_ad_implementation.tex}
-\input{paper/sections/mandel_verification.tex}
-\input{paper/sections/conclusions.tex}
+\paperinput{sections/introduction.tex}
+\paperinput{sections/finite_deformation_biot.tex}
+\paperinput{sections/implicit_ad_implementation.tex}
+\paperinput{sections/poroplastic_results.tex}
+\paperinput{sections/mandel_verification.tex}
+\paperinput{sections/conclusions.tex}
+
+\appendix
+\paperinput{sections/mandel_analytical_appendix.tex}
+\paperinput{sections/stress_trace_biot_appendix.tex}
 
 \bibliographystyle{plainnat}
-\bibliography{all}
+\IfFileExists{all.bib}{\bibliography{all}}{\bibliography{../all}}
 \end{document}

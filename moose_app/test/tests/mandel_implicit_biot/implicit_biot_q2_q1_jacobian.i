@@ -1,3 +1,4 @@
+# Matched-log reference state: K/(phi_s0 K_s)=0.5, B0=0.75.
 [Mesh]
   type = GeneratedMesh
   dim = 1
@@ -74,15 +75,16 @@
     shear_modulus = 0.3
     skeleton_bulk_modulus = 0.5
     mineral_bulk_modulus = 2
-    reference_solid_volume_fraction = 0.25
+    reference_solid_volume_fraction = 0.5
   []
   [local_solid_state]
     type = ADLocalElasticMineralBiotMaterial
+    skeleton_bulk_modulus = 0.5
     pressure = p
     solid_spatial_mass_ratio = solid_spatial_mass_ratio
     mineral_bulk_modulus = 2
-    reference_solid_volume_fraction = 0.25
-    biot_coefficient_name = elastic_biot_closed_form
+    reference_solid_volume_fraction = 0.5
+    biot_coefficient_name = solid_biot_coefficient
     intrinsic_specific_volume_jacobian_tangent_name = elastic_specific_volume_jacobian_tangent
   []
   [solid_reference_accumulation_for_biot]
@@ -90,7 +92,7 @@
     material_property_names = solid_component_reference_accumulation
     property_name = solid_reference_accumulation_for_biot
     constant_names = phi0
-    constant_expressions = 0.25
+    constant_expressions = 0.5
     expression = 'phi0*solid_component_reference_accumulation'
   []
   [implicit_state_selectors]
@@ -100,6 +102,7 @@
   []
   [constrained_biot_state]
     type = ADConstrainedSkeletonBiotMaterial
+    biot_coefficient_name = solid_biot_implicit_diagnostic
     constraint_residual_names = 'solid_local_material_mass_constraint solid_mineral_eos_constraint'
     implicit_state_symbols = 'solid_intrinsic_density_ratio solid_volume_fraction'
     constraint_residual_scales = '1 1'
@@ -108,7 +111,7 @@
     constraint_jacobian_derivative_names = 'solid_local_material_mass_d_jacobian solid_mineral_eos_d_jacobian'
     constraint_state_derivative_names = 'solid_local_material_mass_d_intrinsic_density_ratio solid_local_material_mass_d_volume_fraction solid_mineral_eos_d_intrinsic_density_ratio solid_mineral_eos_d_volume_fraction'
     volume_fraction_state_derivative_names = 'implicit_state_zero implicit_state_one'
-    reference_specific_volume = 4
+    reference_specific_volume = 2
     intrinsic_specific_volume_name = solid_intrinsic_specific_volume_from_constraints
     intrinsic_skeleton_density_name = solid_intrinsic_density_from_constraints
     constraint_norm_name = solid_biot_constraint_norm

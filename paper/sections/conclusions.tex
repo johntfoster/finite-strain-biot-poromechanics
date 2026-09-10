@@ -1,81 +1,38 @@
+% !TeX root = ../main.tex
 \section{Conclusions}
 \label{sec:conclusions}
 
-The formulation solves the solid partial-density balance in spatial form and
-pulls it back to the solid reference configuration for finite-element
-assembly.  The local constitutive update supplies intrinsic solid density and
-the solid volume fraction follows algebraically from the partial and intrinsic
-densities.  The water
-balance is likewise posed spatially;
-water pressure determines intrinsic water density through its barotropic EOS.
-The finite-deformation coefficient follows from the fixed-pressure derivative
-of the local mineral distension.  That derivative is obtained by
-implicit differentiation of the complete local constitutive residual system at
-fixed intrinsic phase pressure and referential solid mass \(J\rho_s\).  The intrinsic
-pressure is the common solid/fluid pressure, the negative mean intrinsic solid
-stress \(\bar p_s=-\frac{1}{3}\operatorname{tr}\bar{\bs\sigma}_s\), while the
-mineral distension \(\bar J\) carries its intrinsic-density response.  The Biot
-transform reconstructs
-\(\bs\sigma^{\prime}=\bs\sigma^{\prime\prime}+(1-B)p\mbf I\), while the
-momentum residual uses the total stress
-\(\bs\sigma=\bs\sigma^{\prime\prime}-Bp\mbf I\).
+We derived a closed-form finite-deformation Biot coefficient for a saturated
+solid with matched logarithmic skeleton and mineral laws and plastic
+distention.  True deformation
+measures intrinsic solid volume change, while distention determines its
+occupation of mixture volume.  Solid mass and the mineral EOS constrain the
+local state.  Implicit differentiation and analytical elimination give
+the coefficient directly in the current states, with no state derivatives in
+its evaluation.  A scalar equation still determines mineral volume.  The
+coefficient connects the two effective stresses and supplies the pressure
+contribution to momentum.
 
-The implementation uses AD scalar operations for the local constitutive
-residual derivatives, implicit tangent, and global balance residuals.
-The elastic state and its direct tangent are independent verification oracles;
-the coefficient passed to momentum comes from the fixed-pressure constitutive
-tangent.
-The coefficient agrees with
-\eqref{eq:elastic-finite-deformation-biot-coefficient}; the solid referential
-mass and local mineral law close to their reported tolerances; and the outer
-Jacobian is checked against a PETSc finite-difference comparison.  These tests
-verify the constitutive derivative and its propagation through the Newton
-system.
+The constitutive derivative defining the coefficient holds the current
+plastic state fixed.  The active return mapping evolves that state, and the
+outer AD derivative retains its effect on both stress and coefficient.  An
+implicit exponential update enforces flow and yield consistency at the same
+returned state.  Independent mass, EOS, energy-derived stress, flow,
+determinant, and derivative checks verify this construction on the smooth
+Drucker--Prager branch.
 
-The solid--water Mandel benchmark uses a prescribed platen displacement.
-Continuous Q2 displacement and Q1 water
-pressure agree with the Cheng--Detournay pressure and lateral-displacement
-profiles to the reported discretization differences and recover the applied
-platen load.  A separate ten-percent
-compression continuation decreases the spatially averaged coefficient from
-\(0.600\) to \(0.51417\).  Together, the two calculations exercise
-finite-deformation momentum, solid mass conservation, mineral compressibility,
-nonlinear water accumulation, Darcy transport, and the nonlinear Biot transform in
-one monolithic solve.  These reported results exercise the inactive-mechanism
-limit of the inelastic update of Sec.~\ref{sec:plastic-loading-incremental-rate}:
-with no active yield (\(\Delta\gamma=0\), \(a^p=1\)), the poroplastic return map
-collapses exactly onto the elastic closure above, which the agreement verifies.
-The ten-percent continuation is a synthetic demonstration rather than physical
-validation.
+The material-point results show how plastic distention carries loading history
+into the coefficient and changes its unloading response.  At nonzero pore
+pressure, that change feeds back into plastic flow through the single-prime
+stress.  The direction and magnitude of the effect follow from the chosen
+energy and flow law.  The coefficient is therefore part of the evolving
+constitutive response, with a role in subsequent deformation as well as in
+the current pressure contribution to stress.
 
-The paper's contribution is the inelastic construction itself: the aggregate
-elastic--plastic split with scalar pore allocation \(a^p\), the single-prime
-Drucker--Prager-type driving stress that requires the implicit coefficient, and
-the rate-independent backward-Euler return map embedded in the fixed-pressure
-automatic-differentiation local system of
-Sec.~\ref{sec:implicit-ad-implementation}.  The Mandel evidence exercises the
-inactive-mechanism (elastic) limit of that system and verifies its collapse onto
-the closed-form elastic closure.  At the material level the inelastic update is
-now activated and verified separately: the single-point demonstration of
-Sec.~\ref{sec:poroplastic-demonstration} returns to the yield surface with
-\(a^p>1\), and the fixed-pressure correction
-\(B=1-(1-B_{\mathrm{el}})/a^p\) reproduces the elastic coefficient exactly
-when yield is inactive and raises the coefficient by up to \(0.043\) over the
-elastic value at \(30\%\) compression.  At nonzero pore pressure that
-correction is not inert: the implicit coefficient feeds back into the plastic
-driving stress through the \((1-B)p\mbf I\) term of the Biot transform, and
-the material-level demonstration of
-Sec.~\ref{sec:poroplastic-b-feedback} shows that holding the coefficient at
-its elastic value over-predicts the plastic increment (by about \(3\%\) at
-\(400\,\mathrm{MPa}\) pore pressure and \(20\%\) compression in the
-reported range).  The material-level machinery is itself verified in
-Sec.~\ref{sec:poroplastic-verification}: the general-path oracle shows by
-automatic differentiation that the reduced coefficient
-\(B=1-(1-B_{\mathrm{el}})/a^p\) is the fixed-pressure tangent of the active
-local system, and the unload-branch check shows the coefficient measured on
-an unloading branch is the fixed-history tangent at the plastic state, which
-differs from the elastic coefficient.  The next stage is the coupled,
-momentum-active demonstration of this
-activated update at the finite-element scale, together with the convergence
-and Jacobian checks that accompany it.  Independent
-physical validation against a particular rock is a separate stage.
+The coupled finite-element calculations verify the elastic specialization
+against the Mandel pressure and displacement solution and resolve coefficient
+evolution during finite compression.  These results separate active
+constitutive verification, the coupled elastic benchmark, numerical
+sensitivity, and physical validation.  The next extension is an active
+poroplastic boundary-value problem with consistent plastic contributions to
+water storage, followed by calibration and comparison with material data.

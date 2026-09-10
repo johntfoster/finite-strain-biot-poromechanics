@@ -15,6 +15,7 @@
     {"master": "moose_app/include/materials/ADSolidReferenceKinematics.h", "biot": "moose_app/include/materials/ADSolidReferenceKinematics.h"},
     {"master": "moose_app/include/materials/ADBiotDarcyReferenceFluxMaterial.h", "biot": "moose_app/include/materials/ADBiotDarcyReferenceFluxMaterial.h"},
     {"master": "moose_app/include/materials/ADVolumetricBarotropicSkeletonStressMaterial.h", "biot": "moose_app/include/materials/ADVolumetricBarotropicSkeletonStressMaterial.h"},
+    {"master": "moose_app/include/utils/MatchedLogMineralState.h", "biot": "moose_app/include/utils/MatchedLogMineralState.h"},
     {"master": "moose_app/include/postprocessors/ADMaterialScalarL2Error.h", "biot": "moose_app/include/postprocessors/ADMaterialScalarL2Error.h"},
     {"master": "moose_app/src/kernels/ADMaterialPropertyResidual.C", "biot": "moose_app/src/kernels/ADMaterialPropertyResidual.C"},
     {"master": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C", "biot": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C"},

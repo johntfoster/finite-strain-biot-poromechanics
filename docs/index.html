@@ -51,8 +51,9 @@
         <strong>Q2 displacement</strong>, continuous <strong>Q1 water pressure</strong>, and
         <strong>Q2 solid partial density</strong>. A spatial solid mass balance evolves the
         partial density, a general local constitutive update supplies the intrinsic solid
-        density and solid volume fraction, and quadrature-point implicit differentiation of
-        the complete local residual system supplies the fixed-pressure Biot coefficient.
+        density and solid volume fraction. Matched logarithmic skeleton and mineral stress
+        laws give a scalar mineral solve and a closed-form fixed-pressure Biot coefficient.
+        A general implicit tangent and centered differences independently verify the coefficient.
       </p>
     </section>
 
@@ -63,7 +64,7 @@
         <div class="card">
           <h3><a href="mandel.html">1 · Water-filled Mandel benchmark</a></h3>
           <p>
-            The plane-strain Mandel consolidation problem solved with the implicit-AD Biot
+            The plane-strain Mandel consolidation problem solved with the closed-form Biot
             coefficient, compared against the analytical Cheng–Detournay solution, with a
             finite-deformation continuation that reports the departure of the Biot
             coefficient from its reference value.
@@ -78,17 +79,11 @@
         <div class="card">
           <h3><a href="poroplastic.html">2 · Poroplastic Biot coefficient</a></h3>
           <p>
-            Single-element demonstrations of the stateful multiplicative ideal
-            Drucker–Prager return mapping and the plastic pore-allocation correction
-            <code>B = 1 − (1 − B<sub>el</sub>)/a<sup>p</sup></code>: elastic collapse,
-            ΔB vs. compression, the implicit-coefficient feedback at pore pressure, the
-            general fixed-history tangent, and the load–unload–reload loop.
+            An implicit exponential return mapping couples plastic distention,
+            mineral compression and the Biot coefficient. Independent state and
+            derivative checks support the loading-history and pressure-feedback
+            demonstrations.
           </p>
-          <div class="links">
-            <span class="badge moose">4 MOOSE materials</span>
-            <span class="badge deck">11 input decks</span>
-            <span class="badge script">5 plot scripts</span>
-          </div>
         </div>
 
         <div class="card">

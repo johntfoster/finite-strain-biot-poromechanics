@@ -1,0 +1,106 @@
+% !TeX root = ../main.tex
+\section{Plastic history and pressure feedback}
+\label{sec:poroplastic-demonstration}
+
+The material-point calculations isolate the coupling between plastic
+distention and the Biot coefficient.  We prescribe homogeneous deformation
+and pore pressure and solve the constitutive update at each increment.
+The skeleton and mineral moduli are those listed for the coupled benchmark
+in \cref{tab:mandel-parameters}.  The reference solid fraction is
+\(\phi_{s0}=0.8\), which keeps the prescribed compression path within
+\(0<\phi_s<1\); the plastic parameters are
+\(M=0.6\), \(\beta=0.4\), and \(c=0\).  These values define a synthetic
+dilative material for verification.
+
+\subsection{Loading, unloading, and reloading}
+
+The drained path uses \(\mbf F=\operatorname{diag}(1,F_{yy},1)\).
+The axial stretch decreases from unity to \(0.8\), increases to \(0.9\),
+and then decreases to \(0.76\).  Each segment occupies one unit of the
+load-path parameter.  The constitutive model is rate independent; this
+parameter orders the imposed states.
+
+\Cref{fig:implicit-poroplastic-history} shows the resulting coefficient and
+plastic distention.  Loading activates dilation and changes the elastic
+volume \(J^e=J/a^p\).  On unloading, the plastic factor is fixed while the
+mineral and skeleton respond elastically.  The coefficient consequently
+follows a different path from the virgin material at the same total
+compression.  Reloading retraces this elastic branch until the previous yield
+state is reached; further compression produces additional plastic distention.
+
+\begin{figure}[ht]
+ \centering
+ \figureinput{implicit_poroplastic_history.pgf}
+ \caption{Drained loading, unloading, and reloading of the implicit poroplastic
+ model.  Left: the Biot coefficient plotted against axial compression; the
+ dashed curve is the virgin elastic response at the same total deformation.
+ Right: accumulated plastic distention along the prescribed path.  The stored
+ state remains fixed during elastic reversal and evolves again after reloading
+ reaches yield.}
+ \label{fig:implicit-poroplastic-history}
+\end{figure}
+
+For the matched logarithmic laws, the coefficient at the plastic state is
+above the virgin elastic value at equal total compression.  Plastic dilation
+reduces \(J^e\) and hence \(\bar J\) on the positive-tangent mineral branch.
+At fixed total \(J\) and pore pressure, the closed coefficient decreases
+with increasing \(\bar J\), so dilation increases \(B\).  This prediction
+follows from the selected constitutive law.
+
+\subsection{Feedback at nonzero pore pressure}
+\label{sec:poroplastic-b-feedback}
+
+To examine pressure feedback, we compress the material to \(F_{yy}=0.8\)
+while increasing pore pressure linearly from zero to a prescribed final
+value.  A companion calculation follows the same deformation and pressure
+history but substitutes the virgin elastic coefficient at the current total
+\(J\) in the single-prime stress reconstruction.  This substitution is a
+controlled numerical comparison; the consistent calculation obtains stress
+and coefficient from the same current plastic state.
+
+\Cref{fig:implicit-poroplastic-feedback} shows that the two plastic responses
+coincide at zero pressure and separate as pressure increases.  In this example,
+the higher coefficient of the plastic state reduces the isotropic term
+\((1-B)pJ\mbf I\) in \eqref{eq:single-prime-kirchhoff-stress}.  The resulting
+increase in compressive mean stress restrains dilative flow.  The
+coefficient therefore affects the state from which its subsequent value is
+computed.  At \(p=400\,\mathrm{MPa}\), the consistent calculation gives
+\(B=0.61560\) and \(a^p=1.04567\); the companion calculation gives
+\(a^p=1.04592\).
+
+\begin{figure}[ht]
+ \centering
+ \figureinput{implicit_poroplastic_feedback.pgf}
+ \caption{Pressure feedback during simultaneous compression and pore-pressure
+ loading.  Left: the final constrained coefficient and the virgin elastic
+ coefficient at the same total deformation and pressure.  Right: final plastic
+ distention using the consistent coefficient in the driving stress and using
+ the virgin coefficient in the companion comparison.  Each point represents
+ a complete constitutive loading path.}
+ \label{fig:implicit-poroplastic-feedback}
+\end{figure}
+\FloatBarrier
+
+\subsection{Constitutive verification}
+\label{sec:poroplastic-verification}
+
+Independent checks reconstruct the physical state from the MOOSE outputs.
+The intrinsic density and volume fraction satisfy solid mass conservation and
+the mineral EOS.  A two-state implicit tangent solve and a centered difference of intrinsic
+volume, with the current plastic factor held fixed, agree with the closed
+coefficient.  The grain EOS is also checked against the intrinsic solid
+stress trace.  Numerical
+differentiation of the pressure Legendre energy reconstructs the returned
+single-prime stress.  The logarithm of the incremental plastic factor checks
+the flow rule, while its determinant checks the accumulated distention.
+Yield admissibility, consistency on the active branch, and nonnegative
+plastic dissipation are checked separately.
+
+The same checks pass for a path with unequal principal stretches and nonzero
+pore pressure.  Increment refinement reduces the difference between successive
+returned plastic states on that path.  The active PETSc test described in
+Sec.~\ref{sec:nested-automatic-differentiation} verifies the outer derivative
+of the converged update.  These checks establish the material-level coupling
+on the smooth yield branch.  They do not constitute experimental validation
+of the selected mineral law or dilation mechanism.
+\FloatBarrier

@@ -145,6 +145,13 @@
   near page boundaries.
 - Keep all generated LaTeX output in `paper/build/`. Never commit auxiliary
   files or generated PDFs from that directory.
+- Use `paper/build/main.pdf` as the sole manuscript preview. Never create
+  renamed manuscript PDFs or source copies to work around a stale preview;
+  record revisions with Git commits and reopen the canonical preview.
+- Preserve the `% !TeX root` directives in section and macro files. Keep
+  SyncTeX enabled so command-line builds retain LaTeX Workshop navigation.
+- Put temporary page renders and review extracts in
+  `.agent-runtime/manuscript-review/`, and remove them after inspection.
 
 ## Shared MOOSE source contract
 

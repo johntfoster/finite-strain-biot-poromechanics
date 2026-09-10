@@ -40,7 +40,7 @@ SHEAR_MODULUS = 0.75e9
 MINERAL_BULK_MODULUS = 2.5e9
 WATER_BULK_MODULUS = 8.0e9
 POROSITY = 0.1
-BIOT_COEFFICIENT = 0.6
+BIOT_COEFFICIENT = 1.0 - SKELETON_BULK_MODULUS / MINERAL_BULK_MODULUS
 HYDRAULIC_MOBILITY = 1.5e-9
 HEIGHT = 0.1
 
@@ -69,6 +69,7 @@ def sha256(path: Path) -> str:
 def parameters() -> dict[str, float]:
     storage_modulus = 1.0 / (
         (1.0 - POROSITY) / MINERAL_BULK_MODULUS
+        - SKELETON_BULK_MODULUS / MINERAL_BULK_MODULUS**2
         + POROSITY / WATER_BULK_MODULUS
     )
     undrained_bulk_modulus = (

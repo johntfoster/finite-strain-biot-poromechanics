@@ -90,6 +90,8 @@ def audit_sync() -> None:
 
 def audit_curated_data() -> None:
     required = {
+        "validation/implicit_poroplastic_history.csv": {"time", "density", "solid_fraction", "b_avg", "a_p_avg"},
+        "validation/implicit_poroplastic_feedback.csv": {"pressure", "B", "a_p", "a_p_reference"},
         "validation/mandel_pressure_profiles.csv": {"time", "x"},
         "validation/mandel_displacement_profiles.csv": {"time", "component", "coordinate", "displacement"},
         "validation/mandel_large_deformation.csv": {"time"},
@@ -117,24 +119,28 @@ def audit_finite_deformation_results() -> None:
         ]
     require(rows, "empty finite-deformation continuation")
     final = rows[-1]
-    require(abs(max(row["side_displacement"] for row in rows) - 0.03679468984281) <= 1.0e-12,
+    require(abs(max(row["side_displacement"] for row in rows) - 0.040393510476404) <= 1.0e-12,
             "finite-deformation maximum lateral displacement drift")
-    require(abs(final["side_displacement"] - 0.027204092415354) <= 1.0e-12,
+    require(abs(final["side_displacement"] - 0.02701778152189) <= 1.0e-12,
             "finite-deformation final lateral displacement drift")
-    require(abs(final["biot_average"] - 0.51417410820727) <= 1.0e-12,
+    require(abs(final["biot_average"] - 0.58219459009679) <= 1.0e-12,
             "finite-deformation final average Biot coefficient drift")
     require(abs(min(row["biot_minimum"] for row in rows if row["time"] == final["time"])
-                - 0.51360255434187) <= 1.0e-12,
+                - 0.58209924671994) <= 1.0e-12,
             "finite-deformation final minimum Biot coefficient drift")
     require(abs(max(row["biot_maximum"] for row in rows if row["time"] == final["time"])
-                - 0.51450277385234) <= 1.0e-12,
+                - 0.58224939716739) <= 1.0e-12,
             "finite-deformation final maximum Biot coefficient drift")
     require(max(row["solid_material_mass_constraint_l2"] for row in rows) <= 2.8e-5,
             "finite-deformation solid-mass diagnostic exceeds recorded bound")
     require(max(row["solid_mineral_eos_constraint_l2"] for row in rows) <= 3.0e-17,
             "finite-deformation mineral-EOS residual exceeds recorded bound")
-    require(max(row["biot_analytic_error_l2"] for row in rows) <= 4.0e-17,
-            "finite-deformation Biot identity exceeds recorded bound")
+    # This is a curated-data regression value for the matched logarithmic model.
+    # The independent constitutive acceptance limit remains 1e-12.
+    biot_error = max(row["biot_analytic_error_l2"] for row in rows)
+    require(abs(biot_error - 4.7701433804565e-17) <= 1e-28,
+            "finite-deformation Biot diagnostic differs from the recorded result")
+    require(biot_error <= 1e-12, "finite-deformation Biot identity failed")
 
     contour_specs = (
         ("validation/mandel_biot_contours.csv", "biot_coefficient"),
@@ -154,6 +160,22 @@ def audit_finite_deformation_results() -> None:
             "Biot and intrinsic-density contours use different samples")
 
 
+def audit_implicit_poroplastic_results() -> None:
+    record = json.loads((ROOT / "validation/implicit_poroplastic_verification.json").read_text())
+    require(record.get("accepted") is True, "implicit poroplastic verification did not pass")
+    limits = {"mass": 1e-10, "eos": 1e-10, "biot": 5e-8, "flow": 1e-9,
+              "yield_residual": 1e-9, "stress": 2e-7, "determinant": 1e-9}
+    for name in ("history", "nonaxisymmetric", "rotated", "pressure_4e+08"):
+        require(name in record, f"missing constitutive verification case: {name}")
+        for metric, limit in limits.items():
+            require(0 <= record[name][metric] <= limit, f"failed {name} {metric}")
+    require(record["objectivity_stress_error"] <= 1e-10, "objectivity check failed")
+    for stem in ("implicit_poroplastic_history", "implicit_poroplastic_feedback"):
+        require(sha256(ROOT / "figures" / (stem + ".png")) ==
+                sha256(ROOT / "docs/assets/img" / (stem + ".png")),
+                f"manuscript and website figure mismatch: {stem}")
+
+
 def audit_provenance() -> None:
     record = json.loads((ROOT / "validation/provenance.yml").read_text(encoding="utf-8"))
     require(record.get("schema_version") == 1, "unsupported provenance schema")
@@ -169,6 +191,8 @@ def audit_manuscript() -> None:
         "paper/defs.tex",
         "paper/build/main.pdf",
         "paper/build/main.log",
+        "figures/implicit_poroplastic_history.pgf",
+        "figures/implicit_poroplastic_feedback.pgf",
         "figures/mandel_pressure_profiles.pgf",
         "figures/mandel_displacements.pgf",
         "figures/mandel_finite_deformation.pgf",
@@ -190,6 +214,7 @@ def main() -> int:
         audit_sync,
         audit_curated_data,
         audit_finite_deformation_results,
+        audit_implicit_poroplastic_results,
         audit_provenance,
         audit_manuscript
     )

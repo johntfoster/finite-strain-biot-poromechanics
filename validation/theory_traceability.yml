@@ -2,49 +2,58 @@ schema_version: 1
 source_of_truth:
   manuscript: paper/main.tex
   notation: paper/defs.tex
-
 specialization:
-  phases: [deformable solid, water]
+  phases:
+  - deformable solid
+  - water
   configuration: solid reference
-  balances_and_closures: [solid partial-density conservation in spatial form, coupled intrinsic mineral Helmholtz energy and pressure equation, local mineral equation of state, barotropic water equation of state]
+  balances_and_closures:
+  - solid partial-density conservation in spatial form
+  - matched logarithmic drained skeleton and mechanical mineral stress laws
+  - scalar mineral equation from stress trace and stress-volume reciprocity
+  - barotropic water equation of state
   discretization:
     displacement: Q2 continuous Lagrange
     water_pressure: Q1 continuous Lagrange
     solid_spatial_mass: Q2 continuous Lagrange
     pressure_enrichment: false
-
 implementation:
   solid_mass_storage:
-    objects: [ADBinarySolidSpatialMassMaterial, ADReferenceMaterialStorageRateTerm]
+    objects:
+    - ADBinarySolidSpatialMassMaterial
+    - ADReferenceMaterialStorageRateTerm
     role: solve the pulled-back spatial solid mass balance d(J rho_s)/dt=0
   local_mineral_state:
-    objects: [ADLocalElasticMineralBiotMaterial, ADConstrainedSkeletonBiotMaterial]
-    role: use the elastic material only to supply a closed-form test state, residual partial derivatives, and an independent oracle; use the general constrained material to solve the AD-valued implicit tangent at fixed intrinsic phase pressure and fixed referential solid mass J rho_s and return the production Biot coefficient
+    objects:
+    - ADLocalElasticMineralBiotMaterial
+    - ADConstrainedSkeletonBiotMaterial
+    role: solve the matched logarithmic mineral residual and evaluate the production
+      closed-form coefficient at the converged state; independently solve the general
+      two-state tangent at fixed pore pressure and fixed referential mass for verification
+    shared_solver: moose_app/include/utils/MatchedLogMineralState.h
+    ad_dependencies: retain mineral-state dependence on deformation and pressure in the outer Jacobian
   water_mass_storage:
-    objects: [ADBiotPressureStorageMaterial, ADReferenceMaterialStorageRateTerm]
-    role: calculate the complete chain-rule time rate of the pulled-back water accumulation J(1-phi_s)rho_f(p) from AD time-integrator rates and assemble it with an AD time kernel, with rho_f supplied by the barotropic water equation of state and no prescribed Biot storage modulus
+    objects:
+    - ADBiotPressureStorageMaterial
+    - ADReferenceMaterialStorageRateTerm
+    role: calculate the complete chain-rule time rate of the pulled-back water accumulation J(1-phi_s)rho_f(p)
+      from AD time-integrator rates and assemble it with an AD time kernel, with rho_f supplied by the
+      barotropic water equation of state and no prescribed Biot storage modulus
   darcy_flux:
     object: ADBiotDarcyReferenceFluxMaterial
     role: pull the Q1 pressure-gradient Darcy mass flux to the solid reference configuration
   total_stress:
     object: ADReferenceSolidStressMaterial
     role: apply the nonlinear Biot pressure contribution to the first Piola stress
-  poroplastic_driving_stress:
-    objects: [ADTensorialPoroplasticBiotMaterial]
-    role: canonical stateful multiplicative ideal Drucker-Prager return map on the single-prime Kirchhoff stress tau' = P''F^T + (1-B)pJ I with stored plastic history (F = F^e F^p, a^p = det F^p); radial return with exact symmetric matrix exponential; inactive branch elastic and unloading elastic with the plastic state frozen; at nonzero pore pressure the single-prime reconstruction carries the pore-allocation-corrected coefficient B = 1 - (1 - B_el)/a^p (frozen-elastic reference available via use_elastic_coefficient_in_trial)
-  poroplastic_biot_correction:
-    object: ADTensorialPoroplasticBiotMaterial
-    role: plastic pore-allocation correction B = 1 - (1 - B_el)/a^p to the total-J elastic coefficient of the same drained skeleton and mineral
-  poroplastic_general_tangent:
-    objects: [ADPlasticStateBiotMaterial, ADConstrainedSkeletonBiotMaterial]
-    role: general fixed-history fixed-pressure tangent of the active plastic local system by AD (route-A phi_s with a^p frozen at the canonical stateful allocation), verifying B_general = B = 1 - (1 - B_el)/a^p equals the stateful-engine coefficient
-  poroplastic_tensorial_stateful:
-    objects: [ADTensorialPoroplasticBiotMaterial]
-    role: canonical stateful multiplicative ideal Drucker-Prager return map with stored plastic history; elastic trial on F^e = F (F^p_n)^-1 and radial return on the full tensorial Kirchhoff stress; exact symmetric matrix exponential updates F^p so unloading is immediately elastic (a^p frozen) and reloading re-yields at the stored peak
   prescribed_deformation_helper:
     object: ADConstantDeformationGradientMaterial
-    role: single-element material-test helper prescribing a uniform diagonal F (test support only)
-
+    role: homogeneous deformation with AD axial stretch and optional superposed rotation
+  implicit_poroplastic:
+    object: ADImplicitPoroplasticBiotMaterial
+    role: solve current symmetric exponential flow increment and yield consistency, recomputing the mass-conserving
+      matched logarithmic mineral state and state-only coefficient at fixed pore pressure and
+      current plastic state; retain the current plastic-state dependence in outer AD derivatives
+    scope: homogeneous constitutive verification; active coupled fluid storage remains unverified
 evidence:
   local_elastic_tangent: validation/mandel_implicit_biot.yml
   outer_ad_jacobian: moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i
@@ -53,14 +62,23 @@ evidence:
   finite_deformation_biot: validation/mandel_large_deformation.csv
   finite_deformation_biot_field: validation/mandel_biot_contours.csv
   finite_deformation_density_field: validation/mandel_density_contours.csv
-  poroplastic_delta_b: validation/poroplastic_delta_b.csv
-  poroplastic_b_feedback: validation/poroplastic_b_feedback.csv
-  poroplastic_general_path: validation/poroplastic_general_path.csv
-  poroplastic_load_unload: validation/poroplastic_load_unload.csv
-  poroplastic_tensorial_load_unload: validation/tensorial_load_unload.csv
-
+  implicit_poroplastic: validation/implicit_poroplastic_verification.json
+  plastic_history: validation/implicit_poroplastic_history.csv
+  plastic_feedback: validation/implicit_poroplastic_feedback.csv
 classification:
-  implementation_verification: [solid_spatial_mass_balance, local_elastic_tangent, outer_ad_jacobian, poroplastic_general_path]
-  analytical_benchmark: [analytical_mandel, analytical_displacements]
-  synthetic_discrimination: [finite_deformation_biot, finite_deformation_biot_field, finite_deformation_density_field, poroplastic_delta_b, poroplastic_b_feedback, poroplastic_load_unload, poroplastic_tensorial_load_unload]
+  implementation_verification:
+  - solid_spatial_mass_balance
+  - local_elastic_tangent
+  - outer_ad_jacobian
+  - implicit_poroplastic
+  analytical_benchmark:
+  - analytical_mandel
+  - analytical_displacements
+  synthetic_discrimination:
+  - finite_deformation_biot
+  - finite_deformation_biot_field
+  - finite_deformation_density_field
+  - plastic_history
+  - plastic_feedback
   independent_physical_validation: []
+legacy_audit: validation/manuscript_constitutive_audit_2026-09-08.md

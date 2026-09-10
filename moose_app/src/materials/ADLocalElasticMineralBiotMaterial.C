@@ -1,6 +1,7 @@
 #include "ADLocalElasticMineralBiotMaterial.h"
 
 #include "metaphysicl/raw_type.h"
+#include "MatchedLogMineralState.h"
 
 #include <cmath>
 
@@ -12,8 +13,9 @@ ADLocalElasticMineralBiotMaterial::validParams()
   InputParameters params = Material::validParams();
   params.addClassDescription(
       "Supplies the elastic verification state, local material-mass and mineral-EOS "
-      "residual derivatives, material rates, and a closed-form fixed-pressure Biot oracle. "
-      "The production Biot coefficient is computed by ADConstrainedSkeletonBiotMaterial.");
+      "residual derivatives, material rates, and the production closed-form fixed-pressure "
+      "Biot coefficient. "
+      "ADConstrainedSkeletonBiotMaterial supplies an independent implicit diagnostic.");
   params.addRequiredCoupledVar("pressure", "Continuous pore-pressure field.");
   params.addRequiredCoupledVar(
       "solid_spatial_mass_ratio",
@@ -22,13 +24,8 @@ ADLocalElasticMineralBiotMaterial::validParams()
       "solid_jacobian_name", "solid_reference_J", "Solid-reference Jacobian J_s.");
   params.addParam<MaterialPropertyName>(
       "solid_jacobian_rate_name", "solid_reference_J_dot", "Material time rate of J_s.");
-  params.addParam<MaterialPropertyName>("mineral_effective_pressure_name",
-                                        "solid_mineral_effective_pressure",
-                                        "Compression-positive mineral pressure q_s(J_s).");
-  params.addParam<MaterialPropertyName>(
-      "mineral_effective_pressure_jacobian_derivative_name",
-      "solid_mineral_effective_pressure_jacobian_derivative",
-      "Fixed-state derivative dq_s/dJ_s.");
+  params.addRequiredRangeCheckedParam<Real>(
+      "skeleton_bulk_modulus", "skeleton_bulk_modulus>0", "Reference drained modulus K.");
   params.addRequiredRangeCheckedParam<Real>(
       "mineral_bulk_modulus", "mineral_bulk_modulus>0", "Mineral bulk modulus K_s.");
   params.addRequiredRangeCheckedParam<Real>("reference_solid_volume_fraction",
@@ -85,6 +82,10 @@ ADLocalElasticMineralBiotMaterial::validParams()
       "mineral_eos_jacobian_derivative_name",
       "solid_mineral_eos_d_jacobian",
       "Output partial derivative of the mineral-EOS residual with respect to J_s.");
+  params.addRangeCheckedParam<Real>("finite_difference_step", 0.0,
+      "finite_difference_step>=0", "Optional fixed-pressure volume perturbation for verification.");
+  params.addParam<MaterialPropertyName>("biot_finite_difference_name",
+      "solid_biot_fixed_pressure_fd", "Output centered-difference Biot diagnostic.");
   return params;
 }
 
@@ -98,12 +99,12 @@ ADLocalElasticMineralBiotMaterial::ADLocalElasticMineralBiotMaterial(
         _fe_problem.isTransient() ? &adCoupledDot("solid_spatial_mass_ratio") : nullptr),
     _J(getADMaterialProperty<Real>("solid_jacobian_name")),
     _J_dot(getADMaterialProperty<Real>("solid_jacobian_rate_name")),
-    _mineral_effective_pressure(
-        getADMaterialProperty<Real>("mineral_effective_pressure_name")),
-    _mineral_effective_pressure_jacobian_derivative(
-        getADMaterialProperty<Real>("mineral_effective_pressure_jacobian_derivative_name")),
+    _skeleton_bulk_modulus(getParam<Real>("skeleton_bulk_modulus")),
     _mineral_bulk_modulus(getParam<Real>("mineral_bulk_modulus")),
     _reference_solid_volume_fraction(getParam<Real>("reference_solid_volume_fraction")),
+    _finite_difference_step(getParam<Real>("finite_difference_step")),
+    _biot_finite_difference(declareADProperty<Real>(
+        getParam<MaterialPropertyName>("biot_finite_difference_name"))),
     _intrinsic_density_ratio(
         declareADProperty<Real>(getParam<MaterialPropertyName>("intrinsic_density_ratio_name"))),
     _intrinsic_density_ratio_dot(declareADProperty<Real>(
@@ -143,13 +144,13 @@ ADLocalElasticMineralBiotMaterial::computeQpProperties()
   if (MetaPhysicL::raw_value(_solid_spatial_mass_ratio[_qp]) <= 0.0)
     mooseError(name(), ": requires a positive normalized solid partial density.");
 
-  // The thermodynamic phase pressure is p.  The sum p+q appears because q(J)
-  // is the deformation-density coupling in d psi_min/d vbar; q is not a
-  // second phase pressure.
-  const ADReal mineral_compression_argument =
-      _pressure[_qp] + _mineral_effective_pressure[_qp];
-  _intrinsic_density_ratio[_qp] =
-      exp(mineral_compression_argument / _mineral_bulk_modulus);
+  const Real k = _skeleton_bulk_modulus /
+                 (_reference_solid_volume_fraction * _mineral_bulk_modulus);
+  const Real alpha = 1.0 - k;
+  const ADReal z = matchedLogMineralVolume(_J[_qp], _pressure[_qp],
+      _skeleton_bulk_modulus, _mineral_bulk_modulus, _reference_solid_volume_fraction);
+  const ADReal D = _mineral_bulk_modulus + alpha * _pressure[_qp] * z;
+  _intrinsic_density_ratio[_qp] = 1.0 / z;
   _solid_volume_fraction[_qp] = _reference_solid_volume_fraction *
                                _solid_spatial_mass_ratio[_qp] / _intrinsic_density_ratio[_qp];
 
@@ -160,10 +161,9 @@ ADLocalElasticMineralBiotMaterial::computeQpProperties()
   if (_fe_problem.isTransient())
   {
     _intrinsic_density_ratio_dot[_qp] =
-        _intrinsic_density_ratio[_qp] *
-        ((*_pressure_dot)[_qp] +
-         _mineral_effective_pressure_jacobian_derivative[_qp] * _J_dot[_qp]) /
-        _mineral_bulk_modulus;
+        (alpha * (*_pressure_dot)[_qp] -
+         _skeleton_bulk_modulus * _J_dot[_qp] /
+             (_reference_solid_volume_fraction * _J[_qp] * z)) / D;
     _solid_volume_fraction_dot[_qp] =
         _reference_solid_volume_fraction *
         ((*_solid_spatial_mass_ratio_dot)[_qp] / _intrinsic_density_ratio[_qp] -
@@ -190,22 +190,32 @@ ADLocalElasticMineralBiotMaterial::computeQpProperties()
   _material_mass_jacobian_derivative[_qp] =
       _solid_volume_fraction[_qp] * _intrinsic_density_ratio[_qp];
   _mineral_eos_intrinsic_density_derivative[_qp] =
-      1.0 / _intrinsic_density_ratio[_qp];
+      D / (_mineral_bulk_modulus * _intrinsic_density_ratio[_qp]);
   _mineral_eos_volume_fraction_derivative[_qp] = 0.0;
-  _mineral_eos_jacobian_derivative[_qp] =
-      -_mineral_effective_pressure_jacobian_derivative[_qp] / _mineral_bulk_modulus;
+  _mineral_eos_jacobian_derivative[_qp] = k / _J[_qp];
 
-  // The explicit elastic derivative is an independent oracle.  The production
-  // coefficient used by the residual is supplied by the general constrained
-  // material under a different property name in the verification inputs.
+  // State-only closed form; the general constrained material independently
+  // solves the two-state residual Jacobian for the verification diagnostic.
   _intrinsic_specific_volume_jacobian_tangent[_qp] =
-      -_mineral_effective_pressure_jacobian_derivative[_qp] /
-      (_mineral_bulk_modulus * _intrinsic_density_ratio[_qp]);
+      _skeleton_bulk_modulus * z / (_reference_solid_volume_fraction * _J[_qp] * D);
   _biot_coefficient[_qp] =
       1.0 - _reference_solid_volume_fraction *
                 _intrinsic_specific_volume_jacobian_tangent[_qp];
   _mineral_eos_residual[_qp] =
-      log(_intrinsic_density_ratio[_qp]) -
-      mineral_compression_argument / _mineral_bulk_modulus;
+      log(_intrinsic_density_ratio[_qp]) + k * log(_J[_qp]) -
+      alpha * _pressure[_qp] * z / _mineral_bulk_modulus;
+  _biot_finite_difference[_qp] = 0.0;
+  if (_finite_difference_step > 0.0)
+  {
+    const Real j = MetaPhysicL::raw_value(_J[_qp]);
+    const Real p = MetaPhysicL::raw_value(_pressure[_qp]);
+    const Real h = _finite_difference_step;
+    const Real plus = matchedLogMineralVolume(j + h, p, _skeleton_bulk_modulus,
+        _mineral_bulk_modulus, _reference_solid_volume_fraction);
+    const Real minus = matchedLogMineralVolume(j - h, p, _skeleton_bulk_modulus,
+        _mineral_bulk_modulus, _reference_solid_volume_fraction);
+    _biot_finite_difference[_qp] = 1.0 -
+        _reference_solid_volume_fraction * (plus - minus) / (2.0 * h);
+  }
 
 }

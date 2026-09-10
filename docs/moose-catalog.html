@@ -47,17 +47,17 @@
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C">ADLocalElasticMineralBiotMaterial</a>
-          <span class="desc">Elastic mineral state: intrinsic solid density, solid volume fraction, constraint residuals and partial derivatives, plus a closed-form Biot oracle.</span>
-          <span class="why">Why: the elastic verification specialization and independent oracle.</span>
+          <span class="desc">Matched logarithmic mineral state, density and volume fraction, material rates, and the production closed-form Biot coefficient.</span>
+          <span class="why">Why: supplies the state-only coefficient and residual derivatives for independent verification.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C">ADConstrainedSkeletonBiotMaterial</a>
-          <span class="desc">Solves the AD-valued implicit local tangent at fixed pressure and fixed referential solid mass; returns the production Biot coefficient.</span>
-          <span class="why">Why: the production fixed-pressure Biot tangent.</span>
+          <span class="desc">Independently solves the AD-valued local tangent at fixed pressure and referential solid mass.</span>
+          <span class="why">Why: checks the production closed form against general implicit differentiation.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C">ADVolumetricBarotropicSkeletonStressMaterial</a>
-          <span class="desc">Pressure-coupled effective skeleton stress from the volumetric barotropic potential.</span>
+          <span class="desc">Pressure-coupled double-prime stress compatible with the matched logarithmic mineral law.</span>
           <span class="why">Why: supplies the double-prime stress <code>P″</code>.</span>
         </li>
         <li>
@@ -81,9 +81,13 @@
           <span class="why">Why: the reference Darcy flux for the water balance.</span>
         </li>
         <li>
+          <a href="source.html?f=../moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C">ADImplicitPoroplasticBiotMaterial</a>
+          <span class="why">Current manuscript model: mass-conserving mineral state, implicit exponential flow and yield solve, and active outer AD.</span>
+        </li>
+        <li>
           <a href="source.html?f=../moose_app/src/materials/ADTensorialPoroplasticBiotMaterial.C">ADTensorialPoroplasticBiotMaterial</a>
           <span class="desc">Stateful multiplicative ideal Drucker–Prager return mapping (<code>F = Fᵉ Fᵖ</code>) with exact symmetric matrix exponential; stores <code>Fᵖ</code> and <code>aᵖ</code>.</span>
-          <span class="why">Why: the canonical inelastic update for the poroplastic demonstrations.</span>
+          <span class="why">Archived prototype; its physical consistency limitations are documented in the constitutive audit.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADPlasticStateBiotMaterial.C">ADPlasticStateBiotMaterial</a>

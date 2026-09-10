@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-# One profile at the Mandel-Cryer overshoot peak (0.02 s) followed by later
+# One profile during the Mandel-Cryer overshoot (0.02 s) followed by later
 # decay profiles; all are members of the fine-early reported time sequence.
 SAMPLE_TIMES = (0.02, 0.046, 0.094, 0.206, 0.398)
 
@@ -86,12 +86,13 @@ def main() -> int:
 
     args.pressure_output.parent.mkdir(parents=True, exist_ok=True)
     with args.pressure_output.open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=("time", "x", "y", "pressure"))
+        writer = csv.DictWriter(stream, lineterminator="\n", fieldnames=("time", "x", "y", "pressure"))
         writer.writeheader()
         writer.writerows(pressure_rows)
     with args.displacement_output.open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(
             stream,
+            lineterminator="\n",
             fieldnames=("time", "component", "coordinate", "displacement"),
         )
         writer.writeheader()
@@ -113,7 +114,7 @@ def main() -> int:
         )
         source_rows = read_rows(args.large_source)
         with args.large_output.open("w", newline="", encoding="utf-8") as stream:
-            writer = csv.DictWriter(stream, fieldnames=fieldnames)
+            writer = csv.DictWriter(stream, lineterminator="\n", fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(
                 {name: row[name] for name in fieldnames} for row in source_rows

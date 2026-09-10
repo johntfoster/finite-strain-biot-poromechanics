@@ -38,7 +38,7 @@
     {
       "biot": "moose_app/include/materials/ADLocalElasticMineralBiotMaterial.h",
       "master": "moose_app/include/materials/ADLocalElasticMineralBiotMaterial.h",
-      "sha256": "ca2bef50ec0464dd42542f909f8656bb5b7b3403f27628848646cac526942422"
+      "sha256": "3ed00c90fc26172b8db12e3b703b33645d8c33ad1e2bad92f3739f4d197182ab"
     },
     {
       "biot": "moose_app/include/materials/ADReferenceSolidStressMaterial.h",
@@ -58,7 +58,12 @@
     {
       "biot": "moose_app/include/materials/ADVolumetricBarotropicSkeletonStressMaterial.h",
       "master": "moose_app/include/materials/ADVolumetricBarotropicSkeletonStressMaterial.h",
-      "sha256": "81e73a536bcf34e88b7c028cf993d436d65d559266876e663ac8c7b23fd8e5ed"
+      "sha256": "90741efb8dbe6dbb3e762e797190dff4460ef5cbf3588c5c091d8bb4b6456ead"
+    },
+    {
+      "biot": "moose_app/include/utils/MatchedLogMineralState.h",
+      "master": "moose_app/include/utils/MatchedLogMineralState.h",
+      "sha256": "ffcde3143ffc6d35b288461ba2a06603b133c4d0a5ebba4f3d73693aa08ef185"
     },
     {
       "biot": "moose_app/include/postprocessors/ADMaterialScalarL2Error.h",
@@ -103,7 +108,7 @@
     {
       "biot": "moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C",
       "master": "moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C",
-      "sha256": "7395fcfa194b04447060f4cc0f038b9a5f18c3ace47e8a2169b63a05579e67bb"
+      "sha256": "d52ea2b03637b313d436583ce1e1d887fa6758299dc3b5872c8d5d4e5dd9854d"
     },
     {
       "biot": "moose_app/src/materials/ADReferenceSolidStressMaterial.C",
@@ -123,7 +128,7 @@
     {
       "biot": "moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C",
       "master": "moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C",
-      "sha256": "3c8cb46bf09f412a8f8256fdbd914bc26a8273f54368f652c62c589bc5d49bdc"
+      "sha256": "768f6175d25a4a61a9be61315a519a63bd153e8b85333c52acad290a6b9871b6"
     },
     {
       "biot": "moose_app/src/postprocessors/ADMaterialScalarL2Error.C",
@@ -133,22 +138,22 @@
     {
       "biot": "moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i",
       "master": "moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i",
-      "sha256": "b377cd06816cc3089c0e2db650bd2b2f6481fdcb7d6e314cb16dcbac833778fa"
+      "sha256": "5ea03a69cb2be080f61ba3d85869c1f77cf02464106b85c73183270d7ea57180"
     },
     {
       "biot": "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i",
       "master": "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i",
-      "sha256": "1d30520ecb7d69eb870167dc71ff0415f8dacd05f91799a0273726f45017e476"
+      "sha256": "7ec3686e86b36a9d9edfd0e1448b23c802c5f1f8cc3b92f1b85c7cf358654b34"
     },
     {
       "biot": "moose_app/test/tests/mandel_implicit_biot/tests",
       "master": "moose_app/test/tests/mandel_implicit_biot/tests",
-      "sha256": "55ca03e4dd9e3fe160f56b41f9d4c8d4de39c8d688b738a9d188e68522550adf"
+      "sha256": "28cd33342a29f90ea285db9b095e35953407b9c177ddaed84e7e33f4ec4c083c"
     },
     {
       "biot": "validation/scripts/check_mandel_implicit_biot.py",
       "master": "validation/scripts/check_mandel_implicit_biot.py",
-      "sha256": "aac201c9a04838a3e283eec22fb732789a4f527351614487984fc501fa34c532"
+      "sha256": "5899ba12d8f3186d59396bc35477b5ea23858efa16963704b1906cd1292ffb6e"
     },
     {
       "biot": "moose_app/patches/moose/0001-skip-automatic-premake-check.patch",
@@ -161,8 +166,8 @@
       "sha256": "806c70e91c05c598912fc2bbdb74c5895ac8d00eb101234f5eb2bb6254f22767"
     }
   ],
-  "manifest_sha256": "b0de1a23a720884a5088958201cc1bda3342f519f5777b123a36c0c9948d9b85",
+  "manifest_sha256": "88073da3c39d0ea18e21a970d9d6440d04ec54e938ce620bc5dca6e9a6143ae9",
   "master_commit": "9674548eac2d11f20efcb045ebe5ff344a43794a",
-  "synchronized_at_utc": "2026-08-27T13:22:17.385484+00:00",
+  "synchronized_at_utc": "2026-09-10T03:42:22.459468+00:00",
   "version": 1
 }

@@ -1,96 +1,189 @@
 schema_version: 1
 scope: single-solid single-water finite-deformation Biot coefficient
-
 mappings:
-  - id: solid_kinematics
-    paper_equations: [eq:skeleton-kinematics]
-    moose_objects: [ADSolidReferenceKinematics]
-    tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_verification]
-
-  - id: solid_spatial_mass_balance
-    paper_equations: [eq:spatial-solid-mass-balance, eq:reference-solid-mass-balance, eq:solid-mass-weak-residual]
-    moose_objects: [ADBinarySolidSpatialMassMaterial, ADReferenceMaterialStorageRateTerm]
-    variables: [Q2 solid partial density stored in reference-normalized form]
-    tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_bdf2, mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
-
-  - id: local_mineral_state
-    paper_equations: [eq:general-local-constitutive-system, eq:local-material-mass-constraint, eq:elastic-local-constraints, eq:elastic-mineral-density]
-    moose_objects: [ADLocalElasticMineralBiotMaterial]
-    outputs: [elastic intrinsic solid density stored in reference-normalized form, solid volume fraction, material rates, constraint residuals and partial derivatives, closed-form Biot oracle]
-    tests: [mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
-
-  - id: fixed_pressure_biot_tangent
-    paper_equations: [eq:finite-deformation-biot-coefficient, eq:implicit-local-state-tangent, eq:constrained-mineral-jacobian-tangent, eq:general-implicit-biot-coefficient, eq:elastic-local-residual-jacobian, eq:elastic-finite-deformation-biot-coefficient]
-    moose_objects: [ADConstrainedSkeletonBiotMaterial, ADLocalElasticMineralBiotMaterial]
-    production_output: ADConstrainedSkeletonBiotMaterial supplies solid_biot_coefficient from the dense AD-valued implicit tangent
-    verification_oracle: ADLocalElasticMineralBiotMaterial supplies elastic_biot_closed_form under a separate property name
-    tests: [mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
-
-  - id: stress_and_momentum
-    paper_equations: [eq:total-first-piola-stress, eq:momentum-weak-residual]
-    moose_objects: [ADVolumetricBarotropicSkeletonStressMaterial, ADReferenceSolidStressMaterial, ADReferenceSolidMomentum]
-    tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_jacobian]
-
-  - id: water_mass_balance
-    paper_equations: [eq:reference-water-mass-balance, eq:barotropic-water-density, eq:water-pressure-weak-residual]
-    moose_objects: [ADBiotPressureStorageMaterial, ADReferenceMaterialStorageRateTerm]
-    time_discretization: AD time kernel using pressure, solid-volume-fraction, and displacement-gradient rates supplied by the selected MOOSE time integrator
-    tests: [mandel_water_q2_q1_bdf2, mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
-
-  - id: water_darcy_flux
-    paper_equations: [eq:reference-darcy-flux, eq:water-pressure-weak-residual]
-    moose_objects: [ADBiotDarcyReferenceFluxMaterial, ADReferenceComponentFluxTerm]
-    tests: [mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
-
-  - id: mandel_discretization
-    paper_equations: [eq:finite-element-spaces, eq:mandel-boundary-conditions]
-    variables: [Q2 displacement, continuous Q1 water pressure, Q2 solid partial density]
-    pressure_enrichment: false
-    tests: [mandel_water_q2_q1_smoke, mandel_water_q2_q1_verification, mandel_water_q2_q1_jacobian]
-
-  - id: poroplastic_return_mapping
-    paper_equations: [eq:single-prime-kirchhoff-stress, eq:finite-plastic-stress-invariants, eq:dp-yield, eq:dp-flow, eq:dp-dissipation, eq:reconstruct-pore-allocation, eq:dp-yield-observable, eq:kuhn-tucker, eq:consistency-dot-f, eq:discrete-consistency]
-    moose_objects: [ADTensorialPoroplasticBiotMaterial]
-    outputs: [stored plastic factor F^p and allocation a^p = det F^p, plastic increment Delta_gamma, yield function f, mean effective pressure p', equivalent shear stress q', returned single-prime Kirchhoff stress, coefficient B = 1 - (1 - B_el)/a^p, elastic coefficient B_el at total J]
-    notes: stateful multiplicative ideal Drucker-Prager radial return on tau' = P''F^T + (1-B)p J I with stored history F = F^e F^p (canonical inelastic update); inactive branch (or elastic unloading) freezes the plastic state (a^p = 1 on virgin collapse, a^p frozen on unload); with use_elastic_coefficient_in_trial = true the single-prime reconstruction holds B_el (frozen-elastic reference) to isolate the coefficient feedback
-    tests: [poroplastic_delta_b_elastic, poroplastic_delta_b, poroplastic_delta_b_20, poroplastic_delta_b_30, poroplastic_delta_b_sweep, poroplastic_b_feedback, poroplastic_tensorial_load_unload]
-
-  - id: poroplastic_biot_correction
-    paper_equations: [eq:finite-deformation-biot-coefficient, eq:general-implicit-biot-coefficient, eq:reconstruct-pore-allocation, eq:elastic-finite-deformation-biot-coefficient, eq:poroplastic-biot-correction]
-    moose_objects: [ADTensorialPoroplasticBiotMaterial]
-    output: B = 1 - (1 - B_el)/a^p with B_el the total-J elastic coefficient of the same drained skeleton and mineral; Delta B = B - B_el
-    tests: [poroplastic_delta_b_elastic, poroplastic_delta_b, poroplastic_delta_b_20, poroplastic_delta_b_30, poroplastic_delta_b_sweep]
-
-  - id: poroplastic_biot_feedback
-    paper_equations: [eq:poroplastic-biot-correction, eq:dp-yield-observable, eq:single-prime-kirchhoff-stress, eq:finite-plastic-stress-invariants, eq:discrete-consistency]
-    moose_objects: [ADTensorialPoroplasticBiotMaterial]
-    outputs: [coefficient B = 1 - (1 - B_el)/a^p carried in the single-prime driving stress, elastic coefficient B_el, coupled a^p and Delta_gamma, frozen-elastic (B = B_el) reference a^p_ref and Delta_gamma_ref]
-    notes: at nonzero pore pressure the corrected coefficient enters the single-prime driving stress through (1-B)p J I; the corrected coefficient exceeds the elastic one (B > B_el) and reduces the predicted plastic pore allocation relative to the frozen-elastic reference (a^p < a_p_ref), with the split growing with pore pressure
-    tests: [poroplastic_b_feedback]
-
-  - id: poroplastic_general_path_oracle
-    paper_equations: [eq:general-local-constitutive-system, eq:implicit-local-state-tangent, eq:constrained-mineral-jacobian-tangent, eq:general-implicit-biot-coefficient, eq:poroplastic-biot-correction]
-    moose_objects: [ADPlasticStateBiotMaterial, ADConstrainedSkeletonBiotMaterial, ADPoroplasticBiotCoefficientMaterial]
-    output: general fixed-history fixed-pressure Biot tangent of the active plastic local system (route-A phi_s = phi_s0*r/(ratio*a^p) with a^p frozen) computed by the AD dense solve; with a^p frozen at the canonical stateful-tensorial accumulated value, verified equal to the reduced closed form B = 1 - (1 - B_el)/a^p to machine precision and to the coefficient the stateful engine reports
-    notes: pure-AD oracle; the frozen (non-AD) plastic pore allocation enters the volume fraction, so the tangent differentiates the converged elastic mineral state at fixed referential solid mass and fixed history
-    tests: [poroplastic_general_path]
-
-  - id: poroplastic_unload_branch
-    paper_equations: [eq:finite-deformation-biot-coefficient, eq:general-implicit-biot-coefficient, eq:poroplastic-biot-correction]
-    moose_objects: [ADPlasticStateBiotMaterial, ADConstrainedSkeletonBiotMaterial, ADPoroplasticBiotCoefficientMaterial]
-    output: unload-branch (frozen-history) fixed-pressure coefficient at a reduced compression after monotonic plastic loading to the canonical peak allocation a^p = 1.031877 (20% compression); exceeds the virgin elastic B_el and equals B = 1 - (1 - B_el)/a^p with a^p frozen at the peak value
-    notes: unload/reload-tangent reading of alpha (Brown-Korringa, Rice-Cleary, Ingraham); pure AD with a^p frozen at the value the canonical stateful engine accumulates
-    tests: [poroplastic_unload_tangent]
-
-  - id: poroplastic_tensorial_stateful
-    paper_equations: [eq:finite-deformation-biot-coefficient, eq:poroplastic-biot-correction, eq:dp-yield-observable, eq:single-prime-kirchhoff-stress, eq:finite-plastic-stress-invariants, eq:discrete-consistency]
-    moose_objects: [ADTensorialPoroplasticBiotMaterial, ADConstantDeformationGradientMaterial]
-    output: stateful multiplicative ideal Drucker-Prager material with F = F^e F^p and stored plastic history (F^p, a^p): elastic trial on F^e = F (F^p_n)^-1, radial return on the full tensorial Kirchhoff stress tau = P''F^T + (1-B)p J I, exact symmetric matrix-exponential update F^p_new = exp(W) F^p_n, a^p = det(F^p); under load-unload-reload axial stretch plastic flow activates on load (a^p > 1), unloading is immediately elastic (a^p frozen at the peak, Delta_gamma = 0), reloading re-yields at the stored peak; with large M (M = 100) it collapses to a^p = 1, Delta_gamma = 0, B = B_el
-    notes: canonical inelastic demonstration; the coefficient B = 1 - (1 - B_el)/a^p is evaluated on the same plastic pore allocation that the stored tensorial return map produces, so the reduced-prototype frozen-history caveat of the scalar route-A closures does not apply
-    tests: [poroplastic_tensorial_load_unload]
-
-  - id: prescribed_deformation_helper
-    paper_equations: [eq:skeleton-kinematics]
-    moose_objects: [ADConstantDeformationGradientMaterial]
-    role: single-element material-test helper prescribing a uniform diagonal F (test support only, not used in production solves)
-    tests: []
+- id: solid_kinematics
+  paper_equations:
+  - eq:skeleton-kinematics
+  moose_objects:
+  - ADSolidReferenceKinematics
+  tests:
+  - mandel_water_q2_q1_smoke
+  - mandel_water_q2_q1_verification
+- id: solid_spatial_mass_balance
+  paper_equations:
+  - eq:spatial-solid-mass-balance
+  - eq:reference-solid-mass-balance
+  - eq:solid-mass-weak-residual
+  moose_objects:
+  - ADBinarySolidSpatialMassMaterial
+  - ADReferenceMaterialStorageRateTerm
+  variables:
+  - Q2 solid partial density stored in reference-normalized form
+  tests:
+  - mandel_water_q2_q1_smoke
+  - mandel_water_q2_q1_bdf2
+  - mandel_water_q2_q1_verification
+  - mandel_water_q2_q1_jacobian
+- id: local_mineral_state
+  paper_equations:
+  - eq:general-local-constitutive-system
+  - eq:local-material-mass-constraint
+  - eq:local-mineral-eos-constraint
+  - eq:verification-mineral-factors
+  - eq:trace-implicit-mineral-volume
+  moose_objects:
+  - ADLocalElasticMineralBiotMaterial
+  outputs:
+  - elastic intrinsic solid density stored in reference-normalized form
+  - solid volume fraction
+  - material rates
+  - constraint residuals and partial derivatives
+  - production state-only Biot coefficient
+  - centered-difference diagnostic from perturbed mineral solves
+  tests:
+  - mandel_water_q2_q1_verification
+  - mandel_water_q2_q1_jacobian
+- id: matched_log_mineral_solver
+  paper_equations:
+  - eq:trace-implicit-mineral-volume
+  - eq:trace-mineral-stability-domain
+  source: moose_app/include/utils/MatchedLogMineralState.h
+  consumers:
+  - ADLocalElasticMineralBiotMaterial
+  - ADVolumetricBarotropicSkeletonStressMaterial
+  - ADImplicitPoroplasticBiotMaterial
+  role: solve the scalar logarithmic mineral residual on its stable branch and retain
+    first and nested second AD derivatives by Newton polishing after raw root bracketing
+  configuration: solid reference; J for elastic states and Je for fixed plastic states
+  tests:
+  - mandel_water_q2_q1_jacobian
+  - implicit_plastic_active_jacobian
+  - implicit_plastic_consistency
+- id: fixed_pressure_biot_tangent
+  paper_equations:
+  - eq:finite-deformation-biot-coefficient
+  - eq:implicit-local-state-tangent
+  - eq:constrained-mineral-jacobian-tangent
+  - eq:general-implicit-biot-coefficient
+  - eq:elastic-finite-deformation-biot-coefficient
+  - eq:trace-closed-form-biot-coefficient
+  moose_objects:
+  - ADConstrainedSkeletonBiotMaterial
+  - ADLocalElasticMineralBiotMaterial
+  production_output: ADLocalElasticMineralBiotMaterial supplies solid_biot_coefficient from the
+    closed form evaluated at the matched logarithmic mineral state
+  verification_oracle: ADConstrainedSkeletonBiotMaterial independently solves the dense AD-valued
+    two-state tangent and supplies solid_biot_implicit_diagnostic
+  tests:
+  - mandel_water_q2_q1_verification
+  - mandel_water_q2_q1_jacobian
+- id: stress_and_momentum
+  paper_equations:
+  - eq:trace-closed-form-double-prime-stress
+  - eq:trace-compatible-reduced-potential
+  - eq:total-first-piola-stress
+  - eq:momentum-weak-residual
+  moose_objects:
+  - ADVolumetricBarotropicSkeletonStressMaterial
+  - ADReferenceSolidStressMaterial
+  - ADReferenceSolidMomentum
+  tests:
+  - mandel_water_q2_q1_smoke
+  - mandel_water_q2_q1_jacobian
+- id: water_mass_balance
+  paper_equations:
+  - eq:reference-water-mass-balance
+  - eq:barotropic-water-density
+  - eq:water-pressure-weak-residual
+  moose_objects:
+  - ADBiotPressureStorageMaterial
+  - ADReferenceMaterialStorageRateTerm
+  time_discretization: AD time kernel using pressure, solid-volume-fraction, and displacement-gradient
+    rates supplied by the selected MOOSE time integrator
+  tests:
+  - mandel_water_q2_q1_bdf2
+  - mandel_water_q2_q1_verification
+  - mandel_water_q2_q1_jacobian
+- id: water_darcy_flux
+  paper_equations:
+  - eq:reference-darcy-flux
+  - eq:water-pressure-weak-residual
+  moose_objects:
+  - ADBiotDarcyReferenceFluxMaterial
+  - ADReferenceComponentFluxTerm
+  tests:
+  - mandel_water_q2_q1_verification
+  - mandel_water_q2_q1_jacobian
+- id: mandel_discretization
+  paper_equations:
+  - eq:finite-element-spaces
+  - eq:mandel-boundary-conditions
+  variables:
+  - Q2 displacement
+  - continuous Q1 water pressure
+  - Q2 solid partial density
+  pressure_enrichment: false
+  tests:
+  - mandel_water_q2_q1_smoke
+  - mandel_water_q2_q1_verification
+  - mandel_water_q2_q1_jacobian
+- id: prescribed_deformation_helper
+  paper_equations:
+  - eq:skeleton-kinematics
+  moose_objects:
+  - ADConstantDeformationGradientMaterial
+  role: Homogeneous AD axial deformation with optional superposed rotation for constitutive tests
+  tests:
+  - implicit_plastic_active_jacobian
+  - implicit_plastic_consistency
+- id: implicit_poroplastic_state
+  paper_equations:
+  - eq:coupled-skeleton-mineral-energy
+  - eq:local-material-mass-constraint
+  - eq:local-mineral-eos-constraint
+  - eq:implicit-local-state-tangent
+  - eq:poroplastic-biot-correction
+  - eq:mandel-driving-stress
+  - eq:plastic-exponential-update
+  - eq:implicit-plastic-flow-increment
+  - eq:discrete-consistency
+  moose_objects:
+  - ADImplicitPoroplasticBiotMaterial
+  configuration: solid reference; symmetric flow in intermediate configuration
+  inputs:
+  - AD deformation gradient
+  - AD pressure
+  - previous plastic factor
+  outputs:
+  - current AD plastic and elastic factors
+  - mineral density
+  - solid volume fraction
+  - state-only Biot coefficient at fixed current plastic state
+  - single-prime Kirchhoff and total first Piola stresses
+  assumptions:
+  - isotropic energy
+  - constant reference solid mass
+  - smooth Drucker-Prager cone
+  - nonassociated dilation
+  - no hardening or apex branch
+  tests:
+  - implicit_plastic_active_jacobian
+  - implicit_plastic_consistency
+- id: constitutive_verification_residuals
+  paper_equations:
+  - sec:nested-automatic-differentiation
+  moose_objects:
+  - ADMaterialPropertyResidual
+  - ADMaterialScalarL2Error
+  role: algebraic AD material probes and spatial error norms
+  tests:
+  - implicit_plastic_active_jacobian
+  - mandel_water_q2_q1_verification
+legacy_prototypes:
+  objects:
+  - ADTensorialPoroplasticBiotMaterial
+  - ADDruckerPragerPoroplasticBiotMaterial
+  - ADPlasticStateBiotMaterial
+  - ADPoroplasticBiotCoefficientMaterial
+  evidence_status: not used by current manuscript
+  audit: validation/manuscript_constitutive_audit_2026-09-08.md

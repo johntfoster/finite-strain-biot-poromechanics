@@ -6,9 +6,11 @@ and one water phase. The global fields are Q2 displacement, continuous Q1 water
 pressure, and Q2 solid partial density. Spatial solid mass balance evolves the
 partial density, while a general local constitutive update supplies intrinsic
 solid density, solid volume fraction, and any inelastic internal variables.
-Quadrature-point implicit differentiation of the complete local residual system
-supplies the fixed-pressure Biot coefficient. The elastic specialization is an
-analytical and centered-difference test of that general path. The
+Matched logarithmic skeleton and mineral laws permit analytical elimination of
+the fixed-pressure implicit tangent, giving the Biot coefficient in closed form
+in the current states. A scalar mineral solve and the active poroplastic return
+mapping retain their automatic-differentiation dependencies. The independent
+two-state implicit tangent and centered differences verify that expression. The
 water balance uses a barotropic pressure--density equation of state. The Biot
 transform maps the constitutive double-prime stress to the single-prime material
 stress and total mixture stress, and all local dependencies remain inside the

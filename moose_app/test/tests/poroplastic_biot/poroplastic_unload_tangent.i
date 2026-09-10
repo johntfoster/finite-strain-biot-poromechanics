@@ -99,23 +99,26 @@
     axial_stretch = 0.9
     out_of_plane_stretch = 1.0
   []
-  [double_prime]
-    type = ADVolumetricBarotropicSkeletonStressMaterial
-    equivalent_pressure = p
-    shear_modulus = 0.75e9
-    skeleton_bulk_modulus = 1.0e9
-    mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
+  # Legacy route-A regression: retain the original contact law and elastic
+  # oracle explicitly, independently of the active matched-log model.
+  [legacy_contact]
+    type = ADParsedMaterial
+    material_property_names = solid_reference_J
+    property_name = solid_mineral_effective_pressure
+    expression = '-1.0e9*log(solid_reference_J)/(0.9*solid_reference_J)'
   []
-  # Elastic oracle provider (a^p = 1): supplies the virgin B_el.
+  [legacy_contact_tangent]
+    type = ADParsedMaterial
+    material_property_names = solid_reference_J
+    property_name = solid_mineral_effective_pressure_jacobian_derivative
+    expression = '-1.0e9*(1-log(solid_reference_J))/(0.9*solid_reference_J^2)'
+  []
   [local_elastic]
-    type = ADLocalElasticMineralBiotMaterial
-    pressure = p
-    solid_spatial_mass_ratio = r
-    mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
-    biot_coefficient_name = elastic_biot_closed_form
-    intrinsic_specific_volume_jacobian_tangent_name = elastic_specific_volume_jacobian_tangent
+    type = ADParsedMaterial
+    coupled_variables = p
+    material_property_names = 'solid_mineral_effective_pressure solid_mineral_effective_pressure_jacobian_derivative'
+    property_name = elastic_biot_closed_form
+    expression = '1+0.9*solid_mineral_effective_pressure_jacobian_derivative/(2.5e9*exp((p+solid_mineral_effective_pressure)/2.5e9))'
   []
   [jdot_zero]
     type = ADGenericConstantMaterial

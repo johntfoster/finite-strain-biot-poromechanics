@@ -1,0 +1,254 @@
+% !TeX root = ../main.tex
+\section{A Biot coefficient from matched logarithmic stress laws}
+\label{sec:stress-trace-biot-construction}
+
+A drained double-prime stress law and a mineral stress law determine the
+finite-pressure response through the intrinsic solid stress trace.  We use
+the same logarithmic Cauchy-stress form for the skeleton and mineral and derive a
+scalar mineral residual suitable for implicit differentiation.  The
+construction is elastic, with \(\mbf F^p=\mbf I\) and \(J^e=J\), and supplies the stress-trace construction underlying
+Sec.~\ref{sec:numerical-solid-eos}.  At a fixed plastic state, replacing the
+independent volume by \(J^e\) gives the same scalar mineral equation; the
+conversion to a total-volume tangent is derived in the main text.
+
+\subsection{Skeleton and mineral stress laws}
+
+Prescribe the drained mean double-prime Cauchy stress and the
+compression-positive mean intrinsic mineral stress by
+\begin{align}
+ \left.\frac13\tr\bs\sigma^{\prime\prime}\right|_{p=0}
+ &=\frac{K\ln J}{J},
+ \label{eq:trace-drained-skeleton-stress}\\
+ \bar p_g&=-\frac13\tr\bar{\bs\sigma}_s,
+ \label{eq:trace-grain-pressure-definition}\\
+ &=-\frac{K_s\ln\bar J}{\bar J}.
+ \label{eq:trace-grain-eos-volume-form}
+\end{align}
+Both laws are derivatives of quadratic logarithmic volume energies with
+respect to their corresponding volume ratios.  The factors \(1/J\) and
+\(1/\bar J\) therefore place both laws in the same Cauchy-stress form.
+The minus sign makes mineral pressure positive in compression.  The
+constants \(K\) and \(K_s\) are the reference drained skeleton and mineral
+bulk moduli.  We take \(0<K<\phi_{s0}K_s\) for the locally stable reference
+state.  The current mineral bulk modulus is
+\begin{equation}
+ -\bar J\frac{\mathrm d\bar p_g}{\mathrm d\bar J}
+ =\frac{K_s(1-\ln\bar J)}{\bar J}.
+ \label{eq:trace-current-mineral-modulus}
+\end{equation}
+Thus the positive-tangent mineral branch has \(\bar J<\exp(1)\).
+The mechanical grain pressure \(\bar p_g\) differs from the
+density-conjugate pressure \(\bar p_s\), which equals pore
+pressure \(p\) under local thermodynamic equilibrium.
+
+The volume-weighted phase stresses and the Biot transform give
+\begin{align}
+ \bs\sigma&=\phi_s\bar{\bs\sigma}_s-(1-\phi_s)p\mbf I,
+ \label{eq:trace-phase-stress-decomposition}\\
+ \bar{\bs\sigma}_s&=\frac{\bs\sigma^{\prime}}{\phi_s}-p\mbf I,
+ \label{eq:trace-intrinsic-solid-stress}\\
+ \bs\sigma^{\prime}&=\bs\sigma^{\prime\prime}+(1-B)p\mbf I.
+ \label{eq:trace-single-prime-transform}
+\end{align}
+Taking the trace, as we did in Foster and Xu \citep[App.~B]{fosterxu2025}, yields
+\begin{equation}
+ \bar p_g=p-
+ \frac{\tfrac13\tr\bs\sigma^{\prime\prime}+(1-B)p}{\phi_s}.
+ \label{eq:trace-grain-pressure-transform}
+\end{equation}
+Combining the mineral law with this identity and solid mass conservation,
+\(\phi_s=\phi_{s0}\bar J/J\), gives
+\begin{equation}
+ \frac13\tr\bs\sigma^{\prime}
+ =\frac{\phi_{s0}}{J}\left(p\bar J+K_s\ln\bar J\right).
+ \label{eq:trace-single-prime-mineral-law}
+\end{equation}
+At zero pore pressure the two effective stresses coincide, so the drained
+skeleton law fixes the mineral-volume curve
+\begin{equation}
+ \bar J(J,0)=J^{K/(\phi_{s0}K_s)}.
+ \label{eq:trace-drained-mineral-curve}
+\end{equation}
+It passes through \(\bar J(1,0)=1\).  Its reference tangent gives
+\(B_0=1-K/K_s\); its full form supplies the boundary data away from that
+reference point.
+
+\subsection{Finite-pressure closure from stress--volume reciprocity}
+
+Under volumetric variations at fixed isochoric deformation, the pressure
+Legendre potential satisfies
+\begin{equation}
+ \left.\pder{W^{\prime}}{J}\right|_p
+ =\frac13\tr\bs\sigma^{\prime},
+ \qquad
+ \left.\pder{W^{\prime}}{p}\right|_J=\phi_{s0}\bar J.
+ \label{eq:trace-legendre-conjugacies}
+\end{equation}
+Equality of mixed derivatives gives the reciprocal relation
+\begin{equation}
+ \left.\pder{}{p}\left(\frac13\tr\bs\sigma^{\prime}\right)\right|_J
+ =\phi_{s0}\left.\pder{\bar J}{J}\right|_p.
+ \label{eq:trace-stress-mineral-reciprocity}
+\end{equation}
+Substitution of \eqref{eq:trace-single-prime-mineral-law} gives
+\begin{equation}
+ J\left.\pder{\bar J}{J}\right|_p
+ -\left(p+\frac{K_s}{\bar J}\right)
+ \left.\pder{\bar J}{p}\right|_J=\bar J.
+ \label{eq:trace-compatible-mineral-pde}
+\end{equation}
+Along its characteristic curves, \(\bar J/J\) and
+\(p\bar J+K_s\ln\bar J\) are constant.  On the drained curve,
+\(\ln\bar J=[K/(\phi_{s0}K_s)]\ln J\).  Eliminating the drained volume
+between the two invariants therefore gives
+\begin{equation}
+ p\bar J+K_s\ln\bar J
+ =\frac{KK_s}{\phi_{s0}K_s-K}\ln\left(\frac{J}{\bar J}\right).
+ \label{eq:trace-characteristic-invariant-relation}
+\end{equation}
+Collecting the logarithmic terms yields the local scalar equation
+\begin{equation}
+ \boxed{
+ K_s\ln\bar J
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p\bar J
+ -\frac{K}{\phi_{s0}}\ln J=0.}
+ \label{eq:trace-implicit-mineral-volume}
+\end{equation}
+Thus finite-pressure equilibrium requires only a scalar constitutive solve.
+For \(p\geq0\), the residual is strictly increasing in positive \(\bar J\)
+from negative to positive infinity, so the positive root is unique.  For
+negative pressure, the branch is continued from the drained state while
+retaining a positive local tangent.
+
+\subsection{Implicit state tangent and Biot coefficient}
+
+At fixed pore pressure and referential solid mass, differentiating
+\eqref{eq:trace-implicit-mineral-volume} gives
+\begin{equation}
+ \left[\frac{K_s}{\bar J}
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p\right]
+ \left.\pder{\bar J}{J}\right|_p=\frac{K}{\phi_{s0}J}.
+ \label{eq:trace-mineral-tangent-system}
+\end{equation}
+The resulting tangent and coefficient are
+\begin{align}
+ \left.\pder{\bar J}{J}\right|_p
+ &=\frac{K\bar J}
+ {\phi_{s0}J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]},
+ \label{eq:trace-mineral-volume-tangent}\\
+ B&=1-
+ \frac{K\bar J}
+ {J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]}.
+ \label{eq:trace-closed-form-biot-coefficient}
+\end{align}
+At \(J=\bar J=1\) and \(p=0\), this gives \(B_0=1-K/K_s\).
+On the entire drained path,
+\begin{equation}
+ B(J,0)=1-\frac{K}{K_s}J^{K/(\phi_{s0}K_s)-1}.
+ \label{eq:trace-drained-biot-coefficient}
+\end{equation}
+
+The same calculation fits the two-state formulation of
+Sec.~\ref{sec:fixed-pressure-constrained-tangent}.  With
+\(\mbf y=(\bar\rho_s,\phi_s)\) and
+\(\bar J=\bar\rho_{s0}/\bar\rho_s\), use
+\begin{align}
+ R_m&=J\phi_s\bar\rho_s-J\rho_s=0,
+ \label{eq:trace-local-mass-residual}\\
+ R_e&=\ln\left(\frac{\bar\rho_s}{\bar\rho_{s0}}\right)
+ +\frac{K}{\phi_{s0}K_s}\ln J
+ -\left(1-\frac{K}{\phi_{s0}K_s}\right)
+ \frac{p\bar\rho_{s0}}{K_s\bar\rho_s}=0.
+ \label{eq:trace-local-mineral-residual}
+\end{align}
+The EOS entries in the local Jacobian and explicit volume derivative are
+\begin{equation}
+ \pder{R_e}{\bar\rho_s}
+ =\frac{1}{\bar\rho_s}\left[
+ 1+\left(1-\frac{K}{\phi_{s0}K_s}\right)\frac{p\bar J}{K_s}\right],
+ \qquad
+ \pder{R_e}{J}=\frac{K}{\phi_{s0}K_sJ}.
+ \label{eq:trace-local-residual-derivatives}
+\end{equation}
+The mass-residual derivatives retain their existing form.  Solving
+\eqref{eq:implicit-local-state-tangent} therefore recovers
+\eqref{eq:trace-mineral-volume-tangent} and
+\eqref{eq:trace-closed-form-biot-coefficient}; no differentiation of an
+explicit root formula is required.
+
+\subsection{Reconstructed double-prime stress and energy check}
+
+Using the mineral residual to simplify the trace relation gives
+\begin{equation}
+ \frac13\tr\bs\sigma^{\prime}
+ =\frac{K}{J}\left(\ln J+\frac{p\bar J}{K_s}\right).
+ \label{eq:trace-closed-form-single-prime-stress}
+\end{equation}
+The Biot transform then gives the finite-pressure double-prime law,
+\begin{equation}
+ \frac13\tr\bs\sigma^{\prime\prime}
+ =\frac{K}{J}\left\{
+ \ln J+
+ \frac{\left(1-\dfrac{K}{\phi_{s0}K_s}\right)(p\bar J)^2}
+ {K_s\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]}
+ \right\}.
+ \label{eq:trace-closed-form-double-prime-stress}
+\end{equation}
+The pressure correction is quadratic near the reference state and vanishes
+on the entire drained path.  It follows from the mineral law and reciprocity.
+For a decoupled neo-Hookean isochoric response, add
+\(GJ^{-5/3}\operatorname{dev}(\mbf F\mbf F^T)\) to this mean stress times
+\(\mbf I\).  The total stress is
+\(\bs\sigma=\bs\sigma^{\prime\prime}-Bp\mbf I\).
+
+A compact verification uses the reduced energy evaluated on the mineral state,
+\begin{equation}
+ W^{\prime\prime}(\mbf F,p)
+ =\frac{G}{2}\left[J^{-2/3}\tr(\mbf F\mbf F^T)-3\right]
+ +\frac{K}{2}(\ln J)^2
+ +\frac{\phi_{s0}}{2K_s}
+ \left(1-\frac{K}{\phi_{s0}K_s}\right)(p\bar J)^2.
+ \label{eq:trace-compatible-reduced-potential}
+\end{equation}
+Its fixed-pressure deformation derivative gives the double-prime stress
+above.  Its pressure derivative is
+\(-\phi_{s0}p\,\partial\bar J/\partial p\).  Adding
+\(\phi_{s0}p\bar J\) gives \(W^{\prime}\) and recovers both conjugacies in
+\eqref{eq:trace-legendre-conjugacies}.  These checks retain the implicit
+dependence of \(\bar J\) on \(J\) and \(p\).
+
+\subsection{Reference response and admissible branch}
+
+The pressure tangent follows from the same scalar residual,
+\begin{equation}
+ \left.\pder{\bar J}{p}\right|_J
+ =-\frac{\left(1-\dfrac{K}{\phi_{s0}K_s}\right)\bar J^2}
+ {K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J}.
+ \label{eq:trace-mineral-pressure-tangent}
+\end{equation}
+At reference it gives
+\begin{equation}
+ \left.\pder{(J-\phi_{s0}\bar J)}{p}\right|_0
+ =\frac{\phi_{s0}}{K_s}-\frac{K}{K_s^2}.
+ \label{eq:trace-reference-pore-volume-storage}
+\end{equation}
+Adding fluid compressibility recovers
+\eqref{eq:classical-biot-storage-comparison}.
+Under unjacketed hydrostatic loading, \(J=\bar J\),
+\(p=-K_s\ln J/J\), and \(\phi_s=\phi_{s0}\).  The single-prime stress
+vanishes and the total stress is \(-p\mbf I\).  In the incompressible-mineral
+limit \(K_s\to\infty\), \(\bar J\to1\), \(B\to1\), and the
+double-prime law reduces to the drained skeleton response.
+
+Admissible states require \(J>0\), \(0<\bar J<\exp(1)\), and
+\(0<\phi_{s0}\bar J/J<1\).  A stable local mineral equilibrium requires
+\begin{equation}
+ K_s+\left(1-\frac{K}{\phi_{s0}K_s}\right)p\bar J>0.
+ \label{eq:trace-mineral-stability-domain}
+\end{equation}
+This condition makes the density Jacobian nonsingular and the mineral
+pressure tangent negative.  At negative pore pressure it selects the branch
+connected to the drained state; it does not assert global existence or
+stability.  The fixed-plastic-state extension and its coupled numerical
+implementation are given in Secs.~\ref{sec:inelastic-plastic-driving-stress}
+and~\ref{sec:implicit-ad-implementation}.

@@ -1,6 +1,7 @@
 #include "ADVolumetricBarotropicSkeletonStressMaterial.h"
 
 #include "metaphysicl/raw_type.h"
+#include "MatchedLogMineralState.h"
 
 registerMooseObject("MulticomponentReactiveFlowApp", ADVolumetricBarotropicSkeletonStressMaterial);
 
@@ -10,9 +11,7 @@ ADVolumetricBarotropicSkeletonStressMaterial::validParams()
   InputParameters params = Material::validParams();
   params.addClassDescription(
       "Computes the pressure-coupled double-prime first Piola stress for a decoupled "
-      "isochoric-volumetric skeleton potential and the deformation-density coupling "
-      "q_s=-K_sk ln(J_s)/(phi_s0 J_s). The quantity q_s is a contact force normalized "
-      "by reference solid volume, not an intrinsic phase pressure.");
+      "isochoric-volumetric skeleton potential and matched logarithmic mineral law.");
   params.addParam<MaterialPropertyName>(
       "deformation_gradient_name", "solid_reference_F", "Material property name for F_s.");
   params.addParam<MaterialPropertyName>(
@@ -37,11 +36,10 @@ ADVolumetricBarotropicSkeletonStressMaterial::validParams()
                                         "Output pressure-coupled double-prime first Piola stress.");
   params.addParam<MaterialPropertyName>("mineral_effective_pressure_name",
                                         "solid_mineral_effective_pressure",
-                                        "Output compression-positive deformation-density "
-                                        "coupling q_s(J_s).");
+                                        "Output compression-positive mechanical mineral pressure.");
   params.addParam<MaterialPropertyName>("mineral_effective_pressure_jacobian_derivative_name",
                                         "solid_mineral_effective_pressure_jacobian_derivative",
-                                        "Output partial q_s / partial J_s.");
+                                        "Output fixed-pressure mineral-pressure derivative with respect to J_s.");
   return params;
 }
 
@@ -76,12 +74,6 @@ ADVolumetricBarotropicSkeletonStressMaterial::computeQpProperties()
     mooseError(name(), ": requires J_s>0.");
 
   const ADReal log_J = log(J);
-  const ADReal q = -_skeleton_bulk_modulus * log_J / (_reference_solid_volume_fraction * J);
-  const ADReal q_jacobian =
-      -_skeleton_bulk_modulus * (1.0 - log_J) / (_reference_solid_volume_fraction * J * J);
-  _mineral_effective_pressure[_qp] = q;
-  _mineral_effective_pressure_jacobian_derivative[_qp] = q_jacobian;
-
   const ADRankTwoTensor F_inv_T = _F_inv[_qp].transpose();
   const ADReal I_1 = _F[_qp].doubleContraction(_F[_qp]);
   const ADReal J_minus_two_thirds = pow(J, -2.0 / 3.0);
@@ -92,13 +84,19 @@ ADVolumetricBarotropicSkeletonStressMaterial::computeQpProperties()
   const ADReal pressure =
       _equivalent_pressure[_qp] +
       (_equivalent_pressure_enrichment ? (*_equivalent_pressure_enrichment)[_qp] : 0.0);
-  const ADReal density_inverse = exp(-(pressure + q) / _mineral_bulk_modulus);
-  const ADReal density_inverse_at_zero_pressure = exp(-q / _mineral_bulk_modulus);
-  const ADRankTwoTensor q_deformation_gradient = q_jacobian * J * F_inv_T;
-
-  _effective_first_piola[_qp] =
-      skeleton_first_piola + _reference_solid_volume_fraction *
-                                 (density_inverse - density_inverse_at_zero_pressure +
-                                  pressure * density_inverse / _mineral_bulk_modulus) *
-                                 q_deformation_gradient;
+  const Real alpha = 1.0 - _skeleton_bulk_modulus /
+                              (_reference_solid_volume_fraction * _mineral_bulk_modulus);
+  const ADReal z = matchedLogMineralVolume(J, pressure, _skeleton_bulk_modulus,
+                                           _mineral_bulk_modulus,
+                                           _reference_solid_volume_fraction);
+  const ADReal D = _mineral_bulk_modulus + alpha * pressure * z;
+  const ADReal z_J = _skeleton_bulk_modulus * z /
+                    (_reference_solid_volume_fraction * J * D);
+  // Mechanical mineral pressure, obtained from the intrinsic stress trace.
+  _mineral_effective_pressure[_qp] = -_mineral_bulk_modulus * log(z) / z;
+  _mineral_effective_pressure_jacobian_derivative[_qp] =
+      -_mineral_bulk_modulus * (1.0 - log(z)) * z_J / (z * z);
+  _effective_first_piola[_qp] = skeleton_first_piola +
+      (_skeleton_bulk_modulus * alpha * pressure * pressure * z * z /
+       (_mineral_bulk_modulus * D)) * F_inv_T;
 }

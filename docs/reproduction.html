@@ -63,27 +63,22 @@ agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh setup   # 
       <h3>2 · Build the MOOSE application</h3>
       <pre><code>make build</code></pre>
 
-      <h3>3 · Run all MOOSE tests (Mandel + poroplastic)</h3>
-      <pre><code>make test
-cd moose_app
-../agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
-  python3 ../.agent-runtime/moose/python/run_tests --no-color -j1 --re=poroplastic
-cd ..</code></pre>
+      <h3>3 · Run all MOOSE tests</h3>
+      <pre><code>make test</code></pre>
 
-      <h3>4 · Regenerate the poroplastic validation data</h3>
-      <pre><code>agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
-  python3 validation/scripts/curate_poroplastic_delta_b.py
-agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
-  python3 validation/scripts/check_poroplastic_general_path.py
-agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
-  python3 validation/scripts/check_poroplastic_load_unload.py
-agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
-  python3 validation/scripts/check_poroplastic_b_feedback.py
-agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
-  python3 validation/scripts/check_tensorial_load_unload.py</code></pre>
+      <h3>4 · Verify and regenerate implicit poroplastic data</h3>
+      <pre><code>make plastic</code></pre>
+      <p>The current material checks physical mass, mineral compression,
+      energy-derived stress, flow, yield, objectivity and derivatives. Archived
+      plastic prototypes retain their original regression tests and are excluded
+      from the manuscript's physical evidence.</p>
 
       <h3>5 · Mandel analytical + AD verification</h3>
       <pre><code>make mandel</code></pre>
+      <p>The closed-form Biot coefficient is checked against the general implicit
+      tangent and centered differences of perturbed mineral solves. The coupled
+      outer AD Jacobian, mass and EOS residuals, and analytical profiles are
+      checked separately.</p>
 
       <h3>6 · Regenerate all figures</h3>
       <pre><code>make figures</code></pre>
@@ -101,11 +96,12 @@ make validate</code></pre>
       <table>
         <thead><tr><th>Target</th><th>What it does</th></tr></thead>
         <tbody>
-          <tr><td><code>make reproduce</code></td><td><code>sync-check → test → mandel → figures → paper → provenance → validate</code></td></tr>
+          <tr><td><code>make reproduce</code></td><td><code>sync-check → test → mandel → plastic → figures → paper → provenance → validate</code></td></tr>
           <tr><td><code>make build</code></td><td>Build the MOOSE app inside the conda environment</td></tr>
-          <tr><td><code>make test</code></td><td>Run the Mandel MOOSE tests</td></tr>
+          <tr><td><code>make test</code></td><td>Run elastic, implicit plastic and archived prototype MOOSE tests</td></tr>
           <tr><td><code>make mandel</code></td><td>Run the full analytical + AD Mandel verification</td></tr>
-          <tr><td><code>make figures</code></td><td>Regenerate every figure with matplotlib (PGF + PNG/PDF)</td></tr>
+          <tr><td><code>make plastic</code></td><td>Verify and curate the implicit poroplastic paths</td></tr>
+          <tr><td><code>make figures</code></td><td>Regenerate the current manuscript and website figures</td></tr>
           <tr><td><code>make paper</code></td><td>Build the PDF manuscript with latexmk + lualatex</td></tr>
           <tr><td><code>make provenance</code></td><td>Regenerate content hashes into <code>validation/provenance.yml</code></td></tr>
           <tr><td><code>make validate</code></td><td>Fail-closed repository audit</td></tr>

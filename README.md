@@ -2,17 +2,20 @@
 
 This repository contains the manuscript, minimal MOOSE application, validation
 data, and agent workflow for computing a finite-deformation Biot coefficient
-from a general fixed-pressure local constitutive update.  The elastic mineral
-response is the verification specialization.
+from matched logarithmic skeleton and mineral stress laws. Implicit
+differentiation gives a closed-form coefficient in terms of the current states.
+An implicit poroplastic material retains active history and pressure coupling.
+The closed-form derivation, verification results, and benchmark parameter
+adjustments are recorded in [the upgrade verification report](validation/closed_form_upgrade_verification.md).
 
 The physical specialization contains one deformable solid and one water phase.
 The global fields are Q2 displacement, continuous Q1 water pressure, and Q2
 solid partial density. Spatial solid mass balance evolves the partial density;
 the local constitutive update supplies intrinsic solid density, solid volume
-fraction, and any inelastic internal variables. Implicit differentiation of the
-complete local residual system supplies the fixed-pressure Biot coefficient.
-The elastic closure supplies analytical and centered-difference tests of this
-general path. Spatial water mass balance
+fraction, and any inelastic internal variables. A scalar solve determines the
+mineral volume, and the closed-form expression supplies the fixed-pressure Biot
+coefficient. A general two-state implicit tangent and centered differences of
+perturbed mineral solves independently verify that coefficient. Spatial water mass balance
 uses a barotropic pressure--density equation of state. The Biot transform maps
 the constitutive double-prime stress to the single-prime material stress and
 the total mixture stress. These local dependencies remain in the outer MOOSE
@@ -23,6 +26,13 @@ profiles with the analytical plane-strain solution. A finite-deformation
 continuation reports the departure of the Biot coefficient from its reference
 value and provides two-dimensional Biot-coefficient and solid-density
 snapshots. The discretization has no pressure enrichment or EG operators.
+
+The plastic demonstration uses `ADImplicitPoroplasticBiotMaterial`. Its current
+plastic state remains active in the outer AD calculation, while the derivative
+defining B fixes that state. Run `make plastic` to verify the physical identities
+and regenerate the material-point data. Earlier plastic prototypes remain in
+the archive; their physical limitations are recorded in
+`validation/manuscript_constitutive_audit_2026-09-08.md`.
 
 ## Repository layout
 

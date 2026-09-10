@@ -33,7 +33,7 @@
       <p class="lead">
         The flagship example: the plane-strain <strong>Mandel consolidation</strong> problem
         solved with a Q2 displacement / continuous Q1 water-pressure / Q2 solid partial-density
-        discretization and an implicit automatic-differentiation Biot coefficient. The spatial
+        discretization and the state-based closed-form Biot coefficient from the matched logarithmic laws. The spatial
         water-pressure and displacement profiles are compared with the analytical
         Cheng–Detournay series, and a finite-deformation continuation reports the departure of
         the Biot coefficient from its small-strain reference together with two-dimensional
@@ -41,9 +41,9 @@
       </p>
       <div class="callout">
         No pressure enrichment, reconstructed EG pressure material, EG facet operator, or
-        pressure stabilization is used. The Biot coefficient is produced by the general
-        constrained implicit tangent (<code>ADConstrainedSkeletonBiotMaterial</code>), with the
-        elastic specialization retained only as an independent closed-form oracle.
+        pressure stabilization is used. The closed-form Biot coefficient is evaluated from the solved mineral state.
+        An independent two-state implicit tangent (<code>ADConstrainedSkeletonBiotMaterial</code>)
+        and a centered difference verify the result.
       </div>
     </section>
 
@@ -58,17 +58,17 @@
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C">ADLocalElasticMineralBiotMaterial</a>
-          <span class="desc">Elastic mineral state: intrinsic solid density, solid volume fraction, material-mass and mineral-EOS residuals, their partial derivatives, and a closed-form Biot oracle.</span>
-          <span class="why">Why: the verification specialization of the local constitutive update; its closed-form coefficient independently cross-checks the general tangent.</span>
+          <span class="desc">Elastic mineral state: intrinsic solid density, solid volume fraction, material-mass and mineral-EOS residuals, their partial derivatives, and the production closed-form Biot coefficient.</span>
+          <span class="why">Why: the verification specialization of the local constitutive update; the matched logarithmic mineral law supplies the state and its pressure-dependent coefficient.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C">ADConstrainedSkeletonBiotMaterial</a>
-          <span class="desc">Solves the dense AD-valued implicit local tangent at fixed intrinsic phase pressure and fixed referential solid mass, returning the production Biot coefficient.</span>
-          <span class="why">Why: the production path — the fixed-pressure Biot coefficient <code>B = 1 − φ<sub>s0</sub> d(J̄/a<sup>p</sup>)/dJ</code> used by the momentum balance.</span>
+          <span class="desc">Solves the dense AD-valued implicit local tangent at fixed intrinsic phase pressure and fixed referential solid mass, returning an independent Biot coefficient diagnostic.</span>
+          <span class="why">Why: verifies the production expression through <code>B = 1 − φ<sub>s0</sub> dJ̄/dJ</code> at fixed pressure and plastic state.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C">ADVolumetricBarotropicSkeletonStressMaterial</a>
-          <span class="desc">Pressure-coupled effective skeleton stress from the volumetric barotropic potential <code>W₀ = μ/2(J<sup>−2/3</sup>I₁ − 3) + K<sub>sk</sub>/2 (ln J)²</code>.</span>
+          <span class="desc">Pressure-coupled double-prime skeleton stress from the matched logarithmic model and its compatible reduced potential.</span>
           <span class="why">Why: produces the double-prime first Piola stress <code>P″</code> entering the Biot transform.</span>
         </li>
         <li>
@@ -150,6 +150,10 @@
           <span class="desc">Runs the Mandel deck on coarse/fine/finer meshes and time steps, evaluates the analytical pressure/displacement agreement, Biot identity, centered-difference tangent, solid-mass drift, and mineral-EOS residual, and reports the acceptance gates.</span>
         </li>
         <li>
+          <a href="source.html?f=../scripts/reproduce_mandel_publication.py">reproduce_mandel_publication.py</a>
+          <span class="desc">Regenerates the analytical platen history, small-load profiles, finite-deformation continuation, mesh/time sensitivity, and curated validation records.</span>
+        </li>
+        <li>
           <a href="source.html?f=../scripts/curate_mandel_profiles.py">curate_mandel_profiles.py</a>
           <span class="desc">Curates the publication pressure, displacement, and large-deformation profile CSVs from MOOSE line-sampler output.</span>
         </li>
@@ -186,6 +190,10 @@
 
     <section class="section">
       <h2>Validation data</h2>
+      <p>The full benchmark passes the existing pressure (3.71%), side-displacement
+        (0.649%), and load (0.238%) error limits. At ten-percent platen compression,
+        the final mean coefficient is 0.58219, a 2.97% departure from B<sub>0</sub> = 0.6.
+        The matched logarithmic laws recover classical single-mineral storage at the reference state.</p>
       <ul class="file-list">
         <li><a href="source.html?f=../validation/mandel_implicit_biot.yml">mandel_implicit_biot.yml</a><span class="desc">Curated verification summary (tolerances, metrics, gates).</span></li>
         <li><a href="../validation/mandel_pressure_profiles.csv">mandel_pressure_profiles.csv</a><span class="desc">Analytical-vs-computed pressure profiles.</span></li>
@@ -201,7 +209,7 @@
       <p>Build, run, verify, and plot this example with:</p>
       <pre><code>make build
 make test        # Mandel smoke / BDF2 / verification / Jacobian tests
-make mandel      # full analytical + AD verification
+make mandel      # full benchmark, continuation, and publication-data curation
 make figures     # regenerate the figures above</code></pre>
       <p>See <a href="reproduction.html">Reproduce</a> for the complete manuscript pipeline.</p>
     </section>

@@ -49,6 +49,10 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
 []
 
 [AuxVariables]
+  [biot_coefficient_state]
+    family = MONOMIAL
+    order = CONSTANT
+  []
   [solid_intrinsic_density_ratio_state]
     family = MONOMIAL
     order = CONSTANT
@@ -75,7 +79,7 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
   [top_displacement]
     type = PiecewiseLinear
     x = '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.142 0.158 0.174 0.19 0.206 0.222 0.238 0.254 0.27 0.286 0.302 0.318 0.334 0.35 0.366 0.382 0.398 0.414 0.43 0.446 0.462 0.478 0.494 0.51 0.526 0.542 0.558 0.574 0.59 0.606 0.622 0.638 0.654 0.67 0.686 0.702'
-    y = '${fparse -0.04473579449729*deformation_scale} ${fparse -0.04522574465159*deformation_scale} ${fparse -0.04568296258292*deformation_scale} ${fparse -0.0462638653703*deformation_scale} ${fparse -0.04706245003807*deformation_scale} ${fparse -0.0476771137399*deformation_scale} ${fparse -0.04819983243093*deformation_scale} ${fparse -0.04866222121661*deformation_scale} ${fparse -0.04907831764185*deformation_scale} ${fparse -0.04945555186141*deformation_scale} ${fparse -0.04979864675995*deformation_scale} ${fparse -0.05011111680537*deformation_scale} ${fparse -0.05039586023283*deformation_scale} ${fparse -0.0506554010407*deformation_scale} ${fparse -0.05089199455273*deformation_scale} ${fparse -0.05110767918176*deformation_scale} ${fparse -0.05130430642806*deformation_scale} ${fparse -0.05148356158098*deformation_scale} ${fparse -0.0516469800223*deformation_scale} ${fparse -0.05179596109583*deformation_scale} ${fparse -0.05193178036774*deformation_scale} ${fparse -0.05205560065529*deformation_scale} ${fparse -0.05216848202376*deformation_scale} ${fparse -0.05227139087811*deformation_scale} ${fparse -0.05236520824278*deformation_scale} ${fparse -0.05245073730676*deformation_scale} ${fparse -0.05252871030074*deformation_scale} ${fparse -0.05259979476626*deformation_scale} ${fparse -0.05266459927078*deformation_scale} ${fparse -0.05272367861783*deformation_scale} ${fparse -0.05277753859675*deformation_scale} ${fparse -0.05282664031291*deformation_scale} ${fparse -0.05287140413529*deformation_scale} ${fparse -0.05291221329535*deformation_scale} ${fparse -0.05294941716795*deformation_scale} ${fparse -0.05298333426241*deformation_scale} ${fparse -0.05301425494932*deformation_scale} ${fparse -0.05304244394647*deformation_scale} ${fparse -0.05306814258513*deformation_scale} ${fparse -0.05309157087617*deformation_scale} ${fparse -0.05311292939357*deformation_scale} ${fparse -0.05313240099158*deformation_scale} ${fparse -0.05315015237022*deformation_scale} ${fparse -0.05316633550234*deformation_scale} ${fparse -0.05318108893478*deformation_scale} ${fparse -0.05319453897443*deformation_scale} ${fparse -0.0532068007696*deformation_scale}'
+    y = '${fparse -0.0419771815701955*deformation_scale} ${fparse -0.0427302686674154*deformation_scale} ${fparse -0.0434127120839256*deformation_scale} ${fparse -0.0442886698279412*deformation_scale} ${fparse -0.0455091812735037*deformation_scale} ${fparse -0.0464596499348389*deformation_scale} ${fparse -0.0472682456066736*deformation_scale} ${fparse -0.0479747485683798*deformation_scale} ${fparse -0.0485971093691553*deformation_scale} ${fparse -0.0491467002296859*deformation_scale} ${fparse -0.0496323879221514*deformation_scale} ${fparse -0.0500616974080911*deformation_scale} ${fparse -0.0504411980354753*deformation_scale} ${fparse -0.050776675278685*deformation_scale} ${fparse -0.0510732377476134*deformation_scale} ${fparse -0.0513353999490549*deformation_scale} ${fparse -0.0515671523222325*deformation_scale} ${fparse -0.0517720223248796*deformation_scale} ${fparse -0.051953128215522*deformation_scale} ${fparse -0.0521132265396356*deformation_scale} ${fparse -0.0522547540923857*deformation_scale} ${fparse -0.0523798650098385*deformation_scale} ${fparse -0.0524904635566767*deformation_scale} ${fparse -0.0525882331103904*deformation_scale} ${fparse -0.052674661783343*deformation_scale} ${fparse -0.0527510650727585*deformation_scale} ${fparse -0.0528186058833959*deformation_scale} ${fparse -0.0528783122276706*deformation_scale} ${fparse -0.0529310928726318*deformation_scale} ${fparse -0.0529777511719526*deformation_scale} ${fparse -0.0530189972934639*deformation_scale} ${fparse -0.0530554590283425*deformation_scale} ${fparse -0.0530876913464769*deformation_scale} ${fparse -0.0531161848434476*deformation_scale} ${fparse -0.0531413732076924*deformation_scale} ${fparse -0.0531636398215089*deformation_scale} ${fparse -0.0531833235963676*deformation_scale} ${fparse -0.0532007241313516*deformation_scale} ${fparse -0.0532161062732375*deformation_scale} ${fparse -0.0532297041476256*deformation_scale} ${fparse -0.0532417247224745*deformation_scale} ${fparse -0.0532523509582798*deformation_scale} ${fparse -0.0532617445928445*deformation_scale} ${fparse -0.0532700486030276*deformation_scale} ${fparse -0.0532773893809391*deformation_scale} ${fparse -0.0532838786577052*deformation_scale} ${fparse -0.0532896152040841*deformation_scale}'
   []
 []
 
@@ -98,11 +102,14 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
   []
   [local_solid_state]
     type = ADLocalElasticMineralBiotMaterial
+    finite_difference_step = 1e-5
+    biot_finite_difference_name = biot_fixed_pressure_fd_check
+    skeleton_bulk_modulus = ${skeleton_bulk_modulus_pa}
     pressure = p
     solid_spatial_mass_ratio = solid_spatial_mass_ratio
     mineral_bulk_modulus = ${mineral_bulk_modulus_pa}
     reference_solid_volume_fraction = ${initial_solid_volume_fraction}
-    biot_coefficient_name = elastic_biot_closed_form
+    biot_coefficient_name = solid_biot_coefficient
     intrinsic_specific_volume_jacobian_tangent_name = elastic_specific_volume_jacobian_tangent
   []
   [solid_reference_accumulation_for_biot]
@@ -120,6 +127,7 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
   []
   [constrained_biot_state]
     type = ADConstrainedSkeletonBiotMaterial
+    biot_coefficient_name = solid_biot_implicit_diagnostic
     constraint_residual_names = 'solid_local_material_mass_constraint solid_mineral_eos_constraint'
     implicit_state_symbols = 'solid_intrinsic_density_ratio solid_volume_fraction'
     constraint_residual_scales = '1 1'
@@ -156,28 +164,11 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
     reference_mobility_name = water_mobility_ref
     reference_mass_flux_name = water_reference_mass_flux
   []
-  [biot_analytic_check]
-    type = ADParsedMaterial
-    material_property_names = 'solid_reference_J solid_intrinsic_density_ratio solid_biot_coefficient'
-    property_name = biot_analytic_check
-    constant_names = 'ksk ks'
-    constant_expressions = '${skeleton_bulk_modulus_pa} ${mineral_bulk_modulus_pa}'
-    expression = '1-ksk*(1-log(solid_reference_J))/(ks*solid_intrinsic_density_ratio*solid_reference_J^2)'
-  []
   [biot_analytic_error]
     type = ADParsedMaterial
-    material_property_names = 'solid_biot_coefficient elastic_biot_closed_form'
+    material_property_names = 'solid_biot_coefficient solid_biot_implicit_diagnostic'
     property_name = biot_analytic_error
-    expression = 'solid_biot_coefficient-elastic_biot_closed_form'
-  []
-  [biot_fixed_pressure_fd_check]
-    type = ADParsedMaterial
-    coupled_variables = p
-    material_property_names = solid_reference_J
-    property_name = biot_fixed_pressure_fd_check
-    constant_names = 'phi0 ksk ks h'
-    constant_expressions = '${initial_solid_volume_fraction} ${skeleton_bulk_modulus_pa} ${mineral_bulk_modulus_pa} 1e-5'
-    expression = '1-phi0*(exp(-(p-ksk*log(solid_reference_J+h)/(phi0*(solid_reference_J+h)))/ks)-exp(-(p-ksk*log(solid_reference_J-h)/(phi0*(solid_reference_J-h)))/ks))/(2*h)'
+    expression = 'solid_biot_coefficient-solid_biot_implicit_diagnostic'
   []
   [biot_fixed_pressure_fd_error]
     type = ADParsedMaterial
@@ -226,6 +217,12 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
 []
 
 [AuxKernels]
+  [biot_coefficient_output]
+    type = ADMaterialRealAux
+    variable = biot_coefficient_state
+    property = solid_biot_coefficient
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
   [solid_intrinsic_density_ratio_output]
     type = ADMaterialRealAux
     variable = solid_intrinsic_density_ratio_state

@@ -21,7 +21,6 @@ repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd "${repo_root}"
 
 env_script="agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh"
-run_tests="${repo_root}/.agent-runtime/moose/python/run_tests"
 
 step() { printf '\n\033[1;34m== %s ==\033[0m\n' "$*"; }
 
@@ -31,19 +30,15 @@ step "0. Environment status"
 step "1. Shared-source integrity check"
 tools/sync_biot_moose.py check
 
-step "2. Build the MOOSE application"
+step "2. Verify the closed-form derivation and build the MOOSE application"
+make derivation
 make build
 
 step "3. Run all MOOSE tests (Mandel + poroplastic)"
 make test
-"${env_script}" run -- python3 "${run_tests}" --no-color -j1 --re=poroplastic
 
-step "4. Regenerate poroplastic validation data"
-"${env_script}" run -- python3 validation/scripts/curate_poroplastic_delta_b.py
-"${env_script}" run -- python3 validation/scripts/check_poroplastic_general_path.py
-"${env_script}" run -- python3 validation/scripts/check_poroplastic_load_unload.py
-"${env_script}" run -- python3 validation/scripts/check_poroplastic_b_feedback.py
-"${env_script}" run -- python3 validation/scripts/check_tensorial_load_unload.py
+step "4. Regenerate and verify implicit poroplastic data"
+make plastic
 
 step "5. Mandel analytical + AD verification"
 make mandel

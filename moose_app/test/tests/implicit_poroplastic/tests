@@ -1,0 +1,19 @@
+[Tests]
+  design = 'validation/manuscript_constitutive_audit_2026-09-08.md'
+  issues = ''
+  [implicit_plastic_active_jacobian]
+    type = PetscJacobianTester
+    input = active_jacobian.i
+    run_sim = true
+    ratio_tol = 1e-7
+    difference_tol = 1e-5
+    max_time = 180
+    requirement = 'An active implicit poroplastic return at nonzero pressure shall preserve the outer AD derivatives of stress invariants, plastic distention and the constrained Biot coefficient in algebraic material residuals.'
+  []
+  [implicit_plastic_consistency]
+    type = RunCommand
+    command = 'python3 ../../../../validation/scripts/check_implicit_poroplastic.py --quick'
+    max_time = 300
+    requirement = 'The converged plastic state shall satisfy independent mass, EOS, exponential-flow, stress-reconstruction and yield checks through loading, unloading and reloading.'
+  []
+[]

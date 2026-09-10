@@ -2,6 +2,7 @@
 //* SPDX-License-Identifier: LGPL-2.1-or-later
 
 #include "ADConstantDeformationGradientMaterial.h"
+#include <cmath>
 
 registerMooseObject("MulticomponentReactiveFlowApp", ADConstantDeformationGradientMaterial);
 
@@ -19,6 +20,8 @@ ADConstantDeformationGradientMaterial::validParams()
                        "Optional auxiliary variable giving the axial stretch F_yy; overrides "
                        "the axial_stretch parameter for time-ramped material tests.");
   params.addParam<Real>("out_of_plane_stretch", 1.0, "Out-of-plane stretch F_zz.");
+  params.addParam<Real>(
+      "rotation_angle", 0., "Superposed rotation about z for objectivity checks.");
   params.addParam<MaterialPropertyName>(
       "deformation_gradient_name", "solid_reference_F", "Output deformation gradient F.");
   params.addParam<MaterialPropertyName>(
@@ -34,9 +37,9 @@ ADConstantDeformationGradientMaterial::ADConstantDeformationGradientMaterial(
     _transverse_stretch(getParam<Real>("transverse_stretch")),
     _axial_stretch(getParam<Real>("axial_stretch")),
     _out_of_plane_stretch(getParam<Real>("out_of_plane_stretch")),
-    _axial_var(isCoupled("axial_stretch_variable")
-                   ? &coupledValue("axial_stretch_variable")
-                   : nullptr),
+    _rotation(getParam<Real>("rotation_angle")),
+    _axial_var(isCoupled("axial_stretch_variable") ? &adCoupledValue("axial_stretch_variable")
+                                                   : nullptr),
     _F(declareADProperty<RankTwoTensor>(
         getParam<MaterialPropertyName>("deformation_gradient_name"))),
     _J(declareADProperty<Real>(getParam<MaterialPropertyName>("jacobian_name"))),
@@ -48,22 +51,25 @@ ADConstantDeformationGradientMaterial::ADConstantDeformationGradientMaterial(
 void
 ADConstantDeformationGradientMaterial::computeQpProperties()
 {
-  const Real axial =
-      _axial_var ? (*_axial_var)[_qp] : _axial_stretch;
-  RankTwoTensor F;
+  const ADReal axial = _axial_var ? (*_axial_var)[_qp] : _axial_stretch;
+  ADRankTwoTensor F;
   F(0, 0) = _transverse_stretch;
   F(1, 1) = axial;
   F(2, 2) = _out_of_plane_stretch;
-  _F[_qp] = F;
+  RankTwoTensor rotation(RankTwoTensor::initIdentity);
+  rotation(0, 0) = rotation(1, 1) = std::cos(_rotation);
+  rotation(0, 1) = -std::sin(_rotation);
+  rotation(1, 0) = std::sin(_rotation);
+  _F[_qp] = rotation * F;
 
-  const Real J = _transverse_stretch * axial * _out_of_plane_stretch;
+  const ADReal J = _transverse_stretch * axial * _out_of_plane_stretch;
   if (J <= 0.0)
     mooseError(name(), ": requires J_s>0.");
   _J[_qp] = J;
 
-  RankTwoTensor Fi;
+  ADRankTwoTensor Fi;
   Fi(0, 0) = 1.0 / _transverse_stretch;
   Fi(1, 1) = 1.0 / axial;
   Fi(2, 2) = 1.0 / _out_of_plane_stretch;
-  _F_inv[_qp] = Fi;
+  _F_inv[_qp] = Fi * rotation.transpose();
 }
