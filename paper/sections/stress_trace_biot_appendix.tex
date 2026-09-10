@@ -14,32 +14,31 @@ conversion to a total-volume tangent is derived in the main text.
 \subsection{Skeleton and mineral stress laws}
 
 Prescribe the drained mean double-prime Cauchy stress and the
-compression-positive mean intrinsic mineral stress by
+mean intrinsic mineral stress by
 \begin{align}
  \left.\frac13\tr\bs\sigma^{\prime\prime}\right|_{p=0}
  &=\frac{K\ln J}{J},
  \label{eq:trace-drained-skeleton-stress}\\
- \bar p_g&=-\frac13\tr\bar{\bs\sigma}_s,
- \label{eq:trace-grain-pressure-definition}\\
- &=-\frac{K_s\ln\bar J}{\bar J}.
+ \frac13\tr\bar{\bs\sigma}_s
+ &=\frac{K_s\ln\bar J}{\bar J}.
  \label{eq:trace-grain-eos-volume-form}
 \end{align}
 Both laws are derivatives of quadratic logarithmic volume energies with
 respect to their corresponding volume ratios.  The factors \(1/J\) and
 \(1/\bar J\) therefore place both laws in the same Cauchy-stress form.
-The minus sign makes mineral pressure positive in compression.  The
-constants \(K\) and \(K_s\) are the reference drained skeleton and mineral
+Both mean stresses are negative in compression.  The constants \(K\) and \(K_s\) are the reference drained skeleton and mineral
 bulk moduli.  We take \(0<K<\phi_{s0}K_s\) for the locally stable reference
 state.  The current mineral bulk modulus is
 \begin{equation}
- -\bar J\frac{\mathrm d\bar p_g}{\mathrm d\bar J}
+ \bar J\frac{\mathrm d}{\mathrm d\bar J}
+ \left(\frac13\tr\bar{\bs\sigma}_s\right)
  =\frac{K_s(1-\ln\bar J)}{\bar J}.
  \label{eq:trace-current-mineral-modulus}
 \end{equation}
 Thus the positive-tangent mineral branch has \(\bar J<\exp(1)\).
-The mechanical grain pressure \(\bar p_g\) differs from the
-density-conjugate pressure \(\bar p_s\), which equals pore
-pressure \(p\) under local thermodynamic equilibrium.
+The intrinsic solid stress includes the skeleton contribution, while the
+density-conjugate pressure \(\bar p_s\) equals pore pressure \(p\) under
+local thermodynamic equilibrium.
 
 The volume-weighted phase stresses and the Biot transform give
 \begin{align}
@@ -52,9 +51,9 @@ The volume-weighted phase stresses and the Biot transform give
 \end{align}
 Taking the trace, as we did in Foster and Xu \citep[App.~B]{fosterxu2025}, yields
 \begin{equation}
- \bar p_g=p-
- \frac{\tfrac13\tr\bs\sigma^{\prime\prime}+(1-B)p}{\phi_s}.
- \label{eq:trace-grain-pressure-transform}
+ \frac13\tr\bar{\bs\sigma}_s
+ =\frac{\tfrac13\tr\bs\sigma^{\prime\prime}+(1-B)p}{\phi_s}-p.
+ \label{eq:trace-intrinsic-solid-mean-stress-transform}
 \end{equation}
 Combining the mineral law with this identity and solid mass conservation,
 \(\phi_s=\phi_{s0}\bar J/J\), gives

@@ -14,6 +14,10 @@
 
 ## Commit messages as process logs
 
+- For every request to create a commit, use
+  `agent_environment/skills/commit/SKILL.md`, including when committing is one
+  step of a larger request. Synthesize the session history before invoking the
+  skill's commit helper; the hooks validate the narrative but do not write it.
 - Every commit carries the full development narrative, not just a one-line
   summary. The one-line header remains a concise summary; the commit body
   records how the repository moved from the previous commit to this one.

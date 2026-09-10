@@ -76,9 +76,8 @@ pressure \citep[eq.~(27c)]{fosterxu2025},
 \end{equation}
 where \(\bar p_f\) and \(\bar p_s\) are the intrinsic water and solid
 thermodynamic pressures, respectively, and any internal variables are held
-fixed.  The grain pressure \(\bar p_g\) is defined as the negative mean
-intrinsic solid stress and also contains the contribution of skeleton
-deformation.  Consequently, pressure equilibrium does not require
+fixed.  The intrinsic solid stress also contains the contribution of
+skeleton deformation.  Consequently, pressure equilibrium does not require
 the effective solid stress to be deviatoric.
 
 Write \(W_s=\rho_{s0}\psi_s\) per unit reference mixture volume.  In terms
@@ -211,38 +210,208 @@ distention of the porous structure and compression of the mineral.
 \label{sec:numerical-solid-eos}
 
 Let \(K\) and \(K_s\) be the reference drained skeleton and mineral bulk
-moduli, with \(0<K<\phi_{s0}K_s\).  We prescribe the same logarithmic
-volumetric form for the drained skeleton and the mineral.  At fixed plastic
-state, their mean stresses satisfy
-\begin{align}
- \left.\frac13\tr\bs\tau^{\prime\prime}\right|_{p=0}
- &=K\ln J^e,
- \label{eq:drained-volumetric-energy-derivative}\\
- \bar p_g=-\frac13\tr\bar{\bs\sigma}_s
- &=-\frac{K_s\ln\bar J}{\bar J}.
- \label{eq:matched-logarithmic-mineral-stress}
-\end{align}
-Here \(\bs\tau^{\prime\prime}=J\bs\sigma^{\prime\prime}\) is the
-Kirchhoff stress formed with the total mixture Jacobian.  In the elastic
-specialization, \(J^e=J\), and the mean skeleton Cauchy stress is
-\(K\ln J/J\), matching the mineral's logarithmic Cauchy-stress form.
-The mechanical grain pressure \(\bar p_g\) is distinct from the
-thermodynamic pressure \(\bar p_s=p\).
-The mineral tangent modulus is \(K_s(1-\ln\bar J)/\bar J\), so \(K_s\)
-is its reference value.
-
-The solid stress trace relates the two volume changes.  Volume weighting
-of the intrinsic phase stresses gives
+moduli, with \(0<K<\phi_{s0}K_s\).  We first prescribe the skeleton
+response at zero pore pressure and the mineral response to compression.
+The skeleton energy is measured per unit original mixture reference volume.
+We choose its drained volumetric part to be \(K(\ln J^e)^2/2\).
+To obtain the corresponding stress, consider a variation at fixed pore
+pressure \(p=0\) and fixed plastic deformation \(\mbf F^p\).  Since
+\(J^e=J/a^p\), the logarithmic volume increments satisfy
 \begin{equation}
- \frac13\tr\bs\tau^{\prime}
- =\phi_{s0}\left(p\bar J+K_s\ln\bar J\right).
- \label{eq:constitutive-single-prime-mineral-trace}
+ \delta\ln J^e=\delta\ln J,
+ \qquad \delta a^p=0.
+ \label{eq:fixed-plastic-log-volume-variation}
 \end{equation}
-On the drained path this fixes
-\(\bar J=(J^e)^{K/(\phi_{s0}K_s)}\).  Equality of the mixed derivatives
-of the pressure Legendre potential extends that path to finite pressure;
-Appendix~\ref{sec:stress-trace-biot-construction} gives the integration.
-Holding the current plastic state fixed gives the scalar mineral equation
+A purely volumetric variation holds \((J^e)^{-1/3}\mbf F^e\) fixed.
+Differentiating this condition and then \(\mbf F=\mbf F^e\mbf F^p\)
+gives
+\begin{align}
+ \delta\mbf F^e&=\frac13\mbf F^e\,\delta\ln J^e,
+ \label{eq:elastic-volumetric-deformation-variation}\\
+ \delta\mbf F&=\delta\mbf F^e\mbf F^p,
+ \label{eq:fixed-plastic-deformation-variation}\\
+ &=\frac13\mbf F\,\delta\ln J^e.
+ \label{eq:total-volumetric-deformation-variation}
+\end{align}
+The deformation derivative of \(W^{\prime\prime}\) is
+\(\mbf P^{\prime\prime}\), as defined in
+\eqref{eq:double-prime-energy-conjugate}.  Its work in this variation is
+\begin{align}
+ \delta W^{\prime\prime}
+ &=\mbf P^{\prime\prime}:\delta\mbf F,
+ \label{eq:drained-energy-first-piola-work}\\
+ &=\frac13\tr\left(\mbf P^{\prime\prime}\mbf F^T\right)
+ \delta\ln J^e,
+ \label{eq:drained-energy-volumetric-work}\\
+ &=\frac J3\tr\bs\sigma^{\prime\prime}\,\delta\ln J^e.
+ \label{eq:drained-energy-cauchy-work}
+\end{align}
+The last step uses the Cauchy-stress transformation
+\(\bs\sigma^{\prime\prime}=J^{-1}\mbf P^{\prime\prime}\mbf F^T\).
+It identifies the Kirchhoff stress as
+\begin{equation}
+ \bs\tau^{\prime\prime}=J\bs\sigma^{\prime\prime}.
+ \label{eq:drained-kirchhoff-volume-convention}
+\end{equation}
+The factor \(J\) converts work per unit current mixture volume to work per
+unit original reference volume.  The elastic ratio \(J^e\) measures the
+recoverable volume change in the energy.
+
+For the chosen drained energy, the isochoric contribution is constant in
+this variation, so direct differentiation gives
+\begin{align}
+ \delta W^{\prime\prime}
+ &=\delta\left[\frac K2(\ln J^e)^2\right],
+ \label{eq:drained-logarithmic-energy-variation}\\
+ &=K\ln J^e\,\delta\ln J^e.
+ \label{eq:drained-logarithmic-energy-differential}
+\end{align}
+Comparing the coefficients of the arbitrary increment \(\delta\ln J^e\)
+in \eqref{eq:drained-energy-cauchy-work} and
+\eqref{eq:drained-logarithmic-energy-differential} yields
+\begin{equation}
+ \left.\frac13\tr\bs\tau^{\prime\prime}\right|_{p=0}
+ =K\ln J^e.
+ \label{eq:drained-volumetric-energy-derivative}
+\end{equation}
+Thus the drained mean skeleton Cauchy stress is \(K\ln J^e/J\).
+In the elastic specialization, \(a^p=1\) and \(J^e=J\), this becomes
+\(K\ln J/J\).
+
+For the mineral, we prescribe the volumetric energy per unit reference
+mineral volume as
+\begin{equation}
+ \bar W_{s,\mathrm{vol}}(\bar J)=\frac{K_s}{2}(\ln\bar J)^2.
+ \label{eq:mineral-volumetric-reference-energy}
+\end{equation}
+This energy specifies the mineral's volume response.  The coupled solid
+energy \(W_s\) is measured per unit reference mixture volume and will be
+constructed below from the skeleton and mineral laws.
+
+Consider a volumetric variation of the true elastic deformation at fixed
+true-plastic state.  Holding \(\bar J^{-1/3}\bar{\mbf F}^e\) fixed gives
+\begin{equation}
+ \delta\bar{\mbf F}^e
+ =\frac13\bar{\mbf F}^e\frac{\delta\bar J}{\bar J}.
+ \label{eq:mineral-volumetric-deformation-variation}
+\end{equation}
+Let \(\bar{\bs\sigma}_s\) denote the intrinsic solid Cauchy stress,
+whose work is measured per unit current mineral volume.  Multiplying its
+volumetric work by \(\bar J\) expresses it per unit reference mineral
+volume.  The energy variation is therefore
+\begin{align}
+ \delta\bar W_{s,\mathrm{vol}}
+ &=\bar J\bar{\bs\sigma}_s:
+ \left[\delta\bar{\mbf F}^e(\bar{\mbf F}^e)^{-1}\right],
+ \label{eq:mineral-volumetric-stress-work}\\
+ &=\bar J\bar{\bs\sigma}_s:
+ \left(\frac13\mbf I\frac{\delta\bar J}{\bar J}\right),
+ \label{eq:mineral-volumetric-work-substitution}\\
+ &=\frac13\tr\bar{\bs\sigma}_s\,\delta\bar J.
+ \label{eq:mineral-volumetric-work-trace}
+\end{align}
+Direct variation of \eqref{eq:mineral-volumetric-reference-energy} gives
+\begin{align}
+ \delta\bar W_{s,\mathrm{vol}}
+ &=\frac{K_s}{2}\,2\ln\bar J\frac{\delta\bar J}{\bar J},
+ \label{eq:mineral-logarithmic-energy-variation}\\
+ &=\frac{K_s\ln\bar J}{\bar J}\,\delta\bar J.
+ \label{eq:logarithmic-mineral-energy-derivative}
+\end{align}
+Equating the coefficients of the arbitrary volume increment
+\(\delta\bar J\) yields
+\begin{equation}
+ \frac13\tr\bar{\bs\sigma}_s=\frac{K_s\ln\bar J}{\bar J}.
+ \label{eq:matched-logarithmic-mineral-stress}
+\end{equation}
+The mean intrinsic stress is negative in compression, where \(\bar J<1\).
+The volumetric energy determines this trace; the deviatoric response is
+specified by the skeleton shear law below.
+
+The tangent
+bulk modulus measures the change in mean intrinsic stress per fractional
+change in the current mineral volume.  Since that fractional volume increment is
+\(\mathrm d\bar J/\bar J=\mathrm d\ln\bar J\), the modulus is
+\(\mathrm d(\tfrac13\tr\bar{\bs\sigma}_s)/\mathrm d\ln\bar J\).  Differentiating
+\eqref{eq:matched-logarithmic-mineral-stress} gives
+\begin{align}
+ \frac{\mathrm d}{\mathrm d\ln\bar J}
+ \left(\frac13\tr\bar{\bs\sigma}_s\right)
+ &=\bar J\frac{\mathrm d}{\mathrm d\bar J}
+ \left(\frac13\tr\bar{\bs\sigma}_s\right),
+ \label{eq:mineral-tangent-log-volume-definition}\\
+ &=K_s\bar J\frac{\mathrm d}{\mathrm d\bar J}
+ \left(\frac{\ln\bar J}{\bar J}\right),
+ \label{eq:mineral-tangent-stress-substitution}\\
+ &=K_s\bar J\left(\frac{1}{\bar J^2}
+ -\frac{\ln\bar J}{\bar J^2}\right),
+ \label{eq:mineral-tangent-logarithmic-differentiation}\\
+ &=\frac{K_s(1-\ln\bar J)}{\bar J}.
+ \label{eq:mineral-current-tangent-bulk-modulus}
+\end{align}
+At the reference mineral volume, \(\bar J=1\), this reduces to
+\begin{equation}
+ \left.\frac{\mathrm d}{\mathrm d\ln\bar J}
+ \left(\frac13\tr\bar{\bs\sigma}_s\right)\right|_{\bar J=1}
+ =K_s.
+ \label{eq:mineral-reference-tangent-bulk-modulus}
+\end{equation}
+Thus \(K_s\) is the reference bulk modulus; the current modulus changes
+with mineral volume according to
+\eqref{eq:mineral-current-tangent-bulk-modulus}.
+The thermodynamic pressure \(\bar p_s=p\) is the density
+conjugate defined in \eqref{eq:local-pressure-equilibrium}.
+
+The two stress laws are connected by the solid's contribution to mixture
+stress.  Water contributes the intrinsic stress \(-p\mbf I\) and occupies
+volume fraction \(1-\phi_s\).  Adding the volume-weighted phase stresses
+gives
+\begin{equation}
+ \bs\sigma=\phi_s\bar{\bs\sigma}_s-(1-\phi_s)p\mbf I.
+ \label{eq:constitutive-phase-stress-sum}
+\end{equation}
+Substitution into \(\bs\sigma^{\prime}=\bs\sigma+p\mbf I\) gives
+\begin{align}
+ \bs\sigma^{\prime}
+ &=\phi_s\bar{\bs\sigma}_s-(1-\phi_s)p\mbf I+p\mbf I,
+ \label{eq:constitutive-single-prime-phase-substitution}\\
+ &=\phi_s\left(\bar{\bs\sigma}_s+p\mbf I\right).
+ \label{eq:constitutive-single-prime-phase-stress}
+\end{align}
+Taking one third of the trace and using \(\tr\mbf I=3\) yields
+\begin{equation}
+ \frac13\tr\bs\sigma^{\prime}
+ =\phi_s\left(\frac13\tr\bar{\bs\sigma}_s+p\right).
+ \label{eq:constitutive-single-prime-phase-trace}
+\end{equation}
+Finally, form \(\bs\tau^{\prime}=J\bs\sigma^{\prime}\), substitute
+\eqref{eq:matched-logarithmic-mineral-stress}, and use solid mass
+conservation, \(J\phi_s=\phi_{s0}\bar J\):
+\begin{align}
+ \frac13\tr\bs\tau^{\prime}
+ &=J\phi_s\left(\frac13\tr\bar{\bs\sigma}_s+p\right),
+ \label{eq:constitutive-kirchhoff-intrinsic-stress-trace}\\
+ &=J\phi_s\left(p+\frac{K_s\ln\bar J}{\bar J}\right),
+ \label{eq:constitutive-kirchhoff-mineral-substitution}\\
+ &=\phi_{s0}\bar J
+ \left(p+\frac{K_s\ln\bar J}{\bar J}\right),
+ \label{eq:constitutive-kirchhoff-solid-mass-substitution}\\
+ &=\phi_{s0}\left(p\bar J+K_s\ln\bar J\right).
+ \label{eq:constitutive-single-prime-mineral-trace}
+\end{align}
+This relation expresses the mean single-prime stress in terms of pore
+pressure and mineral volume.  At \(p=0\), the two effective stresses
+coincide.  Equating \eqref{eq:drained-volumetric-energy-derivative} and
+\eqref{eq:constitutive-single-prime-mineral-trace} then gives
+\(K\ln J^e=\phi_{s0}K_s\ln\bar J\), or
+\(\bar J=(J^e)^{K/(\phi_{s0}K_s)}\).
+
+At finite pressure, the mineral volume and skeleton stress must follow from
+the same energy.  We impose this requirement by equating the mixed pressure
+and volume derivatives of \(W^{\prime}\).  Integrating the resulting
+relation from the drained curve gives the scalar mineral equation below;
+Appendix~\ref{sec:stress-trace-biot-construction} provides the intermediate
+steps.  The plastic state is held fixed throughout this construction:
 \begin{equation}
  \boxed{
  K_s\ln\bar J

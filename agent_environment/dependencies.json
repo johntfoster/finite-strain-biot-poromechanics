@@ -8,6 +8,11 @@
   },
   "routes": [
     {
+      "any": ["commit", "checkpoint", "record changes in git"],
+      "skills": ["commit"],
+      "profiles": []
+    },
+    {
       "all": ["equation"],
       "skills": ["latex-equation-integrity-checker", "latex-equation-resolver"],
       "profiles": ["manuscript"]
