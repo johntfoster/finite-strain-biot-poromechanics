@@ -1,7 +1,7 @@
 # Closed-form matched-logarithmic Biot implementation
 
-The main derivation is in `paper/sections/finite_deformation_biot.tex`, with
-stress-trace compatibility detailed in `paper/sections/stress_trace_biot_appendix.tex`.
+The main derivation, including the stress-trace compatibility argument, is
+in `paper/sections/finite_deformation_biot.tex`.
 The production coefficient is
 
 ```text

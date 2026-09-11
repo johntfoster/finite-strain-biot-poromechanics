@@ -179,9 +179,10 @@ def plot_pressure(rows: list[dict[str, float]], output: Path) -> None:
     initial_kpa = LOAD * skempton * (1.0 + undrained_poisson) / (3.0 * 1000.0)
     axis.axhline(initial_kpa, color="0.4", linestyle="--", linewidth=1.0)
     axis.text(
-        0.01,
+        0.5 * WIDTH,
         initial_kpa + 0.45,
         r"$p_0$ (initial undrained)",
+        ha="center",
         fontsize=7.5,
         color="0.2",
     )

@@ -35,29 +35,30 @@
 
 \begin{abstract}
 Plastic deformation changes the pore volume of a saturated solid and the
-constitutive response through which pore pressure enters stress.  We develop
+contribution of pore pressure to stress.  We derive
 a closed-form finite-deformation Biot coefficient for matched logarithmic
 skeleton and mineral laws.  Implicit differentiation of solid mass and the
 mineral equation of state at fixed pressure and current plastic configuration
-eliminates the state derivatives, leaving an explicit expression in current
-volume, pressure, and intrinsic solid density.  The mineral state requires
-only a scalar constitutive solve.
+gives the coefficient directly in terms of current volume, pressure, and
+intrinsic solid density.  A single scalar equation determines the mineral
+volume.
 A multiplicative split separates isochoric true-plastic flow from plastic
 distention.  An implicit exponential return mapping updates these mechanisms
 and recomputes the mineral state, coefficient, and driving stress together.
-Automatic differentiation retains their active dependence in the outer
-Newton Jacobian.
+Automatic differentiation includes these coupled changes in the Jacobian
+used by Newton's method.
 
-Independent checks verify mass conservation, the mineral EOS, energy-derived
-stress, plastic flow, yield consistency, and both constitutive and algorithmic
-derivatives.  Material-point calculations demonstrate a history-dependent
+Independent checks verify mass conservation, the mineral equation of state,
+energy-derived stress, plastic flow, yield consistency, and the derivatives
+used to evaluate the coefficient and solve the discrete equations.  Material-point calculations demonstrate a history-dependent
 coefficient on unloading and feedback into plastic flow at nonzero pore
 pressure.  The elastic specialization is coupled to solid and water mass
 conservation and momentum balance and tested against the Mandel solution.
-A finite-deformation continuation resolves the evolving coefficient field.
-The results establish a consistent computational connection between mineral
-compressibility, plastic distention, and pressure coupling, with physical
-validation and active coupled-flow verification remaining subsequent steps.
+A larger compression test shows how the coefficient varies across the
+specimen during drainage.  These calculations demonstrate how mineral
+compressibility and plastic volume change affect pressure coupling.
+Verification of coupled flow with plastic deformation and comparison with
+material data remain future work.
 \end{abstract}
 
 \noindent\textbf{Keywords:} finite-deformation poromechanics; Biot coefficient;
@@ -73,7 +74,6 @@ mass balance; Mandel problem
 
 \appendix
 \paperinput{sections/mandel_analytical_appendix.tex}
-\paperinput{sections/stress_trace_biot_appendix.tex}
 
 \bibliographystyle{plainnat}
 \IfFileExists{all.bib}{\bibliography{all}}{\bibliography{../all}}

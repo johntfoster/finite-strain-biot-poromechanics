@@ -3,36 +3,27 @@
 \label{sec:conclusions}
 
 We derived a closed-form finite-deformation Biot coefficient for a saturated
-solid with matched logarithmic skeleton and mineral laws and plastic
-distention.  True deformation
-measures intrinsic solid volume change, while distention determines its
-occupation of mixture volume.  Solid mass and the mineral EOS constrain the
-local state.  Implicit differentiation and analytical elimination give
-the coefficient directly in the current states, with no state derivatives in
-its evaluation.  A scalar equation still determines mineral volume.  The
-coefficient connects the two effective stresses and supplies the pressure
-contribution to momentum.
+solid with logarithmic skeleton and mineral laws and plastic distention.
+A scalar equation determines mineral volume, and the coefficient follows
+directly from that volume, total volume, and pore pressure.  The expression
+recovers \(B_0=1-K/K_s\) at the reference state and connects the pressure
+contribution to total stress with the stress that drives plastic flow.
 
-The constitutive derivative defining the coefficient holds the current
-plastic state fixed.  The active return mapping evolves that state, and the
-outer AD derivative retains its effect on both stress and coefficient.  An
-implicit exponential update enforces flow and yield consistency at the same
-returned state.  Independent mass, EOS, energy-derived stress, flow,
-determinant, and derivative checks verify this construction on the smooth
-Drucker--Prager branch.
-
-The material-point results show how plastic distention carries loading history
-into the coefficient and changes its unloading response.  At nonzero pore
-pressure, that change feeds back into plastic flow through the single-prime
-stress.  The direction and magnitude of the effect follow from the chosen
-energy and flow law.  The coefficient is therefore part of the evolving
-constitutive response, with a role in subsequent deformation as well as in
-the current pressure contribution to stress.
+Plastic distention carries loading history into the coefficient.  The
+material-point calculations show a different unloading response from that
+of the virgin material at the same total deformation.  At nonzero pressure,
+the change in coefficient feeds back into the driving stress and restrains
+dilation for the chosen energy and flow law.  The implicit return mapping
+updates these quantities together, and automatic differentiation retains
+their coupled changes in the Newton Jacobian.  Independent checks of mass,
+energy-derived stress, flow, yield consistency, and derivatives verify the
+update on the smooth Drucker--Prager branch.
 
 The coupled finite-element calculations verify the elastic specialization
-against the Mandel pressure and displacement solution and resolve coefficient
-evolution during finite compression.  These results separate active
-constitutive verification, the coupled elastic benchmark, numerical
-sensitivity, and physical validation.  The next extension is an active
-poroplastic boundary-value problem with consistent plastic contributions to
-water storage, followed by calibration and comparison with material data.
+against the Mandel pressure and horizontal-displacement solution.  A larger
+compression test shows how the coefficient varies across the specimen during
+drainage.  Mesh and time-step comparisons measure numerical sensitivity;
+these calculations provide implementation verification for the chosen laws.
+The next steps are to verify coupled flow with plastic deformation,
+including its contribution to water storage, and to calibrate and test the
+model against material data.

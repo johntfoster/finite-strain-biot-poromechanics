@@ -49,17 +49,13 @@ displacement is imposed and is linear in \(Y\), its profile is a
 boundary-condition reproduction check rather than an independent benchmark
 observable.
 
-The spatial solid-mass residual in \eqref{eq:solid-mass-weak-residual} remains
-active throughout the Mandel solve.  The global field \(\rho_s\) supplies the
-referential solid mass \(J\rho_s\), the elastic update supplies the intrinsic
-solid state and its residual derivatives, and the fixed-pressure tangent
-calculates \(B\) at every quadrature point
-and time step.  The solid volume fraction is derived from the partial and
-intrinsic solid densities, while water
-pressure determines \(\bar\rho_f\) through
-\eqref{eq:barotropic-water-density}.  The small applied load keeps
-the coefficient near its reference value while exercising the same nonlinear
-implementation used away from the reference state.
+The solid-mass residual in \eqref{eq:solid-mass-weak-residual} evolves
+\(\rho_s\) throughout the calculation.  At each integration point, the
+mineral equation determines intrinsic density, the density ratio gives
+\(\phi_s\), and \eqref{eq:poroplastic-biot-correction} gives \(B\) with
+\(a^p=1\).  Water density follows
+\eqref{eq:barotropic-water-density}.  The small load keeps the coefficient
+near its reference value while testing the nonlinear implementation.
 
 The material parameters are listed in \cref{tab:mandel-parameters}.
 \begin{table}[ht]
@@ -83,7 +79,7 @@ The material parameters are listed in \cref{tab:mandel-parameters}.
 \end{table}
 
 The reference coefficient from
-\eqref{eq:elastic-finite-deformation-biot-coefficient} is \(B_0=0.6\).
+\eqref{eq:poroplastic-biot-correction} is \(B_0=0.6\).
 
 
 \subsection{Pressure and displacement}
@@ -139,11 +135,11 @@ smaller spatial sensitivity on the tested grids.  These pairwise comparisons
 measure sensitivity over the reported transient; they do not establish an
 asymptotic convergence order.
 
-The production closed-form coefficient agrees with an independent two-state
-implicit tangent and a centered-difference derivative.  The mineral EOS residual and referential
-solid-mass drift are recorded independently, and the assembled PETSc
-comparison verifies the outer Jacobian.  Numerical values, tolerances, and
-sampling definitions are retained in the accompanying validation records.
+The assembled-Jacobian checks described in
+Sec.~\ref{sec:weak-residuals-and-spaces} also pass for this problem.
+The mineral EOS residual and referential solid-mass drift are recorded
+separately.  The accompanying validation records give numerical errors,
+tolerances, and sampling definitions.
 \FloatBarrier
 
 \subsection{Finite-deformation continuation}
@@ -165,12 +161,12 @@ predictions of this displacement-controlled calculation.
  \label{fig:mandel-finite-deformation}
 \end{figure}
 
-The coefficient develops a spatially nonuniform response during compression
-as the mineral-volume tangent changes.  The undrained interior can briefly
-exceed the reference coefficient, while drainage produces a net decrease.  Drainage during the hold reduces lateral expansion and smooths the
-coefficient field.  \Cref{fig:mandel-normalized-biot-contours} resolves this
-spatial evolution: the largest reduction develops near the drained boundary,
-and the field approaches a nearly uniform state during the hold.
+The coefficient varies across the specimen during compression.  It can
+briefly exceed the reference value in the undrained interior, while the
+largest reduction occurs near the drained boundary
+(\cref{fig:mandel-normalized-biot-contours}).  Drainage during the hold
+reduces lateral expansion and brings the coefficient toward a nearly
+uniform value below its reference value.
 
 \begin{figure}[ht]
  \centering
@@ -186,10 +182,9 @@ The coefficient identity and mineral EOS remain satisfied during this
 continuation.  The solid-mass diagnostic measures the discretization error
 of the weak chain-rule balance, and its drift decreases under time
 refinement.  Mesh and time-step comparisons also check pressure, lateral
-displacement, and the spatially averaged coefficient.  This calculation
-resolves finite-deformation coupling in the elastic specialization; the
-material-point calculations in Sec.~\ref{sec:poroplastic-demonstration}
-exercise the additional plastic history dependence.
+displacement, and the spatially averaged coefficient.  This calculation tests the elastic model at finite deformation.  Plastic
+history is examined separately in the material-point calculations of
+Sec.~\ref{sec:poroplastic-demonstration}.
 \FloatBarrier
 
 \subsection{Scope and reproducibility}
@@ -198,7 +193,6 @@ exercise the additional plastic history dependence.
 The source archive contains the MOOSE materials and kernels, input decks,
 independent constitutive checks, analytical reference calculations, curated
 results, and figure-generation scripts.  The equation-to-object and theory
-maps identify the assumptions exercised by each test.  The active plastic
-verification uses the implicit return mapping; its physical checks are
-separate from the elastic Mandel comparison.  Neither calculation calibrates
-the constitutive model to a particular material.
+maps link each test to its governing equations and assumptions.  The
+calculations verify the implementation for the stated constitutive laws;
+comparison with material data remains a separate task.

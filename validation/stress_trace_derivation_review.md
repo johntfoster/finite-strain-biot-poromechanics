@@ -3,9 +3,8 @@
 The selected elastic construction uses matched logarithmic Cauchy laws: the
 drained double-prime mean stress is `K ln(J)/J`, and mechanical grain pressure
 is `-K_s ln(barJ)/barJ`. The trace relation, pressure Legendre conjugacies,
-and solid mass identity determine its finite-pressure extension. The closed-form result and fixed-plastic-state extension are in
-`paper/sections/finite_deformation_biot.tex`; the supporting stress-trace
-construction is in `paper/sections/stress_trace_biot_appendix.tex`.
+and solid mass identity determine its finite-pressure extension. The stress-trace construction, closed-form result, and fixed-plastic-state
+extension are in `paper/sections/finite_deformation_biot.tex`.
 
 ## Constitutive alternatives examined
 
@@ -62,6 +61,40 @@ It verifies the fixed-pressure tangent chain from the scalar residual to the
 closed-form coefficient, the
 proper-fraction rewrite of the closed-form coefficient, the reference limit
 `B_0 = 1 - K/K_s`, the drained path, and the Maxwell reciprocity.
+
+### Solid volume fraction and porosity forms
+
+Solid mass conservation gives `barJ = J phi_s / phi_s0`. Substitution into
+the closed coefficient and clearing nested fractions gives
+
+```text
+B = 1 - K K_s phi_s0 phi_s /
+        [phi_s0^2 K_s^2 + (phi_s0 K_s - K) p J phi_s].
+```
+
+With current porosity `phi = 1 - phi_s` and reference porosity
+`phi_0 = 1 - phi_s0`, the equivalent expression is
+
+```text
+B = 1 - K K_s (1-phi_0) (1-phi) /
+        [(1-phi_0)^2 K_s^2 + ((1-phi_0) K_s - K) p J (1-phi)].
+```
+
+These forms appear as `eq:biot-solid-volume-fraction-form` and
+`eq:biot-porosity-form` in the main constitutive derivation. The porosity
+remains determined by the mineral EOS and mass conservation. The fixed-pressure,
+fixed-plastic-state definition of the coefficient is preserved.
+
+On 2026-09-10, `check_stress_trace_biot_fraction.py` passed all 21 symbolic
+identities. Six checks verify the solid-fraction substitution, the porosity
+substitution, substitution back into the mineral-volume form, denominator
+scaling, the reference value, and the drained reduction. The cleared
+denominator equals `phi_s0^2 K_s [K_s + (1-K/(phi_s0 K_s)) p barJ]`, so it
+is positive on the original stable branch. At `p=0`, the porosity form
+reduces to `B = 1 - K (1-phi) / [K_s (1-phi_0)]`; at the reference state,
+it gives `B_0 = 1 - K/K_s`.
+
+### Numerical checks
 
 The standard-library verifier brackets the stable scalar root in logarithmic
 mineral volume. It checks 48 elastic states with two parameter sets, positive

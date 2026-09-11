@@ -26,11 +26,9 @@ mappings:
   - mandel_water_q2_q1_jacobian
 - id: local_mineral_state
   paper_equations:
-  - eq:general-local-constitutive-system
-  - eq:local-material-mass-constraint
-  - eq:local-mineral-eos-constraint
+  - eq:elastic-mineral-pressure
+  - eq:solid-volume-fraction-relation
   - eq:verification-mineral-factors
-  - eq:trace-implicit-mineral-volume
   moose_objects:
   - ADLocalElasticMineralBiotMaterial
   outputs:
@@ -45,7 +43,7 @@ mappings:
   - mandel_water_q2_q1_jacobian
 - id: matched_log_mineral_solver
   paper_equations:
-  - eq:trace-implicit-mineral-volume
+  - eq:verification-mineral-factors
   - eq:trace-mineral-stability-domain
   source: moose_app/include/utils/MatchedLogMineralState.h
   consumers:
@@ -62,11 +60,8 @@ mappings:
 - id: fixed_pressure_biot_tangent
   paper_equations:
   - eq:finite-deformation-biot-coefficient
-  - eq:implicit-local-state-tangent
-  - eq:constrained-mineral-jacobian-tangent
-  - eq:general-implicit-biot-coefficient
-  - eq:elastic-finite-deformation-biot-coefficient
-  - eq:trace-closed-form-biot-coefficient
+  - eq:solid-density-eos-tangent
+  - eq:poroplastic-biot-correction
   moose_objects:
   - ADConstrainedSkeletonBiotMaterial
   - ADLocalElasticMineralBiotMaterial
@@ -79,8 +74,8 @@ mappings:
   - mandel_water_q2_q1_jacobian
 - id: stress_and_momentum
   paper_equations:
-  - eq:trace-closed-form-double-prime-stress
-  - eq:trace-compatible-reduced-potential
+  - eq:matched-logarithmic-double-prime-stress
+  - eq:verification-fixed-pressure-potential
   - eq:total-first-piola-stress
   - eq:momentum-weak-residual
   moose_objects:
@@ -139,9 +134,8 @@ mappings:
 - id: implicit_poroplastic_state
   paper_equations:
   - eq:coupled-skeleton-mineral-energy
-  - eq:local-material-mass-constraint
-  - eq:local-mineral-eos-constraint
-  - eq:implicit-local-state-tangent
+  - eq:solid-volume-fraction-relation
+  - eq:verification-mineral-factors
   - eq:poroplastic-biot-correction
   - eq:mandel-driving-stress
   - eq:plastic-exponential-update
@@ -171,7 +165,7 @@ mappings:
   - implicit_plastic_consistency
 - id: constitutive_verification_residuals
   paper_equations:
-  - sec:nested-automatic-differentiation
+  - sec:weak-residuals-and-spaces
   moose_objects:
   - ADMaterialPropertyResidual
   - ADMaterialScalarL2Error

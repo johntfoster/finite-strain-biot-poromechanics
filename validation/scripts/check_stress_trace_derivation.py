@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the elastic stress-trace construction in manuscript Appendix B.
+"""Check the stress-trace construction in the main constitutive derivation.
 
 This standard-library calculation checks the proposed constitutive equations;
 it does not run or validate a MOOSE implementation.

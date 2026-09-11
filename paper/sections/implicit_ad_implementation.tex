@@ -1,161 +1,51 @@
 % !TeX root = ../main.tex
-\section{Closed-form evaluation and implicit numerical implementation}
+\section{Numerical implementation and verification}
 \label{sec:implicit-ad-implementation}
 
-The constitutive calculation contains two distinct derivatives.  The definition
-of \(B\) holds the current plastic state fixed while perturbing skeleton
-volume at fixed pressure.  The global Newton derivative includes the change
-of that plastic state during the return mapping.  Analytical elimination gives the former in closed form.  We preserve the
-state dependence of that expression in the latter with automatic
-differentiation, and retain the general implicit tangent as an independent
-verification.
+The implementation evaluates the mineral volume and Biot coefficient at
+integration points, updates plastic deformation when the yield condition is
+reached, and assembles the phase balances.  Automatic differentiation (AD)
+provides the derivatives of these calculations for Newton's method.
 
-\subsection{The constrained mineral tangent}
-\label{sec:fixed-pressure-constrained-tangent}
+\subsection{Mineral state and plastic update}
 
-At a quadrature point, let \(\mbf y=(\bar\rho_s,\phi_s)\) contain the
-intrinsic density and solid volume fraction.  For prescribed \(J\), \(p\),
-referential mass \(J\rho_s\), and current \(\mbf F^p\), the local state
-satisfies
-\begin{equation}
- \mbf R(\mbf y;J,p,J\rho_s,\mbf F^p)=\mbf0.
- \label{eq:general-local-constitutive-system}
-\end{equation}
-The two residuals enforce the partial-density identity and mineral EOS,
-\begin{align}
- R_m&=J\phi_s\bar\rho_s-J\rho_s=0,
- \label{eq:local-material-mass-constraint}\\
- R_e&=\bar p_s(\bar\rho_s,J^e)-p=0,
- \qquad J^e=\frac{J}{a^p}.
- \label{eq:local-mineral-eos-constraint}
-\end{align}
-The product \(J\rho_s\) is one independent argument of the local problem.
-It remains fixed when \(J\) is perturbed.  On a positive-density branch with
-\(\partial\bar p_s/\partial\bar\rho_s>0\), the EOS determines the local
-intrinsic density and mass conservation determines the volume fraction.
-Their implicit tangent provides an independent route to the coefficient.
+The material solves \eqref{eq:verification-mineral-factors} in
+\(\ln\bar J\) on the branch defined by
+\eqref{eq:trace-mineral-stability-domain}, then evaluates
+\eqref{eq:poroplastic-biot-correction}.  Bracketing locates the scalar root.
+Newton corrections using AD variables at the converged root recover its
+first and second derivatives.  Intrinsic density follows from
+\(\bar\rho_s=\bar\rho_{s0}/\bar J\), and the volume fraction is
+\(\phi_s=\rho_s/\bar\rho_s\), using the current solid partial density.
+The implementation checks positive volumes, \(0<\phi_s<1\), positive
+mineral stiffness, and a positive scalar derivative.
 
-Differentiating the residual system gives
-\begin{equation}
- \pder{\mbf R}{\mbf y}
- \left.\pder{\mbf y}{J}\right|_{p,J\rho_s,\mbf F^p}
- =-\pder{\mbf R}{J}.
- \label{eq:implicit-local-state-tangent}
-\end{equation}
-For the physical density variables, its entries are
-\begin{equation}
- \pder{\mbf R}{\mbf y}
- =\begin{pmatrix}
- J\phi_s & J\bar\rho_s\\
- \partial\bar p_s/\partial\bar\rho_s & 0
- \end{pmatrix},
- \qquad
- \pder{\mbf R}{J}
- =\begin{pmatrix}
- \phi_s\bar\rho_s\\
- (1/a^p)\partial\bar p_s/\partial J^e
- \end{pmatrix}.
- \label{eq:elastic-local-residual-derivatives}
-\end{equation}
-The diagnostic material solves this small linear system.  Explicit
-elimination gives
-\begin{equation}
- \left.\pder{\mbf y}{J}\right|_{p,J\rho_s,\mbf F^p}
- =\frac{1}{J}
- \begin{pmatrix}
- -J^e\dfrac{\partial\bar p_s/\partial J^e}{\partial\bar p_s/\partial\bar\rho_s}\\[6pt]
- \phi_s\left(\dfrac{J^e}{\bar\rho_s}\dfrac{\partial\bar p_s/\partial J^e}{\partial\bar p_s/\partial\bar\rho_s}-1\right)
- \end{pmatrix}.
- \label{eq:explicit-local-state-tangent}
-\end{equation}
-The chain rule then gives
-\begin{align}
- \left.\pder{\bar J}{J}\right|_{p,J\rho_s,\mbf F^p}
- &=-\frac{\bar\rho_{s0}}{\bar\rho_s^2}
- \left.\pder{\bar\rho_s}{J}\right|_{p,J\rho_s,\mbf F^p},
- \label{eq:constrained-mineral-jacobian-tangent}\\
- B&=1-\phi_{s0}
- \left.\pder{\bar J}{J}\right|_{p,J\rho_s,\mbf F^p}.
- \label{eq:general-implicit-biot-coefficient}
-\end{align}
-These relations recover \eqref{eq:poroplastic-biot-correction}.  For the
-matched logarithmic law, it is convenient to evaluate the dimensionless
-residual
-\begin{equation}
- R_e=\ln\left(\frac{\bar\rho_s}{\bar\rho_{s0}}\right)
- +\frac{K}{\phi_{s0}K_s}\ln J^e
- -\left(1-\frac{K}{\phi_{s0}K_s}\right)\frac{p\bar J}{K_s}=0.
- \label{eq:numerical-dimensionless-mineral-residual}
-\end{equation}
-It equals \((1-K/(\phi_{s0}K_s))\bar J/K_s\) times the pressure
-residual in \eqref{eq:local-mineral-eos-constraint}.  This positive scaling
-preserves the implicit tangent on the equilibrium state.  Its Jacobian
-entries are
-\begin{equation}
- \pder{R_e}{\bar\rho_s}
- =\frac{1}{\bar\rho_s}\left[
- 1+\left(1-\frac{K}{\phi_{s0}K_s}\right)\frac{p\bar J}{K_s}\right],
- \qquad
- \pder{R_e}{J}=\frac{K}{\phi_{s0}K_sJ},
- \qquad \pder{R_e}{\phi_s}=0.
- \label{eq:numerical-solid-eos-derivatives}
-\end{equation}
-Substituting these entries in the two-state solve gives
-\eqref{eq:poroplastic-biot-correction} exactly, including at a fixed plastic
-state.  A more general mineral constitutive system retains the same implicit
-construction when its state Jacobian is nonsingular.
+When plastic flow occurs, the seven equations
+\eqref{eq:implicit-plastic-flow-increment}--\eqref{eq:discrete-consistency}
+determine the six independent components of \(\mbf W\) and
+\(\Delta\gamma\).  Each Newton iteration recomputes \(J^e\), mineral
+volume, \(B\), and driving stress from the candidate plastic state.  A
+nested AD calculation differentiates the flow and yield residuals with
+respect to these seven unknowns.  Scaling and squaring with a Taylor
+expansion evaluates the matrix exponential.
 
-The production material solves \eqref{eq:verification-mineral-factors} in
-\(\ln\bar J\) on the stable branch, then evaluates the closed-form
-coefficient.  Bracketing locates the scalar root; AD-valued Newton corrections
-at the converged root retain its first and nested second derivatives.
-Intrinsic density is stored in reference-normalized form.  The volume fraction
-is computed from the current solved partial density.  The local mass residual
-checks this reconstruction, while the independently evolved global balance
-is checked through its referential-mass drift.  Admissibility is enforced for
-positive volumes, \(0<\phi_s<1\), positive mineral stiffness, and a positive
-scalar-state Jacobian.
-
-\subsection{Active plastic update and outer differentiation}
-
-For an active increment, the current \(\mbf F^p\) in
-\eqref{eq:general-local-constitutive-system} is supplied by the coupled flow
-and consistency equations
-\eqref{eq:implicit-plastic-flow-increment}--\eqref{eq:discrete-consistency}.
-Each candidate plastic state changes \(J^e\), the mineral state, and the
-closed-form coefficient.  The resulting coefficient enters the reconstructed
-stress before yield and flow are reevaluated.  Thus the local solve closes
-the feedback between plastic deformation and pressure coupling.
-
-The MOOSE implementation separates the elastic verification provider,
-the general constrained-tangent material, and the active poroplastic material.
-The elastic provider supplies the state, closed-form coefficient, and
-residual derivatives; the general material independently solves
-\eqref{eq:implicit-local-state-tangent} with AD-valued dense linear algebra.
-The poroplastic material evaluates the same closed-form coefficient inside
-its local return mapping.  Its seven-equation
-Newton system uses a nested AD seed to differentiate the flow and consistency
-residuals with respect to the local unknowns.  The matrix exponential is
-evaluated by scaling and squaring with a Taylor expansion.
-
-All current-state calculations use outer AD scalars.  The converged plastic
-factor is copied to ordinary storage only for use as previous-step history;
-its current AD value remains in the stress and coefficient.  Differentiating
-the converged discrete update supplies the algorithmic response needed by
-Newton iteration \citep{simotaylor1985,miehe1996}.  MOOSE carries this
-response into the assembled residual Jacobian \citep{lindsayetal2021ad}.
-The derivative of the active update therefore includes the evolution of
-\(\mbf F^p\), although the constitutive derivative defining \(B\) holds
-that current state fixed.
+The elastic and poroplastic MOOSE materials share the scalar mineral solver
+and closed-form coefficient.  All current-state calculations retain their
+AD derivatives.  The converged plastic factor is stored as ordinary values
+for the next time step, while its current AD value remains in stress and
+coefficient calculations.  Differentiating the converged discrete update
+supplies the algorithmic response needed by Newton iteration
+\citep{simotaylor1985,miehe1996}.  MOOSE carries this response into the
+assembled residual Jacobian \citep{lindsayetal2021ad}.
 
 \subsection{Phase balances and finite-element residuals}
 \label{sec:water-storage-and-transport}
 \label{sec:weak-residuals-and-spaces}
 
 The coupled boundary-value verification uses the elastic specialization of
-the preceding constitutive model.  Solid mass evolves as a global balance-law
-field; the local mineral state determines the solid volume fraction.  Water
-storage uses that pore volume and the barotropic EOS
+the preceding constitutive model.  The solid mass balance determines partial
+density, and the local mineral state determines solid volume fraction.
+Water storage uses that pore volume and the barotropic EOS
 \begin{align}
  \bar\rho_f(p)&=\bar\rho_{f0}
  \exp\left(\frac{p-p_0}{K_f}\right).
@@ -172,14 +62,14 @@ be the water mass flux relative to the solid.  Its reference flux is
  \label{eq:reference-water-mass-balance}
 \end{equation}
 For isotropic permeability \(\kappa\), dynamic viscosity \(\mu_f\), and
-zero gravity, Darcy flow pulls back to
+zero gravity, Darcy flow in reference coordinates is
 \begin{equation}
  \mbf W_f=-\bar\rho_fJ\mbf F^{-1}
  \frac{\kappa}{\mu_f}\mbf F^{-T}\nabla_{\mbf X}p.
  \label{eq:reference-darcy-flux}
 \end{equation}
-The coefficient appears explicitly in momentum, while the same mineral-volume
-response enters fluid accumulation through \(\phi_s\).
+The coefficient enters momentum through the pressure term in stress.  The
+same mineral volume determines water storage through \(\phi_s\).
 
 Let \(\Omega_0\) be the solid reference domain, and let \(\mbf w\), \(q\),
 and \(\eta\) be test functions for displacement \(\mbf u=\mbf x-\mbf X\),
@@ -207,8 +97,8 @@ The overdot follows the solid reference coordinate.  The discrete fields use
  \label{eq:finite-element-spaces}
 \end{equation}
 where \(\mathcal Q_k\) is the continuous tensor-product polynomial space.
-The pressure is continuous Q1, with no enrichment or stabilization.  The
-solid field is stored as \(\rho_s/\rho_{s0}\) for conditioning.
+The pressure uses continuous Q1 elements without stabilization.  Solid
+partial density is stored as \(\rho_s/\rho_{s0}\) for conditioning.
 
 Backward Euler supplies the rates in the reported calculations.  The kernels
 use the continuous chain-rule expansion of the solid and water accumulation
@@ -217,20 +107,11 @@ differs from a backward difference of the complete accumulation product.
 Referential mass drift is therefore checked independently and under time
 refinement.  A BDF2 regression exercises the same rate implementation.
 
-\subsection{Independent derivative checks}
-\label{sec:nested-automatic-differentiation}
-
-The production closed-form coefficient is compared with the independent
-two-state implicit tangent and with centered differences of true volume at
-fixed pressure and referential mass.
-At plastic states, the centered-difference perturbation also fixes the
-current \(\mbf F^p\).  These tests check the derivative that defines \(B\).
-
-A separate PETSc comparison checks the outer AD Jacobian.  The elastic test
-assembles momentum, solid mass, water storage, and Darcy flow.  The active
-plastic test uses algebraic material residuals containing the returned stress
-invariants, plastic distention, and Biot coefficient at nonzero pressure and
-unequal principal stretches.  Its perturbations exercise the active return
-mapping.  These tests establish local and outer derivative consistency within
-their respective scopes; an active coupled poroplastic boundary-value problem
-requires a further verification of plastic contributions to fluid storage.
+A PETSc comparison checks the assembled AD Jacobian.  The elastic
+test includes momentum, solid mass, water storage, and Darcy flow.  The
+plastic test uses material residuals containing the returned stress
+invariants, plastic distention, and coefficient at nonzero pressure and
+unequal principal stretches.  Its perturbations include the change in
+plastic state during the return mapping.  This tests the derivative used by
+Newton's method; a coupled poroplastic flow problem also requires
+verification of plastic contributions to fluid storage.

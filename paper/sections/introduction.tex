@@ -34,24 +34,13 @@ appropriate to failure is a separate constitutive question.  We therefore
 specify the plastic energy and flow assumptions explicitly and examine their
 consequences without fitting the model to a particular rock.
 
-The first contribution is a closed-form coefficient in the current volume,
-pore pressure, and mineral state.  We initially set out to compute the
-coefficient by implicit automatic differentiation of the local constitutive
-constraints.  Analytical elimination of that tangent for matched logarithmic
-stress laws revealed that the state derivatives could be removed entirely.
-The resulting expression retains the finite-deformation dependence and
-recovers the reference relation between bulk moduli.  Only the scalar mineral
-state equation remains to be solved.
-
-The second contribution is a differentiable poroplastic implementation of
-this coefficient.  Solid mass and the mineral EOS determine intrinsic density
-and volume fraction at each candidate plastic state.  The return mapping
-updates plastic distention and uses the closed-form coefficient in the
-single-prime driving stress.  The global Newton derivative retains all of
-these current-state dependencies.  The constitutive derivative defining the
-coefficient holds the current plastic state fixed; the algorithmic derivative
-advancing that state includes its evolution.  An independent implicit tangent
-solve and centered differences verify the analytical elimination.
+The closed-form expression gives the coefficient from the current volume,
+pore pressure, and mineral state.  A scalar mineral equation and solid mass
+conservation determine intrinsic density and volume fraction at each plastic
+state.  The return mapping updates plastic deformation and evaluates the
+coefficient and driving stress together.  The derivative defining the
+coefficient holds the current plastic state fixed; the derivative used by
+Newton's method includes changes in that state.
 
 This construction connects established developments in constitutive
 linearization and coupled porous-material simulation.  Consistent tangents
@@ -63,19 +52,15 @@ its finite-element assembly \citep{lindsayetal2021ad}.  Large-deformation
 models of gels and porous solids describe the accompanying coupling between
 material deformation and fluid transport \citep{hongetal2008,macminnetal2016},
 while multiscale formulations evolve effective poroelastic properties with
-microstructure \citep{dehghanizilian2021}.  Here the coefficient is calculated
-directly from the constrained mineral state and carried through the local
-plastic solve and outer AD calculation.
+microstructure \citep{dehghanizilian2021}.  Here the mineral equation determines the
+coefficient, and AD includes its dependence on the evolving plastic state
+in the Newton Jacobian.
 
-We first establish the kinematics and pressure transformation, then specify a
-multiplicative poroplastic model with isochoric true-plastic flow and scalar
-plastic distention.  An implicit exponential return mapping supplies the
-updated state.  Material-point calculations examine history dependence,
-unloading, and feedback at nonzero pressure, with independent checks of mass,
-energy-derived stress, flow, yield, and derivatives.  The elastic specialization
-is then embedded in solid and water mass conservation and momentum balance.
-Spatial pressure and displacement comparisons with the Mandel solution test
-the coupled finite-element formulation \citep{chengdetournay1988}, and a
-finite-deformation continuation resolves the evolving coefficient field.
-This separates the verified active constitutive response from the coupled
-elastic benchmark and from subsequent physical validation.
+We first establish the kinematics and pressure transformation, then derive
+the coefficient and specify the plastic flow law.  Material-point
+calculations examine loading history, unloading, and pressure feedback.
+The elastic specialization is coupled to solid and water mass conservation
+and momentum balance.  Spatial pressure and displacement comparisons with
+the Mandel solution test the coupled finite-element formulation
+\citep{chengdetournay1988}.  A larger compression test then shows how the
+coefficient evolves across the specimen.

@@ -31,8 +31,9 @@ motion of the solid material from the distention gradient,
 Here \(\bar{\mbf F}\) is the true-deformation gradient, \(\bar J\) is the
 true-deformation Jacobian, \(\mbf A\) is the distention gradient, and \(a\)
 is the distention.  We choose a reference state with \(J_0=\bar J_0=a_0=1\).
-The true-deformation Jacobian measures intrinsic solid volume change;
-distention describes how that material occupies mixture volume.
+The ratio \(\bar J\) measures the change in mineral volume.  Distention
+measures the additional volume change of the porous structure: increasing
+\(a\) at fixed mineral volume increases pore volume.
 
 Let \(\bar\rho_s\) be the solid intrinsic density and \(\phi_s\) its volume
 fraction.  The partial density per unit current mixture volume is
@@ -162,19 +163,17 @@ tensor.  The total first Piola stress and quasi-static balance are
  \label{eq:reference-momentum-balance}
 \end{gather}
 where \(\rho\) is total mixture density and \(\mbf g\) is body-force
-acceleration.  The same coefficient that enters the total stress also
-connects the drained response to the single-prime stress.  This connection
-becomes consequential when the latter supplies the work conjugate for
-plastic flow.
+acceleration.  The coefficient therefore determines both the pressure term
+in total stress and the single-prime stress used below to drive plastic flow.
 
 \section{Poroplastic constitutive response}
 \label{sec:inelastic-plastic-driving-stress}
 
-We choose an isotropic constitutive model to examine how irreversible
-changes in distention enter the pressure coupling.  The matched logarithmic skeleton and mineral laws yield a closed-form
-coefficient at each current plastic state.  The
-multiplicative kinematics follow Drumheller; the mineral EOS, yield
-surface, and dilation rule specified below are constitutive choices.
+We choose an isotropic model to examine how permanent changes in pore volume
+affect pressure coupling.  The logarithmic skeleton and mineral laws give a
+closed-form coefficient at each plastic state.  The mineral equation of
+state (EOS), yield surface, and dilation rule below specify the material
+response.
 
 \subsection{Plastic distention and mineral compression}
 
@@ -190,8 +189,8 @@ flow.  The elastic and plastic factors satisfy
  \qquad \mbf A^p=(a^p)^{1/3}\mbf I.
  \label{eq:inelastic-kinematic-splits}
 \end{equation}
-The spherical plastic factor commutes with the true elastic deformation,
-giving the aggregate decomposition
+Because the plastic distention factor is spherical, the factors combine to
+give
 \begin{equation}
  \mbf F=\mbf F^e\mbf F^p,
  \qquad \mbf F^e=(a^e)^{1/3}\bar{\mbf F}^e,
@@ -205,47 +204,102 @@ isochoric true-plastic flow give
 \(J^e=a^e\bar J\).  Elastic skeleton volume is thus divided between
 distention of the porous structure and compression of the mineral.
 
-\subsection{Matched logarithmic skeleton and mineral laws}
+\subsection{Energy-consistent skeleton and mineral response}
 \label{sec:elastic-verification-closure}
 \label{sec:numerical-solid-eos}
 
-Let \(K\) and \(K_s\) be the reference drained skeleton and mineral bulk
-moduli, with \(0<K<\phi_{s0}K_s\).  We first prescribe the skeleton
-response at zero pore pressure and the mineral response to compression.
-The skeleton energy is measured per unit original mixture reference volume.
-We choose its drained volumetric part to be \(K(\ln J^e)^2/2\).
-To obtain the corresponding stress, consider a variation at fixed pore
-pressure \(p=0\) and fixed plastic deformation \(\mbf F^p\).  Since
-\(J^e=J/a^p\), the logarithmic volume increments satisfy
+The constitutive construction must reproduce the drained skeleton response
+and the mineral compression law through the same stored energy.  Let \(K\)
+and \(K_s\) be their reference bulk moduli, with
+\(0<K<\phi_{s0}K_s\).  We prescribe the drained volumetric energy per unit
+original mixture reference volume as \(K(\ln J^e)^2/2\), and the mineral
+energy per unit reference mineral volume as
+\(K_s(\ln\bar J)^2/2\).  We first identify the stresses conjugate to these
+energies, then match their contributions and impose pressure equilibrium.
+
+Here \(\delta\) denotes an infinitesimal virtual increment about the current
+state.  We evaluate reversible elastic work with the plastic deformation
+held fixed, \(\delta\mbf F^p=\mbf0\), so \(\delta a^p=0\).
+The current elastic deformation may be finite; only the increment is
+infinitesimal.
+
+The tensor \(\delta\mbf F^e(\mbf F^e)^{-1}\) describes the incremental
+deformation relative to the current elastic configuration.  Its symmetric
+part is the infinitesimal strain increment, and its skew part is the
+incremental rotation.  The determinant differential gives
+\begin{align}
+ \delta\ln J^e&=\frac{\delta J^e}{J^e},
+ \label{eq:elastic-logarithmic-volume-increment}\\
+ &=\tr\left[\delta\mbf F^e(\mbf F^e)^{-1}\right].
+ \label{eq:elastic-volume-increment-trace}
+\end{align}
+A purely volumetric increment has equal normal strains in all three
+directions, zero shear strain, and zero rotation.  Its incremental
+deformation tensor is therefore spherical.  Since \(\tr\mbf I=3\),
+\begin{equation}
+ \delta\mbf F^e(\mbf F^e)^{-1}
+ =\frac13\delta\ln J^e\,\mbf I.
+ \label{eq:elastic-spherical-deformation-increment}
+\end{equation}
+The factor \(1/3\) distributes the fractional volume change equally among
+the three directions.  With \(J=a^pJ^e\) and fixed plastic deformation,
 \begin{equation}
  \delta\ln J^e=\delta\ln J,
  \qquad \delta a^p=0.
  \label{eq:fixed-plastic-log-volume-variation}
 \end{equation}
-A purely volumetric variation holds \((J^e)^{-1/3}\mbf F^e\) fixed.
-Differentiating this condition and then \(\mbf F=\mbf F^e\mbf F^p\)
-gives
+Multiplying \eqref{eq:elastic-spherical-deformation-increment} on the
+right by \(\mbf F^e\) gives
+\begin{equation}
+ \delta\mbf F^e=\frac13\mbf F^e\,\delta\ln J^e.
+ \label{eq:elastic-volumetric-deformation-variation}
+\end{equation}
+Then differentiating \(\mbf F=\mbf F^e\mbf F^p\) at fixed
+\(\mbf F^p\) gives
 \begin{align}
- \delta\mbf F^e&=\frac13\mbf F^e\,\delta\ln J^e,
- \label{eq:elastic-volumetric-deformation-variation}\\
  \delta\mbf F&=\delta\mbf F^e\mbf F^p,
  \label{eq:fixed-plastic-deformation-variation}\\
  &=\frac13\mbf F\,\delta\ln J^e.
  \label{eq:total-volumetric-deformation-variation}
 \end{align}
-The deformation derivative of \(W^{\prime\prime}\) is
-\(\mbf P^{\prime\prime}\), as defined in
-\eqref{eq:double-prime-energy-conjugate}.  Its work in this variation is
+This increment preserves elastic shape, as can be checked directly:
+\begin{align}
+ \delta\left[(J^e)^{-1/3}\mbf F^e\right]
+ &=(J^e)^{-1/3}\left(\delta\mbf F^e
+ -\frac13\mbf F^e\,\delta\ln J^e\right),
+ \label{eq:elastic-shape-increment-expansion}\\
+ &=\mbf0.
+ \label{eq:elastic-shape-increment-zero}
+\end{align}
+Thus fixing normalized elastic shape permits a nonzero volume increment
+\(\delta J^e\).
+
+Hold pore pressure constant during the volume increment, so \(\delta p=0\).
+The prescribed pressure may be nonzero.
+The mineral volume \(\bar J\) adjusts to satisfy local pressure equilibrium
+as \(J^e\) changes.  Both \(\bar J\) and \(a^e=J^e/\bar J\) can therefore
+vary during this increment.  At fixed pressure and plastic state, the
+energy increment is
+\(\delta W^{\prime\prime}=\mbf P^{\prime\prime}:\delta\mbf F\), by
+\eqref{eq:double-prime-energy-conjugate}.  Substituting
+\eqref{eq:total-volumetric-deformation-variation} gives
 \begin{align}
  \delta W^{\prime\prime}
  &=\mbf P^{\prime\prime}:\delta\mbf F,
  \label{eq:drained-energy-first-piola-work}\\
+ &=\frac13\left(\mbf P^{\prime\prime}:\mbf F\right)
+ \delta\ln J^e,
+ \label{eq:drained-energy-contraction-work}\\
  &=\frac13\tr\left(\mbf P^{\prime\prime}\mbf F^T\right)
  \delta\ln J^e,
  \label{eq:drained-energy-volumetric-work}\\
  &=\frac J3\tr\bs\sigma^{\prime\prime}\,\delta\ln J^e.
  \label{eq:drained-energy-cauchy-work}
 \end{align}
+The contraction identity
+\(\mbf P^{\prime\prime}:\mbf F=\sum_{i,A}P^{\prime\prime}_{iA}F_{iA}\)
+equals \(\tr(\mbf P^{\prime\prime}\mbf F^T)\), because the diagonal
+entries of the product are \(\sum_A P^{\prime\prime}_{iA}F_{iA}\).
 The last step uses the Cauchy-stress transformation
 \(\bs\sigma^{\prime\prime}=J^{-1}\mbf P^{\prime\prime}\mbf F^T\).
 It identifies the Kirchhoff stress as
@@ -257,8 +311,11 @@ The factor \(J\) converts work per unit current mixture volume to work per
 unit original reference volume.  The elastic ratio \(J^e\) measures the
 recoverable volume change in the energy.
 
-For the chosen drained energy, the isochoric contribution is constant in
-this variation, so direct differentiation gives
+To determine the drained reference response, we now choose the constant
+pore pressure to be zero.  This is the reference condition for the
+prescribed energy \(K(\ln J^e)^2/2\); the definition of the double-prime
+stress requires only \(\delta p=0\).  At \(p=0\), the isochoric contribution
+is constant in this volumetric increment, so direct differentiation gives
 \begin{align}
  \delta W^{\prime\prime}
  &=\delta\left[\frac K2(\ln J^e)^2\right],
@@ -266,7 +323,8 @@ this variation, so direct differentiation gives
  &=K\ln J^e\,\delta\ln J^e.
  \label{eq:drained-logarithmic-energy-differential}
 \end{align}
-Comparing the coefficients of the arbitrary increment \(\delta\ln J^e\)
+Reversible work must equal the change in stored energy for every admissible
+volumetric increment.  Equating the coefficients of \(\delta\ln J^e\)
 in \eqref{eq:drained-energy-cauchy-work} and
 \eqref{eq:drained-logarithmic-energy-differential} yields
 \begin{equation}
@@ -281,26 +339,37 @@ In the elastic specialization, \(a^p=1\) and \(J^e=J\), this becomes
 For the mineral, we prescribe the volumetric energy per unit reference
 mineral volume as
 \begin{equation}
- \bar W_{s,\mathrm{vol}}(\bar J)=\frac{K_s}{2}(\ln\bar J)^2.
+ \bar W_s(\bar J)=\frac{K_s}{2}(\ln\bar J)^2.
  \label{eq:mineral-volumetric-reference-energy}
 \end{equation}
-This energy specifies the mineral's volume response.  The coupled solid
-energy \(W_s\) is measured per unit reference mixture volume and will be
-constructed below from the skeleton and mineral laws.
-
-Consider a volumetric variation of the true elastic deformation at fixed
-true-plastic state.  Holding \(\bar J^{-1/3}\bar{\mbf F}^e\) fixed gives
+To identify its conjugate stress, consider a purely volumetric increment
+of the true elastic deformation, holding the true-plastic factor and
+elastic distention \(a^e\) fixed.  The same determinant identity and
+spherical-increment condition give
+\begin{equation}
+ \delta\bar{\mbf F}^e(\bar{\mbf F}^e)^{-1}
+ =\frac13\frac{\delta\bar J}{\bar J}\mbf I.
+ \label{eq:mineral-spherical-deformation-increment}
+\end{equation}
+Multiplying on the right by \(\bar{\mbf F}^e\) gives
 \begin{equation}
  \delta\bar{\mbf F}^e
  =\frac13\bar{\mbf F}^e\frac{\delta\bar J}{\bar J}.
  \label{eq:mineral-volumetric-deformation-variation}
 \end{equation}
-Let \(\bar{\bs\sigma}_s\) denote the intrinsic solid Cauchy stress,
-whose work is measured per unit current mineral volume.  Multiplying its
-volumetric work by \(\bar J\) expresses it per unit reference mineral
-volume.  The energy variation is therefore
+The normalized true-elastic shape is unchanged by the same cancellation
+shown in \eqref{eq:elastic-shape-increment-expansion}.
+This increment changes \(J^e=a^e\bar J\) together with \(\bar J\), and
+pressure is allowed to change.  The drained skeleton increment instead
+fixes pressure and allows elastic distention to adjust.
+Let \(\bar{\bs\sigma}_s\) denote the intrinsic solid Cauchy stress.
+Its contraction with
+\(\delta\bar{\mbf F}^e(\bar{\mbf F}^e)^{-1}\) is work per unit current
+mineral volume.  Multiplication by \(\bar J\) converts that work to the
+reference mineral volume used by \(\bar W_s\).
+Equating reversible work and stored-energy change gives
 \begin{align}
- \delta\bar W_{s,\mathrm{vol}}
+ \delta\bar W_s
  &=\bar J\bar{\bs\sigma}_s:
  \left[\delta\bar{\mbf F}^e(\bar{\mbf F}^e)^{-1}\right],
  \label{eq:mineral-volumetric-stress-work}\\
@@ -312,7 +381,7 @@ volume.  The energy variation is therefore
 \end{align}
 Direct variation of \eqref{eq:mineral-volumetric-reference-energy} gives
 \begin{align}
- \delta\bar W_{s,\mathrm{vol}}
+ \delta\bar W_s
  &=\frac{K_s}{2}\,2\ln\bar J\frac{\delta\bar J}{\bar J},
  \label{eq:mineral-logarithmic-energy-variation}\\
  &=\frac{K_s\ln\bar J}{\bar J}\,\delta\bar J.
@@ -325,12 +394,11 @@ Equating the coefficients of the arbitrary volume increment
  \label{eq:matched-logarithmic-mineral-stress}
 \end{equation}
 The mean intrinsic stress is negative in compression, where \(\bar J<1\).
-The volumetric energy determines this trace; the deviatoric response is
-specified by the skeleton shear law below.
+This equality prescribes the intrinsic mean-stress response.  The
+deviatoric response is specified by the skeleton shear law below.
 
-The tangent
-bulk modulus measures the change in mean intrinsic stress per fractional
-change in the current mineral volume.  Since that fractional volume increment is
+The tangent bulk modulus measures the change in mean intrinsic stress per
+fractional change in current mineral volume.  Since that volume increment is
 \(\mathrm d\bar J/\bar J=\mathrm d\ln\bar J\), the modulus is
 \(\mathrm d(\tfrac13\tr\bar{\bs\sigma}_s)/\mathrm d\ln\bar J\).  Differentiating
 \eqref{eq:matched-logarithmic-mineral-stress} gives
@@ -356,11 +424,9 @@ At the reference mineral volume, \(\bar J=1\), this reduces to
  =K_s.
  \label{eq:mineral-reference-tangent-bulk-modulus}
 \end{equation}
-Thus \(K_s\) is the reference bulk modulus; the current modulus changes
-with mineral volume according to
-\eqref{eq:mineral-current-tangent-bulk-modulus}.
-The thermodynamic pressure \(\bar p_s=p\) is the density
-conjugate defined in \eqref{eq:local-pressure-equilibrium}.
+Thus \(K_s\) is the reference bulk modulus.  The mean intrinsic stress
+describes mineral compression, while the pressure \(\bar p_s=p\) is
+defined by the energy derivative in \eqref{eq:local-pressure-equilibrium}.
 
 The two stress laws are connected by the solid's contribution to mixture
 stress.  Water contributes the intrinsic stress \(-p\mbf I\) and occupies
@@ -399,19 +465,80 @@ conservation, \(J\phi_s=\phi_{s0}\bar J\):
  &=\phi_{s0}\left(p\bar J+K_s\ln\bar J\right).
  \label{eq:constitutive-single-prime-mineral-trace}
 \end{align}
-This relation expresses the mean single-prime stress in terms of pore
-pressure and mineral volume.  At \(p=0\), the two effective stresses
-coincide.  Equating \eqref{eq:drained-volumetric-energy-derivative} and
-\eqref{eq:constitutive-single-prime-mineral-trace} then gives
-\(K\ln J^e=\phi_{s0}K_s\ln\bar J\), or
-\(\bar J=(J^e)^{K/(\phi_{s0}K_s)}\).
+This relation also identifies the work conjugates of elastic distention
+and mineral volume.  At fixed plastic state and elastic shape, the energy
+differential in the independent arguments \((J^e,\bar J)\) is
+\begin{align}
+ \delta W_s
+ &=\frac13\tr\bs\tau^{\prime}\,\delta\ln J^e
+ -\phi_{s0}p\,\delta\bar J,
+ \label{eq:coupled-volume-energy-work}\\
+ &=\frac13\tr\bs\tau^{\prime}\,\delta\ln a^e
+ +\phi_{s0}\frac13\tr\bar{\bs\sigma}_s\,\delta\bar J.
+ \label{eq:distention-mineral-energy-work}
+\end{align}
+The first line uses the fixed-density stress derivative and the density
+conjugacy in \eqref{eq:intrinsic-pressure-free-energy}.  In the second,
+\(\delta\ln J^e=\delta\ln a^e+\delta\bar J/\bar J\), and
+\eqref{eq:constitutive-kirchhoff-intrinsic-stress-trace} cancels the
+pressure contribution to the coefficient of \(\delta\bar J\).
+Thus, at fixed distention, mineral work per reference mixture volume is
+\(\phi_{s0}\) times mineral work per reference mineral volume.  This is
+the energy equivalence required by the mineral increment above.
 
-At finite pressure, the mineral volume and skeleton stress must follow from
-the same energy.  We impose this requirement by equating the mixed pressure
-and volume derivatives of \(W^{\prime}\).  Integrating the resulting
-relation from the drained curve gives the scalar mineral equation below;
-Appendix~\ref{sec:stress-trace-biot-construction} provides the intermediate
-steps.  The plastic state is held fixed throughout this construction:
+Because the prescribed intrinsic mean stress depends only on \(\bar J\),
+integration of \eqref{eq:distention-mineral-energy-work} at fixed \(a^e\)
+gives the mineral term \(\phi_{s0}K_s(\ln\bar J)^2/2\).  The remaining
+volumetric energy depends on \(a^e\) alone.  Its derivative with respect
+to \(\ln a^e\) must equal \(\tr\bs\tau^{\prime}/3\).
+At \(p=0\), the two effective stresses coincide, and matching the drained
+and mineral stresses yields
+\begin{align}
+ K\ln J^e&=\phi_{s0}K_s\ln\bar J,
+ \label{eq:drained-mineral-volume-matching}\\
+ \ln a^e&=\left(1-\frac{K}{\phi_{s0}K_s}\right)\ln J^e.
+ \label{eq:drained-distention-volume-matching}
+\end{align}
+Expressing the drained mean Kirchhoff stress in terms of \(\ln a^e\)
+and integrating fixes the distention energy.  With zero energy at
+\(a^e=\bar J=1\), the combined volumetric energy is
+\begin{equation}
+ W_{s,\mathrm{vol}}(J^e,\bar J)
+ =\frac{K}{2\left(1-K/(\phi_{s0}K_s)\right)}
+ \left[\ln\left(\frac{J^e}{\bar J}\right)\right]^2
+ +\frac{\phi_{s0}K_s}{2}(\ln\bar J)^2.
+ \label{eq:distention-mineral-volumetric-energy}
+\end{equation}
+Here \(a^e=J^e/\bar J\) has been substituted to recover the independent
+arguments used for pressure equilibrium.  On the drained curve,
+the two terms reduce respectively to
+\(K[1-K/(\phi_{s0}K_s)](\ln J^e)^2/2\) and
+\(K^2(\ln J^e)^2/(2\phi_{s0}K_s)\).  Their sum is exactly the prescribed
+drained skeleton energy \(K(\ln J^e)^2/2\).
+
+The constructed energy determines mineral volume at a prescribed pore
+pressure through \eqref{eq:intrinsic-pressure-free-energy}.  To evaluate
+that derivative, vary \(\bar J\) at fixed \(J^e\), elastic shape,
+and plastic state.  These constraints fix \(\mbf F^e\) and hence
+\(\mbf F\), while \(a^e=J^e/\bar J\) changes.  Both volumetric energy
+terms therefore contribute.  Differentiating
+\eqref{eq:distention-mineral-volumetric-energy} gives
+\begin{equation}
+ \left.\pder{W_s}{\bar J}\right|_{\mbf F^e}
+ =-\frac{K\ln(J^e/\bar J)}
+ {\left(1-K/(\phi_{s0}K_s)\right)\bar J}
+ +\frac{\phi_{s0}K_s\ln\bar J}{\bar J}.
+ \label{eq:matched-energy-density-derivative}
+\end{equation}
+Applying the pressure-equilibrium relation
+\eqref{eq:intrinsic-pressure-free-energy} sets this derivative equal to
+\(-\phi_{s0}p\).  Rearranging gives
+\begin{equation}
+ p\bar J+K_s\ln\bar J
+ =\frac{KK_s}{\phi_{s0}K_s-K}\ln\left(\frac{J^e}{\bar J}\right).
+ \label{eq:constitutive-characteristic-volume-relation}
+\end{equation}
+Collecting the logarithmic terms yields the scalar mineral equation
 \begin{equation}
  \boxed{
  K_s\ln\bar J
@@ -429,11 +556,98 @@ the same equation is
  {\left(1-K/(\phi_{s0}K_s)\right)\bar J}=p.
  \label{eq:elastic-mineral-pressure}
 \end{equation}
-For \(p\geq0\), the scalar residual is strictly increasing from negative
-to positive infinity, and its positive root is unique.  At negative pressure,
-we continue the drained branch with
-\(K_s+(1-K/(\phi_{s0}K_s))p\bar J>0\).
-We also require \(0<\bar J<\exp(1)\) and \(0<\phi_s<1\).
+For \(p\geq0\), the residual in
+\eqref{eq:verification-mineral-factors} is strictly increasing from
+negative to positive infinity as \(\bar J\) increases, so its positive
+root is unique.  For negative pore pressure, more than one positive root
+can exist.  At fixed \(J^e\), we select the root that varies continuously
+from \(\bar J=(J^e)^{K/(\phi_{s0}K_s)}\) as pressure decreases from zero.
+We retain this solution only while the mineral-equation residual has a
+positive derivative with respect to \(\bar J\), which requires
+\begin{equation}
+ K_s+\left(1-\frac{K}{\phi_{s0}K_s}\right)p\bar J>0.
+ \label{eq:trace-mineral-stability-domain}
+\end{equation}
+This condition keeps the scalar derivative positive.  We also require
+\(0<\bar J<\exp(1)\) for positive mineral stiffness and
+\(0<\phi_s<1\) for positive solid and pore volumes.
+
+We next verify that the mineral-volume response and the single-prime
+stress are compatible derivatives of the same pressure potential.
+For the mineral-volume solution satisfying
+\eqref{eq:trace-mineral-stability-domain}, the positive residual derivative
+allows \(\bar J\) to be expressed locally as a smooth function of
+\(\mbf F\) and \(p\) at fixed plastic state.  Evaluating the pressure
+potential \eqref{eq:pressure-legendre-potential} at this solution and
+differentiating gives
+\begin{align}
+ \delta W^{\prime}
+ &=\delta W^{\prime\prime}+\phi_{s0}p\,\delta\bar J
+ +\phi_{s0}\bar J\,\delta p,
+ \label{eq:pressure-potential-increment}\\
+ &=\left.\pder{W_s}{\mbf F}\right|_{\bar J}:\delta\mbf F
+ +\left(\left.\pder{W_s}{\bar J}\right|_{\mbf F}
+ +\phi_{s0}p\right)\delta\bar J
+ +\phi_{s0}\bar J\,\delta p.
+ \label{eq:pressure-potential-chain-rule}
+\end{align}
+The second line applies the chain rule to \(W_s\) evaluated at
+\(\bar J(\mbf F,p)\).  Pressure equilibrium,
+\eqref{eq:intrinsic-pressure-free-energy}, makes the coefficient of
+\(\delta\bar J\) zero.  Using the single-prime stress definition
+\eqref{eq:single-prime-fixed-density-conjugate} therefore gives
+\begin{equation}
+ \delta W^{\prime}=\mbf P^{\prime}:\delta\mbf F
+ +\phi_{s0}\bar J\,\delta p.
+ \label{eq:pressure-potential-conjugate-increment}
+\end{equation}
+Here pressure and deformation can both change; the mineral volume adjusts
+to maintain pressure equilibrium.  For a volumetric increment at fixed
+elastic shape, substitution of
+\eqref{eq:total-volumetric-deformation-variation} gives
+\begin{align}
+ \delta W^{\prime}
+ &=\frac13\left(\mbf P^{\prime}:\mbf F\right)\delta\ln J^e
+ +\phi_{s0}\bar J\,\delta p,
+ \label{eq:pressure-potential-volumetric-contraction}\\
+ &=\frac13\tr\bs\tau^{\prime}\,\delta\ln J^e
+ +\phi_{s0}\bar J\,\delta p.
+ \label{eq:pressure-potential-volumetric-increment}
+\end{align}
+The last line uses \(\bs\tau^{\prime}=\mbf P^{\prime}\mbf F^T\).
+Identifying the coefficients of the independent increments
+\(\delta\ln J^e\) and \(\delta p\), with plastic state and elastic shape
+fixed, yields
+\begin{equation}
+ \left.\pder{W^{\prime}}{\ln J^e}\right|_p
+ =\frac13\tr\bs\tau^{\prime},
+ \qquad
+ \left.\pder{W^{\prime}}{p}\right|_{J^e}=\phi_{s0}\bar J.
+ \label{eq:constitutive-legendre-volume-derivatives}
+\end{equation}
+Smoothness of the pressure potential requires its mixed derivatives with
+respect to \(p\) and \(\ln J^e\) to agree.  Differentiating the first
+identity with respect to pressure and the second with respect to
+\(\ln J^e\), equating the results, and substituting the single-prime
+stress trace \eqref{eq:constitutive-single-prime-mineral-trace} gives
+\begin{equation}
+ \phi_{s0}\left[\bar J+
+ \left(p+\frac{K_s}{\bar J}\right)
+ \left.\pder{\bar J}{p}\right|_{J^e}\right]
+ =\phi_{s0}J^e\left.\pder{\bar J}{J^e}\right|_p.
+ \label{eq:constitutive-mixed-energy-derivative-equality}
+\end{equation}
+Equivalently,
+\begin{equation}
+ J^e\left.\pder{\bar J}{J^e}\right|_p
+ -\left(p+\frac{K_s}{\bar J}\right)
+ \left.\pder{\bar J}{p}\right|_{J^e}=\bar J.
+ \label{eq:constitutive-compatible-mineral-pde}
+\end{equation}
+Implicit differentiation of \eqref{eq:verification-mineral-factors}
+satisfies this identity.  It expresses the energy compatibility between
+the pressure dependence of mean stress and the deformation dependence of
+mineral volume.  The latter response determines the Biot coefficient below.
 
 \subsection{Closed-form coefficient from implicit differentiation}
 
@@ -458,34 +672,59 @@ Substitution into the definition of \(B\) yields
  {J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]}.}
  \label{eq:poroplastic-biot-correction}
 \end{equation}
-This is a closed-form expression in the current states \(J\), \(p\), and
-\(\bar J\): evaluating the coefficient requires no state derivatives or
-additional tangent solve.  The mineral state itself remains the solution of
-\eqref{eq:verification-mineral-factors}.  Plastic history enters through
+The coefficient can therefore be evaluated directly from \(J\), \(p\),
+and the mineral-volume ratio \(\bar J\) obtained by solving
+\eqref{eq:verification-mineral-factors}.
+Plastic history enters through
 \(J^e=J/a^p\) in that equation, while the coefficient's denominator
 contains total \(J\), because its defining derivative is with respect to
 total volume.
 
-For a virgin elastic state, the same expression is evaluated with
-\(\bar J(p,J)\):
+Solid mass conservation also gives \(\bar J=J\phi_s/\phi_{s0}\).
+Substituting this identity into \eqref{eq:poroplastic-biot-correction}
+and clearing the nested fractions gives the solid-volume-fraction form
 \begin{equation}
- B_{\mathrm{el}}(p,J)
- =1-\frac{K\bar J(p,J)}
- {J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J(p,J)\right]}.
- \label{eq:elastic-finite-deformation-biot-coefficient}
+ B=1-\frac{KK_s\phi_{s0}\phi_s}
+ {\phi_{s0}^2K_s^2+(\phi_{s0}K_s-K)pJ\phi_s}.
+ \label{eq:biot-solid-volume-fraction-form}
 \end{equation}
-At \(J=\bar J=1\) and \(p=0\), both expressions recover
+Let \(\phi=1-\phi_s\) be the current porosity and
+\(\phi_0=1-\phi_{s0}\) its reference value.  The equivalent porosity form is
+\begin{equation}
+ B=1-\frac{KK_s(1-\phi_0)(1-\phi)}
+ {(1-\phi_0)^2K_s^2+\left[(1-\phi_0)K_s-K\right]pJ(1-\phi)}.
+ \label{eq:biot-porosity-form}
+\end{equation}
+Both expressions use the current phase volumes determined by the same
+mineral equation and retain the fixed-plastic-state definition of \(B\).
+
+For a virgin elastic state, \(a^p=1\) and \(J^e=J\).  We denote the
+coefficient evaluated with this mineral state by \(B_{\mathrm{el}}(p,J)\).
+At \(J=\bar J=1\) and \(p=0\), the expression recovers
 \(B_0=1-K/K_s\) \citep{biotwillis1957}.  At fixed total volume and pressure,
 increased plastic distention reduces \(J^e\) and \(\bar J\) on the stable
 branch, and hence increases \(B\).  This dependence follows from the
-specified constitutive laws and provides a direct link between stored
-plastic volume change and subsequent pressure coupling.
+specified constitutive laws.
+
+Differentiating the same mineral equation at fixed deformation and plastic
+state gives the pressure response needed for fluid storage:
+\begin{equation}
+ \left.\pder{\bar J}{p}\right|_{J,\mbf F^p}
+ =-\frac{\left(1-\dfrac{K}{\phi_{s0}K_s}\right)\bar J^2}
+ {K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J}.
+ \label{eq:trace-mineral-pressure-tangent}
+\end{equation}
+It is negative under \eqref{eq:trace-mineral-stability-domain}: increasing
+pore pressure at fixed skeleton volume compresses the mineral and increases
+the volume available to water.
 
 \subsection{Compatible energy and stress}
 
-The stress trace construction also determines an energy consistent with
-local pressure equilibrium.  With a neo-Hookean isochoric response of shear
-modulus \(G\), a potential per unit original mixture reference volume is
+Completing the square in
+\eqref{eq:distention-mineral-volumetric-energy} separates the drained energy
+from the energy associated with departure from the drained mineral state.
+Adding a neo-Hookean isochoric response of shear modulus \(G\) gives the
+potential per unit original mixture reference volume,
 \begin{align}
  W_s(\mbf F^e,\bar J)
  &=\frac{G}{2}\left[(J^e)^{-2/3}\tr(\mbf F^e(\mbf F^e)^T)-3\right]
@@ -496,19 +735,18 @@ modulus \(G\), a potential per unit original mixture reference volume is
 \end{align}
 Its derivative \(-\phi_{s0}^{-1}\partial W_s/\partial\bar J\) gives
 \eqref{eq:elastic-mineral-pressure}.  Evaluating this energy on the mineral
-root and taking the pressure Legendre transform gives
+root gives
 \begin{align}
  W^{\prime\prime}(\mbf F^e,p)
  &=\frac{G}{2}\left[(J^e)^{-2/3}\tr(\mbf F^e(\mbf F^e)^T)-3\right]
  +\frac K2(\ln J^e)^2 \notag\\
  &\quad+\frac{\phi_{s0}}{2K_s}
- \left(1-\frac{K}{\phi_{s0}K_s}\right)(p\bar J)^2,
- \label{eq:verification-fixed-pressure-potential}\\
- W^{\prime}(\mbf F^e,p)
- &=W^{\prime\prime}(\mbf F^e,p)+\phi_{s0}p\bar J.
- \label{eq:constitutive-pressure-legendre-energy}
+ \left(1-\frac{K}{\phi_{s0}K_s}\right)(p\bar J)^2.
+ \label{eq:verification-fixed-pressure-potential}
 \end{align}
-Their fixed-pressure deformation derivatives include the dependence of
+Adding \(\phi_{s0}p\bar J\) gives \(W^{\prime}\), as defined in
+\eqref{eq:pressure-legendre-potential}.  Both fixed-pressure deformation
+derivatives include the dependence of
 \(\bar J\) on \(J^e\).  The resulting single-prime Kirchhoff stress is
 \begin{equation}
  \bs\tau^{\prime}
@@ -532,7 +770,15 @@ pressure correction to the double-prime stress vanishes quadratically near
 the reference state.  The single-prime stress supplies the work conjugate
 for the plastic update below.
 
-\subsection{Work conjugacy, yield, and flow}
+For an elastic specimen under equal hydrostatic pressure on the pore fluid
+and external boundary (unjacketed loading), \(J=\bar J\),
+\(p=-K_s\ln J/J\), and \(\phi_s=\phi_{s0}\).  The single-prime stress
+vanishes and the total stress is \(-p\mbf I\).  In the incompressible-mineral
+limit, \(K_s\to\infty\), the mineral volume remains fixed,
+\(B\to1\), and the double-prime stress reduces to the drained skeleton
+response.
+
+\subsection{Plastic driving stress, yield, and flow}
 \label{sec:plastic-loading-incremental-rate}
 
 Plastic flow changes \(\mbf F^e\) at fixed total deformation.  The

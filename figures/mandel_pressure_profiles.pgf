@@ -1394,7 +1394,7 @@
 \definecolor{textcolor}{rgb}{0.200000,0.200000,0.200000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.491757in,y=3.551251in,left,base]{\color{textcolor}{\rmfamily\fontsize{7.500000}{9.000000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}$p_0$ (initial undrained)}}%
+\pgftext[x=3.150204in,y=3.551251in,,base]{\color{textcolor}{\rmfamily\fontsize{7.500000}{9.000000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}$p_0$ (initial undrained)}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
