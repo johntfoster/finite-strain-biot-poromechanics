@@ -1,0 +1,8 @@
+[
+  {
+    "axial_stretch": 0.95,
+    "pore_pressure": 200000000.0,
+    "mean_stress_at_apex": -9635712.782739613,
+    "outcome": "rejected_outside_smooth_cone"
+  }
+]

@@ -56,3 +56,15 @@ matchedLogMineralVolume(const T & J, const T & pressure, double K, double Ks, do
     mooseError("Matched logarithmic mineral state is outside the positive-modulus branch.");
   return z;
 }
+
+/** Equation (68), evaluated with the mineral volume from equation (63).
+ * J is total volume; plastic history enters the mineral solve through Je.
+ */
+template <typename T>
+T
+matchedLogBiotCoefficient(const T & J, const T & pressure, const T & mineral_volume,
+                          double K, double Ks, double phi0)
+{
+  return 1.0 - K * mineral_volume /
+      (J * (Ks + (1.0 - K / (phi0 * Ks)) * pressure * mineral_volume));
+}

@@ -10,7 +10,7 @@ specialization:
   balances_and_closures:
   - solid partial-density conservation in spatial form
   - matched logarithmic drained skeleton and mechanical mineral stress laws
-  - scalar mineral equation from stress trace and stress-volume reciprocity
+  - scalar mineral equation from pressure equilibrium of the distention and mineral energy
   - barotropic water equation of state
   discretization:
     displacement: Q2 continuous Lagrange

@@ -2,7 +2,9 @@ PYTHON ?= python3
 LATEXMK ?= latexmk
 MOOSE_ENV := agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh
 
-.PHONY: sync-check sync-pull sync-push build test derivation mandel plastic figures paper provenance validate reproduce
+.NOTPARALLEL: reproduce
+
+.PHONY: sync-check sync-pull sync-push build test derivation mandel plastic examples figures paper provenance validate reproduce
 
 sync-check:
 	tools/sync_biot_moose.py check
@@ -30,12 +32,23 @@ derivation:
 plastic:
 	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_implicit_poroplastic.py --curate
 
+examples: build
+	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/curate_poroplastic_delta_b.py
+	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_poroplastic_general_path.py
+	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_poroplastic_load_unload.py
+	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_poroplastic_b_feedback.py
+	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_tensorial_load_unload.py
+
 figures:
 	MPLCONFIGDIR=.agent-runtime/matplotlib $(MOOSE_ENV) run -- $(PYTHON) scripts/plot_mandel_extended_results.py
 	MPLCONFIGDIR=.agent-runtime/matplotlib $(MOOSE_ENV) run -- $(PYTHON) scripts/plot_implicit_poroplastic.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(MOOSE_ENV) run -- $(PYTHON) scripts/plot_poroplastic_delta_b.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(MOOSE_ENV) run -- $(PYTHON) scripts/plot_poroplastic_b_feedback.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(MOOSE_ENV) run -- $(PYTHON) scripts/plot_poroplastic_load_unload.py
+	MPLCONFIGDIR=.agent-runtime/matplotlib $(MOOSE_ENV) run -- $(PYTHON) scripts/plot_tensorial_load_unload.py
 
 paper:
-	$(LATEXMK) -lualatex -interaction=nonstopmode -halt-on-error \
+	$(LATEXMK) -lualatex -synctex=1 -interaction=nonstopmode -halt-on-error \
 		-outdir=paper/build paper/main.tex
 
 provenance:
@@ -44,4 +57,4 @@ provenance:
 validate:
 	$(PYTHON) scripts/validate_repository.py
 
-reproduce: sync-check derivation test mandel plastic figures paper provenance validate
+reproduce: sync-check derivation test mandel plastic examples figures paper provenance validate

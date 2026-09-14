@@ -17,7 +17,6 @@
       <a href="index.html">Home</a>
       <a href="mandel.html">Mandel benchmark</a>
       <a href="poroplastic.html" class="active">Poroplastic Biot</a>
-      <a href="sandstone.html">Sandstone</a>
       <a href="moose-catalog.html">MOOSE catalog</a>
       <a href="reproduction.html">Reproduce</a>
     </nav>
@@ -71,10 +70,19 @@ elastic, and physical calibration is a subsequent task.</p>
 </ul>
 <pre><code>make plastic
 make figures</code></pre>
-<p>The earlier scalar correction and radial-return prototypes are retained in
-the source archive. Their checks do not establish the physical consistency
-required by this manuscript; the <a href="source.html?f=../validation/manuscript_constitutive_audit_2026-09-08.md">constitutive audit</a>
-records the differences and failed assumptions.</p>
+<p>The supplementary monotonic and frozen-history examples use the same mineral equation and coefficient as the manuscript calculations.</p>
+</section>
+<section class="section">
+<h2>Supplementary constitutive examples</h2>
+<p>These calculations use the same mineral equation and coefficient as the
+manuscript. The frozen-history curves compare the closed expression with an
+independent two-state tangent. In the pressure sweep, 5% compression at 200 MPa
+requires an apex branch; the domain check records its rejection and the plotted
+curves contain the supported smooth-cone solutions.</p>
+<img src="assets/img/poroplastic_delta_b.png" alt="Monotonic coefficient and plastic history contribution" style="max-width:100%">
+<img src="assets/img/poroplastic_load_unload.png" alt="Independent frozen-history coefficient on unloading" style="max-width:100%">
+<img src="assets/img/poroplastic_b_feedback.png" alt="Pressure feedback over supported compression and pressure paths" style="max-width:100%">
+<img src="assets/img/tensorial_load_unload.png" alt="Supplementary implicit loading cycle" style="max-width:100%">
 </section>
 </div></main>
 

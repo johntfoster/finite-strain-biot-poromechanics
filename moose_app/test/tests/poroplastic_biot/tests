@@ -5,63 +5,86 @@
   [poroplastic_delta_b_elastic]
     type = RunApp
     input = poroplastic_delta_b_elastic.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_delta_b_elastic'
     max_time = 60
-    requirement = 'The canonical stateful tensorial poroplastic material (ADTensorialPoroplasticBiotMaterial) with yield inactive (M=100) shall collapse exactly onto the elastic response under drained monotonic compression: a^p = 1, Delta_gamma = 0, and the pore-allocation-corrected Biot coefficient shall equal the elastic coefficient B = B_el (E-1 collapse, Delta B = 0).'
+    requirement = 'The canonical stateful tensorial poroplastic material (ADImplicitPoroplasticBiotMaterial) with yield inactive (M=100) shall collapse exactly onto the elastic response under drained monotonic compression: a^p = 1, Delta_gamma = 0, and the fixed-history Biot coefficient shall equal the elastic coefficient B = B_el (E-1 collapse, Delta B = 0).'
   []
 
   [poroplastic_delta_b]
     type = RunApp
     input = poroplastic_delta_b.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_delta_b'
     max_time = 60
-    requirement = 'The canonical stateful tensorial multiplicative ideal Drucker-Prager material shall run on a single element under drained monotonic compression to 10% axial compression with the mechanism active (M=0.6): the stored plastic factor accumulates (a^p > 1) and the reported coefficient B = 1 - (1 - B_el)/a^p exceeds the total-J elastic coefficient (Delta B > 0).'
+    requirement = 'The canonical stateful tensorial multiplicative ideal Drucker-Prager material shall run on a single element under drained monotonic compression to 10% axial compression with the mechanism active (M=0.6): the stored plastic factor accumulates (a^p > 1) and the reported coefficient B from the matched mineral solve and fixed-history closed form exceeds the total-J elastic coefficient (Delta B > 0).'
   []
 
   [poroplastic_delta_b_20]
     type = RunApp
     input = poroplastic_delta_b_20.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_delta_b_20'
     max_time = 60
-    requirement = 'The canonical stateful tensorial material at 20% axial compression shall report a pore-allocation correction Delta B consistent with B = 1 - (1 - B_el)/a^p evaluated at the accumulated plastic factor a^p > 1.'
+    requirement = 'The canonical stateful tensorial material at 20% axial compression shall report a pore-allocation correction Delta B consistent with B from the matched mineral solve and fixed-history closed form evaluated at the accumulated plastic factor a^p > 1.'
   []
 
   [poroplastic_delta_b_30]
     type = RunApp
     input = poroplastic_delta_b_30.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_delta_b_30'
     max_time = 60
-    requirement = 'The canonical stateful tensorial material at 30% axial compression shall report a pore-allocation correction Delta B consistent with B = 1 - (1 - B_el)/a^p evaluated at the accumulated plastic factor a^p > 1.'
+    requirement = 'The canonical stateful tensorial material at 30% axial compression shall report a pore-allocation correction Delta B consistent with B from the matched mineral solve and fixed-history closed form evaluated at the accumulated plastic factor a^p > 1.'
   []
 
   [poroplastic_delta_b_sweep]
     type = RunApp
     input = poroplastic_delta_b_sweep.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_delta_b_sweep'
     max_time = 60
-    requirement = 'One monotonic drained compression run of the canonical stateful tensorial material to 35% axial compression shall supply the elastic coefficient B_el, the accumulated plastic factor a^p, and the pore-allocation-corrected coefficient B = 1 - (1 - B_el)/a^p over the whole compression range used in the delta-B demonstration figure.'
+    requirement = 'One monotonic drained compression run of the canonical stateful tensorial material to 35% axial compression shall supply the elastic coefficient B_el, the accumulated plastic factor a^p, and the fixed-history coefficient B from the matched mineral solve and fixed-history closed form over the whole compression range used in the delta-B demonstration figure.'
   []
 
   [poroplastic_b_feedback]
     type = RunApp
     input = poroplastic_b_feedback.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_b_feedback'
     max_time = 60
-    requirement = 'At nonzero pore pressure the canonical stateful tensorial material shall carry the pore-allocation-corrected coefficient B = 1 - (1 - B_el)/a^p in the single-prime driving stress through (1 - B) p J I: the corrected coefficient shall exceed the elastic coefficient (B > B_el), and the coupled plastic pore allocation shall fall below the frozen-elastic (B = B_el) reference pass (a^p < a^p_ref), with the split growing with pore pressure.'
+    requirement = 'At nonzero pore pressure the canonical stateful tensorial material shall carry the fixed-history coefficient B from the matched mineral solve and fixed-history closed form in the single-prime driving stress through (1 - B) p J I: the corrected coefficient shall exceed the elastic coefficient (B > B_el), and the coupled plastic pore allocation shall fall below the frozen-elastic (B = B_el) reference pass (a^p < a^p_ref), with the split growing with pore pressure.'
   []
 
   [poroplastic_general_path]
     type = RunApp
     input = poroplastic_general_path.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_general_path'
     max_time = 60
-    requirement = 'With the plastic pore allocation frozen at the value accumulated by the canonical stateful tensorial engine, the coefficient of the general fixed-history fixed-pressure tangent of the active plastic local system (assembled in AD by ADConstrainedSkeletonBiotMaterial from the route-A residuals of ADPlasticStateBiotMaterial) shall equal the reduced closed form B = 1 - (1 - B_el)/a^p to machine precision and the coefficient the stateful engine reports.'
+    requirement = 'With the plastic pore allocation frozen at the value accumulated by the canonical stateful tensorial engine, the coefficient of the general fixed-history fixed-pressure tangent of the active plastic local system (assembled in AD by ADConstrainedSkeletonBiotMaterial from the matched logarithmic residuals of ADPlasticStateBiotMaterial) shall equal the reduced closed form B from the matched mineral solve and fixed-history closed form to machine precision and the coefficient the stateful engine reports.'
   []
 
   [poroplastic_unload_tangent]
     type = RunApp
     input = poroplastic_unload_tangent.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_unload_tangent'
     max_time = 60
-    requirement = 'At a reduced compression with the plastic pore allocation frozen at the canonical peak value reached under monotonic loading to 20% compression (a^p = 1.031877), the fixed-history fixed-pressure coefficient computed by the AD general path shall exceed the virgin elastic coefficient at the same compression and equal B = 1 - (1 - B_el)/a^p (the unload/reload-tangent reading of alpha).'
+    requirement = 'At a reduced compression with the plastic pore allocation frozen at the canonical peak value reached under monotonic loading to 20% compression (prescribed positive a^p), the fixed-history fixed-pressure coefficient computed by the AD general path shall exceed the virgin elastic coefficient at the same compression and equal B from the matched mineral solve and fixed-history closed form (the unload/reload-tangent reading of alpha).'
   []
 
   [poroplastic_tensorial_load_unload]
     type = RunApp
     input = tensorial_load_unload.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/tensorial_load_unload'
     max_time = 60
-    requirement = 'The stateful full tensorial multiplicative ideal Drucker-Prager material (F = F^e F^p, elastic trial on F^e = F (F^p_n)^-1, radial return on the Kirchhoff stress) shall run on a single element under load-unload-reload axial stretch: load produces plastic flow (a^p > 1), unloading is immediately elastic with a^p frozen at the peak value and Delta_gamma = 0, and reloading re-yields at the stored peak.'
+    requirement = 'The stateful full tensorial multiplicative ideal Drucker-Prager material (F = F^e F^p, elastic trial on F^e = F (F^p_n)^-1, implicit exponential return on the Mandel driving stress) shall run on a single element under load-unload-reload axial stretch: load produces plastic flow (a^p > 1), unloading is immediately elastic with a^p frozen at the peak value and Delta_gamma = 0, and reloading re-yields at the stored peak.'
+  []
+  [poroplastic_compression]
+    type = RunApp
+    input = poroplastic_compression.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_compression'
+    max_time = 60
+    requirement = 'The homogeneous implicit update shall solve a single active compression increment with the current mineral state and coefficient.'
+  []
+  [poroplastic_elastic]
+    type = RunApp
+    input = poroplastic_elastic.i
+    cli_args = 'Outputs/file_base=../../../../.agent-runtime/example-tests/poroplastic_elastic'
+    max_time = 60
+    requirement = 'The homogeneous implicit update shall remain elastic when the yield condition is inactive.'
   []
 []

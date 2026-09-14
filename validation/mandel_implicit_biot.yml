@@ -12,24 +12,24 @@ discretization:
   - 4
   fine_time_step_seconds: 0.002
 metrics:
-  maximum_pressure_normalized_error: 0.037105783118342596
+  maximum_pressure_normalized_error: 0.037105783118384326
   maximum_side_displacement_relative_error: 0.006488620273675091
   maximum_top_displacement_relative_error: 0.0011251386372235607
   maximum_load_relative_error: 0.0023756394890999946
   maximum_biot_reference_error: 8.881586539999375e-06
-  maximum_biot_identity_l2: 5.0453270632174e-17
-  maximum_biot_centered_difference_l2: 1.5465381929664e-12
-  maximum_referential_solid_mass_drift_l2: 4.395190319756e-10
-  maximum_mineral_eos_residual_l2: 2.5087361421713e-17
-  mandel_cryer_pressure_increase: 0.027381295374126147
+  maximum_biot_identity_l2: 5.1281786958836e-17
+  maximum_biot_centered_difference_l2: 1.5433905678451e-12
+  maximum_referential_solid_mass_drift_l2: 4.3951902499092e-10
+  maximum_mineral_eos_residual_l2: 2.4999783516314e-17
+  mandel_cryer_pressure_increase: 0.027381295374146575
   mandel_cryer_peak_time_seconds: 0.014
   maximum_spatial_refinement_pressure_difference: 0.002490604417530413
-  maximum_temporal_refinement_pressure_difference: 0.027250147816057804
-  maximum_finer_temporal_refinement_pressure_difference: 0.016862133119018647
+  maximum_temporal_refinement_pressure_difference: 0.02725014781607867
+  maximum_finer_temporal_refinement_pressure_difference: 0.016862133118914404
   analytical_12_vs_128_root_pressure_difference: 4.429042450450072e-07
   analytical_12_vs_128_root_displacement_difference_m: 2.160643166550218e-13
-  maximum_horizontal_displacement_profile_normalized_error: 0.0006794105099495397
-  maximum_vertical_displacement_profile_normalized_error: 1.144765028214187e-13
+  maximum_horizontal_displacement_profile_normalized_error: 0.0006794105099420434
+  maximum_vertical_displacement_profile_normalized_error: 9.700644828429875e-14
 profile_figure:
   classification: early-refined small-load profile run for the publication figure
   mesh:
@@ -44,7 +44,7 @@ profile_figure:
   - 0.206
   - 0.398
   pressure_profile_line_y_m: 0.05
-  maximum_plotted_pressure_profile_normalized_error: 0.00980093176682384
+  maximum_plotted_pressure_profile_normalized_error: 0.009800931766740423
   mandel_cryer_overshoot_demonstrated_at_seconds: 0.02
 finite_deformation_continuation:
   classification: synthetic finite-deformation implementation demonstration
@@ -76,9 +76,9 @@ finite_deformation_continuation:
     - 1.035646668462602
     - 1.0357094381429115
     final_average_biot_relative_departure_from_reference: 0.02967568317201667
-    maximum_biot_identity_l2: 4.7701433804565e-17
-    maximum_referential_solid_mass_drift_l2: 2.7851894967969e-05
-    maximum_mineral_eos_residual_l2: 2.4323174568337e-17
+    maximum_biot_identity_l2: 4.6829394935328e-17
+    maximum_referential_solid_mass_drift_l2: 2.7851894967972e-05
+    maximum_mineral_eos_residual_l2: 2.4208483193636e-17
     final_vertical_nominal_stress_pa: -214958859.88189
   sensitivity:
     spatial_20x2_vs_40x4_at_dt_0p002:
@@ -87,7 +87,7 @@ finite_deformation_continuation:
     temporal_dt_0p004_vs_0p002_on_40x4:
       maximum_pressure_difference_over_peak: 0.003283046274353241
       maximum_average_biot_difference: 3.563407927997808e-05
-      coarse_maximum_referential_solid_mass_drift_l2: 5.5726726702768e-05
+      coarse_maximum_referential_solid_mass_drift_l2: 5.5726726702781e-05
 reproduction:
   build: make build
   tests: make test

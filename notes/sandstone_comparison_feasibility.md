@@ -1,3 +1,5 @@
+> Historical research note. Current equations, code, and verified results are maintained in `paper/main.tex`, `moose_app/`, and `validation/`.
+
 # Sandstone comparison: A (feasibility) result and B (calibration) status
 
 Date: 2026-09-04. Owner: nonlinear-Biot manuscript (experimental-comparison

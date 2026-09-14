@@ -1,23 +1,4 @@
-# Canonical implicit-coefficient feedback at nonzero pore pressure.
-# Single element driven by the stateful multiplicative tensorial engine
-# (ADTensorialPoroplasticBiotMaterial, M = 0.6, beta = 0.4) under drained
-# uniaxial-strain compression to 20% axial compression (axial stretch ramped
-# 1.0 -> 0.8 over t in [0,1]) at a prescribed NONZERO uniform pore pressure.
-# The single-prime driving stress tau' = tau'' + (1 - B) p J I contains the
-# pore-allocation-corrected coefficient B = 1 - (1 - B_el)/a^p (> B_el), so
-# the coefficient and the plastic state are coupled: the returned pore
-# allocation a^p and increment Delta_gamma carry the feedback of the corrected
-# coefficient through the isotropic term (1 - B) p J I.
-#
-# A frozen-elastic reference pass (same run structure with the elastic
-# coefficient B_el held in the single-prime reconstruction via
-# use_elastic_coefficient_in_trial = true) is produced by the driver that
-# curates this deck, isolating the coefficient feedback.
-#
-# SWEEP ANCHORS (substituted by validation/scripts/check_poroplastic_b_feedback.py):
-#   'value = 1.5e8'  : uniform pore pressure p0
-#   'y = \'1 0.8\''  : axial ramp target (axial stretch at end of load)
-
+# Implicit poroplastic loading with the mineral equation (63) and coefficient (68).
 [Mesh]
   type = GeneratedMesh
   dim = 2
@@ -46,10 +27,10 @@
 
 [BCs]
   [p_value]
-    type = DirichletBC
+    type = FunctionDirichletBC
     variable = p
     boundary = 'left right bottom top'
-    value = 1.5e8
+    function = pressure_path
   []
 []
 
@@ -62,6 +43,10 @@
 []
 
 [Functions]
+  [pressure_path]
+    type = ParsedFunction
+    expression = '1.5e8*min(t,1)'
+  []
   [axial]
     type = PiecewiseLinear
     x = '0 1'
@@ -130,12 +115,12 @@
     axial_stretch_variable = axial_aux
   []
   [tensorial]
-    type = ADTensorialPoroplasticBiotMaterial
+    type = ADImplicitPoroplasticBiotMaterial
     pressure = p
     shear_modulus = 0.75e9
     skeleton_bulk_modulus = 1.0e9
     mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
+    reference_solid_volume_fraction = 0.8
     dp_friction_slope = 0.6
     dp_dilation_slope = 0.4
     dp_cohesion = 0.0

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foster Technical Prose"
+  short_description: "Clarify technical prose in Foster's style."
+  default_prompt: "Use $foster-technical-prose to revise this technical manuscript while preserving its mathematics and citations."

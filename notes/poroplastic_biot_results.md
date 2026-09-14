@@ -1,3 +1,5 @@
+> Historical research note. Current equations, code, and verified results are maintained in `paper/main.tex`, `moose_app/`, and `validation/`.
+
 # Poroplastic Biot-coefficient correction: results (M3, route A)
 
 Date: 2026-09-04. Owner: nonlinear-Biot manuscript / MOOSE (todo M3 + Delta-B seed).

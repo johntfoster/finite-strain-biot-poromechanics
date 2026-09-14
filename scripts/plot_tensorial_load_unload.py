@@ -78,3 +78,7 @@ from matplotlib.backends.backend_pgf import FigureCanvasPgf  # noqa: E402
 pgf_path = os.path.join(ROOT, "figures", "tensorial_load_unload.pgf")
 FigureCanvasPgf(fig).print_pgf(pgf_path)
 print("wrote", pgf_path)
+
+# Publish the same image used by the repository figure set.
+import shutil
+shutil.copyfile(png_path, os.path.join(ROOT, "docs/assets/img", os.path.basename(png_path)))

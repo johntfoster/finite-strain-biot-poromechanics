@@ -1,3 +1,5 @@
+> Historical design note, superseded by the current manuscript and [formulation consistency report](../validation/formulation_consistency_2026-09-14.md).
+
 # Scope note: plastic driving stress and the implicit Biot coefficient
 
 Status: proposal for review — not authoritative.

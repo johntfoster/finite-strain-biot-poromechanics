@@ -17,7 +17,6 @@
       <a href="index.html">Home</a>
       <a href="mandel.html">Mandel benchmark</a>
       <a href="poroplastic.html">Poroplastic Biot</a>
-      <a href="sandstone.html">Sandstone</a>
       <a href="moose-catalog.html">MOOSE catalog</a>
       <a href="reproduction.html" class="active">Reproduce</a>
     </nav>
@@ -67,11 +66,13 @@ agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh setup   # 
       <pre><code>make test</code></pre>
 
       <h3>4 · Verify and regenerate implicit poroplastic data</h3>
-      <pre><code>make plastic</code></pre>
+      <pre><code>make plastic
+make examples</code></pre>
       <p>The current material checks physical mass, mineral compression,
-      energy-derived stress, flow, yield, objectivity and derivatives. Archived
-      plastic prototypes retain their original regression tests and are excluded
-      from the manuscript's physical evidence.</p>
+      energy-derived stress, flow, yield, objectivity and derivatives. Supplementary
+      loading and frozen-history examples use the same constitutive law. The
+      feedback sweep records an independently identified inadmissible apex state
+      separately from its smooth-cone solutions.</p>
 
       <h3>5 · Mandel analytical + AD verification</h3>
       <pre><code>make mandel</code></pre>
@@ -96,11 +97,12 @@ make validate</code></pre>
       <table>
         <thead><tr><th>Target</th><th>What it does</th></tr></thead>
         <tbody>
-          <tr><td><code>make reproduce</code></td><td><code>sync-check → test → mandel → plastic → figures → paper → provenance → validate</code></td></tr>
+          <tr><td><code>make reproduce</code></td><td><code>sync-check → derivation → test → mandel → plastic → examples → figures → paper → provenance → validate</code></td></tr>
           <tr><td><code>make build</code></td><td>Build the MOOSE app inside the conda environment</td></tr>
-          <tr><td><code>make test</code></td><td>Run elastic, implicit plastic and archived prototype MOOSE tests</td></tr>
+          <tr><td><code>make test</code></td><td>Run elastic, implicit plastic and supplementary MOOSE tests</td></tr>
           <tr><td><code>make mandel</code></td><td>Run the full analytical + AD Mandel verification</td></tr>
           <tr><td><code>make plastic</code></td><td>Verify and curate the implicit poroplastic paths</td></tr>
+          <tr><td><code>make examples</code></td><td>Regenerate supplementary paths and independent tangent checks</td></tr>
           <tr><td><code>make figures</code></td><td>Regenerate the current manuscript and website figures</td></tr>
           <tr><td><code>make paper</code></td><td>Build the PDF manuscript with latexmk + lualatex</td></tr>
           <tr><td><code>make provenance</code></td><td>Regenerate content hashes into <code>validation/provenance.yml</code></td></tr>

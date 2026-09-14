@@ -1,18 +1,12 @@
 #!/usr/bin/env python3
-"""Run the canonical stateful tensorial monotonic compression sweep and curate
-validation/poroplastic_delta_b.csv (elastic coefficient B_el, accumulated
-plastic factor a^p, pore-allocation-corrected coefficient B_pl, and the
-correction Delta B = B_pl - B_el over the compression range).
+"""Run the implicit drained compression sweep and curate its Biot coefficients.
 
-Source: moose_app/test/tests/poroplastic_biot/poroplastic_delta_b_sweep.i
-(ADTensorialPoroplasticBiotMaterial, M=0.6, beta=0.4; drained uniaxial-strain
-ramp to 35% axial compression).  Checks that the reported coefficient satisfies
-the route-A closed form  B = 1 - (1 - B_el)/a^p  to CSV precision, that the
-mechanism is active (a^p > 1, Delta B > 0), and that Delta B grows with
-compression over the physically meaningful range (elastic B_el >= 0).
-
-Run inside the moose conda environment.
+The independent scalar mineral solve verifies equation (68) at each returned
+plastic distention. The checks also require active dilation and an increasing
+history contribution through the sampled compression range.
 """
+
+from check_stress_trace_derivation import mineral
 
 import csv
 import os
@@ -70,7 +64,7 @@ def main():
     # Checks.
     active = all(rr["a_p"] > 1.0 and rr["delta_B"] > 0 for rr in rows)
     closed_form = all(
-        abs(rr["B_pl"] - (1.0 - (1.0 - rr["B_el"]) / rr["a_p"])) < 1.0e-12
+        abs(rr["B_pl"] - mineral(rr["axial_stretch"], 0., 1e9, 2.5e9, .8, rr["a_p"])[2]) < 1.0e-12
         for rr in rows)
     growing = all(
         rows[i + 1]["delta_B"] > rows[i]["delta_B"]
@@ -86,7 +80,7 @@ def main():
 
     fields = ["axial_stretch", "compression", "a_p", "B_el", "B_pl", "delta_B"]
     with open(OUT, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=fields)
+        w = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
         w.writeheader()
         for rr in rows:
             w.writerow(rr)

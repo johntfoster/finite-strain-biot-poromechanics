@@ -9,7 +9,7 @@ and .pgf.
 Two panels: the left is the pore-pressure scan at 20% axial compression, the
 right the axial-compression scan at 200 MPa pore pressure.  In each panel the
 left axis gives the pore-allocation-corrected coefficient
-B = 1 - (1 - B_el)/a^p (solid) and the elastic coefficient B_el (dashed); the
+B = 1 - K*Jbar/(J*(Ks + (1-K/(phi0*Ks))*p*Jbar)) (solid) and the elastic coefficient B_el (dashed); the
 right (secondary) axis gives the percent by which the frozen-elastic (B = B_el)
 reference over-predicts the plastic increment Delta_gamma (markers).  Because
 both panels show the same quantities, a single shared legend is drawn above
@@ -60,13 +60,13 @@ p_scan = sorted([r for r in rows if abs(r["compression"] - 0.20) < 1e-9],
 c_scan = sorted([r for r in rows if abs(r["pore_pressure"] - 2.0e8) < 1e6],
                 key=lambda r: r["compression"])
 
-fig, (ax_l, ax_r) = plt.subplots(1, 2, figsize=(6.6, 3.6))
+fig, (ax_l, ax_r) = plt.subplots(1, 2, figsize=(8.0, 3.6))
 
 
 def panel(ax, data, xkey, xlabel):
-    x = [r[xkey] for r in data]
+    x = [r[xkey] / (1e6 if xkey == "pore_pressure" else 1) for r in data]
     ax.plot(x, [r["B_coupled"] for r in data], "-", color="tab:red",
-            label=r"$B = 1 - (1-B_{\mathrm{el}})/a^p$")
+            label=r"$B$ (current plastic state)")
     ax.plot(x, [r["B_el"] for r in data], "--", color="tab:gray",
             label=r"$B_{\mathrm{el}}$")
     ax.set_xlabel(xlabel)
@@ -80,7 +80,7 @@ def panel(ax, data, xkey, xlabel):
     return ax, axr
 
 
-ax_l, ax_lr = panel(ax_l, p_scan, "pore_pressure", "Pore pressure  $p_0$ (Pa)")
+ax_l, ax_lr = panel(ax_l, p_scan, "pore_pressure", "Final pore pressure (MPa)")
 _, ax_rr = panel(ax_r, c_scan, "compression", "Axial compression  $1-\\lambda_a$")
 
 # Single shared legend above the panels (identical entries in both panels).
@@ -89,7 +89,7 @@ labels = [ln.get_label() for ln in handles]
 fig.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.98),
            ncol=3, framealpha=0.9)
 fig.subplots_adjust(top=0.78, bottom=0.14, left=0.10, right=0.90,
-                    wspace=0.42)
+                    wspace=0.85)
 
 fig.savefig(png_path, dpi=200)
 print("wrote", png_path)
@@ -98,3 +98,7 @@ from matplotlib.backends.backend_pgf import FigureCanvasPgf  # noqa: E402
 
 FigureCanvasPgf(fig).print_pgf(pgf_path)
 print("wrote", pgf_path)
+
+# Publish the same image used by the repository figure set.
+import shutil
+shutil.copyfile(png_path, os.path.join(ROOT, "docs/assets/img", os.path.basename(png_path)))

@@ -133,6 +133,15 @@ def main():
                     coupling = K / (phi0 * Ks)
                     assert Ks + (1 - coupling) * pressure * z > 0
                     assert 0 < B < 1
+                    def original_energy(volume):
+                        return (K / (2 * (1 - coupling)) * math.log(J / volume) ** 2
+                                + phi0 * Ks / 2 * math.log(volume) ** 2)
+                    check("original_energy_pressure_equilibrium",
+                          derivative(original_energy, z), -phi0 * pressure, Ks)
+                    shape = sum(value * value for row in F for value in row)
+                    check("original_to_reduced_energy", original_energy(z),
+                          potential(F, pressure, K, Ks, phi0, G, True)
+                          - G / 2 * (J ** (-2 / 3) * shape - 3), Ks)
                     check("solid_mass", J * phi / z, phi0)
                     zJ = derivative(lambda x: mineral(x, pressure, K, Ks, phi0)[0], J)
                     zp = derivative(lambda x: mineral(J, x, K, Ks, phi0)[0], pressure, Ks)

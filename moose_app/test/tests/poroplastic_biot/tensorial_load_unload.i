@@ -1,11 +1,4 @@
-# Canonical tensorial load-unload-reload demonstration.
-# Stateful multiplicative ideal Drucker-Prager return mapping
-# (ADTensorialPoroplasticBiotMaterial): F = F^e F^p, elastic trial on
-# F^e = F (F^p_n)^-1, radial return updating F^p; unloading inside the yield
-# surface freezes the plastic state (immediate elastic reversal) and reloading
-# re-yields from the stored state.  Single element, drained (p = 0), axial
-# stretch ramped in time: 1.0 -> 0.8 (load) -> 1.0 (unload) -> 0.8 (reload).
-
+# Implicit poroplastic loading with the mineral equation (63) and coefficient (68).
 [Mesh]
   type = GeneratedMesh
   dim = 2
@@ -155,12 +148,12 @@
     axial_stretch_variable = axial_aux
   []
   [tensorial]
-    type = ADTensorialPoroplasticBiotMaterial
+    type = ADImplicitPoroplasticBiotMaterial
     pressure = p
     shear_modulus = 0.75e9
     skeleton_bulk_modulus = 1.0e9
     mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
+    reference_solid_volume_fraction = 0.8
     dp_friction_slope = 0.6
     dp_dilation_slope = 0.4
     dp_cohesion = 0.0

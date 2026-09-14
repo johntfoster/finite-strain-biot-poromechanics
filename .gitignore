@@ -33,6 +33,3 @@ __pycache__/
 
 # Stray retrieval state written by local Codex sessions (canonical store is .agent-runtime/research/)
 .codex-research/
-
-# Syncthing transfer files are transient, not manuscript revisions.
-.syncthing.*.tmp

@@ -1,8 +1,4 @@
-# Single-element constitutive check of ADDruckerPragerPoroplasticBiotMaterial.
-# Prescribed uniform compression (constant deformation gradient), drained (p=0),
-# fixed Biot coefficient.  Confirms the active-yield return map runs: a^p > 1,
-# Delta_gamma > 0, yield f ~ 0 after return.
-
+# Homogeneous implicit constitutive check using equations (63) and (68).
 [Mesh]
   type = GeneratedMesh
   dim = 2
@@ -68,25 +64,14 @@
     axial_stretch = 0.9
     out_of_plane_stretch = 1.0
   []
-  [double_prime]
-    type = ADVolumetricBarotropicSkeletonStressMaterial
-    equivalent_pressure = p
-    shear_modulus = 0.75e9
-    skeleton_bulk_modulus = 1.0e9
-    mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
-  []
-  [const_biot]
-    type = ADGenericConstantMaterial
-    prop_names = solid_biot_coefficient
-    prop_values = 0.6
-  []
   [dp]
-    type = ADDruckerPragerPoroplasticBiotMaterial
+    type = ADImplicitPoroplasticBiotMaterial
     pressure = p
     shear_modulus = 0.75e9
     skeleton_bulk_modulus = 1.0e9
-    dp_friction_slope = 0.2
+    mineral_bulk_modulus = 2.5e9
+    reference_solid_volume_fraction = 0.8
+    dp_friction_slope = 0.6
     dp_dilation_slope = 0.4
     dp_cohesion = 0.0
   []
@@ -144,7 +129,9 @@
 []
 
 [Executioner]
-  type = Steady
+  type = Transient
+  num_steps = 1
+  dt = 1
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'

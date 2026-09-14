@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import math
+import shutil
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -59,7 +60,7 @@ def save_figure(figure, output: Path) -> None:
         figure.savefig(output.with_suffix(".png"), dpi=180)
         site_output = ROOT / "docs/assets/img" / output.with_suffix(".png").name
         site_output.parent.mkdir(parents=True, exist_ok=True)
-        figure.savefig(site_output, dpi=180)
+        shutil.copyfile(output.with_suffix(".png"), site_output)
 
 
 def read_rows(path: Path) -> list[dict[str, float]]:

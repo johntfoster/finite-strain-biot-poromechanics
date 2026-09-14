@@ -1,3 +1,5 @@
+> Historical design note, superseded by the current manuscript and [formulation consistency report](../validation/formulation_consistency_2026-09-14.md).
+
 # Derivation / notation audit: plastic driving stress and the implicit Biot coefficient
 
 Status: Phase-1 work in progress (Part A–D derived and source-anchored; Part E

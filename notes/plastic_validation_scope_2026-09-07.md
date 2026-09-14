@@ -1,3 +1,5 @@
+> Historical research note. Current equations, code, and verified results are maintained in `paper/main.tex`, `moose_app/`, and `validation/`.
+
 # Plasticity demonstration scope: implicit Biot coefficient, not rock calibration
 
 Status: author decision (recorded 2026-09-07). Owner: nonlinear-Biot manuscript

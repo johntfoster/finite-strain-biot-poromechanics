@@ -70,7 +70,7 @@ def main():
 
     fields = ["time", "axial_stretch", "compression", "a_p", "dgamma", "B"]
     with open(OUT, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=fields)
+        w = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
         w.writeheader()
         for r in rows:
             w.writerow(r)

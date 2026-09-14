@@ -1,24 +1,9 @@
 #!/usr/bin/env python3
-"""Canonical general-path oracle check (pure AD, no finite differences).
+"""Compare the independent two-state AD tangent with the closed Biot coefficient.
 
-Runs the single-element deck moose_app/test/tests/poroplastic_biot/
-poroplastic_general_path.i over a drained axial-compression sweep.  The plastic
-pore allocation is frozen at the accumulated a^p of the canonical stateful
-tensorial engine (ADTensorialPoroplasticBiotMaterial) at the same compression,
-read from validation/poroplastic_delta_b.csv.  The check verifies that
-
-    B_reduced = 1 - (1 - B_el)/a^p
-
-equals the coefficient returned by the general fixed-history, fixed-pressure
-tangent of the active plastic local system (assembled with AD by
-ADConstrainedSkeletonBiotMaterial from the route-A residuals of
-ADPlasticStateBiotMaterial with a^p frozen) to machine precision at every
-compression, and that both equal the coefficient the canonical stateful engine
-reports at the same state.  Curates validation/poroplastic_general_path.csv.
-
-Run inside the moose conda environment:
-  agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- \
-      python3 validation/scripts/check_poroplastic_general_path.py
+Plastic distention is taken from the implicit monotonic loading run. Each
+prescribed state conserves reference solid mass and solves the matched mineral
+equation. Within-run and cross-run tolerances remain 1e-9 and 1e-6.
 """
 
 import csv
@@ -55,8 +40,8 @@ def run_case(axial, a_p, workdir):
     deck = os.path.join(workdir, name + ".i")
     with open(DECK, encoding="utf-8") as fh:
         text = fh.read()
-    text = text.replace("axial_stretch = 0.9", "axial_stretch = %.6g" % axial)
-    text = text.replace("prop_values = 1.015137", "prop_values = %.9g" % a_p)
+    text = text.replace("axial_stretch_value := 0.9", "axial_stretch_value := %.6g" % axial)
+    text = text.replace("prop_values = 1.0151604645142", "prop_values = %.9g" % a_p)
     with open(deck, "w", encoding="utf-8") as fh:
         fh.write(text)
     r = subprocess.run([BINARY, "-i", deck, "--no-color"],
@@ -110,7 +95,7 @@ def main():
     fields = ["axial_stretch", "compression", "a_p", "B_el", "B_general",
               "B_reduced", "oracle_error"]
     with open(OUT, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=fields)
+        w = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
         w.writeheader()
         for row in rows:
             w.writerow(row)

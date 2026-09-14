@@ -1,3 +1,5 @@
+> Historical audit of the former implementation. Its referenced prototypes have been removed; see [the current consistency report](formulation_consistency_2026-09-14.md).
+
 # Constitutive and manuscript audit
 
 The manuscript will retain plasticity. The verified contribution is the implicit

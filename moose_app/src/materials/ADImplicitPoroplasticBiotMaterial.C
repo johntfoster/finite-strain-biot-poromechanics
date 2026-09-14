@@ -133,9 +133,9 @@ evaluate(const Matrix<T> & F,
 
   // Closed solution of the fixed-p, fixed-reference-mass, fixed-Fp tangent.
   // d(log Je)/dJ = 1/J: the denominator uses total J even in plastic states.
-  s.B = 1. - c.K * z / (J * D);
+  s.B = matchedLogBiotCoefficient(J, p, z, c.K, c.Ks, c.phi0);
   const T virgin_z = matchedLogMineralVolume(J, p, c.K, c.Ks, c.phi0);
-  s.B_el = 1. - c.K * virgin_z / (J * (c.Ks + alpha * p * virgin_z));
+  s.B_el = matchedLogBiotCoefficient(J, p, virgin_z, c.K, c.Ks, c.phi0);
 
   const auto FeinvT = transpose(inverse(s.Fe));
   T I1 = 0.;

@@ -1,14 +1,4 @@
-# Canonical delta-B demonstration at 20% axial compression.
-# Canonical stateful multiplicative ideal Drucker-Prager first-loading
-# demonstration (ADTensorialPoroplasticBiotMaterial): single element, drained
-# (p = 0), axial stretch ramped in time from 1.0 to 0.8 over t in
-# [0,1] at M = 0.6, dilation beta = 0.4.  The stored plastic factor F^p
-# (det F^p = a^p) accumulates along the path; the reported coefficient
-#   B = 1 - (1 - B_el)/a^p
-# uses the total-J elastic coefficient B_el of the same drained skeleton and
-# mineral (route-A convention), so Delta B = B - B_el > 0 with the mechanism
-# active.  
-
+# Implicit poroplastic loading with the mineral equation (63) and coefficient (68).
 [Mesh]
   type = GeneratedMesh
   dim = 2
@@ -131,12 +121,12 @@
     axial_stretch_variable = axial_aux
   []
   [tensorial]
-    type = ADTensorialPoroplasticBiotMaterial
+    type = ADImplicitPoroplasticBiotMaterial
     pressure = p
     shear_modulus = 0.75e9
     skeleton_bulk_modulus = 1.0e9
     mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
+    reference_solid_volume_fraction = 0.8
     dp_friction_slope = 0.6
     dp_dilation_slope = 0.4
     dp_cohesion = 0.0

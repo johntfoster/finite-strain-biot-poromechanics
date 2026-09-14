@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Plot the poroplastic Delta-B vs compression curve (single-element, drained,
-prescribed uniaxial-strain compression; ideal Drucker-Prager, M=0.2, beta=0.4).
+prescribed uniaxial-strain compression; ideal Drucker-Prager, M=0.6, beta=0.4).
 
 Reads validation/poroplastic_delta_b.csv and writes figures/poroplastic_delta_b.png.
 """
@@ -35,11 +35,7 @@ rows = []
 with open(csv_path, newline="") as fh:
     for r in csv.DictReader(fh):
         v = {k: float(val) for k, val in r.items()}
-        # Restrict to the physically meaningful range (elastic B_el >= 0);
-        # the single-element uniaxial-strain closed form leaves the physical
-        # regime beyond ~30% compression.
-        if v["compression"] <= 0.30:
-            rows.append(v)
+        rows.append(v)
 
 comp = [r["compression"] for r in rows]
 b_el = [r["B_el"] for r in rows]
@@ -59,7 +55,7 @@ ax1.grid(alpha=0.3)
 ax2.plot(comp, db, "-^", color="tab:blue")
 ax2.set_xlabel("Axial compression  $1-\\lambda_a$")
 ax2.set_ylabel(r"$\Delta B = B_{\mathrm{pl}} - B_{\mathrm{el}}$")
-ax2.set_title("Plastic pore-allocation correction to $B$")
+ax2.set_title("Plastic history contribution to $B$")
 ax2.grid(alpha=0.3)
 
 fig.tight_layout()
@@ -72,3 +68,7 @@ from matplotlib.backends.backend_pgf import FigureCanvasPgf  # noqa: E402
 pgf_path = os.path.join(ROOT, "figures", "poroplastic_delta_b.pgf")
 FigureCanvasPgf(fig).print_pgf(pgf_path)
 print("wrote", pgf_path)
+
+# Publish the same image used by the repository figure set.
+import shutil
+shutil.copyfile(png_path, os.path.join(ROOT, "docs/assets/img", os.path.basename(png_path)))

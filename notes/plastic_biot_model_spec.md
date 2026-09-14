@@ -1,3 +1,5 @@
+> Historical design note, superseded by the current manuscript and [formulation consistency report](../validation/formulation_consistency_2026-09-14.md).
+
 # Constitutive model specification: Drucker-Prager-type poroplasticity with the implicit Biot coefficient
 
 Status: draft spec, to be closed (E-1/E-4) before code.

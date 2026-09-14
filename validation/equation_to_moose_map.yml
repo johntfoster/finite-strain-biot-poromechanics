@@ -65,10 +65,10 @@ mappings:
   moose_objects:
   - ADConstrainedSkeletonBiotMaterial
   - ADLocalElasticMineralBiotMaterial
-  production_output: ADLocalElasticMineralBiotMaterial supplies solid_biot_coefficient from the
-    closed form evaluated at the matched logarithmic mineral state
-  verification_oracle: ADConstrainedSkeletonBiotMaterial independently solves the dense AD-valued
-    two-state tangent and supplies solid_biot_implicit_diagnostic
+  production_output: ADLocalElasticMineralBiotMaterial supplies solid_biot_coefficient
+    from the closed form evaluated at the matched logarithmic mineral state
+  verification_oracle: ADConstrainedSkeletonBiotMaterial independently solves the
+    dense AD-valued two-state tangent and supplies solid_biot_implicit_diagnostic
   tests:
   - mandel_water_q2_q1_verification
   - mandel_water_q2_q1_jacobian
@@ -127,7 +127,8 @@ mappings:
   - eq:skeleton-kinematics
   moose_objects:
   - ADConstantDeformationGradientMaterial
-  role: Homogeneous AD axial deformation with optional superposed rotation for constitutive tests
+  role: Homogeneous AD axial deformation with optional superposed rotation for constitutive
+    tests
   tests:
   - implicit_plastic_active_jacobian
   - implicit_plastic_consistency
@@ -173,11 +174,23 @@ mappings:
   tests:
   - implicit_plastic_active_jacobian
   - mandel_water_q2_q1_verification
-legacy_prototypes:
-  objects:
-  - ADTensorialPoroplasticBiotMaterial
-  - ADDruckerPragerPoroplasticBiotMaterial
+- id: supplementary_fixed_history_examples
+  paper_equations:
+  - eq:verification-mineral-factors
+  - eq:poroplastic-biot-correction
+  - eq:distension
+  moose_objects:
+  - ADImplicitPoroplasticBiotMaterial
   - ADPlasticStateBiotMaterial
   - ADPoroplasticBiotCoefficientMaterial
-  evidence_status: not used by current manuscript
-  audit: validation/manuscript_constitutive_audit_2026-09-08.md
+  - ADConstrainedSkeletonBiotMaterial
+  configuration: solid reference; mineral solve at Je=J/ap; coefficient derivative
+    with respect to total J
+  ad_expectations: current mineral states and coefficient retain AD; prescribed plastic
+    history is held fixed in the two-state oracle
+  tests:
+  - poroplastic_delta_b
+  - poroplastic_general_path
+  - poroplastic_unload_tangent
+  - poroplastic_b_feedback
+  - poroplastic_tensorial_load_unload

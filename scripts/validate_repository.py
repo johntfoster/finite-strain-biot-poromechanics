@@ -6,6 +6,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -138,7 +139,7 @@ def audit_finite_deformation_results() -> None:
     # This is a curated-data regression value for the matched logarithmic model.
     # The independent constitutive acceptance limit remains 1e-12.
     biot_error = max(row["biot_analytic_error_l2"] for row in rows)
-    require(abs(biot_error - 4.7701433804565e-17) <= 1e-28,
+    require(abs(biot_error - 4.6829394935328e-17) <= 1e-28,
             "finite-deformation Biot diagnostic differs from the recorded result")
     require(biot_error <= 1e-12, "finite-deformation Biot identity failed")
 
@@ -185,6 +186,34 @@ def audit_provenance() -> None:
         require(sha256(path) == expected, f"provenance drift: {name}")
 
 
+def audit_formulation_consistency() -> None:
+    retired = ("ADTensorialPoroplasticBiotMaterial", "ADDruckerPragerPoroplasticBiotMaterial")
+    for deck in (ROOT / "moose_app/test/tests").rglob("*.i"):
+        require(not any(name in deck.read_text() for name in retired),
+                f"obsolete constitutive model in {deck.relative_to(ROOT)}")
+    for name in retired:
+        require(not (ROOT / f"moose_app/src/materials/{name}.C").exists(),
+                f"obsolete compiled constitutive model: {name}")
+    for png in (ROOT / "figures").glob("*.png"):
+        site = ROOT / "docs/assets/img" / png.name
+        require(site.is_file() and sha256(png) == sha256(site),
+                f"manuscript and website image mismatch: {png.name}")
+    for page in (ROOT / "docs").glob("*.html"):
+        for source in re.findall(r'<img[^>]+src="([^"]+)"', page.read_text()):
+            require((page.parent / source).is_file(), f"missing image in {page.name}: {source}")
+    with (ROOT / "validation/implicit_poroplastic_feedback.csv").open() as stream:
+        final = list(csv.DictReader(stream))[-1]
+    prose = (ROOT / "paper/sections/poroplastic_results.tex").read_text()
+    for value in (f"B={float(final['B']):.5f}",
+                  f"a^p={float(final['a_p']):.5f}",
+                  f"a^p={float(final['a_p_reference']):.5f}"):
+        require(value in prose, f"manuscript feedback value differs from rerun: {value}")
+    domain = json.loads((ROOT / "validation/poroplastic_domain_checks.json").read_text())
+    require(len(domain) == 1 and domain[0]["mean_stress_at_apex"] < 0
+            and domain[0]["outcome"] == "rejected_outside_smooth_cone",
+            "missing independently identified smooth-cone domain rejection")
+
+
 def audit_manuscript() -> None:
     required = [
         "paper/main.tex",
@@ -216,6 +245,7 @@ def main() -> int:
         audit_finite_deformation_results,
         audit_implicit_poroplastic_results,
         audit_provenance,
+        audit_formulation_consistency,
         audit_manuscript
     )
     for audit in audits:

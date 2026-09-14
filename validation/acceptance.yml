@@ -3,7 +3,8 @@ study: finite-deformation solid-water spatial-mass and fixed-pressure Biot verif
 evidence_class: implementation_verification_and_analytical_benchmark
 entries:
 - id: ad_time_integrator_storage
-  governing_reduction: chain-rule time derivatives of the pulled-back solid and water accumulations
+  governing_reduction: chain-rule time derivatives of the pulled-back solid and water
+    accumulations
   variables:
   - displacement
   - water pressure
@@ -12,13 +13,15 @@ entries:
   - transient solves with backward Euler and BDF2
   - solid reference-mass drift
   authoritative_reference: paper/sections/implicit_ad_implementation.tex
-  tolerance: backward-Euler and BDF2 smoke solves succeed; solid reference-mass drift L2 <= 1.0e-9
+  tolerance: backward-Euler and BDF2 smoke solves succeed; solid reference-mass drift
+    L2 <= 1.0e-9
   result: moose_app/test/tests/mandel_implicit_biot/tests
   status: pass
 - id: local_elastic_tangent
-  governing_reduction: production closed-form coefficient from the matched logarithmic mineral
-    state, independently checked by general AD-valued implicit differentiation of the material-mass
-    and mineral-EOS residuals at fixed pore pressure and fixed referential solid mass J rho_s
+  governing_reduction: production closed-form coefficient from the matched logarithmic
+    mineral state, independently checked by general AD-valued implicit differentiation
+    of the material-mass and mineral-EOS residuals at fixed pore pressure and fixed
+    referential solid mass J rho_s
   variables:
   - solid-reference Jacobian
   - solid partial density
@@ -29,12 +32,13 @@ entries:
   - solid reference-mass drift
   - mineral-EOS residual
   authoritative_reference: paper/sections/finite_deformation_biot.tex
-  tolerance: Biot identity and mineral-EOS residual L2 <= 1.0e-12; solid reference-mass drift L2 <= 1.0e-9
+  tolerance: Biot identity and mineral-EOS residual L2 <= 1.0e-12; solid reference-mass
+    drift L2 <= 1.0e-9
   result: validation/mandel_implicit_biot.yml
   status: pass
 - id: outer_ad_jacobian
-  governing_reduction: transient Q2 displacement, Q1 pressure, and Q2 solid partial-density residual with
-    momentum, solid storage, water storage, and Darcy transport
+  governing_reduction: transient Q2 displacement, Q1 pressure, and Q2 solid partial-density
+    residual with momentum, solid storage, water storage, and Darcy transport
   variables:
   - displacement
   - water pressure
@@ -46,8 +50,9 @@ entries:
   result: moose_app/test/tests/mandel_implicit_biot/tests
   status: pass
 - id: mandel_pressure_and_displacement
-  governing_reduction: water-filled plane-strain Mandel consolidation obtained by linearizing the spatial
-    solid partial-density balance, local mineral EOS, and exact J(1-phi_s)rho_f(p) balance
+  governing_reduction: water-filled plane-strain Mandel consolidation obtained by
+    linearizing the spatial solid partial-density balance, local mineral EOS, and
+    exact J(1-phi_s)rho_f(p) balance
   variables:
   - Q2 displacement
   - Q1 water pressure
@@ -59,11 +64,13 @@ entries:
   - applied load
   - exact reference-water accumulation
   authoritative_reference: Cheng-Detournay analytical Mandel series
-  tolerance: pressure scale error <= 4.0e-2; side displacement error <= 8.0e-3; load error <= 3.0e-3
+  tolerance: pressure scale error <= 4.0e-2; side displacement error <= 8.0e-3; load
+    error <= 3.0e-3
   result: validation/mandel_implicit_biot.yml
   status: pass
 - id: finite_deformation_continuation
-  governing_reduction: ten-percent platen-compression continuation of the solid-water problem
+  governing_reduction: ten-percent platen-compression continuation of the solid-water
+    problem
   variables:
   - displacement
   - water pressure
@@ -75,9 +82,11 @@ entries:
   - two-dimensional solid-density field
   - mesh and time sensitivity
   - temporal decay of the referential-mass L2 diagnostic
-  authoritative_reference: exact implicit-Biot identity evaluated along the solved path
-  tolerance: Biot identity and mineral-EOS residual L2 <= 1.0e-12; solid reference-mass L2 drift decreases
-    when the backward-Euler step is halved; mesh and time sensitivity metrics are reported
+  authoritative_reference: exact implicit-Biot identity evaluated along the solved
+    path
+  tolerance: Biot identity and mineral-EOS residual L2 <= 1.0e-12; solid reference-mass
+    L2 drift decreases when the backward-Euler step is halved; mesh and time sensitivity
+    metrics are reported
   result: validation/mandel_large_deformation.csv
   status: pass
 - id: implicit_poroplastic_consistency
@@ -95,25 +104,25 @@ entries:
   - objectivity
   - increment refinement
   authoritative_reference: paper/sections/finite_deformation_biot.tex
-  tolerance: mass and EOS <= 1e-10; Biot <= 5e-8; flow and determinant <= 1e-9; normalized yield <= 1e-9;
-    normalized stress <= 2e-7; normalized objectivity <= 1e-10
+  tolerance: mass and EOS <= 1e-10; Biot <= 5e-8; flow and determinant <= 1e-9; normalized
+    yield <= 1e-9; normalized stress <= 2e-7; normalized objectivity <= 1e-10
   result: validation/implicit_poroplastic_verification.json
   status: pass
 - id: implicit_poroplastic_outer_ad
-  governing_reduction: active material residuals with stress invariants, plastic distention and Biot coefficient
+  governing_reduction: active material residuals with stress invariants, plastic distention
+    and Biot coefficient
   observables:
   - PETSc relative and absolute Jacobian differences
   authoritative_reference: moose_app/test/tests/implicit_poroplastic/active_jacobian.i
   tolerance: ratio <= 1e-7 and difference <= 1e-5
   result: moose_app/test/tests/implicit_poroplastic/tests
   status: pass
-legacy_prototype_entries:
+supplementary_entries:
 - id: poroplastic_b_feedback
-  governing_reduction: canonical stateful tensorial engine (ADTensorialPoroplasticBiotMaterial, M = 0.6,
-    beta = 0.4) on a single element under monotonic drained compression to a target axial stretch at a
-    prescribed nonzero uniform pore pressure; the pore-allocation-corrected coefficient B = 1 - (1 - B_el)/a^p
-    is carried in the single-prime driving stress through (1-B)p J I, with a frozen-elastic (B = B_el)
-    reference pass isolating the coefficient feedback
+  governing_reduction: Implicit exponential return during simultaneous axial compression
+    and pressure ramp; coefficient from the mineral equation and fixed-history closed
+    form enters the driving stress. A virgin-coefficient companion isolates pressure
+    feedback.
   variables:
   - uniform prescribed axial compression
   - uniform pore pressure
@@ -121,42 +130,36 @@ legacy_prototype_entries:
   - corrected coefficient B
   - elastic coefficient B_el
   - coupled and frozen-elastic plastic pore allocation and increment
-  authoritative_reference: paper/sections/mandel_verification.tex (single-element poroplastic demonstration)
-  tolerance: B > B_el and a^p < a_p_ref at nonzero pore pressure; the plastic-increment over-prediction
-    of the frozen-elastic reference grows with pore pressure at fixed compression and widens with compression
-    at fixed pore pressure
+  authoritative_reference: paper/sections/finite_deformation_biot.tex; paper/sections/poroplastic_results.tex
+  tolerance: B > B_el and a^p <= a_p_ref within 1e-9 for supported smooth-cone states;
+    the independently identified tensile-apex state must be rejected by the MOOSE solve
   result: moose_app/test/tests/poroplastic_biot/tests (poroplastic_b_feedback), validation/poroplastic_b_feedback.csv,
     validation/scripts/check_poroplastic_b_feedback.py
   status: pass
-  evidence_status: rejected_for_current_manuscript
-  audit: validation/manuscript_constitutive_audit_2026-09-08.md
+  evidence_status: supplementary_implementation_verification
 - id: poroplastic_general_path
-  governing_reduction: general fixed-history fixed-pressure Biot tangent of the active plastic local system
-    obtained by the AD dense solve (ADConstrainedSkeletonBiotMaterial) from the route-A local residuals
-    of ADPlasticStateBiotMaterial (phi_s = phi_s0*r/(ratio*a^p)) with a^p frozen at the value accumulated
-    by the canonical stateful tensorial engine; pure AD, no finite differences
+  governing_reduction: Mass-conserving two-state tangent at fixed pressure and plastic
+    distention, with the mineral state solved at Je=J/ap. Compare the dense AD tangent,
+    closed coefficient, and independently run implicit loading state.
   variables:
   - uniform prescribed axial compression
   - drained pore pressure
   - frozen canonical plastic pore allocation
   observables:
   - general-path coefficient B_general
-  - reduced coefficient B_reduced = 1 - (1 - B_el)/a^p
+  - reduced coefficient B_reduced from eq:poroplastic-biot-correction
   - elastic coefficient B_el
   - plastic pore allocation a^p
-  authoritative_reference: paper/sections/implicit_ad_implementation.tex (Sec. 3, local fixed-pressure
-    tangent), paper/sections/mandel_verification.tex (single-element poroplastic demonstration)
-  tolerance: '|B_general - B_reduced| <= 1.0e-9 over the drained compression sweep (machine precision);
-    both equal the stateful-engine coefficient (|B_reduced - B_stateful| <= 1.0e-6)'
+  authoritative_reference: paper/sections/finite_deformation_biot.tex; paper/sections/poroplastic_results.tex
+  tolerance: '|B_general - B_reduced| <= 1.0e-9 over the drained compression sweep
+    (machine precision); both equal the stateful-engine coefficient (|B_reduced -
+    B_stateful| <= 1.0e-6)'
   result: validation/poroplastic_general_path.csv, validation/scripts/check_poroplastic_general_path.py
   status: pass
-  evidence_status: rejected_for_current_manuscript
-  audit: validation/manuscript_constitutive_audit_2026-09-08.md
+  evidence_status: supplementary_implementation_verification
 - id: poroplastic_unload_branch
-  governing_reduction: 'unload-branch coefficient after monotonic plastic loading to the canonical peak
-    allocation a^p = 1.031877 (20% compression): the plastic pore allocation is frozen at the peak, and
-    the fixed-history fixed-pressure tangent is evaluated by pure AD (ADPlasticStateBiotMaterial residuals
-    + ADConstrainedSkeletonBiotMaterial dense solve) at a reduced compression'
+  governing_reduction: Freeze the distention measured at 20 percent compression; solve
+    mineral equilibrium and the two-state tangent at each unloading volume.
   variables:
   - uniform prescribed axial compression (unload)
   - frozen canonical plastic pore allocation
@@ -165,19 +168,16 @@ legacy_prototype_entries:
   - virgin elastic B_el
   - monotonic-load coefficient
   - frozen a^p
-  authoritative_reference: paper/sections/mandel_verification.tex (single-element poroplastic demonstration);
-    Brown-Korringa / Rice-Cleary / Ingraham unload-reload definition of alpha
-  tolerance: B_unload = 1 - (1 - B_el)/a^p at the frozen peak to CSV precision; B_unload > B_el at every
-    unload compression
+  authoritative_reference: paper/sections/finite_deformation_biot.tex; paper/sections/poroplastic_results.tex
+  tolerance: B_unload agrees with the independent scalar solve and closed form at
+    the frozen peak to CSV precision; B_unload > B_el at every unload compression
   result: validation/poroplastic_load_unload.csv, validation/scripts/check_poroplastic_load_unload.py
   status: pass
-  evidence_status: rejected_for_current_manuscript
-  audit: validation/manuscript_constitutive_audit_2026-09-08.md
+  evidence_status: supplementary_implementation_verification
 - id: poroplastic_tensorial_load_unload
-  governing_reduction: 'canonical stateful multiplicative ideal Drucker-Prager material on a single element
-    under load-unload-reload axial stretch: F = F^e F^p with stored plastic history; elastic trial on
-    F^e = F (F^p_n)^-1 and radial return on the full tensorial Kirchhoff stress; exact symmetric matrix-exponential
-    update of F^p'
+  governing_reduction: Implicit multiplicative exponential return with the current
+    mineral state, coefficient, and Mandel driving stress through loading, unloading
+    and reloading.
   variables:
   - uniform prescribed axial stretch (load 0 to 20%
   - unload to 10%
@@ -186,15 +186,14 @@ legacy_prototype_entries:
   observables:
   - plastic pore allocation a^p = det(F^p)
   - plastic increment Delta_gamma
-  - coefficient B = 1 - (1 - B_el)/a^p
-  authoritative_reference: paper/sections/mandel_verification.tex (single-element poroplastic demonstration);
-    multiplicative plasticity (Simo-Hughes) return-mapping update
-  tolerance: loading produces Delta_gamma > 0 and a^p > 1; on the unload branch Delta_gamma = 0 and a^p
-    is frozen at the peak (immediate elastic reversal) to CSV precision; reloading re-yields at the stored
-    peak; the elastic-limit variant (M = 100) collapses to a^p = 1, Delta_gamma = 0, B = B_el; the peak
-    a^p is path independent as the step is refined
-  result: validation/tensorial_load_unload.csv, validation/scripts/check_tensorial_load_unload.py, moose_app/test/tests/poroplastic_biot/tests
-    (poroplastic_tensorial_load_unload)
+  - coefficient B from eq:poroplastic-biot-correction
+  authoritative_reference: paper/sections/finite_deformation_biot.tex; paper/sections/poroplastic_results.tex
+  tolerance: loading produces Delta_gamma > 0 and a^p > 1; on the unload branch Delta_gamma
+    = 0 and a^p is frozen at the peak (immediate elastic reversal) to CSV precision;
+    reloading re-yields at the stored peak; the elastic-limit variant (M = 100) collapses
+    to a^p = 1, Delta_gamma = 0, B = B_el; the peak a^p is path independent as the
+    step is refined
+  result: validation/tensorial_load_unload.csv, validation/scripts/check_tensorial_load_unload.py,
+    moose_app/test/tests/poroplastic_biot/tests (poroplastic_tensorial_load_unload)
   status: pass
-  evidence_status: rejected_for_current_manuscript
-  audit: validation/manuscript_constitutive_audit_2026-09-08.md
+  evidence_status: supplementary_implementation_verification

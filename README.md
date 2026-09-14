@@ -6,7 +6,7 @@ from matched logarithmic skeleton and mineral stress laws. Implicit
 differentiation gives a closed-form coefficient in terms of the current states.
 An implicit poroplastic material retains active history and pressure coupling.
 The closed-form derivation, verification results, and benchmark parameter
-adjustments are recorded in [the upgrade verification report](validation/closed_form_upgrade_verification.md).
+adjustments are recorded in [the formulation consistency report](validation/formulation_consistency_2026-09-14.md).
 
 The physical specialization contains one deformable solid and one water phase.
 The global fields are Q2 displacement, continuous Q1 water pressure, and Q2
@@ -30,9 +30,9 @@ snapshots. The discretization has no pressure enrichment or EG operators.
 The plastic demonstration uses `ADImplicitPoroplasticBiotMaterial`. Its current
 plastic state remains active in the outer AD calculation, while the derivative
 defining B fixes that state. Run `make plastic` to verify the physical identities
-and regenerate the material-point data. Earlier plastic prototypes remain in
-the archive; their physical limitations are recorded in
-`validation/manuscript_constitutive_audit_2026-09-08.md`.
+and regenerate the material-point data. Supplementary loading and frozen-history
+examples use the same mineral equation and coefficient; run `make examples`
+to regenerate their independent checks and data.
 
 ## Repository layout
 

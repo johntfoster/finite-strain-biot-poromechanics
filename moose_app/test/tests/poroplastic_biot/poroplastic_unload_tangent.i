@@ -1,16 +1,4 @@
-# Canonical unload-branch coefficient (frozen plastic history).
-# After monotonic plastic (dilative) loading to a peak compression the plastic
-# pore allocation a^p is frozen at the value accumulated by the canonical
-# stateful tensorial engine (ADTensorialPoroplasticBiotMaterial, M = 0.6,
-# beta = 0.4); along an unloading branch the coefficient is the fixed-history,
-# fixed-pressure tangent at the current (reduced) compression, evaluated here
-# by pure AD (ADPlasticStateBiotMaterial residuals + the dense AD solve of
-# ADConstrainedSkeletonBiotMaterial) with a^p read frozen.  This is the
-# literature operational definition of the coefficient as an unload/reload
-# tangent (Brown-Korringa; Rice-Cleary; Ingraham): the unload coefficient
-# differs from the virgin elastic coefficient B_el at the same compression.
-# Single element, drained (p = 0), prescribed axial stretch below the peak.
-
+axial_stretch_value := 0.9
 [Mesh]
   type = GeneratedMesh
   dim = 2
@@ -53,10 +41,10 @@
     value = 0
   []
   [r_one]
-    type = DirichletBC
+    type = FunctionDirichletBC
     variable = r
     boundary = 'left right bottom top'
-    value = 1
+    function = reference_mass
   []
 []
 
@@ -92,65 +80,43 @@
 []
 
 [Materials]
-  # Unloaded axial stretch (SWEEP ANCHOR 'axial_stretch = 0.9').
   [const_f]
     type = ADConstantDeformationGradientMaterial
     transverse_stretch = 1.0
-    axial_stretch = 0.9
+    axial_stretch = '${axial_stretch_value}'
     out_of_plane_stretch = 1.0
-  []
-  # Legacy route-A regression: retain the original contact law and elastic
-  # oracle explicitly, independently of the active matched-log model.
-  [legacy_contact]
-    type = ADParsedMaterial
-    material_property_names = solid_reference_J
-    property_name = solid_mineral_effective_pressure
-    expression = '-1.0e9*log(solid_reference_J)/(0.9*solid_reference_J)'
-  []
-  [legacy_contact_tangent]
-    type = ADParsedMaterial
-    material_property_names = solid_reference_J
-    property_name = solid_mineral_effective_pressure_jacobian_derivative
-    expression = '-1.0e9*(1-log(solid_reference_J))/(0.9*solid_reference_J^2)'
-  []
-  [local_elastic]
-    type = ADParsedMaterial
-    coupled_variables = p
-    material_property_names = 'solid_mineral_effective_pressure solid_mineral_effective_pressure_jacobian_derivative'
-    property_name = elastic_biot_closed_form
-    expression = '1+0.9*solid_mineral_effective_pressure_jacobian_derivative/(2.5e9*exp((p+solid_mineral_effective_pressure)/2.5e9))'
   []
   [jdot_zero]
     type = ADGenericConstantMaterial
     prop_names = solid_reference_J_dot
     prop_values = 0
   []
-  # Frozen plastic history at the peak: a^p held at the canonical stateful
-  # value reached under monotonic loading to 20% compression
-  # (SWEEP ANCHOR 'prop_values = 1.031877').
   [frozen_ap_ad]
     type = ADGenericConstantMaterial
     prop_names = plastic_pore_allocation
-    prop_values = 1.031877
+    prop_values = 1.0319314841578
   []
   [frozen_ap_value]
     type = GenericConstantMaterial
     prop_names = plastic_pore_allocation_value
-    prop_values = 1.031877
+    prop_values = 1.0319314841578
   []
-  # Reduced closed-form oracle at the frozen state.
   [b_correct]
     type = ADPoroplasticBiotCoefficientMaterial
+    pressure = p
+    skeleton_bulk_modulus = 1.0e9
+    mineral_bulk_modulus = 2.5e9
+    reference_solid_volume_fraction = 0.8
     elastic_biot_coefficient_name = elastic_biot_closed_form
     plastic_pore_allocation_name = plastic_pore_allocation
   []
-  # General-path residual provider (route-A phi_s with a^p frozen).
   [plastic_state]
     type = ADPlasticStateBiotMaterial
+    skeleton_bulk_modulus = 1.0e9
     pressure = p
     solid_spatial_mass_ratio = r
     mineral_bulk_modulus = 2.5e9
-    reference_solid_volume_fraction = 0.9
+    reference_solid_volume_fraction = 0.8
     plastic_pore_allocation_value_name = plastic_pore_allocation_value
   []
   [plastic_accumulation]
@@ -158,15 +124,14 @@
     material_property_names = solid_reference_J
     property_name = plastic_solid_reference_accumulation_for_biot
     constant_names = phi0
-    constant_expressions = 0.9
-    expression = 'phi0*solid_reference_J'
+    constant_expressions = 0.8
+    expression = 'phi0'
   []
   [implicit_state_selectors]
     type = ADGenericConstantMaterial
     prop_names = 'implicit_state_zero implicit_state_one'
     prop_values = '0 1'
   []
-  # General dense AD tangent at the frozen plastic state (unload branch).
   [constrained_biot_state]
     type = ADConstrainedSkeletonBiotMaterial
     constraint_residual_names = 'plastic_local_material_mass_constraint plastic_mineral_eos_constraint'
@@ -177,7 +142,7 @@
     constraint_jacobian_derivative_names = 'plastic_local_material_mass_d_jacobian plastic_mineral_eos_d_jacobian'
     constraint_state_derivative_names = 'plastic_local_material_mass_d_intrinsic_density_ratio plastic_local_material_mass_d_volume_fraction plastic_mineral_eos_d_intrinsic_density_ratio plastic_mineral_eos_d_volume_fraction'
     volume_fraction_state_derivative_names = 'implicit_state_zero implicit_state_one'
-    reference_specific_volume = '${fparse 1/0.9}'
+    reference_specific_volume = '${fparse 1/0.8}'
     intrinsic_specific_volume_name = plastic_intrinsic_specific_volume_from_constraints
     intrinsic_skeleton_density_name = plastic_intrinsic_density_from_constraints
     constraint_norm_name = plastic_biot_constraint_norm
@@ -246,4 +211,11 @@
 [Outputs]
   csv = true
   execute_on = timestep_end
+[]
+
+[Functions]
+  [reference_mass]
+    type = ParsedFunction
+    expression = '1/${axial_stretch_value}'
+  []
 []

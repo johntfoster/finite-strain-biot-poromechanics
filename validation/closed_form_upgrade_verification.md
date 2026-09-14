@@ -1,3 +1,5 @@
+> Historical upgrade record. The current rerun and cleanup are recorded in [the formulation consistency report](formulation_consistency_2026-09-14.md).
+
 # Closed-form matched-logarithmic Biot implementation
 
 The main derivation, including the stress-trace compatibility argument, is

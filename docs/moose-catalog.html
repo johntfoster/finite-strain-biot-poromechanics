@@ -17,7 +17,6 @@
       <a href="index.html">Home</a>
       <a href="mandel.html">Mandel benchmark</a>
       <a href="poroplastic.html">Poroplastic Biot</a>
-      <a href="sandstone.html">Sandstone</a>
       <a href="moose-catalog.html" class="active">MOOSE catalog</a>
       <a href="reproduction.html">Reproduce</a>
     </nav>
@@ -84,26 +83,18 @@
           <a href="source.html?f=../moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C">ADImplicitPoroplasticBiotMaterial</a>
           <span class="why">Current manuscript model: mass-conserving mineral state, implicit exponential flow and yield solve, and active outer AD.</span>
         </li>
-        <li>
-          <a href="source.html?f=../moose_app/src/materials/ADTensorialPoroplasticBiotMaterial.C">ADTensorialPoroplasticBiotMaterial</a>
-          <span class="desc">Stateful multiplicative ideal Drucker–Prager return mapping (<code>F = Fᵉ Fᵖ</code>) with exact symmetric matrix exponential; stores <code>Fᵖ</code> and <code>aᵖ</code>.</span>
-          <span class="why">Archived prototype; its physical consistency limitations are documented in the constitutive audit.</span>
-        </li>
+
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADPlasticStateBiotMaterial.C">ADPlasticStateBiotMaterial</a>
-          <span class="desc">Route-A local residual provider for the fixed-history, fixed-pressure plastic tangent with <code>aᵖ</code> frozen.</span>
+          <span class="desc">Mass and matched mineral residual provider for the fixed-history, fixed-pressure plastic tangent with <code>aᵖ</code> frozen.</span>
           <span class="why">Why: feeds the general AD tangent for the poroplastic oracle checks.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADPoroplasticBiotCoefficientMaterial.C">ADPoroplasticBiotCoefficientMaterial</a>
-          <span class="desc">Plastic pore-allocation correction <code>B = 1 − (1 − B<sub>el</sub>)/aᵖ</code>.</span>
-          <span class="why">Why: the reduced route-A closure used as a reference.</span>
+          <span class="desc">Closed-form coefficient evaluated at the mineral root with <code>Jᵉ = J/aᵖ</code>.</span>
+          <span class="why">Why: the closed-form reference for the independent two-state tangent.</span>
         </li>
-        <li>
-          <a href="source.html?f=../moose_app/src/materials/ADDruckerPragerPoroplasticBiotMaterial.C">ADDruckerPragerPoroplasticBiotMaterial</a>
-          <span class="desc">Scalar Drucker–Prager poroplastic return mapping on the single-prime Kirchhoff stress, with optional <code>biot_feedback</code> fixed-point iteration.</span>
-          <span class="why">Why: the scalar prototype for the feedback comparisons.</span>
-        </li>
+
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADConstantDeformationGradientMaterial.C">ADConstantDeformationGradientMaterial</a>
           <span class="desc">Prescribes a uniform diagonal <code>F</code> (optionally time-ramped).</span>

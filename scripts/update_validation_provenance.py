@@ -13,8 +13,8 @@ OUTPUT = ROOT / "validation/provenance.yml"
 
 FILES = [
     "scripts/reproduce_mandel_publication.py",
-    "validation/closed_form_upgrade_verification.md",
-    "paper/sections/stress_trace_biot_appendix.tex",
+    "validation/formulation_consistency_2026-09-14.md",
+    "validation/poroplastic_domain_checks.json",
     "validation/scripts/check_stress_trace_derivation.py",
     "validation/scripts/check_stress_trace_biot_fraction.py",
     "validation/stress_trace_derivation_review.md",
@@ -78,7 +78,6 @@ FILES = [
     "figures/poroplastic_b_feedback.pgf",
     "figures/poroplastic_load_unload.pgf",
     "figures/tensorial_load_unload.pgf",
-    "figures/sandstone_comparison.pgf",
     "scripts/curate_mandel_profiles.py",
     "scripts/extract_mandel_density_contours.py",
     "scripts/plot_mandel_extended_results.py",
@@ -86,8 +85,6 @@ FILES = [
     "scripts/plot_poroplastic_b_feedback.py",
     "scripts/plot_poroplastic_load_unload.py",
     "scripts/plot_tensorial_load_unload.py",
-    "scripts/sweep_poroplastic_b_feedback.py",
-    "scripts/plot_sandstone_comparison.py",
     "validation/scripts/check_poroplastic_general_path.py",
     "validation/scripts/check_poroplastic_load_unload.py",
     "validation/scripts/check_poroplastic_b_feedback.py",
@@ -97,6 +94,18 @@ FILES = [
     "moose/sync_manifest.json",
     "moose/sync_state.json"
 ]
+
+
+FILES = sorted(set(FILES) | {
+    str(path.relative_to(ROOT))
+    for pattern in (
+        "moose_app/src/**/*.C", "moose_app/include/**/*.h",
+        "moose_app/test/tests/**/*.i", "moose_app/test/tests/**/tests",
+        "validation/scripts/*.py", "figures/*.png", "figures/*.pgf", "figures/*.pdf",
+        "docs/assets/img/*.png", "docs/*.html",
+    )
+    for path in ROOT.glob(pattern)
+})
 
 
 def sha256(path: Path) -> str:

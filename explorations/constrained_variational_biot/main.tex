@@ -1,0 +1,399 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{microtype}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+\providecommand{\doi}[1]{\href{https://dx.doi.org/#1}{#1}}
+
+\title{A constrained variational reduction for a finite-deformation\
+single-solid, single-fluid Biot system}
+\author{Exploratory manuscript}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The mineral equation in a finite-deformation Biot model relates mineral-volume
+ratio, pore pressure, and elastic volume.  We show that this equation is the
+local stationarity condition of a pressure-dependent mineral potential.  This
+observation gives a constrained variational interpretation of the
+finite-deformation Biot stress transformation, but it does not by itself
+remove a global equation: mineral volume is already a locally condensed
+constitutive state.  For a nonreacting solid with compatible referential mass,
+solid mass conservation provides a distinct continuum reduction.  It eliminates
+the global solid partial-density field and gives a two-field system for
+displacement and pore pressure, with mineral volume still found by a scalar
+local solve.  We derive the reduced storage, total stress, weak equations,
+and the conditions under which the reduction is valid.  Darcy flow requires
+a dissipative virtual-power or Onsager extension; it does not follow from a
+conservative Hamilton principle alone.  The result identifies a focused
+two-field prototype while retaining the constitutive mineral response that
+produces the nonlinear Biot coefficient.
+\end{abstract}
+
+\noindent\textbf{Keywords:} finite-deformation poromechanics; constrained
+variation; Biot coefficient; solid mass conservation; Darcy dissipation
+
+\section{Introduction}
+\label{sec:introduction}
+
+In a saturated porous material, total volume change and mineral-volume change
+are different kinematic responses.  Their distinction determines the solid
+volume fraction, fluid storage, and the contribution of pore pressure to the
+mixture stress.  A finite-deformation Biot coefficient follows from the
+mineral-volume response at fixed pore pressure \citep{fosterxu2025}.  The
+matched logarithmic specialization considered here supplies that response by
+a scalar equation coupling elastic volume, pressure, and mineral volume.
+
+The scalar equation appears naturally as a constraint candidate.  This paper
+asks two separate questions.  First, can that relation be obtained from a
+variational statement?  Second, does making it explicit reduce the number of
+global equations?  The answers differ.  The relation is a local stationarity
+condition of a mixed mineral potential.  Its elimination is therefore an
+energy-consistent constitutive condensation.  It does not reduce the existing
+global system, because the mineral-volume ratio is already local rather than
+a finite-element field.  A separate reduction follows from source-free solid
+mass conservation: for a solid with prescribed compatible referential mass, it eliminates
+the solid partial density in favor of the deformation.
+
+The contribution is a precise separation of these two eliminations for the
+single-solid model, together with the resulting continuum two-field weak
+problem.  It is a specialization and reformulation of the existing model,
+rather than a claim that a mineral multiplier supplies a new field reduction.
+
+We restrict attention to one deformable solid and one compressible fluid at
+constant temperature.  There are no solid sources, reactions, or phase
+changes.  The construction follows the constituent-volume distinction used
+in mixture theories \citep{drumheller2000} and retains the finite-deformation
+pressure transformation of \citet{fosterxu2025}.  Section~\ref{sec:state}
+states the model.  Section~\ref{sec:stationarity} derives the local
+stationarity result and the total stress.  Section~\ref{sec:reduction}
+performs the global reduction.  Section~\ref{sec:variational-flow} separates
+the conservative and dissipative portions of the formulation.
+
+\section{State, mass balance, and mineral equation}
+\label{sec:state}
+
+Let \(\mbf x=\boldsymbol\chi(\mbf X,t)\) be the solid motion,
+\(\mbf F=\nabla_{\mbf X}\boldsymbol\chi\), and \(J=\det\mbf F>0\).
+Let \(\bar J\) denote the mineral-volume ratio and let \(\phi_{s0}\) be
+the reference solid volume fraction.  The solid partial density \(\rho_s\)
+is mass per current mixture volume, whereas the solid intrinsic density
+\(\bar\rho_s\) is mass per current mineral volume.  Suppose the material
+solid has no mass source and its initial data satisfy
+\(J\rho_s|_{t=0}=\rho_{s0}(\mbf X)\).  Integrating solid mass balance then
+gives
+\begin{align}
+ J\rho_s &= \rho_{s0}(\mbf X),
+ \label{eq:solid-mass-integrated}\\
+ \bar J &= \frac{\bar\rho_{s0}}{\bar\rho_s},
+ \qquad
+ \phi_s=\frac{\phi_{s0}\bar J}{J}.
+ \label{eq:phase-volume-state}
+\end{align}
+The constant-reference specialization uses
+\(\rho_{s0}=\phi_{s0}\bar\rho_{s0}\).  Thus \(\bar J\) determines the
+intrinsic density, while the ratio \(\phi_{s0}\bar J/J\) determines the
+current solid volume fraction.  A spatially varying prescribed
+\(\rho_{s0}(\mbf X)\) is also admissible, but the formulas below use the
+constant-reference specialization.
+
+For the elastic specialization, let \(J^e\) be elastic volume.  It equals
+\(J\) in the absence of plastic distention and equals \(J/a^p\) when a
+stored plastic volume factor \(a^p\) is held fixed.  The matched logarithmic
+mineral relation is
+\begin{equation}
+ R(J^e,p,\bar J)
+ =K_s\ln\bar J
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p\bar J
+ -\frac{K}{\phi_{s0}}\ln J^e=0,
+ \label{eq:mineral-residual}
+\end{equation}
+where \(K\) and \(K_s\) are the drained and mineral reference bulk moduli,
+with \(0<K<\phi_{s0}K_s\).  Write
+\(\alpha=1-K/(\phi_{s0}K_s)>0\).  We follow the root continued from the
+drained state and retain it where
+\begin{equation}
+ D\equiv\pder{R}{\bar J}
+ =\frac{K_s}{\bar J}
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p>0.
+ \label{eq:stable-mineral-branch}
+\end{equation}
+Equivalently, \(K_s+\alpha p\bar J>0\).  This condition makes the chosen
+scalar branch regular; its strict-local-minimum meaning follows below.
+
+The finite-deformation Biot coefficient is defined at fixed pressure,
+referential solid mass, and plastic state by
+\begin{equation}
+ B=1-\phi_{s0}\left.\pder{\bar J}{J}\right|_{p,J\rho_s,\mbf F^p}.
+ \label{eq:biot-definition}
+\end{equation}
+Implicit differentiation of \cref{eq:mineral-residual} gives
+\begin{equation}
+ B=1-
+ \frac{K\bar J}
+ {J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]}.
+ \label{eq:biot-coefficient}
+\end{equation}
+At \(J=\bar J=1\) and \(p=0\), this recovers \(B=1-K/K_s\)
+\citep{biotwillis1957}.
+
+\section{Mineral equation as a local stationarity condition}
+\label{sec:stationarity}
+
+For the elastic specialization, the relevant part of the matched free energy
+per unit reference mixture volume is
+\begin{equation}
+ W_s(\mbf F^e,\bar J)
+ =W_{\mathrm{iso}}(\mbf F^e)
+ +\frac K2(\ln J^e)^2
+ +\frac{\phi_{s0}K_s}{2\alpha}
+ \left(\ln\bar J-\frac{K}{\phi_{s0}K_s}\ln J^e\right)^2,
+ \label{eq:matched-energy}
+\end{equation}
+where \(W_{\mathrm{iso}}\) is independent of \(\bar J\).  In the
+following constitutive variations, the plastic state is held fixed, so that
+\(\mbf F^e\) is determined by \(\mbf F\).  The pressure conjugacy is
+\begin{equation}
+ p=-\frac{1}{\phi_{s0}}
+ \left.\pder{W_s}{\bar J}\right|_{\mbf F^e}.
+ \label{eq:pressure-conjugacy}
+\end{equation}
+Substitution of \cref{eq:matched-energy} gives
+\begin{equation}
+ \pder{W_s}{\bar J}+\phi_{s0}p
+ =\frac{\phi_{s0}}{\alpha\bar J}R(J^e,p,\bar J).
+ \label{eq:energy-residual-identity}
+\end{equation}
+For prescribed \((\mbf F,p)\), introduce
+\begin{equation}
+ \Pi_s(\mbf F,\bar J;p)=W_s(\mbf F,\bar J)+\phi_{s0}p\bar J.
+ \label{eq:local-mineral-potential}
+\end{equation}
+Equations \cref{eq:energy-residual-identity,eq:mineral-residual} show that
+\(\delta_{\bar J}\Pi_s=0\) is exactly the mineral equation.  At a root,
+its second variation is
+\begin{equation}
+ \frac{\partial^2\Pi_s}{\partial\bar J^2}
+ =\frac{\phi_{s0}}{\alpha\bar J}
+ \pder{R}{\bar J}
+ =\frac{\phi_{s0}\left(K_s+\alpha p\bar J\right)}
+ {\alpha\bar J^2}>0.
+ \label{eq:mineral-curvature}
+\end{equation}
+Hence the selected positive-derivative root is a strict local minimum and a
+regular implicit branch.  This statement neither establishes a global minimum
+nor excludes other roots under tensile pressure.
+
+The same result supplies the stress transformation.  Define the mixed
+mechanical potential per unit reference volume
+\begin{equation}
+ G(\mbf F,\bar J,p)
+ =W_s(\mbf F,\bar J)-p\left(J-\phi_{s0}\bar J\right).
+ \label{eq:mixed-mechanical-potential}
+\end{equation}
+Let \(W^{\prime\prime}(\mbf F,p)=W_s(\mbf F,\bar J(\mbf F,p))\) and
+\(\mbf P^{\prime\prime}=\partial W^{\prime\prime}/\partial\mbf F|_p\).
+Writing \(\mbf P'=\partial W_s/\partial\mbf F|_{\bar J}\), the fixed-
+pressure chain rule and \cref{eq:pressure-conjugacy} give
+\begin{align}
+ \mbf P^{\prime\prime}
+ &=\mbf P'-\phi_{s0}p
+ \left.\pder{\bar J}{J}\right|_pJ\mbf F^{-T},
+ \label{eq:fixed-pressure-stress-chain-rule}\\
+ &=\mbf P'-(1-B)pJ\mbf F^{-T}.
+ \label{eq:prime-stress-transform}
+\end{align}
+The envelope theorem applied to \cref{eq:mixed-mechanical-potential} now
+gives the total derivative along the stationary state,
+\begin{equation}
+ \frac{\dd}{\dd\mbf F}G(\mbf F,\bar J(\mbf F,p),p)
+ =\mbf P'-pJ\mbf F^{-T}
+ =\mbf P^{\prime\prime}-BpJ\mbf F^{-T}.
+ \label{eq:mixed-stress-total}
+\end{equation}
+This is a fixed-pressure mechanical identity.  The potential \(G\) is not,
+by itself, an action for a free pressure variation: its derivative with
+respect to \(p\) contains pore volume rather than the fluid mass balance.
+
+An explicit multiplier constraint \(\lambda R=0\) is therefore unnecessary
+for this model.  It introduces an additional local variable \(\lambda\) and
+an additional equation.  Eliminating them recovers the same local tangent
+obtained by differentiating the scalar mineral solve.  The stationarity form
+explains the existing condensation; it does not create a further global
+reduction.
+
+\section{Continuum reduction of the source-free system}
+\label{sec:reduction}
+
+The continuum reduction of a global equation comes instead from
+\cref{eq:solid-mass-integrated}.  The original three-field representation
+uses \((\mbf u,p,\rho_s)\), with \(\mbf u=\mbf x-\mbf X\).  Because
+\(\rho_s=\rho_{s0}/J\) follows pointwise from the integrated solid mass
+balance and the compatible initial condition, the solid partial-density field
+and its residual can be removed at the continuum level.
+The locally solved mineral ratio remains necessary:
+\begin{equation}
+ R(J^e,p,\bar J)=0,
+ \qquad
+ \phi_s=\frac{\phi_{s0}\bar J}{J}.
+ \label{eq:reduced-local-state}
+\end{equation}
+
+Let \(\bar\rho_f(p)\) be a barotropic fluid intrinsic density and let
+\(\mbf W_f\) be fluid mass flux relative to the solid, expressed per unit
+reference area.  The referential fluid mass becomes
+\begin{equation}
+ m_f(\mbf F,p)
+ =J(1-\phi_s)\bar\rho_f(p)
+ =\left(J-\phi_{s0}\bar J(\mbf F,p)\right)\bar\rho_f(p).
+ \label{eq:reduced-fluid-storage}
+\end{equation}
+Let \(\Omega_0\) be the solid reference domain, with displacement and
+traction boundaries \(\Gamma_u\) and \(\Gamma_t\), and pressure and normal
+mass-flux boundaries \(\Gamma_p\) and \(\Gamma_w\).  Let \(\mbf b_0\) be
+body force per reference volume.  The two-field governing equations are
+\begin{align}
+ \nabla_{\mbf X}\mathbin{\cdot}
+ \left(\mbf P^{\prime\prime}-BpJ\mbf F^{-T}\right)
+ +\mbf b_0&=\mbf 0,
+ \label{eq:reduced-momentum}\\
+ \dot m_f+\nabla_{\mbf X}\mathbin{\cdot}\mbf W_f&=0.
+ \label{eq:reduced-water-mass}
+\end{align}
+For isotropic permeability \(\kappa\), viscosity \(\mu_f\), and zero
+gravity, Darcy flow is
+\begin{equation}
+ \mbf W_f=-\bar\rho_f J\mbf F^{-1}
+ \frac{\kappa}{\mu_f}\mbf F^{-T}\nabla_{\mbf X}p.
+ \label{eq:darcy-flux}
+\end{equation}
+The state dependency in \cref{eq:reduced-fluid-storage} includes the
+implicit response of \(\bar J\) to both deformation and pressure.  Thus the
+reduced water equation retains the mineral-compressibility contribution to
+storage and the same Biot coefficient in momentum.
+
+For test functions \(\mbf w\) and \(q\), vanishing on \(\Gamma_u\) and
+\(\Gamma_p\), respectively, the corresponding weak residuals are
+\begin{align}
+ \mathcal R_u(\mbf w)
+ &=\int_{\Omega_0}\nabla_{\mbf X}\mbf w:
+ \left(\mbf P^{\prime\prime}-BpJ\mbf F^{-T}\right)\dd V_0
+ -\int_{\Omega_0}\mbf w\mathbin{\cdot}\mbf b_0\dd V_0
+ -\int_{\Gamma_t}\mbf w\mathbin{\cdot}\bar{\mbf t}\dd A_0,
+ \label{eq:reduced-weak-momentum}\\
+ \mathcal R_p(q)
+ &=\int_{\Omega_0}q\dot m_f\dd V_0
+ -\int_{\Omega_0}\nabla_{\mbf X}q\mathbin{\cdot}\mbf W_f\dd V_0
+ +\int_{\Gamma_w}q\bar w_f\dd A_0.
+ \label{eq:reduced-weak-water}
+\end{align}
+This is a two-field continuum system only under the stated source-free,
+compatible-initial-data assumptions.  Solid production, reactions, or evolving
+referential mass restore a solid mass equation and its field.  The reduction
+also removes freedom to prescribe \(\rho_s\) independently of the initial
+motion and \(\rho_{s0}(\mbf X)\).
+
+The result does not assert algebraic equivalence to a finite-element method
+that independently approximates \(\rho_s\).  For example, substituting
+\(\rho_{s0}/J(\mbf u_h)\) into a Q2--Q1--Q2 discretization does not generally
+produce a Q2 density field.  A prototype should use displacement and pressure
+spaces selected for the reduced storage, evaluate \(\bar J\) at quadrature
+points, and differentiate the complete local state.  It should then compare
+pressure and displacement with the three-field solution, check referential
+solid and fluid mass drift under time refinement, and compare its assembled
+Jacobian with finite differences.  The coupled PDE in this paper is restricted
+to elasticity.  A poroplastic extension requires a local return map and the
+plastic-state contribution to \(\dot m_f\) and the outer tangent.
+
+\section{Conservative variation and Darcy dissipation}
+\label{sec:variational-flow}
+
+The stationary mineral calculation and the mechanical virtual work have a
+conservative variational structure.  For quasistatic mechanics, arbitrary
+admissible \(\delta\mbf u\) gives the internal virtual work
+\begin{equation}
+ \delta\mathcal W_{\mathrm{int}}
+ =\int_{\Omega_0}
+ \left(\mbf P^{\prime\prime}-BpJ\mbf F^{-T}\right):
+ \nabla_{\mbf X}\delta\mbf u\dd V_0.
+ \label{eq:mechanical-virtual-work}
+\end{equation}
+Together with external virtual work, this yields
+\cref{eq:reduced-momentum}.  With inertia, the same internal variation
+enters an action in the usual Hamilton form.
+
+Fluid transport is different: Darcy flux dissipates energy.  A conservative
+Hamilton action alone cannot return \cref{eq:darcy-flux}.  It must be
+supplemented by a dissipative virtual-power term or an Onsager rate
+minimization \citep{bedford1979variational,doi2011onsager}.  Let
+\(\mu_f^{\mathrm{chem}}\) denote the fluid chemical potential per unit mass.
+At constant temperature,
+\(\nabla_{\mbf X}\mu_f^{\mathrm{chem}}=\nabla_{\mbf X}p/\bar\rho_f\).
+The
+mass-flux rate potential and force pairing are
+\begin{equation}
+ \mathcal O(\mbf W_f)
+ =\frac{\mu_f}{2\bar\rho_f^2\kappa J}
+ \mbf W_f\mathbin{\cdot}
+ \left(\mbf F^T\mbf F\right)\mbf W_f.
+ \label{eq:darcy-onsager-potential}
+\end{equation}
+Stationarity of the Onsager functional
+\begin{equation}
+ \mathcal O(\mbf W_f)+\mbf W_f\mathbin{\cdot}
+ \nabla_{\mbf X}\mu_f^{\mathrm{chem}}
+ \label{eq:darcy-onsager-functional}
+\end{equation}
+with respect to \(\mbf W_f\) gives
+\begin{equation}
+ \frac{\mu_f}{\bar\rho_f^2\kappa J}
+ \left(\mbf F^T\mbf F\right)\mbf W_f
+ +\frac{1}{\bar\rho_f}\nabla_{\mbf X}p=\mbf0,
+ \label{eq:darcy-onsager-stationarity}
+\end{equation}
+which is \cref{eq:darcy-flux}.  Fluid mass balance remains the kinematic
+constraint that relates this flux to the storage in
+\cref{eq:reduced-fluid-storage}.  A complete time-incremental mixed
+principle must include that mass constraint and a fluid free energy; the
+fixed-pressure mechanical potential \(G\) alone is not such a principle.
+
+This separation identifies the appropriate variational program for the
+two-field prototype.  The mineral equation should be condensed locally from
+\cref{eq:local-mineral-potential}; the reduced fluid storage should use
+\cref{eq:reduced-fluid-storage}; and Darcy flow should enter through a
+Hamilton--d'Alembert or Onsager dissipation term.  Treating the mineral
+equation as a global multiplier constraint would obscure, rather than
+simplify, this structure.
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+The finite-deformation mineral equation is an energy stationarity condition
+in the mineral-volume ratio.  Its selected strict-local-minimum branch permits a local,
+energy-consistent elimination of mineral volume and produces the usual
+finite-deformation total stress.  That elimination is already present when a
+material routine solves the scalar mineral equation, so an explicit
+constraint multiplier does not reduce the global system.
+
+For the nonreacting single-solid, single-fluid specialization, source-free
+solid mass conservation yields a different continuum reduction.  It removes the
+solid partial-density field, leaving displacement and pressure as global
+unknowns while preserving the local mineral solve, nonlinear fluid storage,
+and Biot stress response.  A future implementation should compare this
+two-field system against the existing three-field formulation under matching
+initial and boundary data, then determine whether the reduction retains the
+desired robustness in drainage and finite-deformation benchmarks.
+
+\bibliographystyle{plainnat}
+\bibliography{explorations/constrained_variational_biot/references}
+\end{document}

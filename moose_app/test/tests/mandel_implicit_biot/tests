@@ -1,11 +1,11 @@
 [Tests]
-  design = 'moose_app/doc/theory_traceability.yml validation/validation_matrix.yml'
+  design = 'validation/theory_traceability.yml validation/acceptance.yml'
   issues = ''
 
   [mandel_water_q2_q1_smoke]
     type = RunApp
     input = mandel_water_q2_q1.i
-    cli_args = 'Executioner/end_time=0.014 Outputs/file_base=mandel_water_q2_q1_smoke'
+    cli_args = 'Executioner/end_time=0.014 Outputs/file_base=../../../../.agent-runtime/example-tests/mandel_water_q2_q1_smoke'
     max_time = 180
     requirement = 'The application shall solve the water-filled plane-strain Mandel problem with Q2 displacement, continuous Q1 pressure, a Q2 spatial solid partial-density balance, local mineral density and volume-fraction outputs, exact pulled-back water accumulation, and a fixed-pressure elastic Biot tangent.'
   []
@@ -13,7 +13,7 @@
   [mandel_water_q2_q1_bdf2]
     type = RunApp
     input = mandel_water_q2_q1.i
-    cli_args = 'Executioner/scheme=bdf2 Executioner/end_time=0.014 Outputs/file_base=mandel_water_q2_q1_bdf2'
+    cli_args = 'Executioner/scheme=bdf2 Executioner/end_time=0.014 Outputs/file_base=../../../../.agent-runtime/example-tests/mandel_water_q2_q1_bdf2'
     max_time = 180
     requirement = 'The pulled-back solid and water accumulations shall use MOOSE AD time-integrator rates and solve with BDF2 without a hard-coded backward difference.'
   []

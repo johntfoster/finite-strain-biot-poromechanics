@@ -1,3 +1,5 @@
+> Historical design note, superseded by the current manuscript and [formulation consistency report](../validation/formulation_consistency_2026-09-14.md).
+
 # MOOSE implementation plan: Drucker-Prager-type poroplasticity with implicit B
 
 Status: plan for the rate-independent backward-Euler AD return-mapping prototype

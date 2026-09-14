@@ -1,21 +1,11 @@
 #!/usr/bin/env python3
-"""V3 unload-branch (frozen-history) coefficient demonstration.
+"""Verify the fixed-history coefficient along a prescribed unloading branch.
 
-After monotonic plastic (dilative) loading to a peak compression, the plastic
-pore allocation a^p is frozen; along an unloading branch the coefficient is the
-fixed-history, fixed-pressure tangent at the reduced compression.  This driver
-evaluates that unload coefficient by pure AD (deck
-poroplastic_unload_tangent.i: ADPlasticStateBiotMaterial residuals + the dense
-AD solve of ADConstrainedSkeletonBiotMaterial with a^p frozen), verifies it
-equals the reduced closed form B = 1 - (1 - B_el)/a^p to machine precision at
-every unload point, and shows it exceeds the virgin elastic coefficient B_el at
-the same compression (the unload/reload-tangent reading of alpha in the
-literature).  Curates validation/poroplastic_load_unload.csv.
-
-Peak state and the monotonic loading branch are read from
-validation/poroplastic_general_path.csv (V2); the unload branch is computed
-here.  Run inside the moose conda environment.
+The measured peak plastic distention is frozen. The dense two-state AD tangent
+is compared with an independent scalar mineral solve and equation (68).
 """
+
+from check_stress_trace_derivation import mineral
 
 import csv
 import os
@@ -54,8 +44,8 @@ def run_unload(axial, a_p_frozen, workdir):
     deck = os.path.join(workdir, name + ".i")
     with open(DECK, encoding="utf-8") as fh:
         text = fh.read()
-    text = text.replace("axial_stretch = 0.9", "axial_stretch = %.6g" % axial)
-    text = text.replace("prop_values = 1.031877", "prop_values = %.9g" % a_p_frozen)
+    text = text.replace("axial_stretch_value := 0.9", "axial_stretch_value := %.6g" % axial)
+    text = text.replace("prop_values = 1.0319314841578", "prop_values = %.9g" % a_p_frozen)
     with open(deck, "w", encoding="utf-8") as fh:
         fh.write(text)
     r = subprocess.run([BINARY, "-i", deck, "--no-color"],
@@ -97,7 +87,7 @@ def main():
         res = run_unload(axial, a_p_peak, SCRATCH)
         err = abs(res["oracle_error"])
         # pure-AD cross-check against the reduced closed form at the frozen state
-        reduced_check = 1.0 - (1.0 - res["B_el"]) / a_p_peak
+        reduced_check = mineral(axial, 0., 1e9, 2.5e9, .8, a_p_peak)[2]
         ad_err = abs(res["B_general"] - reduced_check)
         delta = res["B_general"] - res["B_el"]
         status = "OK"
@@ -123,7 +113,7 @@ def main():
     # Curate: monotonic load branch (from V2) + unload branch.
     fields = ["axial_stretch", "compression", "branch", "B_el", "a_p", "B"]
     with open(OUT, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=fields)
+        w = csv.DictWriter(fh, fieldnames=fields, lineterminator="\n")
         w.writeheader()
         for comp in [0.05, 0.10, 0.15, 0.20]:
             g = general[comp]

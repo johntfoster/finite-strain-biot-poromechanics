@@ -30,7 +30,10 @@ respect to these seven unknowns.  Scaling and squaring with a Taylor
 expansion evaluates the matrix exponential.
 
 The elastic and poroplastic MOOSE materials share the scalar mineral solver
-and closed-form coefficient.  All current-state calculations retain their
+and closed-form coefficient.  The mineral solve uses \(J^e=J/a^p\), while
+the denominator of \eqref{eq:poroplastic-biot-correction} uses total \(J\).
+The elastic specialization sets \(a^p=1\).
+All current-state calculations retain their
 AD derivatives.  The converged plastic factor is stored as ordinary values
 for the next time step, while its current AD value remains in stress and
 coefficient calculations.  Differentiating the converged discrete update

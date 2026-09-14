@@ -199,8 +199,8 @@ ADLocalElasticMineralBiotMaterial::computeQpProperties()
   _intrinsic_specific_volume_jacobian_tangent[_qp] =
       _skeleton_bulk_modulus * z / (_reference_solid_volume_fraction * _J[_qp] * D);
   _biot_coefficient[_qp] =
-      1.0 - _reference_solid_volume_fraction *
-                _intrinsic_specific_volume_jacobian_tangent[_qp];
+      matchedLogBiotCoefficient(_J[_qp], _pressure[_qp], z, _skeleton_bulk_modulus,
+                                _mineral_bulk_modulus, _reference_solid_volume_fraction);
   _mineral_eos_residual[_qp] =
       log(_intrinsic_density_ratio[_qp]) + k * log(_J[_qp]) -
       alpha * _pressure[_qp] * z / _mineral_bulk_modulus;
