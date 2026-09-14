@@ -1,6 +1,6 @@
 PYTHON ?= python3
 LATEXMK ?= latexmk
-MOOSE_ENV := agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh
+MOOSE_ENV := .agent/shared/skills/setup-moose-conda/scripts/moose_conda_env.sh
 
 .NOTPARALLEL: reproduce
 

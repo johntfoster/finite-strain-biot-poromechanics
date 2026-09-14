@@ -34,7 +34,7 @@ def main() -> int:
         if sys.platform == "win32":
             binary = ROOT / ".agent-runtime/venvs/publication/Scripts/git-filter-repo.exe"
         return 0 if binary.is_file() else 1
-    helper = ROOT / "agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh"
+    helper = ROOT / ".agent/shared/skills/setup-moose-conda/scripts/moose_conda_env.sh"
     return subprocess.run([str(helper), "status"], cwd=ROOT).returncode
 
 

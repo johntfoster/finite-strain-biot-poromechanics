@@ -1,0 +1,8 @@
+version: 1
+primary_context: this_repository
+dependencies:
+  - name: compositional-simulator
+    repository: git@github.com:johntfoster/Compositional.git
+    commit: f72c4ca86dfad2e27f65c4a6638ba3f226c8c6f3
+    relationship: synchronized-source-authority
+    scope: moose/sync_manifest.json

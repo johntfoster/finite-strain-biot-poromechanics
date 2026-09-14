@@ -1,0 +1,3 @@
+[submodule ".agent/shared"]
+	path = .agent/shared
+	url = git@github.com:johntfoster/research-agent-workflows.git

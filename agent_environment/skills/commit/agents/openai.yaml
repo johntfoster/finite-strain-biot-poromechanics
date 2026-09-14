@@ -1,6 +1,0 @@
-interface:
-  display_name: "Commit"
-  short_description: "Summarize development chats and commit through hooks"
-  default_prompt: "Use $commit to summarize the relevant development sessions and commit the requested changes through the repository hooks."
-policy:
-  allow_implicit_invocation: true

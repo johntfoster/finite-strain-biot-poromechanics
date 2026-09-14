@@ -18,6 +18,8 @@ SPEC.loader.exec_module(MODULE)
 VALID = """Subject
 
 Summary
+AI model(s): GPT-5 Codex
+AI session(s): isolated commit-helper fixture
 State transition.
 
 What changed & why
@@ -46,7 +48,14 @@ class ProcessLogValidationTest(unittest.TestCase):
         self.assertIn("missing section: Summary", errors)
 
     def test_rejects_empty_section(self) -> None:
-        errors = MODULE.validate(VALID.replace("State transition.\n", ""))
+        errors = MODULE.validate(
+            VALID.replace(
+                "AI model(s): GPT-5 Codex\n"
+                "AI session(s): isolated commit-helper fixture\n"
+                "State transition.\n",
+                "",
+            )
+        )
         self.assertIn("empty section: Summary", errors)
 
     def test_rejects_reordered_sections(self) -> None:

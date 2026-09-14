@@ -77,13 +77,13 @@ The setup skill pins MOOSE commit
 versions. Inspect the environment without changing it:
 
 ```sh
-agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh status
+.agent/shared/skills/setup-moose-conda/scripts/moose_conda_env.sh status
 ```
 
 Provision missing dependencies only when authorized:
 
 ```sh
-agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh setup
+.agent/shared/skills/setup-moose-conda/scripts/moose_conda_env.sh setup
 ```
 
 Build, run the Mandel and Q1 Jacobian tests, regenerate figures and manuscript,

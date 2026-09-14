@@ -1,5 +1,17 @@
 # AGENTS.md
 
+## Shared workflow dependency
+
+- This paper repository is the primary context. Read
+  `.agent/shared/AGENTS.shared.md`; local manuscript, MOOSE, synchronization,
+  and validation rules in this file override shared workflow defaults.
+- The reusable core is pinned as the `.agent/shared` Git submodule. Route work
+  with `tools/agentctl route "<task>"`; shared skills are canonical under
+  `.agent/shared/skills/`, and project-specific skills belong under
+  `agent_local/skills/`.
+- Do not inspect sibling paper repositories unless John explicitly requests it
+  or `research-dependencies.yml` declares the exact pinned source needed.
+
 ## Portable agent environment
 
 - Treat this file as the sole universal entry point for agent work.
