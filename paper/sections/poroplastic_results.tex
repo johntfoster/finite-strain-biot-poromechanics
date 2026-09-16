@@ -6,27 +6,27 @@ The material-point calculations show how plastic volume change affects the
 Biot coefficient.  We prescribe homogeneous deformation
 and pore pressure and solve the constitutive update at each increment.
 The skeleton and mineral moduli are those listed for the coupled benchmark
-in \cref{tab:mandel-parameters}.  The reference solid fraction is
+in \cref{tab:mandel-parameters}.  The reference solid volume fraction is
 \(\phi_{s0}=0.8\), which keeps the prescribed compression path within
 \(0<\phi_s<1\); the plastic parameters are
 \(M=0.6\), \(\beta=0.4\), and \(c=0\).  These values define a synthetic
-material that dilates during plastic flow; they are used for verification.
+material that dilates during plastic flow and is used for verification.
 
 \subsection{Loading, unloading, and reloading}
 
 The drained path uses \(\mbf F=\operatorname{diag}(1,F_{yy},1)\).
 The axial stretch decreases from unity to \(0.8\), increases to \(0.9\),
-and then decreases to \(0.76\).  Each segment occupies one unit of the
-load-path parameter.  The constitutive model is rate independent; this
-parameter orders the imposed states.
+and then decreases to \(0.76\).  Each segment occupies one unit of the load
+parameter.  The constitutive model is rate independent, so this parameter
+only orders the imposed states.
 
-\Cref{fig:implicit-poroplastic-history} shows the resulting coefficient and
-plastic distention.  Loading activates dilation and changes the elastic
+\Cref{fig:implicit-poroplastic-history} shows the resulting Biot coefficient
+and plastic distention.  Loading activates dilation and changes the elastic
 volume \(J^e=J/a^p\).  On unloading, the plastic factor is fixed while the
-mineral and skeleton respond elastically.  The coefficient consequently
-follows a different path from the virgin material at the same total
-compression.  Reloading retraces this elastic branch until the previous yield
-state is reached; further compression produces additional plastic distention.
+mineral and skeleton respond elastically.  The Biot coefficient therefore
+differs from the virgin elastic value at the same total compression.  Reloading
+retraces this elastic branch until the previous yield state is reached;
+further compression produces additional plastic distention.
 
 \begin{figure}[ht]
  \centering
@@ -40,7 +40,7 @@ state is reached; further compression produces additional plastic distention.
  \label{fig:implicit-poroplastic-history}
 \end{figure}
 
-The coefficient remains above the virgin elastic value at equal total
+The Biot coefficient remains above the virgin elastic value at equal total
 compression.  This agrees with \eqref{eq:poroplastic-biot-correction}:
 plastic dilation reduces the elastic mineral volume and increases \(B\).
 
@@ -49,15 +49,16 @@ plastic dilation reduces the elastic mineral volume and increases \(B\).
 
 To examine pressure feedback, we compress the material to \(F_{yy}=0.8\)
 while increasing pore pressure linearly from zero to a prescribed final
-value.  A companion calculation follows the same deformation and pressure
-history but substitutes the virgin elastic coefficient at the current total
-\(J\) in the single-prime stress reconstruction.  This substitution is a
-controlled numerical comparison; the consistent calculation obtains stress
-and coefficient from the same current plastic state.
+value.  The consistent calculation obtains the stress and the Biot coefficient
+from the same current plastic state.  A companion calculation follows the
+same deformation and pressure history but replaces the Biot coefficient in
+the stress by its virgin elastic value at the current total volume.  The
+comparison isolates the effect of the Biot coefficient on the plastic
+response.
 
 \Cref{fig:implicit-poroplastic-feedback} shows that the two plastic responses
 coincide at zero pressure and separate as pressure increases.  In this example,
-the higher coefficient of the plastic state reduces the isotropic term
+the higher Biot coefficient of the plastic state reduces the isotropic term
 \((1-B)pJ\mbf I\) in \eqref{eq:single-prime-kirchhoff-stress}.  The resulting
 increase in compressive mean stress restrains dilative flow.
 At \(p=400\,\mathrm{MPa}\), the consistent calculation gives
@@ -70,9 +71,9 @@ At \(p=400\,\mathrm{MPa}\), the consistent calculation gives
  \caption{Pressure feedback during simultaneous compression and pore-pressure
  loading.  Left: the final Biot coefficient and the virgin elastic
  coefficient at the same total deformation and pressure.  Right: final plastic
- distention using the consistent coefficient in the driving stress and using
- the virgin coefficient in the companion comparison.  Each point represents
- a complete constitutive loading path.}
+ distention using the consistent Biot coefficient in the driving stress and
+ using the virgin coefficient in the companion comparison.  Each point
+ represents a complete constitutive loading path.}
  \label{fig:implicit-poroplastic-feedback}
 \end{figure}
 \FloatBarrier
@@ -83,17 +84,17 @@ At \(p=400\,\mathrm{MPa}\), the consistent calculation gives
 Independent checks reconstruct the physical state from the MOOSE outputs.
 The intrinsic density and volume fraction satisfy solid mass conservation and
 the mineral EOS.  The mineral law is also checked against the intrinsic solid
-stress trace.  Numerical differentiation of the pressure Legendre energy
-recovers the returned
-single-prime stress.  The logarithm of the incremental plastic factor checks
-the flow rule, while its determinant checks the accumulated distention.
+stress trace.  Numerical differentiation of the pressure Legendre potential
+recovers the returned single-prime stress.  The logarithm of the incremental
+plastic factor checks the flow rule, while its determinant checks the
+accumulated distention.
 Yield admissibility, consistency on the active branch, and nonnegative
 plastic dissipation are checked separately.
 
 The same checks pass for a path with unequal principal stretches and nonzero
-pore pressure.  Increment refinement reduces the difference between successive
-returned plastic states on that path.  The active PETSc test described in
-Sec.~\ref{sec:weak-residuals-and-spaces} verifies the Newton Jacobian
-of the converged update.  These checks verify the constitutive update on the
-smooth yield branch.
+pore pressure.  Refining the load increments reduces the change between
+successive returned plastic states on that path.  The active PETSc test
+described in Sec.~\ref{sec:weak-residuals-and-spaces} verifies the Newton
+Jacobian of the converged update.  Together these checks verify the
+constitutive update on the smooth yield branch.
 \FloatBarrier

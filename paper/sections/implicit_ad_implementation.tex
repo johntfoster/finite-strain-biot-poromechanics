@@ -9,12 +9,13 @@ provides the derivatives of these calculations for Newton's method.
 
 \subsection{Mineral state and plastic update}
 
-The material solves \eqref{eq:verification-mineral-factors} in
+The material solves \eqref{eq:verification-mineral-factors} for
 \(\ln\bar J\) on the branch defined by
 \eqref{eq:trace-mineral-stability-domain}, then evaluates
-\eqref{eq:poroplastic-biot-correction}.  Bracketing locates the scalar root.
-Newton corrections using AD variables at the converged root recover its
-first and second derivatives.  Intrinsic density follows from
+\eqref{eq:poroplastic-biot-correction}.  A bracketing search locates the
+scalar root, and Newton iterations carried out with AD variables at that root
+supply the first and second derivatives of the scalar equation.  Intrinsic
+density follows from
 \(\bar\rho_s=\bar\rho_{s0}/\bar J\), and the volume fraction is
 \(\phi_s=\rho_s/\bar\rho_s\), using the current solid partial density.
 The implementation checks positive volumes, \(0<\phi_s<1\), positive
@@ -30,15 +31,15 @@ respect to these seven unknowns.  Scaling and squaring with a Taylor
 expansion evaluates the matrix exponential.
 
 The elastic and poroplastic MOOSE materials share the scalar mineral solver
-and closed-form coefficient.  The mineral solve uses \(J^e=J/a^p\), while
+and closed-form Biot coefficient.  The mineral solve uses \(J^e=J/a^p\), while
 the denominator of \eqref{eq:poroplastic-biot-correction} uses total \(J\).
 The elastic specialization sets \(a^p=1\).
 All current-state calculations retain their
 AD derivatives.  The converged plastic factor is stored as ordinary values
 for the next time step, while its current AD value remains in stress and
-coefficient calculations.  Differentiating the converged discrete update
-supplies the algorithmic response needed by Newton iteration
-\citep{simotaylor1985,miehe1996}.  MOOSE carries this response into the
+Biot coefficient calculations.  Differentiating the converged discrete update
+supplies the derivative of the update that Newton iteration requires
+\citep{simotaylor1985,miehe1996}.  MOOSE carries that derivative into the
 assembled residual Jacobian \citep{lindsayetal2021ad}.
 
 \subsection{Phase balances and finite-element residuals}
@@ -71,7 +72,7 @@ zero gravity, Darcy flow in reference coordinates is
  \frac{\kappa}{\mu_f}\mbf F^{-T}\nabla_{\mbf X}p.
  \label{eq:reference-darcy-flux}
 \end{equation}
-The coefficient enters momentum through the pressure term in stress.  The
+The Biot coefficient enters momentum through the pressure term in stress.  The
 same mineral volume determines water storage through \(\phi_s\).
 
 Let \(\Omega_0\) be the solid reference domain, and let \(\mbf w\), \(q\),
@@ -104,17 +105,18 @@ The pressure uses continuous Q1 elements without stabilization.  Solid
 partial density is stored as \(\rho_s/\rho_{s0}\) for conditioning.
 
 Backward Euler supplies the rates in the reported calculations.  The kernels
-use the continuous chain-rule expansion of the solid and water accumulation
-rates with MOOSE time-integrator derivatives.  This discretization generally
-differs from a backward difference of the complete accumulation product.
-Referential mass drift is therefore checked independently and under time
-refinement.  A BDF2 regression exercises the same rate implementation.
+expand the solid and water accumulation rates with the chain rule and obtain
+the time derivatives from the MOOSE time integrator.  This expansion differs
+in general from differencing the complete accumulation term between time
+levels.  The resulting referential mass drift is therefore measured directly
+and under time refinement.  A BDF2 regression exercises the same rate
+implementation.
 
 A PETSc comparison checks the assembled AD Jacobian.  The elastic
 test includes momentum, solid mass, water storage, and Darcy flow.  The
 plastic test uses material residuals containing the returned stress
-invariants, plastic distention, and coefficient at nonzero pressure and
+invariants, plastic distention, and Biot coefficient at nonzero pressure and
 unequal principal stretches.  Its perturbations include the change in
 plastic state during the return mapping.  This tests the derivative used by
-Newton's method; a coupled poroplastic flow problem also requires
-verification of plastic contributions to fluid storage.
+Newton's method; a coupled flow problem with plastic deformation would
+also require verification of the plastic contribution to water storage.

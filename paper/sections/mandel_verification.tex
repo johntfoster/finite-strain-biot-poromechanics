@@ -37,24 +37,24 @@ the outward unit normal to the reference boundary.
 The top displacement is spatially uniform and follows the analytical
 constant-load solution of \citet{chengdetournay1988}.  The computed vertical
 nominal-stress resultant then provides an independent check of the applied
-\(100\ \mathrm{kPa}\) compression.  The right face is mechanically
-traction-free, and the prescribed-normal-displacement boundaries are
-frictionless.  The initial material state is
+\(100\ \mathrm{kPa}\) compression.  The right face is traction free, and the
+boundaries with prescribed normal displacement are frictionless.  The
+initial material state is
 \(\mbf u=\mbf0\), \(p=0\), and \(\rho_s=\rho_{s0}\); the local constitutive
 state then has \(\bar\rho_s=\bar\rho_{s0}\), \(\phi_s=\phi_{s0}\), and
 \(\bar J=1\).  The first time step applies the analytical platen
 displacement, after which its time history follows
 \eqref{eq:mandel-vertical-displacement-series}.  Because the vertical
-displacement is imposed and is linear in \(Y\), its profile is a
-boundary-condition reproduction check rather than an independent benchmark
-observable.
+displacement is imposed and linear in \(Y\), its profile confirms the applied
+boundary condition rather than providing an independent benchmark
+comparison.
 
 The solid-mass residual in \eqref{eq:solid-mass-weak-residual} evolves
 \(\rho_s\) throughout the calculation.  At each integration point, the
 mineral equation determines intrinsic density, the density ratio gives
 \(\phi_s\), and \eqref{eq:poroplastic-biot-correction} gives \(B\) with
 \(a^p=1\).  Water density follows
-\eqref{eq:barotropic-water-density}.  The small load keeps the coefficient
+\eqref{eq:barotropic-water-density}.  The small load keeps the Biot coefficient
 near its reference value while testing the nonlinear implementation.
 
 The material parameters are listed in \cref{tab:mandel-parameters}.
@@ -78,7 +78,7 @@ The material parameters are listed in \cref{tab:mandel-parameters}.
  \end{tabular}
 \end{table}
 
-The reference coefficient from
+The reference Biot coefficient from
 \eqref{eq:poroplastic-biot-correction} is \(B_0=0.6\).
 
 
@@ -91,10 +91,11 @@ obtained from the matched logarithmic mineral law and the water law.  It
 recovers the classical single-mineral storage relation, so the benchmark
 tests the small-strain limit of the finite-deformation implementation.
 
-The error and refinement study uses a \(40\)-by-\(4\) QUAD9 mesh with
-uniform backward-Euler steps \(\Delta t=0.002\ \mathrm{s}\).  The spatial
-profiles use the same mesh with an early-refined sequence beginning at
-\(0.001\ \mathrm{s}\) and increasing to \(0.016\ \mathrm{s}\).
+The error and refinement study uses a \(40\times4\) mesh of nine-node
+quadrilaterals with uniform backward-Euler steps
+\(\Delta t=0.002\ \mathrm{s}\).  The spatial profiles use the same mesh with
+an early-refined sequence beginning at \(0.001\ \mathrm{s}\) and increasing
+to \(0.016\ \mathrm{s}\).
 \Cref{fig:mandel-pressure-profiles} compares pressure along
 \(Y=0.05\ \mathrm{m}\) at several times.  The solution reproduces the
 pressure rise near the undrained center, followed by decay as fluid leaves
@@ -114,16 +115,17 @@ through the lateral boundary.
 \Cref{fig:mandel-displacements} compares the displacement profiles at the
 same times.  Horizontal displacement is sampled along the specimen mid-height and
 provides an independent check of the coupled mechanical response.  Vertical
-displacement is sampled on the drained side; its agreement confirms
-reproduction of the imposed analytical platen history.
+displacement is sampled on the drained side; its agreement confirms the
+imposed platen history.
 
 \begin{figure}[ht]
  \centering
  \figureinput{mandel_displacements.pgf}
  \caption{Horizontal and vertical displacement profiles in the elastic Mandel
  verification.  Solid curves are the analytical series and open circles are
- finite-element values.  Horizontal displacement is an independent benchmark
- observable; vertical displacement checks the prescribed platen motion.}
+ finite-element values.  Horizontal displacement provides an independent
+ benchmark comparison; vertical displacement checks the prescribed platen
+ motion.}
  \label{fig:mandel-displacements}
 \end{figure}
 
@@ -132,8 +134,8 @@ horizontal positions and checks the recovered nominal load.  Separate mesh
 and time-step comparisons measure numerical sensitivity.  Successive temporal
 refinements reduce the pressure difference, while the mesh comparison shows
 smaller spatial sensitivity on the tested grids.  These pairwise comparisons
-measure sensitivity over the reported transient; they do not establish an
-asymptotic convergence order.
+measure sensitivity over the reported transient rather than an asymptotic
+convergence order.
 
 The assembled-Jacobian checks described in
 Sec.~\ref{sec:weak-residuals-and-spaces} also pass for this problem.
@@ -148,7 +150,7 @@ tolerances, and sampling definitions.
 A second calculation uses the same domain, phase balances, and elastic
 constitutive model at a larger imposed deformation.  The platen displacement
 increases linearly to \(-0.1H\) over \(0.2\ \mathrm{s}\) and is then held.
-The pressure, lateral displacement, nominal stress, and coefficient are
+The pressure, lateral displacement, nominal stress, and Biot coefficient are
 predictions of this displacement-controlled calculation.
 
 \begin{figure}[ht]
@@ -161,11 +163,11 @@ predictions of this displacement-controlled calculation.
  \label{fig:mandel-finite-deformation}
 \end{figure}
 
-The coefficient varies across the specimen during compression.  It can
-briefly exceed the reference value in the undrained interior, while the
-largest reduction occurs near the drained boundary
+The Biot coefficient varies across the specimen during compression.  It briefly
+exceeds the reference value in the undrained interior, while the largest
+reduction occurs near the drained boundary
 (\cref{fig:mandel-normalized-biot-contours}).  Drainage during the hold
-reduces lateral expansion and brings the coefficient toward a nearly
+reduces lateral expansion and brings the Biot coefficient toward a nearly
 uniform value below its reference value.
 
 \begin{figure}[ht]
@@ -178,12 +180,13 @@ uniform value below its reference value.
  \label{fig:mandel-normalized-biot-contours}
 \end{figure}
 
-The coefficient identity and mineral EOS remain satisfied during this
-continuation.  The solid-mass diagnostic measures the discretization error
-of the weak chain-rule balance, and its drift decreases under time
+The Biot coefficient identity and the mineral EOS remain satisfied during
+this continuation.  The solid-mass diagnostic measures the discretization
+error of the weak chain-rule balance, and its drift decreases under time
 refinement.  Mesh and time-step comparisons also check pressure, lateral
-displacement, and the spatially averaged coefficient.  This calculation tests the elastic model at finite deformation.  Plastic
-history is examined separately in the material-point calculations of
+displacement, and the spatially averaged Biot coefficient.  This calculation
+tests the elastic model at finite deformation, and plastic history is
+examined separately in the material-point calculations of
 Sec.~\ref{sec:poroplastic-demonstration}.
 \FloatBarrier
 

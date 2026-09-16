@@ -6,61 +6,74 @@ Plastic deformation changes the pore volume of a saturated solid and the
 elastic response of its skeleton.  When the mineral is compressible, it also
 changes how pore pressure contributes to stress.  The Biot coefficient must
 then follow the constitutive state through loading and unloading.  Its value
-enters the stress that drives further plastic flow, so the coefficient and
-plastic state must be evaluated together.  We derive a closed-form
-finite-deformation coefficient for matched logarithmic skeleton and mineral
-laws, incorporate it into an implicit poroplastic update, and verify the
-constitutive and finite-element derivatives.
+enters the stress that drives further plastic flow, so the Biot coefficient
+and the plastic state must be evaluated together.  We derive a closed-form
+finite-deformation Biot coefficient for matched logarithmic skeleton and
+mineral constitutive laws, incorporate it into an implicit poroplastic
+update, and verify the constitutive and finite-element derivatives.
 
-The distinction between mineral volume and mixture volume is central to the
-construction.  Drumheller separates the true deformation of a constituent
-from the distention that describes its occupation of mixture volume
-\citep{drumheller2000}.  In Foster and Xu, we expressed the finite-deformation
-Biot coefficient through the change of intrinsic solid volume with skeleton
-volume at fixed pore pressure \citep{fosterxu2025}.  That pressure transformation
-relates the double-prime, fixed-pressure effective stress to the single-prime,
-fixed-density effective stress.  For the constitutive model considered here,
-the latter supplies the work conjugate for plastic deformation.  Consequently,
-evolution of the Biot coefficient affects both the total mixture stress and
-the evaluation of yield and flow.
+The distinction between mineral volume and pore volume is central to the
+construction.  Drumheller separates the true deformation of a mineral
+constituent, which changes the volume of its own material, from the
+distention that describes pore volume allocation
+\citep{drumheller2000}.  In
+earlier work with Xu, we expressed the finite-deformation Biot coefficient as
+the change of intrinsic solid volume with respect to changes in skeleton volume at fixed pore
+pressure \citep{fosterxu2025}.  That transformation relates the effective
+stress evaluated at fixed pore pressure, written with a double prime, to the
+effective stress evaluated at fixed solid density, written with a single
+prime.  For the constitutive model considered here, the fixed-density stress
+is the stress that does work on plastic deformation.  Evolution of the Biot
+coefficient therefore affects both the total mixture stress and the
+evaluation of yield and flow.
 
-The reference coefficient recovers the familiar relation between skeleton and
-mineral bulk moduli \citep{biotwillis1957}.  At a plastically deformed state,
-its value depends on the current elastic response and stored distention.
-Measurements during sandstone compaction provide experimental motivation for
-such state dependence \citep{ingraham2017evolution}.  Those measurements
-identify an elastic unloading coefficient; the effective-stress coefficient
-appropriate to failure is a separate constitutive question.  We therefore
-specify the plastic energy and flow assumptions explicitly and examine their
-consequences without fitting the model to a particular rock.
+The reference Biot coefficient recovers the familiar relation between skeleton
+and mineral bulk moduli \citep{biotwillis1957}.  At a plastically deformed
+state, its value depends on the current elastic response and stored
+distention.  Measurements during sandstone compaction give experimental
+motivation for that state dependence \citep{ingraham2017evolution}.  Those
+measurements report the Biot coefficient from an elastic unloading response:
+the drained bulk modulus is taken from the slope of a small unloading loop at
+the current mean stress, and the unjacketed mineral grain modulus from an
+unjacketed test.  The reported value is therefore the reversible change of
+pore volume at fixed inelastic state, the same fixed-state derivative that
+defines the Biot coefficient here.  Converting that derivative into a stress
+that drives plastic flow requires a plastic energy and a flow law, and the
+choice among them sets the pressure feedback examined below.  We therefore
+state those assumptions explicitly and report their consequences for a
+synthetic material rather than fitting the response of a particular rock.
 
-The closed-form expression gives the coefficient from the current volume,
+The closed-form expression gives the Biot coefficient from the current volume,
 pore pressure, and mineral state.  A scalar mineral equation and solid mass
-conservation determine intrinsic density and volume fraction at each plastic
-state.  The return mapping updates plastic deformation and evaluates the
-coefficient and driving stress together.  The derivative defining the
-coefficient holds the current plastic state fixed; the derivative used by
-Newton's method includes changes in that state.
+conservation determine the intrinsic mineral density and the volume fraction
+at each plastic state.  The implicit return mapping advances plastic
+deformation and updates the Biot coefficient and the driving stress with it.
+The derivative that defines the Biot coefficient holds the plastic state
+fixed, so it describes the reversible unloading response.  The driving stress
+contains the Biot coefficient, so differentiating the stress with respect to
+the deformation must also carry the change in the coefficient that
+accompanies a change in the plastic state.
 
-This construction connects established developments in constitutive
-linearization and coupled porous-material simulation.  Consistent tangents
+This construction connects established developments in coupled
+porous-material simulation and constitutive linearization.  Large-deformation
+models of gels and porous solids describe the coupling between material
+deformation and fluid transport \citep{hongetal2008,macminnetal2016}, and
+multiscale formulations evolve effective poroelastic properties with
+microstructure \citep{dehghanizilian2021}; the Biot coefficient derived here is
+a related state-dependent poroelastic property.  Consistent tangents
 differentiate the discrete material update used by the nonlinear solver
-\citep{simotaylor1985,miehe1996}.  Automatic differentiation (AD) supplies coupled
-finite-strain poromechanics Jacobians from residual evaluations
+\citep{simotaylor1985,miehe1996}.  Automatic differentiation (AD) supplies
+coupled finite-strain poromechanics Jacobians from residual evaluations
 \citep{sunostien2013}, and MOOSE supports AD-valued local calculations within
-its finite-element assembly \citep{lindsayetal2021ad}.  Large-deformation
-models of gels and porous solids describe the accompanying coupling between
-material deformation and fluid transport \citep{hongetal2008,macminnetal2016},
-while multiscale formulations evolve effective poroelastic properties with
-microstructure \citep{dehghanizilian2021}.  Here the mineral equation determines the
-coefficient, and AD includes its dependence on the evolving plastic state
-in the Newton Jacobian.
+its finite-element assembly \citep{lindsayetal2021ad}.  Here the mineral
+equation determines the Biot coefficient, and AD includes its dependence on
+the evolving plastic state in the Newton Jacobian.
 
 We first establish the kinematics and pressure transformation, then derive
-the coefficient and specify the plastic flow law.  Material-point
+the Biot coefficient and specify the plastic flow law.  Material-point
 calculations examine loading history, unloading, and pressure feedback.
 The elastic specialization is coupled to solid and water mass conservation
 and momentum balance.  Spatial pressure and displacement comparisons with
 the Mandel solution test the coupled finite-element formulation
 \citep{chengdetournay1988}.  A larger compression test then shows how the
-coefficient evolves across the specimen.
+Biot coefficient evolves across the specimen.
