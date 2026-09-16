@@ -15,11 +15,11 @@ Let the solid motion map a reference position \(\mbf X\) to
 \(\mbf x=\bs\chi(\mbf X,t)\).  Its deformation gradient and solid-reference
 Jacobian are
 \begin{equation}
- \mbf F=\nabla_{\mbf X}\bs\chi,
- \qquad J=\det\mbf F>0.
+ \mbf F=\pder{\bs\chi}{\mbf X} = \nabla_{\mbf X} \mbf{u}_s + \mbf{I},
+ \qquad J=\det\mbf F>0,
  \label{eq:skeleton-kinematics}
 \end{equation}
-Following Drumheller \citep[Sec.~3]{drumheller2000}, we separate the true
+where $\mbf{u}_s$ is the solid displacement field. Following Drumheller \citep[Sec.~3]{drumheller2000}, we separate the true
 motion of the solid material from the distention gradient,
 \begin{equation}
  \mbf F=\mbf A\bar{\mbf F},
