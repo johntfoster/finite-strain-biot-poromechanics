@@ -34,36 +34,33 @@
 \maketitle
 
 \begin{abstract}
-Plastic deformation changes the pore volume of a saturated solid and the
-contribution of pore pressure to stress.  We derive a closed-form
-finite-deformation Biot coefficient for matched logarithmic skeleton and
-mineral laws.  Differentiating solid mass conservation together with the
-mineral equation of state at fixed pore pressure and fixed plastic
-configuration gives a single scalar equation for the mineral volume, and the
-Biot coefficient then follows directly from the current total volume, the
-pore pressure, and the mineral volume ratio.  The deformation split separates
-volume-preserving plastic flow of the mineral from plastic distention of the
-pore space.  An implicit exponential return mapping advances both mechanisms
-together with the mineral state, the Biot coefficient, and the plastic
-driving stress.  Automatic differentiation carries their coupled change into the
-Jacobian used by Newton's method.
+Mineral compression and plastic changes in pore volume govern how pore
+pressure couples to deformation in a saturated porous solid.  For
+logarithmic skeleton and mineral laws, we derive a coupled stored energy,
+its effective stresses, and a closed-form Biot coefficient at finite
+strain.  Mineral compression introduces a pressure correction to the
+effective stress obtained from the energy at fixed pressure.  Linearization
+about the undeformed, zero-pressure state recovers classical Biot
+elasticity.  A scalar equation determines the mineral volume, from which
+the Biot coefficient follows directly using the current total volume and
+pore pressure.  The plastic formulation separates volume-preserving
+mineral deformation from permanent changes in pore volume.  We solve for
+the mineral state and plastic deformation together, using automatic
+differentiation to retain their coupling in Newton's method.
 
-Independent checks verify mass conservation, the mineral equation of state,
-the stress recovered from the stored energy, plastic flow, yield consistency,
-and the derivatives used to evaluate the Biot coefficient and solve the discrete
-equations.  Material-point calculations show how the Biot coefficient depends
-on loading history during unloading and how it feeds back into plastic flow
-at nonzero pore pressure.  Coupling the constitutive response to solid and
-water mass conservation and momentum balance recovers the elastic Mandel
-solution.  A poroplastic compression test verifies the plastic contribution
-to fluid storage and shows a persistent increase in the Biot coefficient
-relative to its elastic value at the same pressure and total volume.  Plastic
-dilation reverses fluid exchange from outflow to inflow for the selected
-synthetic material.  Mass-balance drift decreases under time-step refinement;
-isotropic hardening gives smooth local fields for the selected synthetic law.
-Together, these calculations show how mineral compressibility and plastic
-volume change affect pressure coupling.  Comparison with material data remains
-future work.
+Independent checks verify mass conservation, the constitutive equations,
+and the derivatives used in the numerical solution.  The coupled
+finite-element formulation recovers the elastic Mandel solution and shows
+reversible changes in the Biot coefficient under larger compression and
+drainage.  Material-point calculations show how plastic history changes
+the coefficient during unloading and how its current value affects
+further plastic flow.  A poroplastic compression test verifies the plastic
+contribution to fluid storage and shows a persistent increase in the
+coefficient relative to its elastic value at the same pressure and total
+volume.  For the selected synthetic geomaterial, plastic dilation reverses
+fluid exchange from outflow to inflow.  These results connect mineral
+compression and permanent pore-volume change to evolving pressure
+coupling; comparison with material data remains future work.
 \end{abstract}
 
 \noindent\textbf{Keywords:} finite-deformation poromechanics; Biot coefficient;
