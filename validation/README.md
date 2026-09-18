@@ -50,3 +50,25 @@ local link and packaged source file.
 The supplementary smooth-cone domain rejection is retained in
 [poroplastic_domain_checks.json](poroplastic_domain_checks.json). It is an
 expected constitutive-domain rejection, not a converged data point.
+
+## Submission verification, 2026-09-18
+
+The pinned local toolchain passed all 21 ordinary MOOSE regressions. The two
+heavy studies were run separately through the full publication drivers:
+`make plastic-flow` passed storage, Jacobian, elastic-limit, and mesh/time
+comparisons, and `make stability` passed all six cases. The derivation checks,
+material-point examples, supplementary loading paths, analytical Mandel
+benchmark, and finite-deformation continuation also passed their existing
+acceptance criteria.
+
+All publication figures were regenerated from the resulting curated data, and
+the canonical manuscript compiled to 30 pages. The repository audit, 13 tool
+tests, 33-file shared-source integrity check, and manuscript environment check
+passed. The website build checked 298 local links and 25 repository Markdown
+links. The container image and manuscript build were also tested independently.
+
+A fresh eight-core GitHub Codespace built the pinned MOOSE framework and
+application, then passed `make test plastic figures paper provenance validate`.
+Its ordinary suite reported 21 passed, two heavy tests skipped, and zero failed;
+the skipped studies are covered by the full local runs above. This check used
+a newly installed Conda environment and the checked-in container configuration.
