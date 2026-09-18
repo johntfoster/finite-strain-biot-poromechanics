@@ -37,7 +37,7 @@
       </p>
       <div class="callout ok">
         Requirements are pinned by
-        <a href="../agent_environment/skills/setup-moose-conda/SKILL.md">the MOOSE conda setup skill</a>
+        <a href="source.html?f=tools/setup_reproduction.sh">the reproduction setup script</a>
         (MOOSE commit <code>abafb58b67a6037c6723ffeb19647c84484466da</code> and the tested conda
         package versions).
       </div>
@@ -53,9 +53,11 @@
       <h2>Step-by-step commands</h2>
 
       <h3>0 · Inspect or provision the environment</h3>
-      <pre><code>agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh status
-agent_environment/skills/setup-moose-conda/scripts/moose_conda_env.sh setup   # only when provisioning is needed</code></pre>
+      <pre><code>git submodule update --init --recursive
+make setup</code></pre>
 
+      <p><a href="https://codespaces.new/johntfoster/nonlinear_biot_ad_implementation">Launch a configured Codespace</a>. Setup installs MOOSE, builds the application and manuscript, and prepares the website. Wait for setup to finish before running commands. Use <code>make serve</code> and forwarded port 8000 to preview the site.</p>
+      <p><a href="moose-catalog.html#examples">Every example input and its implementation links</a>.</p>
       <h3>1 · Shared-source integrity check</h3>
       <pre><code>tools/sync_biot_moose.py check</code></pre>
 
@@ -97,11 +99,14 @@ make validate</code></pre>
       <table>
         <thead><tr><th>Target</th><th>What it does</th></tr></thead>
         <tbody>
-          <tr><td><code>make reproduce</code></td><td><code>sync-check → derivation → test → mandel → plastic → examples → figures → paper → provenance → validate</code></td></tr>
+          <tr><td><code>make reproduce</code></td><td><code>sync-check → derivation → test → mandel → plastic → plastic-flow → stability → examples → figures → paper → provenance → validate</code></td></tr>
           <tr><td><code>make build</code></td><td>Build the MOOSE app inside the conda environment</td></tr>
           <tr><td><code>make test</code></td><td>Run elastic, implicit plastic and supplementary MOOSE tests</td></tr>
           <tr><td><code>make mandel</code></td><td>Run the full analytical + AD Mandel verification</td></tr>
           <tr><td><code>make plastic</code></td><td>Verify and curate the implicit poroplastic paths</td></tr>
+          <tr><td><code>make plastic-flow</code></td><td>Run and curate the coupled plastic compression study</td></tr>
+          <tr><td><code>make stability</code></td><td>Run the complete six-case spatial stability audit</td></tr>
+          <tr><td><code>make serve</code></td><td>Build and serve the self-contained website on port 8000</td></tr>
           <tr><td><code>make examples</code></td><td>Regenerate supplementary paths and independent tangent checks</td></tr>
           <tr><td><code>make figures</code></td><td>Regenerate the current manuscript and website figures</td></tr>
           <tr><td><code>make paper</code></td><td>Build the PDF manuscript with latexmk + lualatex</td></tr>
@@ -112,6 +117,25 @@ make validate</code></pre>
       </table>
     </section>
   </div>
+<section class="section container">
+<h2>Coupled plastic compression test</h2>
+<p>Run the coupled storage and Jacobian checks, the mesh and time-step study,
+and the elastic-limit comparison before curating the contour and history data.</p>
+<pre><code>POROPLASTIC_MPI_RANKS=8 make plastic-flow
+make figures
+make paper
+make provenance
+make validate</code></pre>
+<p>The MPI rank count is optional; the verification record lists the ranks used.
+The plotted calculation uses a 40 × 4 mesh, a uniform 0.0025 s step,
+and isotropic hardening modulus 100 MPa. The constitutive material defaults to
+zero hardening; the compression deck and material-point publication driver
+select initial cohesion 20 MPa and hardening modulus 100 MPa. The default
+material-point regression retains the perfectly plastic limit.
+<a href="poroplastic.html">Results and numerical limits</a>.
+The <a href="source.html?f=../validation/poroplastic_spatial_stability.md">spatial-stability audit</a>
+gives the separate zero-hardening controls and hardening refinement commands.</p>
+</section>
 </main>
 
 <footer class="site-footer">

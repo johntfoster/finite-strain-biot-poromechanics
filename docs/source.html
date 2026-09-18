@@ -72,12 +72,18 @@
     return langMap[ext] || 'plaintext';
   }
 
+  file = file.replace(/^\.\.\//, '');
+  if (!file || file.startsWith('/') || file.split('/').includes('..') || /^[a-z]+:/i.test(file)) {
+    code.textContent = 'Invalid repository source path.';
+    return;
+  }
+  var sourceUrl = 'sources/' + file.split('/').map(encodeURIComponent).join('/');
   var lang = languageOf(file);
   title.textContent = file;
   badge.textContent = lang;
-  raw.href = file;
+  raw.href = sourceUrl;
 
-  fetch(file, { cache: 'no-store' })
+  fetch(sourceUrl, { cache: 'no-store' })
     .then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.text();
@@ -90,7 +96,7 @@
     .catch(function (err) {
       code.textContent = 'Could not load "' + file + '": ' + err + '. ' +
         'On a local file:// preview, the viewer cannot fetch sibling files; ' +
-        'open the site over HTTP (e.g. the deployed GitHub Pages URL).';
+        'run make serve or open the deployed GitHub Pages URL.';
       badge.textContent = 'error';
     });
 

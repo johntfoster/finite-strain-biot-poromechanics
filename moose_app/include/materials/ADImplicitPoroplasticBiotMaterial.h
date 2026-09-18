@@ -19,10 +19,13 @@ protected:
   void initQpStatefulProperties() override;
   const ADMaterialProperty<RankTwoTensor> & _F;
   const ADVariableValue & _pressure;
-  const Real _G, _K, _Ks, _phi0, _M, _beta, _cohesion;
+  const Real _G, _K, _Ks, _phi0, _M, _beta, _cohesion, _hardening;
   const bool _frozen_reference;
   MaterialProperty<RankTwoTensor> & _Fp_history;
   const MaterialProperty<RankTwoTensor> & _Fp_old;
+  MaterialProperty<Real> & _accumulated_history;
+  const MaterialProperty<Real> & _accumulated_old;
+  ADMaterialProperty<Real> & _accumulated;
   ADMaterialProperty<RankTwoTensor> & _Fp;
   ADMaterialProperty<RankTwoTensor> & _Fe;
   ADMaterialProperty<RankTwoTensor> & _tau;

@@ -2,6 +2,7 @@
 """Generate the verified plastic figures for the manuscript and website."""
 
 import csv
+import json
 from pathlib import Path
 import shutil
 import matplotlib
@@ -36,6 +37,9 @@ def save(fig, name):
     plt.close(fig)
 
 
+record = json.loads((ROOT / 'validation/implicit_poroplastic_verification.json').read_text())
+if not record.get('accepted') or record['parameters']['hardening_modulus_Pa'] != 1e8:
+    raise ValueError('Publication figures require verified isotropic-hardening results')
 history = read("implicit_poroplastic_history.csv")
 fig, axes = plt.subplots(1, 2, figsize=(6.4, 2.7))
 for lo, hi, label, color in [

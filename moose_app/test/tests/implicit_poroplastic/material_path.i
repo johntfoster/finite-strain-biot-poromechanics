@@ -385,6 +385,10 @@
 []
 
 [Postprocessors]
+  [accumulated_avg]
+    type = ADElementAverageMaterialProperty
+    mat_prop = accumulated_plastic_multiplier
+  []
   [density]
     type = ElementAverageValue
     variable = density

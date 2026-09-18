@@ -16,4 +16,26 @@
     max_time = 300
     requirement = 'The converged plastic state shall satisfy independent mass, EOS, exponential-flow, stress-reconstruction and yield checks through loading, unloading and reloading.'
   []
+  [implicit_plastic_hardening_jacobian]
+    type = PetscJacobianTester
+    input = active_jacobian.i
+    cli_args = 'Materials/plastic/dp_hardening_modulus=0.1'
+    run_sim = true
+    ratio_tol = 1e-7
+    difference_tol = 1e-5
+    max_time = 180
+    requirement = 'Isotropic hardening shall retain accumulated-multiplier dependence in the implicit return and outer AD Jacobian.'
+  []
+  [implicit_plastic_hardening_history]
+    type = RunCommand
+    command = 'python3 ../../../../validation/scripts/check_poroplastic_hardening.py'
+    max_time = 300
+    requirement = 'The accumulated plastic multiplier and hardened yield stress shall satisfy independent loading, unloading, reloading, flow and energy-derived stress checks.'
+  []
+  [implicit_plastic_publication_history]
+    type = RunCommand
+    command = 'python3 ../../../../validation/scripts/check_implicit_poroplastic.py --publication --quick --output-dir ../../../../.agent-runtime/implicit_poroplastic_publication_test'
+    max_time = 300
+    requirement = 'The publication material with nonzero initial cohesion and isotropic hardening shall satisfy independent history, yield, stress, flow and objectivity checks.'
+  []
 []

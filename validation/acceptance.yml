@@ -90,6 +90,7 @@ entries:
   result: validation/mandel_large_deformation.csv
   status: pass
 - id: implicit_poroplastic_consistency
+  publication_parameters: initial cohesion 20 MPa; isotropic hardening modulus 100 MPa; reference solid fraction 0.8
   governing_reduction: matched logarithmic mineral state at Je=J/a_p with a closed-form
     fixed-current-plastic-state coefficient; implicit exponential flow and yield consistency
   observables:
@@ -116,6 +117,50 @@ entries:
   authoritative_reference: moose_app/test/tests/implicit_poroplastic/active_jacobian.i
   tolerance: ratio <= 1e-7 and difference <= 1e-5
   result: moose_app/test/tests/implicit_poroplastic/tests
+  status: pass
+- id: implicit_poroplastic_hardening
+  governing_reduction: dissipative isotropic hardening inside the implicit nonassociated return
+  observables:
+  - independently accumulated plastic multiplier and current yield strength
+  - elastic unloading and renewed plastic loading
+  - mass, mineral EOS, exponential flow, fixed-history coefficient and energy-derived stress
+  - outer AD Jacobian at positive hardening modulus
+  authoritative_reference: paper/sections/finite_deformation_biot.tex
+  tolerance: existing material-point tolerances unchanged; accumulated multiplier error <= 1e-10; PETSc ratio <= 1e-7 and difference <= 1e-5
+  result: validation/scripts/check_poroplastic_hardening.py; moose_app/test/tests/implicit_poroplastic/tests
+  status: pass
+- id: coupled_poroplastic_storage
+  governing_reduction: mineral and pore-volume rates including the evolving exponential plastic increment in the reference water balance
+  observables:
+  - centered differences of complete water accumulation with independently solved mineral states
+  - fixed-history Biot coefficient and same-state elastic comparator
+  - assembled momentum, solid mass, water storage, and Darcy Jacobian through compression and hold
+  - recovery of the existing elastic pressure, displacement, and coefficient with yielding suppressed
+  authoritative_reference: paper/sections/implicit_ad_implementation.tex
+  tolerance: normalized storage-rate error <= 2e-7; Biot error <= 5e-8; PETSc ratio <= 1e-7 and difference <= 1e-5; normalized elastic-recovery field errors <= 1e-7
+  result: validation/poroplastic_mandel_verification.json
+  status: pass
+- id: coupled_poroplastic_refinement
+  governing_reduction: ten-percent axial compression and hold with active plastic pore-volume evolution
+  observables:
+  - water-mass change versus integrated Darcy outflow and pressure-boundary reaction
+  - temporal refinement of chain-rule water-mass drift and solid-mass drift
+  - spatial and temporal sensitivity of averages and local coefficient differences
+  authoritative_reference: paper/sections/mandel_verification.tex
+  tolerance: finest-run Darcy mass mismatch <= 1 percent of initial water mass; water reaction and chain-rule drift and solid-mass drift decrease under temporal refinement; mineral EOS L2 <= 1e-10
+  result: validation/poroplastic_mandel_verification.json
+  status: pass
+  limitations: synthetic hardening modulus; no experimental validation or global constitutive stability proof is claimed
+- id: poroplastic_spatial_stability
+  governing_reduction: fixed-pressure active acoustic tangent and spatial response under dissipative isotropic hardening
+  observables:
+  - acoustic determinant sign change in the zero-hardening control
+  - positive sampled acoustic determinants on corrected coarse, fine and half-time-step paths
+  - transverse field variation and spatial second differences
+  - fine-grid temporal difference of the coefficient contrast
+  authoritative_reference: paper/sections/mandel_verification.tex
+  tolerance: transverse RMS delta B <= 1e-8; positive sampled acoustic determinants; fine-grid temporal maximum delta B difference <= 5e-6; fine/coarse final second-difference RMS ratio <= 0.6
+  result: validation/poroplastic_spatial_stability.json
   status: pass
 supplementary_entries:
 - id: poroplastic_b_feedback

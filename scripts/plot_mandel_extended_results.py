@@ -7,6 +7,7 @@ import argparse
 import csv
 import math
 import shutil
+from extract_mandel_density_contours import DEFAULT_TIMES
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -48,11 +49,13 @@ B0 = 1.0 - K / KS
 MOBILITY = 1.5e-9
 WIDTH = 1.0
 HEIGHT = 0.1
+BIOT_RATIO_LIMITS = (0.965, 1.02)
 
 
 def save_figure(figure, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
-    figure.savefig(output, metadata={"Creator": "plot_mandel_extended_results.py"})
+    options = {"metadata": {"Creator": "plot_mandel_extended_results.py"}} if output.suffix == ".pdf" else {}
+    figure.savefig(output, **options)
     pgf_output = output.with_suffix(".pgf")
     if pgf_output != output:
         figure.savefig(pgf_output)
@@ -330,8 +333,11 @@ def plot_spatial_contours(
     output: Path,
     limits: tuple[float, float] | None = None,
     scale: float = 1.0,
+    active_key: str | None = None,
 ) -> None:
     times = sorted({row["time"] for row in rows})
+    if tuple(times) != DEFAULT_TIMES:
+        raise ValueError(f"Expected common six-panel snapshot times {DEFAULT_TIMES}, got {times}")
     x_centers = sorted({row["X"] for row in rows})
     y_centers = sorted({row["Y"] for row in rows})
     x_edges = [WIDTH * index / len(x_centers) for index in range(len(x_centers) + 1)]
@@ -366,6 +372,17 @@ def plot_spatial_contours(
                         ),
                         edgecolor="none",
                     )
+                )
+        if active_key is not None:
+            active = {
+                (row["X"], row["Y"]): row[active_key] > 1.e-9
+                for row in rows if row["time"] == time
+            }
+            if any(active.values()) and not all(active.values()):
+                axis.contour(
+                    x_centers, y_centers,
+                    [[float(active[(x, y)]) for x in x_centers] for y in y_centers],
+                    levels=[0.5], colors="k", linewidths=0.65,
                 )
         axis.set_title(fr"$t={time:g}$ s", fontsize=9.0)
         axis.set_xlim(0.0, WIDTH)
@@ -404,7 +421,7 @@ def plot_normalized_biot_contours(rows: list[dict[str, float]], output: Path) ->
         "biot_coefficient",
         r"normalized Biot coefficient, $B/B_0$",
         output,
-        limits=(0.965, 1.01),
+        limits=BIOT_RATIO_LIMITS,
         scale=1.0 / B0,
     )
 

@@ -8,9 +8,19 @@ poroelastic coefficients \citep{chengdetournay1988}.  For the parameters in
 linearizing the equations solved by the finite-element model.  At
 \(J=1\), \(\rho_s=\rho_{s0}\), \(\phi_s=\phi_{s0}\), and \(\bar J=1\), source-free solid
 mass gives \(\phi_s=\phi_{s0}\bar J/J\), and hence
-\(J(1-\phi_s)=J-\phi_{s0}\bar J\).  Differentiation of this identity,
-using the derivative of \eqref{eq:verification-mineral-factors} with \(a^p=1\) and
-\(\partial\bar J/\partial p=-(1-K/(\phi_{s0}K_s))/K_s\) at the reference state, gives
+\(J(1-\phi_s)=J-\phi_{s0}\bar J\).  At fixed deformation and plastic
+state, differentiation of \eqref{eq:verification-mineral-factors} gives
+\begin{equation}
+ \left.\pder{\bar J}{p}\right|_{J,\mbf F^p}
+ =-\frac{\left(1-\dfrac{K}{\phi_{s0}K_s}\right)\bar J^2}
+ {K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J}.
+ \label{eq:trace-mineral-pressure-tangent}
+\end{equation}
+The derivative is negative on the stability domain
+\eqref{eq:trace-mineral-stability-domain}.  At the reference state, with
+\(a^p=1\) and \(p=0\), it reduces to
+\(\partial\bar J/\partial p=-(1-K/(\phi_{s0}K_s))/K_s\).
+Differentiating the pore-volume identity using this value gives
 \begin{equation}
  \frac{\partial}{\partial t}\left[J(1-\phi_s)\right]
  =B_0\dot J+\left(\frac{\phi_{s0}}{K_s}-\frac{K}{K_s^2}\right)\dot p.

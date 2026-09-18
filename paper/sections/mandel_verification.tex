@@ -1,6 +1,11 @@
 % !TeX root = ../main.tex
-\section{Coupled elastic verification}
+\section{Coupled finite-element verification}
 \label{sec:mandel-verification}
+
+The coupled calculations first verify the small-load elastic limit against the
+analytical Mandel solution, then examine finite compression with and without
+plastic flow. The finite-deformation comparisons distinguish changes in the
+current Biot coefficient from discretization error and constitutive instability.
 
 \subsection{Boundary-value problem}
 \label{sec:mandel-boundary-value-problem}
@@ -34,7 +39,8 @@ The mechanical symmetry conditions and drained pressure condition are
 \end{subequations}
 Here \(u_x\) and \(u_y\) are the components of \(\mbf u\), and \(\mbf N\) is
 the outward unit normal to the reference boundary.
-The top displacement is spatially uniform and follows the analytical
+For the small-load benchmark, the top displacement is spatially uniform and
+follows the analytical
 constant-load solution of \citet{chengdetournay1988}.  The computed vertical
 nominal-stress resultant then provides an independent check of the applied
 \(100\ \mathrm{kPa}\) compression.  The right face is traction free, and the
@@ -54,13 +60,14 @@ The solid-mass residual in \eqref{eq:solid-mass-weak-residual} evolves
 mineral equation determines intrinsic density, the density ratio gives
 \(\phi_s\), and \eqref{eq:poroplastic-biot-correction} gives \(B\) with
 \(a^p=1\).  Water density follows
-\eqref{eq:barotropic-water-density}.  The small load keeps the Biot coefficient
+\eqref{eq:barotropic-fluid-density}.  The small load keeps the Biot coefficient
 near its reference value while testing the nonlinear implementation.
 
 The material parameters are listed in \cref{tab:mandel-parameters}.
 \begin{table}[ht]
  \centering
- \caption{Solid--water Mandel parameters.}
+ \caption{Solid--water parameters shared by the coupled calculations;
+ the applied stress specifies the small-load benchmark.}
  \label{tab:mandel-parameters}
  \begin{tabular}{lr}
   \toprule
@@ -149,7 +156,8 @@ tolerances, and sampling definitions.
 
 A second calculation uses the same domain, phase balances, and elastic
 constitutive model at a larger imposed deformation.  The platen displacement
-increases linearly to \(-0.1H\) over \(0.2\ \mathrm{s}\) and is then held.
+increases linearly to \(-0.1H\) over \(0.2\ \mathrm{s}\) and is then held. The elastic calculation uses a \(40\times4\) mesh
+and \(\Delta t=0.002\ \mathrm{s}\).
 The pressure, lateral displacement, nominal stress, and Biot coefficient are
 predictions of this displacement-controlled calculation.
 
@@ -170,12 +178,42 @@ reduction occurs near the drained boundary
 reduces lateral expansion and brings the Biot coefficient toward a nearly
 uniform value below its reference value.
 
+The decrease follows directly from the relative compression of the specimen
+and mineral. In the drained elastic limit, \(p=0\) and \(a^p=1\),
+\eqref{eq:verification-mineral-factors} gives
+\(\bar J=J^{K/(\phi_{s0}K_s)}\). Substitution into
+\eqref{eq:poroplastic-biot-correction} gives
+\begin{align}
+ \left.B\right|_{p=0,\,a^p=1}
+ &=1-\frac{K}{K_s}J^{K/(\phi_{s0}K_s)-1},
+ \label{eq:drained-elastic-biot-volume}\\
+ &=1-0.4J^{-5/9}
+ \quad\text{for the parameters in \cref{tab:mandel-parameters}}.
+ \label{eq:drained-elastic-biot-parameters}
+\end{align}
+Since \(K/(\phi_{s0}K_s)=4/9<1\), compression increases
+\(\bar J/J\): the porous specimen contracts more than the mineral, so the
+solid volume fraction increases and \(B\) falls below \(B_0\).
+This change is reversible in the elastic model; the coefficient need not
+remain constant during a finite elastic deformation.
+
+At fixed total volume, positive pore pressure reduces the mineral volume and
+increases the denominator in \eqref{eq:poroplastic-biot-correction}, raising
+\(B\). This pressure contribution opposes the decrease caused by bulk
+compression and accounts for the transient increase in the undrained interior.
+Drainage removes this contribution while the imposed compression remains,
+leaving a coefficient below its initial value. The drained expression explains
+the trend, while the plotted transient values use the full pressure-dependent
+mineral solution.
+
 \begin{figure}[ht]
  \centering
  \figureinput{mandel_normalized_biot_contours.pgf}
  \caption{Normalized Biot coefficient during finite compression and drainage.
- The panels share a color scale and use solid reference coordinates.  The
- largest transient reduction occurs near the drained boundary.  The vertical
+ The snapshots at \(t=0.04,0.10,0.20,0.30,0.50,0.70\ \mathrm{s}\)
+ share times, color limits, and panel dimensions with
+ \cref{fig:poroplastic-mandel-biot-ratio}, and use solid reference coordinates.
+ The largest transient reduction occurs near the drained boundary.  The vertical
  plotting scale is enlarged to show the through-height field.}
  \label{fig:mandel-normalized-biot-contours}
 \end{figure}
@@ -185,13 +223,182 @@ this continuation.  The solid-mass diagnostic measures the discretization
 error of the weak chain-rule balance, and its drift decreases under time
 refinement.  Mesh and time-step comparisons also check pressure, lateral
 displacement, and the spatially averaged Biot coefficient.  This calculation
-tests the elastic model at finite deformation, and plastic history is
-examined separately in the material-point calculations of
-Sec.~\ref{sec:poroplastic-demonstration}.
+tests the elastic model at finite deformation.  The next calculation activates
+plastic flow in the same geometry to exercise its contribution to fluid
+storage.
 \FloatBarrier
 
-\subsection{Scope and reproducibility}
+\subsection{Coupled poroplastic compression and fluid exchange}
+\label{sec:coupled-poroplastic-mandel}
+
+Plastic pore-volume evolution is exercised on the same quarter-domain with
+matched elastic moduli, water properties, and boundary conditions.  The
+platen again reaches ten-percent axial compression at \(0.2\ \mathrm{s}\)
+and remains fixed through \(0.7\ \mathrm{s}\).  The Drucker--Prager parameters
+are \(M=0.6\), \(\beta=0.4\), and \(c_0=20\ \mathrm{MPa}\), with
+isotropic hardening modulus \(H=100\ \mathrm{MPa}\).
+This synthetic modulus retains a positive sampled acoustic response over
+the loading path; calibration against material data is outside this test.
+The reference solid fraction remains \(\phi_{s0}=0.9\).
+We solve the coupled poroplastic response on a \(40\times4\) mesh with
+\(\Delta t=0.0025\ \mathrm{s}\).  This loading path extends the
+finite-compression calculation into plastic flow.  The analytical Mandel
+comparison remains a small-load elastic benchmark, while the plastic
+calculation is checked through local identities, assembled derivatives,
+mass balances, and refinement.
+
+Figure~\ref{fig:poroplastic-mandel-biot-ratio} plots \(B/B_0\), where
+\(B\) is the current coefficient including plasticity and
+\(B_0=1-K/K_s=0.6\) is its reference value.  This normalization matches
+\cref{fig:mandel-normalized-biot-contours}.  The spatial distribution reflects
+both the evolving mineral state and stored plastic distention.  The companion
+coefficient \(B_{\mathrm{el}}(p,J)\), evaluated at the same local pressure and
+total volume with \(a^p=1\), separately isolates the plastic-history contribution
+in the coefficient histories and numerical diagnostics.
+
+\begin{figure}[ht]
+ \centering
+ \figureinput{poroplastic_mandel_biot_ratio.pgf}
+ \caption{Current Biot coefficient including plasticity, normalized by its
+ reference value \(B_0=1-K/K_s=0.6\), during coupled compression and fluid exchange.
+ Each panel shows the element-averaged \(B/B_0\).
+ The snapshot times, color scale, and panel dimensions match
+ \cref{fig:mandel-normalized-biot-contours};
+ a value of one denotes the reference coefficient. The panels use solid
+ reference coordinates. Black curves, where present, bound elements whose average plastic
+ multiplier increment exceeds \(10^{-9}\).
+ The vertical plotting scale is enlarged.  The element values are shown
+ without smoothing.}
+ \label{fig:poroplastic-mandel-biot-ratio}
+\end{figure}
+
+The pressure first rises under compression, then falls as plastic dilation
+increases pore volume.  It crosses below the prescribed zero pressure at the
+drained face, reversing fluid exchange from outflow to inflow
+(\cref{fig:poroplastic-mandel-history}).  The pressure continues to relax
+during the hold while the Biot coefficient retains the accumulated plastic
+contribution.  The single-phase barotropic water law is continued into tension
+in this synthetic test.  Cavitation and desaturation are not represented, so
+the suction values characterize the stated constitutive model.
+
+\begin{figure}[ht]
+ \centering
+ \figureinput{poroplastic_mandel_history.pgf}
+ \caption{Coupled poroplastic response under a compression ramp and hold.
+ Left: pressure at two positions on the symmetry edge \(Y=0\).
+ Right: reference-volume averages of the current Biot coefficient and its
+ elastic comparator at the same local pressure and volume.
+ The dotted vertical line marks the end of platen motion.}
+ \label{fig:poroplastic-mandel-history}
+\end{figure}
+
+Plastic dilation raises the coefficient through a different mineral state.
+At fixed \(J\) and \(p\), increasing \(a^p\) reduces \(J^e=J/a^p\)
+and the stable mineral-volume root \(\bar J\), thereby increasing \(B\).
+The resulting pore-volume evolution also changes pressure and lateral
+expansion. Thus \cref{fig:mandel-normalized-biot-contours,fig:poroplastic-mandel-biot-ratio}
+compare identical axial displacement histories, but different local pressure
+and deformation histories. The opposite late-time changes in \(B/B_0\)
+reflect both stored plastic distention and this coupled redistribution.
+They characterize the dilative flow law used here; plastic compaction would
+require a different constitutive model.
+
+The elastic comparator at the plastic calculation's local pressure and total
+volume separates the direct plastic-history contribution from the change in
+coupled state. The difference \(B-B_{\mathrm{el}}(p,J)\) remains positive
+during the hold for this dilative law. Its magnitude is a prediction of the
+uncalibrated constitutive example, rather than an estimate for a particular
+material.
+
+Comparing the
+\(20\times2\) and \(40\times4\) meshes at the same
+\(0.0025\ \mathrm{s}\) step changes the average coefficient contrast by less than
+\(4.0\times10^{-7}\) over the complete history.  The local field is more
+sensitive: at \(0.7\ \mathrm{s}\), the root-mean-square and maximum
+differences between the piecewise-constant element-average fields on the
+common reference domain are \(8.3\times10^{-6}\) and
+\(1.9\times10^{-5}\), respectively.  The positive plastic-history
+contribution persists under these refinements.  The maximum transverse root-mean-square variation of the
+coefficient contrast is below \(10^{-14}\) over the fine-grid histories at
+steps of \(0.0025\) and \(0.00125\ \mathrm{s}\).  Halving this step changes
+the local contrast by at most \(3.9\times10^{-6}\) across the six snapshots.
+
+The role of hardening is assessed separately from scalar mineral stability.
+Let \(\mbf P\) denote the total first Piola stress and let \(\mbf n\) be a
+unit normal in the reference plane.  Differentiating the active return in the
+vanishing-increment limit, at fixed pressure and previous plastic history,
+gives the loading tangent and its acoustic tensor,
+\begin{align}
+ \mc A_{iJkL}
+ &=\left.\frac{\mathrm dP_{iJ}}{\mathrm dF_{kL}}\right|_{p,\mathrm{active}},
+ \label{eq:poroplastic-loading-tangent}\\
+ Q_{ik}(\mbf n)&=\mc A_{iJkL}n_Jn_L.
+ \label{eq:poroplastic-acoustic-tensor}
+\end{align}
+A sign change of \(\det\mbf Q\) between normal directions implies a
+singular acoustic tensor at an intervening direction.  For \(H=0\), an
+independent constitutive replay gives both positive and negative determinants
+at \(0.3\ \mathrm{s}\), before the pronounced late-time spatial oscillations.
+At \((X,Y)=(0.5125,0.0375)\ \mathrm{m}\) and \(0.4\ \mathrm{s}\), its
+minimum is \(-0.00891\ \mathrm{GPa}^2\).  The positive mineral tangent remains
+far from zero, so the scalar root condition does not prevent this mechanical
+loss of ellipticity.  Halving the time step and, separately, setting
+\(\beta=M\) while retaining \(H=0\) leave both the acoustic sign change
+and the spatial oscillations.  With \(H=100\ \mathrm{MPa}\), the minimum over the
+sampled active states at three positions is
+\(0.03797\ \mathrm{GPa}^2\), and the spatial oscillations disappear.
+The diagnostic scans in-plane normal directions at \(0.25^\circ\) intervals
+and checks sensitivity to the finite-difference increment.  Positive values
+at these samples characterize the tested path; they are not a global
+stability proof for the constitutive law.
+
+The independent water-storage derivative and both Biot-coefficient checks
+pass during active flow.  The coupled Jacobian test also passes through
+compression and the full hold, and suppressing yielding recovers the
+existing elastic solution.  On the \(20\times2\) mesh, reducing the step
+from \(0.01\) to \(0.005\) and \(0.0025\ \mathrm{s}\) reduces the maximum
+water-mass defect relative to integrated boundary reaction from
+\(0.178\%\) to \(0.089\%\) and \(0.045\%\) of initial water mass.  Solid-mass
+drift decreases similarly.  For the plotted \(40\times4\) calculation,
+the maximum mismatch between water-mass change and integrated Darcy outflow
+is \(0.291\%\) of initial water mass.  These checks verify the plastic
+storage contribution while measuring the time-discretization drift and
+boundary-flux spatial error separately.
+\FloatBarrier
+
+\subsection{Physical interpretation, scope, and reproducibility}
 \label{sec:verification-scope}
+
+The physical question is whether the selected dilative flow law can reproduce
+both fluid exchange and the evolution of the Biot coefficient in a real
+material. Experiments support the pressure-reduction mechanism:
+\citet{makhnenkolabuz2015} observed dilation-induced pore-pressure reduction
+and increased resistance to deformation in undrained Berea sandstone.
+\citet{brantut2020} measured pressure drops during shear failure of granite
+and subsequent fluid influx during pressure recovery. These observations
+support dilation-induced suction and fluid uptake, although their loading
+and drainage conditions differ from the present calculation. The resulting
+hydraulic strengthening, often termed dilatant hardening, is distinct from
+the prescribed isotropic hardening of the yield surface used here.
+
+The predicted increase in \(B\) requires a separate assessment. Measurements
+on high-porosity Castlegate sandstone show that the Biot coefficient can
+decrease under hydrostatic loading and stabilize after shear stress is
+applied along constant-shear-stress paths \citep{ingraham2017evolution}. Those
+experiments probe a different, predominantly compactive regime; they neither
+validate nor rule out the increase predicted by the present dilative law.
+They show that the stress path and the evolution of drained and unjacketed
+stiffness matter. Observing dilation or fluid influx alone would therefore
+not validate the relation between plastic distention and \(B\).
+
+Physical assessment requires joint measurements of volume change, pore
+pressure, boundary fluid exchange, and poroelastic response along matched
+loading paths. The present calculations establish internal consistency and
+numerical behavior for the chosen laws. They do not establish that a constant
+dilation slope and the selected hardening law reproduce those observations.
+The continuation of the water law into tension also needs assessment:
+\citet{brantut2020} observed pressure drops reaching vapor pressure, a regime
+outside the single-phase description used here.
 
 The source archive contains the MOOSE materials and kernels, input decks,
 independent constitutive checks, analytical reference calculations, curated

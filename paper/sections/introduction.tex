@@ -19,7 +19,7 @@ distention that describes pore volume allocation
 \citep{drumheller2000}.  In
 earlier work with Xu, we expressed the finite-deformation Biot coefficient as
 the change of intrinsic solid volume with respect to changes in skeleton volume at fixed pore
-pressure \citep{fosterxu2025}.  That transformation relates the effective
+pressure \citep{fosterxu2025}.  That relation connects the effective
 stress evaluated at fixed pore pressure, written with a double prime, to the
 effective stress evaluated at fixed solid density, written with a single
 prime.  For the constitutive model considered here, the fixed-density stress
@@ -72,8 +72,13 @@ the evolving plastic state in the Newton Jacobian.
 We first establish the kinematics and pressure transformation, then derive
 the Biot coefficient and specify the plastic flow law.  Material-point
 calculations examine loading history, unloading, and pressure feedback.
-The elastic specialization is coupled to solid and water mass conservation
+The constitutive response is coupled to solid and water mass conservation
 and momentum balance.  Spatial pressure and displacement comparisons with
-the Mandel solution test the coupled finite-element formulation
-\citep{chengdetournay1988}.  A larger compression test then shows how the
-Biot coefficient evolves across the specimen.
+the Mandel solution test the elastic limit of the finite-element formulation
+\citep{chengdetournay1988}.  Larger compression tests examine the spatial
+Biot coefficient in the elastic and plastic regimes.  The poroplastic test
+verifies the plastic pore-volume contribution to fluid storage and compares
+the coefficient with its elastic value at matched local pressure and total
+volume.  A local acoustic-tensor diagnostic identifies loss of ellipticity
+in the perfectly plastic specialization; isotropic hardening supplies a
+stable spatial response over the tested path.

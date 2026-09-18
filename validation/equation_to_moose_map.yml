@@ -75,8 +75,7 @@ mappings:
 - id: stress_and_momentum
   paper_equations:
   - eq:matched-logarithmic-double-prime-stress
-  - eq:verification-fixed-pressure-potential
-  - eq:total-first-piola-stress
+  - eq:reference-momentum-balance
   - eq:momentum-weak-residual
   moose_objects:
   - ADVolumetricBarotropicSkeletonStressMaterial
@@ -87,9 +86,9 @@ mappings:
   - mandel_water_q2_q1_jacobian
 - id: water_mass_balance
   paper_equations:
-  - eq:reference-water-mass-balance
-  - eq:barotropic-water-density
-  - eq:water-pressure-weak-residual
+  - eq:reference-fluid-mass-balance
+  - eq:barotropic-fluid-density
+  - eq:fluid-pressure-weak-residual
   moose_objects:
   - ADBiotPressureStorageMaterial
   - ADReferenceMaterialStorageRateTerm
@@ -102,7 +101,7 @@ mappings:
 - id: water_darcy_flux
   paper_equations:
   - eq:reference-darcy-flux
-  - eq:water-pressure-weak-residual
+  - eq:fluid-pressure-weak-residual
   moose_objects:
   - ADBiotDarcyReferenceFluxMaterial
   - ADReferenceComponentFluxTerm
@@ -134,6 +133,10 @@ mappings:
   - implicit_plastic_consistency
 - id: implicit_poroplastic_state
   paper_equations:
+  - eq:plastic-isotropic-hardening
+  - eq:plastic-accumulated-multiplier
+  - eq:discrete-plastic-hardening
+  - eq:distention-mineral-volumetric-energy
   - eq:coupled-skeleton-mineral-energy
   - eq:solid-volume-fraction-relation
   - eq:verification-mineral-factors
@@ -160,10 +163,13 @@ mappings:
   - constant reference solid mass
   - smooth Drucker-Prager cone
   - nonassociated dilation
-  - no hardening or apex branch
+  - optional nonnegative linear isotropic hardening; no apex branch
   tests:
   - implicit_plastic_active_jacobian
   - implicit_plastic_consistency
+  - implicit_plastic_hardening_jacobian
+  - implicit_plastic_hardening_history
+  - implicit_plastic_publication_history
 - id: constitutive_verification_residuals
   paper_equations:
   - sec:weak-residuals-and-spaces
@@ -194,3 +200,43 @@ mappings:
   - poroplastic_unload_tangent
   - poroplastic_b_feedback
   - poroplastic_tensorial_load_unload
+- id: coupled_poroplastic_pore_volume
+  paper_equations:
+  - eq:poroplastic-mineral-volume-rate
+  - eq:poroplastic-solid-fraction-rate
+  - eq:discrete-plastic-distention-rate
+  - eq:verification-mineral-factors
+  - eq:plastic-exponential-update
+  - eq:reference-fluid-mass-balance
+  - eq:fluid-pressure-weak-residual
+  moose_objects:
+  - ADImplicitPoroplasticBiotMaterial
+  - ADPoroplasticPoreVolumeMaterial
+  - ADBiotPressureStorageMaterial
+  - ADReferenceMaterialStorageRateTerm
+  configuration: solid reference
+  inputs: [Q2 displacement, Q1 pressure, Q2 solid partial density, plastic multiplier increment]
+  ad_dependencies: current mineral state and exponential plastic increment retain outer AD derivatives
+  time_discretization: backward Euler field rates; log plastic distention rate equals beta times the plastic multiplier increment divided by the step
+  tests: [poroplastic_mandel_storage, poroplastic_mandel_refinement]
+- id: poroplastic_spatial_stability
+  paper_equations:
+  - eq:plastic-isotropic-hardening
+  - eq:poroplastic-loading-tangent
+  - eq:poroplastic-acoustic-tensor
+  moose_objects: [ADImplicitPoroplasticBiotMaterial]
+  configuration: solid reference; Q2 displacement and Q1 pressure; active fixed-pressure tangent
+  independent_diagnostic: validation/scripts/check_poroplastic_acoustic.py
+  refinement_diagnostic: validation/scripts/check_poroplastic_spatial_stability.py
+  assumptions:
+  - synthetic dissipative isotropic hardening modulus 100 MPa
+  - unchanged nonassociated flow direction
+  - sampled in-plane acoustic tensors; no global stability or physical-validation claim
+  tests: [implicit_plastic_hardening_jacobian, implicit_plastic_hardening_history, poroplastic_spatial_stability]
+- id: drained_boundary_mass_reaction
+  paper_equations: [eq:fluid-pressure-weak-residual]
+  moose_objects: [NodalDofSum]
+  inputs: [saved water storage and flux residuals on Q1 pressure nodes]
+  configuration: solid reference
+  role: sum boundary reaction degrees of freedom without counting Q2 midside interpolation values
+  tests: [poroplastic_mandel_storage, poroplastic_mandel_refinement]

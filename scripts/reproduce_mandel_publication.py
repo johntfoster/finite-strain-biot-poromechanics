@@ -104,6 +104,7 @@ def curate(output, benchmark_summary):
                     '--exodus', str(output / 'large_fine.e')], check=True, cwd=ROOT)
     record_path = ROOT / 'validation/mandel_implicit_biot.yml'
     record = yaml.safe_load(record_path.read_text())
+    record['finite_deformation_continuation'].pop('spatial_field_regeneration', None)
     if benchmark_summary:
         benchmark = json.loads(benchmark_summary.read_text())
         if not benchmark['accepted']:
@@ -125,16 +126,20 @@ def curate(output, benchmark_summary):
             abs(float(row['displacement']) - mandel.analytical_displacement(component, float(row['coordinate']), float(row['time']), mandel.ROOT_COUNT)) / scale
             for row in displacements if row['component'] == component)
     density = read_rows(ROOT / 'validation/mandel_density_contours.csv')
-    final_density = [row['intrinsic_solid_density_ratio'] for row in density if row['time'] == fine[-1]['time']]
+    last_snapshot = max(row['time'] for row in density)
+    final_density = [row['intrinsic_solid_density_ratio'] for row in density if row['time'] == last_snapshot]
+    record['finite_deformation_continuation']['spatial_field_times_seconds'] = sorted({row['time'] for row in density})
     final = fine[-1]
     metrics = record['finite_deformation_continuation']['metrics']
+    metrics.pop('final_intrinsic_solid_density_ratio_range', None)
     metrics.update({
         'maximum_platen_compression_over_height': max(-row['top_displacement'] / mandel.HEIGHT for row in fine),
         'maximum_lateral_expansion_over_width': maximum(fine, 'side_displacement'),
         'final_lateral_expansion_over_width': final['side_displacement'],
         'final_biot_minimum': final['biot_minimum'], 'final_biot_average': final['biot_average'], 'final_biot_maximum': final['biot_maximum'],
         'maximum_intrinsic_solid_density_ratio': maximum(density, 'intrinsic_solid_density_ratio'),
-        'final_intrinsic_solid_density_ratio_range': [min(final_density), max(final_density)],
+        'last_snapshot_time_seconds': last_snapshot,
+        'last_snapshot_intrinsic_solid_density_ratio_range': [min(final_density), max(final_density)],
         'final_average_biot_relative_departure_from_reference': abs(final['biot_average'] - mandel.BIOT_COEFFICIENT) / mandel.BIOT_COEFFICIENT,
         'maximum_biot_identity_l2': maximum(fine, 'biot_analytic_error_l2'),
         'maximum_referential_solid_mass_drift_l2': fine_mass,

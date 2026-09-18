@@ -9,26 +9,38 @@ provides the derivatives of these calculations for Newton's method.
 
 \subsection{Mineral state and plastic update}
 
-The material solves \eqref{eq:verification-mineral-factors} for
-\(\ln\bar J\) on the branch defined by
-\eqref{eq:trace-mineral-stability-domain}, then evaluates
-\eqref{eq:poroplastic-biot-correction}.  A bracketing search locates the
-scalar root, and Newton iterations carried out with AD variables at that root
-supply the first and second derivatives of the scalar equation.  Intrinsic
-density follows from
+At each integration point, the elastic or poroplastic constitutive update
+solves the nonlinear scalar residual
+\eqref{eq:verification-mineral-factors} using
+\(x=\ln\bar J\) as the numerical unknown on the branch defined by
+\eqref{eq:trace-mineral-stability-domain}.  A bracketing search locates the
+root, and Newton iterations carried out with AD variables at that root supply
+the first and second derivatives of the scalar equation.  After convergence,
+the update recovers \(\bar J=\exp x\).  Intrinsic density follows from
 \(\bar\rho_s=\bar\rho_{s0}/\bar J\), and the volume fraction is
 \(\phi_s=\rho_s/\bar\rho_s\), using the current solid partial density.
-The implementation checks positive volumes, \(0<\phi_s<1\), positive
-mineral stiffness, and a positive scalar derivative.
+The update then evaluates \eqref{eq:poroplastic-biot-correction} and checks
+positive volumes, \(0<\phi_s<1\), positive mineral stiffness, and a positive
+scalar derivative.
 
 When plastic flow occurs, the seven equations
 \eqref{eq:implicit-plastic-flow-increment}--\eqref{eq:discrete-consistency}
 determine the six independent components of \(\mbf W\) and
 \(\Delta\gamma\).  Each Newton iteration recomputes \(J^e\), mineral
-volume, \(B\), and driving stress from the candidate plastic state.  A
-nested AD calculation differentiates the flow and yield residuals with
-respect to these seven unknowns.  Scaling and squaring with a Taylor
-expansion evaluates the matrix exponential.
+volume, \(B\), and driving stress from the candidate plastic state.
+For positive \(H\), the cohesion is evaluated at
+\(\kappa^p_n+\Delta\gamma\); its derivative therefore enters the same
+local consistency Jacobian.  Both \(\mbf F^p_n\) and \(\kappa^p_n\) remain
+fixed during the current solve.
+Forward-mode differentiation evaluates the local Jacobian with respect to
+these seven unknowns.  Newton iteration first solves their values.  At the
+converged root, the implicit-function theorem supplies their outer AD
+derivatives by solving the same local Jacobian against the derivatives of
+the residual with respect to the global fields, with previous-step history
+fixed.  Scaling and squaring with a Taylor polynomial
+through order 20 evaluates the matrix exponential using only algebraic
+operations on AD scalars.  This construction avoids differentiating a spectral
+decomposition when principal values coincide.
 
 The elastic and poroplastic MOOSE materials share the scalar mineral solver
 and closed-form Biot coefficient.  The mineral solve uses \(J^e=J/a^p\), while
@@ -43,27 +55,27 @@ supplies the derivative of the update that Newton iteration requires
 assembled residual Jacobian \citep{lindsayetal2021ad}.
 
 \subsection{Phase balances and finite-element residuals}
-\label{sec:water-storage-and-transport}
+\label{sec:fluid-storage-and-transport}
 \label{sec:weak-residuals-and-spaces}
 
-The coupled boundary-value verification uses the elastic specialization of
-the preceding constitutive model.  The solid mass balance determines partial
+The coupled boundary-value calculations use the elastic and poroplastic
+specializations of the preceding constitutive model.  The solid mass balance determines partial
 density, and the local mineral state determines solid volume fraction.
-Water storage uses that pore volume and the barotropic EOS
+Fluid storage uses that pore volume and the barotropic EOS
 \begin{align}
  \bar\rho_f(p)&=\bar\rho_{f0}
  \exp\left(\frac{p-p_0}{K_f}\right).
- \label{eq:barotropic-water-density}
+ \label{eq:barotropic-fluid-density}
 \end{align}
-Here \(K_f\) is the constant water bulk modulus and
+Here \(K_f\) is the constant fluid bulk modulus and
 \((p_0,\bar\rho_{f0})\) is its reference state.  Let \(\mbf w_f\)
-be the water mass flux relative to the solid.  Its reference flux is
-\(\mbf W_f=J\mbf F^{-1}\mbf w_f\).  The water balance is
+be the fluid mass flux relative to the solid.  Its reference flux is
+\(\mbf W_f=J\mbf F^{-1}\mbf w_f\).  The fluid balance is
 \begin{equation}
  \left.\pder{}{t}\right|_{\mbf X}
  \left[J(1-\phi_s)\bar\rho_f\right]
  +\nabla_{\mbf X}\mathbin{\cdot}\mbf W_f=0.
- \label{eq:reference-water-mass-balance}
+ \label{eq:reference-fluid-mass-balance}
 \end{equation}
 For isotropic permeability \(\kappa\), dynamic viscosity \(\mu_f\), and
 zero gravity, Darcy flow in reference coordinates is
@@ -73,50 +85,130 @@ zero gravity, Darcy flow in reference coordinates is
  \label{eq:reference-darcy-flux}
 \end{equation}
 The Biot coefficient enters momentum through the pressure term in stress.  The
-same mineral volume determines water storage through \(\phi_s\).
+same mineral volume determines fluid storage through \(\phi_s\).
 
-Let \(\Omega_0\) be the solid reference domain, and let \(\mbf w\), \(q\),
-and \(\eta\) be test functions for displacement \(\mbf u=\mbf x-\mbf X\),
-pressure, and solid partial density.  With zero body force and the boundary
-terms omitted, the residuals are
+Let \(\Omega_0\) be the solid reference domain, and let \(\delta\mbf u\),
+\(\delta p\), and \(\delta\rho_s\) be test functions for displacement
+\(\mbf u=\mbf x-\mbf X\), pressure, and solid partial density.  Let
+\(\Gamma_t\) and \(\Gamma_f\) be the portions of the reference boundary with
+prescribed nominal traction
+\(\bar{\mbf t}_0=\mbf P\mbf N\) and prescribed outward referential fluid mass
+flux \(\bar m_f=\mbf W_f\mathbin{\cdot}\mbf N\), respectively, where
+\(\mbf N\) is the outward unit normal.  The displacement and pressure test
+functions vanish on their corresponding essential boundaries.  With zero body
+force, the residuals are
 \begin{align}
- R_u(\mbf w)
- &=\int_{\Omega_0}\nabla_{\mbf X}\mbf w:
- \left(\mbf P^{\prime\prime}-BpJ\mbf F^{-T}\right)\dd V_0,
+ R_u(\delta\mbf u)
+ &=\int_{\Omega_0}\nabla_{\mbf X}\delta\mbf u:
+ \left(\mbf P^{\prime\prime}-BpJ\mbf F^{-T}\right)\dd V_0 \notag\\
+ &\quad-\int_{\Gamma_t}\delta\mbf u\mathbin{\cdot}
+ \bar{\mbf t}_0\dd A_0,
  \label{eq:momentum-weak-residual}\\
- R_p(q)
- &=\int_{\Omega_0}q\pder{}{t}
- \left[J(1-\phi_s)\bar\rho_f(p)\right]\dd V_0
- -\int_{\Omega_0}\nabla_{\mbf X}q\mathbin{\cdot}\mbf W_f\dd V_0,
- \label{eq:water-pressure-weak-residual}\\
- R_{\rho_s}(\eta)
- &=\int_{\Omega_0}\eta\left(\dot J\rho_s+J\dot\rho_s\right)\dd V_0.
+ R_p(\delta p)
+ &=\int_{\Omega_0}\delta p\pder{}{t}
+ \left[J(1-\phi_s)\bar\rho_f(p)\right]\dd V_0 \notag\\
+ &\quad-\int_{\Omega_0}\nabla_{\mbf X}\delta p\mathbin{\cdot}
+ \mbf W_f\dd V_0 \notag\\
+ &\quad+\int_{\Gamma_f}\delta p\,\bar m_f\dd A_0,
+ \label{eq:fluid-pressure-weak-residual}\\
+ R_{\rho_s}(\delta\rho_s)
+ &=\int_{\Omega_0}\delta\rho_s
+ \left(\dot J\rho_s+J\dot\rho_s\right)\dd V_0.
  \label{eq:solid-mass-weak-residual}
 \end{align}
-The overdot follows the solid reference coordinate.  The discrete fields use
+The overdot follows the solid reference coordinate.  No boundary contribution
+appears in \(R_{\rho_s}\) because the solid reference moves with the skeleton
+and its mass balance contains no referential solid-flux divergence.  The
+discrete fields use
 \begin{equation}
- \mbf u_h\in[\mathcal Q_2]^2,
- \qquad p_h\in\mathcal Q_1,
- \qquad \rho_{s,h}\in\mathcal Q_2,
+ \mbf u^h\in[\mathcal Q_2]^2,
+ \qquad p^h\in\mathcal Q_1,
+ \qquad \rho_s^h\in\mathcal Q_2,
  \label{eq:finite-element-spaces}
 \end{equation}
 where \(\mathcal Q_k\) is the continuous tensor-product polynomial space.
-The pressure uses continuous Q1 elements without stabilization.  Solid
+The pressure uses continuous \(\mathcal Q_1\) elements without stabilization.  Solid
 partial density is stored as \(\rho_s/\rho_{s0}\) for conditioning.
 
-Backward Euler supplies the rates in the reported calculations.  The kernels
-expand the solid and water accumulation rates with the chain rule and obtain
-the time derivatives from the MOOSE time integrator.  This expansion differs
-in general from differencing the complete accumulation term between time
-levels.  The resulting referential mass drift is therefore measured directly
-and under time refinement.  A BDF2 regression exercises the same rate
-implementation.
+In the reported calculations, the MOOSE Backward Euler time integrator
+supplies the rates of the displacement, pressure, and solid partial-density
+fields.  The implementation then applies the chain rule directly to the solid
+and fluid accumulations in \eqref{eq:solid-mass-weak-residual} and
+\eqref{eq:fluid-pressure-weak-residual}, using rates derived from those field
+rates.  Evaluating the fluid accumulation also requires \(\dot\phi_s\),
+which depends on the mineral response and the plastic update.  The following
+rates supply this constitutive contribution to
+\eqref{eq:fluid-pressure-weak-residual}.
 
-A PETSc comparison checks the assembled AD Jacobian.  The elastic
-test includes momentum, solid mass, water storage, and Darcy flow.  The
-plastic test uses material residuals containing the returned stress
-invariants, plastic distention, and Biot coefficient at nonzero pressure and
-unequal principal stretches.  Its perturbations include the change in
-plastic state during the return mapping.  This tests the derivative used by
-Newton's method; a coupled flow problem with plastic deformation would
-also require verification of the plastic contribution to water storage.
+Since \(J^e=J/a^p\), differentiating the mineral EOS
+\eqref{eq:verification-mineral-factors} along the current loading path gives
+\begin{align}
+ \left[\frac{K_s}{\bar J}
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p\right]\dot{\bar J}
+ &=\frac{K}{\phi_{s0}}
+ \left(\frac{\dot J}{J}-\frac{\dot a^p}{a^p}\right) \notag\\
+ &\quad-\left(1-\frac{K}{\phi_{s0}K_s}\right)\bar J\dot p.
+ \label{eq:poroplastic-mineral-volume-rate}
+\end{align}
+The identity \(\phi_s=\rho_s\bar J/\bar\rho_{s0}\) then combines this
+mineral-volume rate with the solved solid partial-density rate to give
+\begin{equation}
+ \dot\phi_s=\phi_s\left(\frac{\dot\rho_s}{\rho_s}
+ +\frac{\dot{\bar J}}{\bar J}\right).
+ \label{eq:poroplastic-solid-fraction-rate}
+\end{equation}
+To evaluate the plastic contribution in
+\eqref{eq:poroplastic-mineral-volume-rate}, the exponential update
+\eqref{eq:plastic-exponential-update} supplies the logarithmic
+distention rate over the same backward-Euler step,
+\begin{equation}
+ \frac{\ln a^p_n-\ln a^p_{n-1}}{\Delta t}
+ =\frac{\beta\Delta\gamma}{\Delta t},
+ \label{eq:discrete-plastic-distention-rate}
+\end{equation}
+which evaluates \(\dot a^p/a^p\) in
+\eqref{eq:poroplastic-mineral-volume-rate}.  Here \(n\) denotes the current
+time level and \(\Delta t\) the step.  The resulting solid-volume-fraction
+rate enters the full water accumulation in
+\eqref{eq:fluid-pressure-weak-residual}; its dependence on the converged
+plastic increment remains in the outer AD Jacobian.  Positive plastic
+distention increases pore volume at fixed total volume and pressure and
+therefore contributes positively to water storage.
+
+\subsection{Verification of the discrete residuals}
+
+At a finite time step, the chain-rule rates used above are generally not equal
+to backward differences of the complete nonlinear accumulations.  We therefore
+measure the referential solid-mass drift and verify that it decreases under
+time-step refinement.  A separate elastic BDF2 regression confirms that the same
+chain-rule calculation accepts rates from a different MOOSE time integrator
+without modification.
+
+The Jacobian tests check the derivatives of these discrete residuals,
+including the constitutive rates entering fluid storage.  PETSc forms a finite-difference approximation of
+the residual Jacobian and compares it with the Jacobian assembled from the
+MOOSE AD derivatives.  The relative and absolute Frobenius-norm differences
+must remain below \(10^{-7}\) and \(10^{-5}\), respectively.  The elastic
+coupled-field test includes momentum, solid mass, fluid storage, and Darcy
+flow.  A separate active-plastic test applies the same comparison to algebraic
+residuals containing the returned stress invariants, plastic distention, and
+Biot coefficient at nonzero pressure and unequal principal stretches.  Each
+finite-difference perturbation repeats the return mapping, so the comparison
+tests the derivative of the converged local update carried into the outer
+Newton Jacobian.  A further coupled poroplastic test includes all four field
+residuals during compression and the subsequent hold.  A temporal predictor
+moves the initial Newton guess away from the elastic--plastic switching
+surface, and every assembled Jacobian is compared on the resulting path.
+The finite-difference scale parameter is \(10^{-9}\) in the unit-scaled diagnostic;
+the same relative and absolute tolerances apply.  At the switching surface
+itself, perturbations can select different active branches, so a single smooth
+Jacobian does not describe both sides.
+
+An independent check perturbs total volume, pressure, solid partial density,
+and plastic distention at sampled quadrature points, solves the scalar
+mineral equation independently, and differences the complete water
+accumulation.  It verifies the plastic storage contribution separately from
+the assembled Jacobian.  Integrated Darcy outflow and the pressure-boundary
+reaction are compared with water-mass change.  The reaction sums only nodes
+carrying pressure degrees of freedom.  Time-step refinement measures the
+mass drift introduced by the chain-rule time discretization.

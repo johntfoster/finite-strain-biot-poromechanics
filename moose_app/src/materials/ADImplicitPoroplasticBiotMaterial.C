@@ -97,7 +97,7 @@ exponential(Matrix<T> a)
 }
 struct Parameters
 {
-  Real G, K, Ks, phi0, M, beta, cohesion;
+  Real G, K, Ks, phi0, M, beta, cohesion, hardening, accumulated_old;
   bool frozen_reference;
 };
 template <typename T>
@@ -158,7 +158,8 @@ evaluate(const Matrix<T> & F,
   for (const auto & value : dev)
     norm2 += value * value;
   s.q = raw_value(norm2) > 1.e-40 ? sqrt(1.5 * norm2) : T(0.);
-  s.yield = s.q - c.M * s.mean - c.cohesion;
+  s.yield = s.q - c.M * s.mean - c.cohesion -
+            c.hardening * (c.accumulated_old + x[6]);
   const unsigned index[6] = {0, 4, 8, 1, 2, 5};
   for (unsigned k = 0; k < 6; ++k)
   {
@@ -173,8 +174,9 @@ evaluate(const Matrix<T> & F,
   return s;
 }
 
+template <typename T>
 Real
-norm(const std::array<ADReal, 7> & r)
+norm(const std::array<T, 7> & r)
 {
   Real value = 0.;
   for (const auto & x : r)
@@ -186,8 +188,9 @@ norm(const std::array<ADReal, 7> & r)
   }
   return value;
 }
-std::array<ADReal, 7>
-solve(std::array<std::array<ADReal, 7>, 7> A, std::array<ADReal, 7> rhs)
+template <typename T>
+std::array<T, 7>
+solve(std::array<std::array<T, 7>, 7> A, std::array<T, 7> rhs)
 {
   for (unsigned k = 0; k < 7; ++k)
   {
@@ -201,13 +204,13 @@ solve(std::array<std::array<ADReal, 7>, 7> A, std::array<ADReal, 7> rhs)
     std::swap(rhs[k], rhs[pivot]);
     for (unsigned i = k + 1; i < 7; ++i)
     {
-      const ADReal factor = A[i][k] / A[k][k];
+      const T factor = A[i][k] / A[k][k];
       for (unsigned j = k + 1; j < 7; ++j)
         A[i][j] -= factor * A[k][j];
       rhs[i] -= factor * rhs[k];
     }
   }
-  std::array<ADReal, 7> x{};
+  std::array<T, 7> x{};
   for (int i = 6; i >= 0; --i)
   {
     x[i] = rhs[i];
@@ -241,6 +244,9 @@ ADImplicitPoroplasticBiotMaterial::validParams()
   params.addParam<Real>("dp_friction_slope", 0.6, "Friction slope M.");
   params.addParam<Real>("dp_dilation_slope", 0.4, "Dilation slope beta.");
   params.addParam<Real>("dp_cohesion", 0., "Cohesion.");
+  params.addRangeCheckedParam<Real>(
+      "dp_hardening_modulus", 0., "dp_hardening_modulus>=0",
+      "Linear isotropic hardening modulus multiplying accumulated plastic multiplier.");
   params.addParam<bool>(
       "use_elastic_coefficient_in_trial",
       false,
@@ -258,9 +264,13 @@ ADImplicitPoroplasticBiotMaterial::ADImplicitPoroplasticBiotMaterial(const Input
     _M(getParam<Real>("dp_friction_slope")),
     _beta(getParam<Real>("dp_dilation_slope")),
     _cohesion(getParam<Real>("dp_cohesion")),
+    _hardening(getParam<Real>("dp_hardening_modulus")),
     _frozen_reference(getParam<bool>("use_elastic_coefficient_in_trial")),
     _Fp_history(declareProperty<RankTwoTensor>("implicit_plastic_history")),
     _Fp_old(getMaterialPropertyOld<RankTwoTensor>("implicit_plastic_history")),
+    _accumulated_history(declareProperty<Real>("implicit_plastic_accumulated_history")),
+    _accumulated_old(getMaterialPropertyOld<Real>("implicit_plastic_accumulated_history")),
+    _accumulated(declareADProperty<Real>("accumulated_plastic_multiplier")),
     _Fp(declareADProperty<RankTwoTensor>("implicit_plastic_Fp")),
     _Fe(declareADProperty<RankTwoTensor>("implicit_plastic_Fe")),
     _tau(declareADProperty<RankTwoTensor>("implicit_plastic_tau_prime")),
@@ -286,6 +296,7 @@ void
 ADImplicitPoroplasticBiotMaterial::initQpStatefulProperties()
 {
   _Fp_history[_qp] = RankTwoTensor(RankTwoTensor::initIdentity);
+  _accumulated_history[_qp] = 0.;
 }
 void
 ADImplicitPoroplasticBiotMaterial::computeQpProperties()
@@ -298,51 +309,65 @@ ADImplicitPoroplasticBiotMaterial::computeQpProperties()
       F[3 * i + j] = _F[_qp](i, j);
       old[3 * i + j] = _Fp_old[_qp](i, j);
     }
-  if (raw_value(determinant(F)) <= 0. || raw_value(determinant(old)) <= 0.)
-    mooseError(name(), ": requires positive total and previous plastic Jacobians.");
-  const Parameters c{_G, _K, _Ks, _phi0, _M, _beta, _cohesion, _frozen_reference};
+  if (raw_value(determinant(old)) <= 0.)
+    mooseError(name(), ": requires a positive previous plastic Jacobian.");
+  if (raw_value(determinant(F)) <= 0.)
+    mooseException(name(), ": trial total Jacobian is nonpositive; reduce the Newton step.");
+  const Parameters c{_G, _K, _Ks, _phi0, _M, _beta, _cohesion,
+                     _hardening, _accumulated_old[_qp], _frozen_reference};
   std::array<ADReal, 7> x{};
   auto state = evaluate(F, old, _pressure[_qp], x, c);
   if (raw_value(state.yield) > 1.e-11 * _G)
   {
-    Matrix<ChainedADReal> chained_F{}, chained_old{};
+    // Solve local values without repeatedly propagating global derivatives.
+    // The implicit-function solve at the converged root recovers global AD derivatives.
+    Matrix<Real> value_F{}, value_old{};
     for (unsigned i = 0; i < 9; ++i)
     {
-      chained_F[i] = ChainedADReal(F[i]);
-      chained_old[i] = ChainedADReal(old[i]);
+      value_F[i] = raw_value(F[i]);
+      value_old[i] = raw_value(old[i]);
+    }
+    const Real value_pressure = raw_value(_pressure[_qp]);
+    std::array<Real, 7> value_x{};
+    auto value_state = evaluate(value_F, value_old, value_pressure, value_x, c);
+    Matrix<ChainedReal> chained_F{}, chained_old{};
+    for (unsigned i = 0; i < 9; ++i)
+    {
+      chained_F[i] = ChainedReal(value_F[i]);
+      chained_old[i] = ChainedReal(value_old[i]);
     }
     bool converged = false;
     for (unsigned iteration = 0; iteration < 40; ++iteration)
     {
-      std::array<std::array<ADReal, 7>, 7> A{};
+      std::array<std::array<Real, 7>, 7> A{};
       for (unsigned column = 0; column < 7; ++column)
       {
-        std::array<ChainedADReal, 7> seeded{};
+        std::array<ChainedReal, 7> seeded{};
         for (unsigned j = 0; j < 7; ++j)
-          seeded[j] = ChainedADReal(x[j], ADReal(j == column ? 1. : 0.));
+          seeded[j] = ChainedReal(value_x[j], Real(j == column ? 1. : 0.));
         const auto residual =
-            evaluate(chained_F, chained_old, ChainedADReal(_pressure[_qp]), seeded, c).residual;
+            evaluate(chained_F, chained_old, ChainedReal(value_pressure), seeded, c).residual;
         for (unsigned row = 0; row < 7; ++row)
           A[row][column] = residual[row].derivatives();
       }
-      const auto correction = solve(A, state.residual);
-      const Real current_norm = norm(state.residual);
+      const auto correction = solve(A, value_state.residual);
+      const Real current_norm = norm(value_state.residual);
       Real step = 1.;
       bool accepted = false;
       for (unsigned search = 0; search < 18; ++search)
       {
-        auto trial = x;
+        auto trial = value_x;
         for (unsigned j = 0; j < 7; ++j)
           trial[j] -= step * correction[j];
         if (raw_value(trial[6]) >= 0.)
         {
-          auto candidate = evaluate(F, old, _pressure[_qp], trial, c);
+          auto candidate = evaluate(value_F, value_old, value_pressure, trial, c);
           const Real candidate_norm = norm(candidate.residual);
           if (std::isfinite(candidate_norm) &&
               (candidate_norm < current_norm || candidate_norm < 1.e-12))
           {
-            x = trial;
-            state = candidate;
+            value_x = trial;
+            value_state = candidate;
             accepted = true;
             break;
           }
@@ -351,7 +376,7 @@ ADImplicitPoroplasticBiotMaterial::computeQpProperties()
       }
       if (!accepted)
         mooseError(name(), ": local line search failed on smooth cone branch.");
-      if (norm(state.residual) < 1.e-12 && norm(correction) < 1.e-10)
+      if (norm(value_state.residual) < 1.e-12 && norm(correction) < 1.e-10)
       {
         converged = true;
         break;
@@ -359,6 +384,28 @@ ADImplicitPoroplasticBiotMaterial::computeQpProperties()
     }
     if (!converged)
       mooseError(name(), ": local poroplastic Newton solve did not converge.");
+    // R_x dx = -R_F dF - R_p dp at fixed previous-step history.
+    // Local Jacobian values suffice because the converged residual is zero.
+    std::array<std::array<ADReal, 7>, 7> tangent{};
+    for (unsigned column = 0; column < 7; ++column)
+    {
+      std::array<ChainedReal, 7> seeded{};
+      for (unsigned j = 0; j < 7; ++j)
+        seeded[j] = ChainedReal(value_x[j], Real(j == column ? 1. : 0.));
+      const auto residual =
+          evaluate(chained_F, chained_old, ChainedReal(value_pressure), seeded, c).residual;
+      for (unsigned row = 0; row < 7; ++row)
+        tangent[row][column] = raw_value(residual[row].derivatives());
+    }
+    for (unsigned j = 0; j < 7; ++j)
+      x[j] = value_x[j];
+    auto differential = evaluate(F, old, _pressure[_qp], x, c).residual;
+    for (auto & r : differential)
+      r -= raw_value(r);
+    const auto correction = solve(tangent, differential);
+    for (unsigned j = 0; j < 7; ++j)
+      x[j] -= correction[j];
+    state = evaluate(F, old, _pressure[_qp], x, c);
     if (raw_value(state.q) < 1.e-10 * _G)
       mooseError(name(), ": cone apex requires a separate constitutive branch.");
   }
@@ -380,6 +427,8 @@ ADImplicitPoroplasticBiotMaterial::computeQpProperties()
   _ratio[_qp] = state.ratio;
   _phi[_qp] = state.phi;
   _gamma[_qp] = x[6];
+  _accumulated[_qp] = _accumulated_old[_qp] + x[6];
+  _accumulated_history[_qp] = raw_value(_accumulated[_qp]);
   _yield[_qp] = state.yield;
   _mean[_qp] = state.mean;
   _q[_qp] = state.q;

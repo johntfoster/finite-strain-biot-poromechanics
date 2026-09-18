@@ -20,11 +20,30 @@ mass conservation, the energy-derived stress, the flow rule, yield
 consistency, and the derivatives verify the update on the smooth
 Drucker--Prager branch.
 
-The coupled finite-element calculations verify the elastic specialization
-against the Mandel pressure and horizontal-displacement solution.  A larger
-compression test shows how the Biot coefficient varies across the specimen
-during drainage.  Mesh and time-step comparisons measure numerical sensitivity;
-these calculations provide implementation verification for the chosen laws.
-The next steps are to verify coupled flow with plastic deformation,
-including its contribution to water storage, and to calibrate and test the
-model against material data.
+The coupled finite-element calculations recover the elastic Mandel pressure
+and horizontal-displacement solution and verify fluid storage during plastic
+flow.  Independent differences of water accumulation and assembled-Jacobian
+comparisons check the plastic pore-volume contribution and its derivatives.
+Water-mass change is also checked against boundary flow, and time-step
+refinement reduces the drift introduced by the chain-rule time discretization.
+
+For the selected dilative material, the compression-and-hold calculation
+produces a positive plastic-history contribution to the Biot coefficient at
+matched pressure and total volume. Dilation reverses fluid exchange from
+initial outflow to inflow,
+and the coefficient retains its plastic contribution during the hold.
+The perfectly plastic specialization loses ellipticity along the hold.
+A positive isotropic hardening modulus retains the nonassociated flow rule
+and gives smooth spatial fields with decreasing differences under refinement.
+This hardening modulus is a constitutive choice for the synthetic test.
+
+Whether the dilative model reproduces both fluid exchange and Biot-coefficient
+evolution in a real material remains an open question. Experiments support
+dilation-induced pressure reduction and fluid uptake
+\citep{makhnenkolabuz2015,brantut2020}, while measured Biot coefficients also
+exhibit stress-path-dependent decreases and stabilization
+\citep{ingraham2017evolution}. The increase predicted here must therefore be tested
+alongside volumetric deformation and drainage, rather than inferred from
+dilatancy alone. Calibration and such joint comparisons, together with
+extension to cavitation or desaturation where required, are needed to assess
+the physical range of the constitutive specialization.

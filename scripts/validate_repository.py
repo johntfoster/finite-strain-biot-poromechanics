@@ -154,7 +154,7 @@ def audit_finite_deformation_results() -> None:
         require(contour_rows and all(value_name in row for row in contour_rows),
                 f"invalid finite-deformation contour artifact: {name}")
         times = {float(row["time"]) for row in contour_rows}
-        require(times == {0.0, 0.046, 0.094, 0.206, 0.398, 0.702},
+        require(times == {0.04, 0.1, 0.2, 0.3, 0.5, 0.7},
                 f"unexpected contour times in {name}")
         contour_keys.append({(row["time"], row["X"], row["Y"]) for row in contour_rows})
     require(contour_keys[0] == contour_keys[1],
@@ -164,7 +164,10 @@ def audit_finite_deformation_results() -> None:
 def audit_implicit_poroplastic_results() -> None:
     record = json.loads((ROOT / "validation/implicit_poroplastic_verification.json").read_text())
     require(record.get("accepted") is True, "implicit poroplastic verification did not pass")
-    limits = {"mass": 1e-10, "eos": 1e-10, "biot": 5e-8, "flow": 1e-9,
+    require(record.get('parameters', {}).get('cohesion_Pa') == 2e7 and
+            record.get('parameters', {}).get('hardening_modulus_Pa') == 1e8,
+            'material-point publication does not use the coupled hardening parameters')
+    limits = {"accumulated": 1e-10, "mass": 1e-10, "eos": 1e-10, "biot": 5e-8, "flow": 1e-9,
               "yield_residual": 1e-9, "stress": 2e-7, "determinant": 1e-9}
     for name in ("history", "nonaxisymmetric", "rotated", "pressure_4e+08"):
         require(name in record, f"missing constitutive verification case: {name}")
@@ -175,6 +178,65 @@ def audit_implicit_poroplastic_results() -> None:
         require(sha256(ROOT / "figures" / (stem + ".png")) ==
                 sha256(ROOT / "docs/assets/img" / (stem + ".png")),
                 f"manuscript and website figure mismatch: {stem}")
+
+
+def audit_poroplastic_mandel_results() -> None:
+    record = json.loads((ROOT / "validation/poroplastic_mandel_verification.json").read_text())
+    require(record.get("accepted") is True, "coupled poroplastic verification did not pass")
+    for name, expected in record["source_sha256"].items():
+        require(sha256(ROOT / name) == expected, f"stale coupled verification source: {name}")
+    require(record["storage"]["active_samples"] > 0, "plastic storage was not exercised")
+    for metric, limit in record["storage"]["tolerances"].items():
+        require(0 <= record["storage"]["errors"][metric] <= limit,
+                f"coupled storage check failed: {metric}")
+    require(record["jacobian"]["relative"] <= 1e-7 and
+            record["jacobian"]["absolute"] <= 1e-5, "coupled plastic Jacobian failed")
+    for metric in ("max_relative_reaction_mass_defect", "max_relative_chain_rule_defect", "solid_mass_l2"):
+        require(record["mass"]["temporal_fine"][metric] < record["mass"]["fine"][metric] <
+                record["mass"]["temporal_coarse"][metric], f"temporal refinement failed: {metric}")
+    require(record["mass"]["spatial_fine"]["max_relative_mass_defect"] <= .01,
+            "water mass and Darcy outflow disagree by more than 1% of initial water mass")
+    require(all(v <= 1e-7 for v in record["elastic_limit"]["field_errors"].values()),
+            "coupled elastic-limit recovery failed")
+    with (ROOT / "validation/poroplastic_mandel_contours.csv").open() as stream:
+        rows = [{k: float(v) for k, v in r.items()} for r in csv.DictReader(stream)]
+    require({r["time"] for r in rows} == {0.04, 0.1, 0.2, 0.3, 0.5, 0.7},
+            "plastic and elastic contour snapshot times must match")
+    require(max(r["delta_B"] for r in rows) > 1e-3, "plastic coefficient contrast is absent")
+    require(all(abs(r["B"] - r["B_el"] - r["delta_B"]) < 1e-10 for r in rows),
+            "same-state elastic comparison is inconsistent")
+    require(record['parameters'].get('hardening_modulus') == 1e8,
+            'coupled publication data do not use the documented hardening law')
+    b0 = 1. - record['parameters']['K']/record['parameters']['Ks']
+    require(abs(b0 - .6) < 1e-12, 'publication figures use different reference coefficients')
+    require(all(.965 <= r['B']/b0 <= 1.02 for r in rows),
+            'Biot ratios lie outside the shared publication color scale')
+    for case in ('temporal_fine', 'spatial_fine'):
+        for field, limit in [('delta_b', 1e-8), ('ap', 1e-7), ('gamma', 1e-8)]:
+            require(record['spatial_structure'][case][field]['maximum_transverse_rms'] <= limit,
+                    f'unresolved spatial variation: {case} {field}')
+    for stem in ("poroplastic_mandel_biot_ratio", "poroplastic_mandel_history"):
+        require(sha256(ROOT / "figures" / (stem + ".png")) ==
+                sha256(ROOT / "docs/assets/img" / (stem + ".png")),
+                f"manuscript and website figure mismatch: {stem}")
+
+
+def audit_poroplastic_spatial_stability() -> None:
+    record = json.loads((ROOT/'validation/poroplastic_spatial_stability.json').read_text())
+    require(record.get('accepted') is True and record.get('status') == 'complete',
+            'spatial-stability verification is incomplete')
+    for name, expected in record['source_sha256'].items():
+        require(sha256(ROOT/name) == expected, f'stale spatial-stability source: {name}')
+    baseline = record['cases']['baseline_perfect_plastic']['acoustic']['acoustic']
+    require(any(r['determinant_changes_sign'] for r in baseline), 'baseline acoustic diagnosis missing')
+    for name in ('hardening_coarse', 'hardening_fine', 'hardening_half_dt'):
+        case = record['cases'][name]
+        require(min(r['minimum_determinant_GPa2'] for r in case['acoustic']['acoustic']) > 0.,
+                f'nonpositive sampled acoustic determinant: {name}')
+        require(case['spatial_structure']['delta_b']['maximum_transverse_rms'] <= 1e-8,
+                f'unresolved spatial variation: {name}')
+    require(max(r['maximum'] for r in record['corrected_temporal_differences'].values()) <= 5e-6,
+            'fine-grid time-step difference exceeds the stability verification limit')
 
 
 def audit_provenance() -> None:
@@ -204,10 +266,11 @@ def audit_formulation_consistency() -> None:
     with (ROOT / "validation/implicit_poroplastic_feedback.csv").open() as stream:
         final = list(csv.DictReader(stream))[-1]
     prose = (ROOT / "paper/sections/poroplastic_results.tex").read_text()
-    for value in (f"B={float(final['B']):.5f}",
-                  f"a^p={float(final['a_p']):.5f}",
-                  f"a^p={float(final['a_p_reference']):.5f}"):
-        require(value in prose, f"manuscript feedback value differs from rerun: {value}")
+    require(float(final['B']) > float(final['B_virgin']) and
+            float(final['a_p']) < float(final['a_p_reference']),
+            'publication feedback does not support the stated restraint of dilation')
+    require(r"c_0=20\ \mathrm{MPa}" in prose and r"H=100\ \mathrm{MPa}" in prose,
+            'material-point manuscript parameters disagree with publication runs')
     domain = json.loads((ROOT / "validation/poroplastic_domain_checks.json").read_text())
     require(len(domain) == 1 and domain[0]["mean_stress_at_apex"] < 0
             and domain[0]["outcome"] == "rejected_outside_smooth_cone",
@@ -225,7 +288,9 @@ def audit_manuscript() -> None:
         "figures/mandel_pressure_profiles.pgf",
         "figures/mandel_displacements.pgf",
         "figures/mandel_finite_deformation.pgf",
-        "figures/mandel_normalized_biot_contours.pgf"
+        "figures/mandel_normalized_biot_contours.pgf",
+        "figures/poroplastic_mandel_biot_ratio.pgf",
+        "figures/poroplastic_mandel_history.pgf"
     ]
     for name in required:
         require((ROOT / name).is_file(), f"missing manuscript resource: {name}")
@@ -244,6 +309,8 @@ def main() -> int:
         audit_curated_data,
         audit_finite_deformation_results,
         audit_implicit_poroplastic_results,
+        audit_poroplastic_mandel_results,
+        audit_poroplastic_spatial_stability,
         audit_provenance,
         audit_formulation_consistency,
         audit_manuscript

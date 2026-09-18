@@ -3,7 +3,6 @@
   "description": "Paths belonging to the public nonlinear-Biot paper and reproducibility repository.",
   "paths": [
     ".latexmkrc",
-    ".vscode",
     "AGENTS.md",
     "VISION.md",
     "README.md",
@@ -21,6 +20,14 @@
     "provenance",
     "agent_environment",
     "agent_workflows",
-    "tools"
+    "tools",
+    "docs",
+    ".devcontainer",
+    ".github/workflows",
+    ".gitmodules",
+    ".agent/shared",
+    "agent-profile.json",
+    "licenses",
+    "LICENSE"
   ]
 }

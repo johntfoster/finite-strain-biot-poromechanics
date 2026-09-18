@@ -135,7 +135,7 @@
           <span class="desc">The PETSc Jacobian-tester deck that verifies the outer automatic-differentiation Jacobian against finite differences.</span>
         </li>
         <li>
-          <a href="../moose_app/test/tests/mandel_implicit_biot/tests">tests</a>
+          <a href="source.html?f=moose_app/test/tests/mandel_implicit_biot/tests">tests</a>
           <span class="desc">The MOOSE test specification (<code>smoke</code>, <code>bdf2</code>, <code>verification</code>, <code>jacobian</code>) with the acceptance requirements.</span>
         </li>
       </ul>
@@ -179,8 +179,14 @@
       </figure>
       <figure>
         <img src="assets/img/mandel_normalized_biot_contours.png" alt="Mandel normalized Biot coefficient contours">
-        <figcaption>Two-dimensional normalized Biot-coefficient (B/B<sub>0</sub>) snapshot from the finite-deformation continuation.</figcaption>
+        <figcaption>Normalized Biot coefficient B/B<sub>0</sub> at 0.04, 0.10, 0.20, 0.30, 0.50, and 0.70 s. The times, colors, and panel sizes match the plastic calculation.</figcaption>
       </figure>
+      <p>In the drained elastic limit, the matched logarithmic laws give
+        B = 1 − 0.4 J<sup>−5/9</sup>. Compression (J &lt; 1) therefore lowers B
+        below its initial value 0.6: the porous body contracts more than the mineral,
+        increasing the solid volume fraction. Positive pore pressure temporarily
+        opposes this decrease; drainage removes that contribution while axial
+        compression remains imposed. The elastic change is reversible on unloading.</p>
       <figure>
         <img src="assets/img/mandel_finite_deformation.png" alt="Mandel finite-deformation Biot departure">
         <figcaption>Departure of the finite-deformation Biot coefficient from its reference value.</figcaption>
@@ -195,11 +201,11 @@
         The matched logarithmic laws recover classical single-mineral storage at the reference state.</p>
       <ul class="file-list">
         <li><a href="source.html?f=../validation/mandel_implicit_biot.yml">mandel_implicit_biot.yml</a><span class="desc">Curated verification summary (tolerances, metrics, gates).</span></li>
-        <li><a href="../validation/mandel_pressure_profiles.csv">mandel_pressure_profiles.csv</a><span class="desc">Analytical-vs-computed pressure profiles.</span></li>
-        <li><a href="../validation/mandel_displacement_profiles.csv">mandel_displacement_profiles.csv</a><span class="desc">Analytical-vs-computed displacement profiles.</span></li>
-        <li><a href="../validation/mandel_large_deformation.csv">mandel_large_deformation.csv</a><span class="desc">Finite-deformation continuation data.</span></li>
-        <li><a href="../validation/mandel_biot_contours.csv">mandel_biot_contours.csv</a><span class="desc">Biot-coefficient field snapshots.</span></li>
-        <li><a href="../validation/mandel_density_contours.csv">mandel_density_contours.csv</a><span class="desc">Solid intrinsic-density field snapshots.</span></li>
+        <li><a href="source.html?f=validation/mandel_pressure_profiles.csv">mandel_pressure_profiles.csv</a><span class="desc">Analytical-vs-computed pressure profiles.</span></li>
+        <li><a href="source.html?f=validation/mandel_displacement_profiles.csv">mandel_displacement_profiles.csv</a><span class="desc">Analytical-vs-computed displacement profiles.</span></li>
+        <li><a href="source.html?f=validation/mandel_large_deformation.csv">mandel_large_deformation.csv</a><span class="desc">Finite-deformation continuation data.</span></li>
+        <li><a href="source.html?f=validation/mandel_biot_contours.csv">mandel_biot_contours.csv</a><span class="desc">Biot-coefficient field snapshots.</span></li>
+        <li><a href="source.html?f=validation/mandel_density_contours.csv">mandel_density_contours.csv</a><span class="desc">Solid intrinsic-density field snapshots.</span></li>
       </ul>
     </section>
 

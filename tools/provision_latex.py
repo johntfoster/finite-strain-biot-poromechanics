@@ -14,20 +14,20 @@ def run(argv: list[str]) -> None:
 
 
 def main() -> int:
-    if shutil.which("pdflatex") and shutil.which("bibtex"):
+    if all(shutil.which(name) for name in ("lualatex", "latexmk", "bibtex")):
         print("LaTeX toolchain already available")
         return 0
     system = platform.system()
     if system == "Linux" and shutil.which("apt-get"):
         prefix = [] if getattr(__import__("os"), "geteuid", lambda: 1)() == 0 else ["sudo"]
         run([*prefix, "apt-get", "update"])
-        run([*prefix, "apt-get", "install", "-y", "texlive-latex-extra", "texlive-bibtex-extra", "texlive-fonts-recommended"])
+        run([*prefix, "apt-get", "install", "-y", "latexmk", "texlive-luatex", "texlive-latex-extra", "texlive-bibtex-extra", "texlive-fonts-recommended"])
     elif system == "Darwin" and shutil.which("brew"):
         run(["brew", "install", "--cask", "mactex-no-gui"])
     elif system == "Windows" and shutil.which("winget"):
         run(["winget", "install", "--id", "MiKTeX.MiKTeX", "--exact"])
     else:
-        print("no supported package manager found; install pdflatex and bibtex", file=sys.stderr)
+        print("no supported package manager found; install lualatex, latexmk, and bibtex", file=sys.stderr)
         return 2
     return 0
 

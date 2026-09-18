@@ -26,7 +26,7 @@ def main() -> int:
     parser.add_argument("profile", choices=["manuscript", "research", "publication", "moose"])
     profile = parser.parse_args().profile
     if profile == "manuscript":
-        return 0 if all(shutil.which(name) for name in ("pdflatex", "bibtex")) else 1
+        return 0 if all(shutil.which(name) for name in ("lualatex", "latexmk", "bibtex")) else 1
     if profile == "research":
         return 0 if module_in(profile, "pypdf") else 1
     if profile == "publication":

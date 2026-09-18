@@ -19,7 +19,7 @@ except ImportError:
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_TIMES = (0.0, 0.046, 0.094, 0.206, 0.398, 0.702)
+DEFAULT_TIMES = (0.04, 0.1, 0.2, 0.3, 0.5, 0.7)
 SKELETON_TO_MINERAL_BULK_MODULUS_RATIO = 0.4
 
 

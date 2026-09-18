@@ -1,0 +1,4 @@
+# csv.writer emits RFC 4180 CRLF records; preserve bytes for provenance hashes.
+*.csv -text whitespace=cr-at-eol
+# Matplotlib emits trailing spaces in generated PGF comment headers.
+*.pgf whitespace=-blank-at-eol

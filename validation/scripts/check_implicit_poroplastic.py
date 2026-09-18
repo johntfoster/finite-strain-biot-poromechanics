@@ -2,12 +2,13 @@
 """Independently verify the implicit poroplastic constitutive state in MOOSE.
 
 Raw runs remain under .agent-runtime. Publication data are written only with
---curate, after all physical acceptance checks pass.
+--curate, after all constitutive verification checks pass.
 """
 
 import argparse
 import csv
 import json
+from functools import partial
 import subprocess
 from pathlib import Path
 
@@ -47,7 +48,8 @@ def energy(Fe, pressure):
     )
 
 
-def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotation=0.0):
+def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotation=0.0,
+          hardening=0.0, cohesion=0.0):
     worst = dict(
         mass=0.0,
         eos=0.0,
@@ -56,8 +58,10 @@ def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotatio
         yield_residual=0.0,
         stress=0.0,
         determinant=0.0,
+        accumulated=0.0,
     )
     Fpold = np.eye(3)
+    accumulated = 0.0
     for row in rows:
         if not all(np.isfinite(value) for value in row.values()):
             raise AssertionError("Nonfinite constitutive output")
@@ -75,6 +79,10 @@ def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotatio
         Fe = F @ np.linalg.inv(Fp)
         Je, ap = np.linalg.det(Fe), np.linalg.det(Fp)
         gamma = row["dgamma_avg"]
+        accumulated += gamma
+        if 'accumulated_avg' in row:
+            worst['accumulated'] = max(worst['accumulated'],
+                abs(row['accumulated_avg'] - accumulated))
         ratio = row["density"]
         worst["mass"] = max(
             worst["mass"], abs(J * row["solid_fraction"] * ratio / PHI0 - 1)
@@ -114,7 +122,7 @@ def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotatio
         worst["determinant"] = max(
             worst["determinant"], abs(np.log(ap / np.linalg.det(Fpold)) - BETA * gamma)
         )
-        residual = (q - M * mean) / G
+        residual = (q - M * mean - cohesion - hardening * accumulated) / G
         worst["yield_residual"] = max(
             worst["yield_residual"],
             abs(residual) if gamma > 1e-10 else max(residual, 0.0),
@@ -143,6 +151,7 @@ def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotatio
         yield_residual=1e-9,
         stress=2e-7,
         determinant=1e-9,
+        accumulated=1e-10,
     )
     for name, value in worst.items():
         if value > limits[name]:
@@ -161,8 +170,14 @@ def run(
     out_of_plane=1.0,
     monotonic=False,
     rotation=0.0,
+    hardening=0.0,
+    cohesion=0.0,
 ):
     text = DECK.read_text()
+    text = text.replace('dp_cohesion = 0.0',
+                        f'dp_cohesion = {cohesion:.16g}\n'
+                        f'    dp_hardening_modulus = {hardening:.16g}\n'
+                        f'    use_elastic_coefficient_in_trial = {str(reference).lower()}')
     if pressure:
         text = text.replace(
             "[Functions]\n",
@@ -189,11 +204,6 @@ def run(
             "type = ADConstantDeformationGradientMaterial",
             f"type = ADConstantDeformationGradientMaterial\n    rotation_angle = {rotation:.16g}",
         )
-    if reference:
-        text = text.replace(
-            "dp_cohesion = 0.0",
-            "dp_cohesion = 0.0\n    use_elastic_coefficient_in_trial = true",
-        )
     text = text.replace("csv = true", "csv = true\n  console = false")
     deck = directory / (name + ".i")
     deck.write_text(text)
@@ -212,7 +222,7 @@ def run(
 
 def write_csv(path, rows):
     with path.open("w", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -221,12 +231,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--quick", action="store_true")
     parser.add_argument("--curate", action="store_true")
+    parser.add_argument("--publication", action="store_true",
+                        help="Use c0=20 MPa and H=100 MPa, matching the coupled example")
     parser.add_argument("--output-dir", type=Path, default=ROOT / ".agent-runtime/implicit_poroplastic")
     args = parser.parse_args()
     directory = args.output_dir.resolve()
     directory.mkdir(parents=True, exist_ok=True)
-    rows = run(directory, "history")
-    report = {"history": check(rows)}
+    publication = args.publication or args.curate
+    parameters = dict(cohesion=2.e7 if publication else 0.,
+                      hardening=1.e8 if publication else 0.)
+    run_case = partial(run, **parameters)
+    check_case = partial(check, **parameters)
+    rows = run_case(directory, "history")
+    report = {"history": check_case(rows)}
     peak = next(r for r in rows if abs(r["time"] - 1) < 1e-8)
     unload = [r for r in rows if 1.0 + 1e-8 < r["time"] <= 2.0 + 1e-8]
     if (
@@ -240,13 +257,13 @@ def main():
         raise AssertionError(
             "Reload beyond the previous peak must activate plastic flow"
         )
-    nonaxis = run(
+    nonaxis = run_case(
         directory, "nonaxis", pressure=1e8, end=1.0, transverse=1.02, out_of_plane=0.98
     )
-    report["nonaxisymmetric"] = check(
+    report["nonaxisymmetric"] = check_case(
         nonaxis, pressure=1e8, transverse=1.02, out_of_plane=0.98
     )
-    rotated = run(
+    rotated = run_case(
         directory,
         "rotated",
         pressure=1e8,
@@ -255,7 +272,7 @@ def main():
         out_of_plane=0.98,
         rotation=0.4,
     )
-    report["rotated"] = check(
+    report["rotated"] = check_case(
         rotated, pressure=1e8, transverse=1.02, out_of_plane=0.98, rotation=0.4
     )
     rotation = np.array(
@@ -281,8 +298,8 @@ def main():
     if not args.quick:
         refined = []
         for dt in [0.01, 0.005]:
-            rr = run(directory, "history_" + str(dt), dt=dt)
-            report["history_" + str(dt)] = check(rr, dt=dt)
+            rr = run_case(directory, "history_" + str(dt), dt=dt)
+            report["history_" + str(dt)] = check_case(rr, dt=dt)
             refined.append(rr)
         differences = [
             abs(refined[0][-1]["a_p_avg"] - rows[-1]["a_p_avg"]),
@@ -296,7 +313,7 @@ def main():
         # A changing principal stress direction supplies a nontrivial increment study.
         nonaxis_refined = []
         for dt in [0.01, 0.005]:
-            rr = run(
+            rr = run_case(
                 directory,
                 "nonaxis_" + str(dt),
                 pressure=1e8,
@@ -305,7 +322,7 @@ def main():
                 transverse=1.02,
                 out_of_plane=0.98,
             )
-            report["nonaxis_" + str(dt)] = check(
+            report["nonaxis_" + str(dt)] = check_case(
                 rr, pressure=1e8, transverse=1.02, out_of_plane=0.98
             )
             nonaxis_refined.append(rr)
@@ -317,10 +334,10 @@ def main():
             raise AssertionError(f"Nonaxisymmetric refinement failed: {differences}")
         report["nonaxisymmetric_refinement_differences"] = differences
         for p in [0.0, 0.5e8, 1e8, 2e8, 4e8]:
-            coupled = run(
+            coupled = run_case(
                 directory, f"pressure_{p:g}", pressure=p, end=1.0, monotonic=True
             )
-            reference = run(
+            reference = run_case(
                 directory,
                 f"reference_{p:g}",
                 pressure=p,
@@ -328,7 +345,7 @@ def main():
                 monotonic=True,
                 reference=True,
             )
-            report[f"pressure_{p:g}"] = check(coupled, pressure=p)
+            report[f"pressure_{p:g}"] = check_case(coupled, pressure=p)
             cp, rf = coupled[-1], reference[-1]
             if p == 0 and abs(cp["a_p_avg"] - rf["a_p_avg"]) > 1e-12:
                 raise AssertionError("Pressure-free feedback comparison must coincide")
@@ -348,6 +365,9 @@ def main():
         if args.curate:
             write_csv(ROOT / "validation/implicit_poroplastic_history.csv", rows)
             write_csv(ROOT / "validation/implicit_poroplastic_feedback.csv", feedback)
+    report["parameters"] = dict(K=K, Ks=KS, G=G, phi_s0=PHI0, M=M, beta=BETA,
+                                cohesion_Pa=parameters['cohesion'],
+                                hardening_modulus_Pa=parameters['hardening'])
     report["accepted"] = True
     report["scope"] = (
         "material state, fixed-current-plastic-state Biot derivative, return consistency; separate PETSc test checks active outer AD"
