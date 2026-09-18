@@ -2,6 +2,7 @@
 import importlib.util
 from pathlib import Path
 import tempfile
+import subprocess
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -31,6 +32,16 @@ class SiteTests(unittest.TestCase):
         for pattern in ('moose_app/test/tests/**/*.i', 'moose_app/include/**/*.h'):
             for path in ROOT.glob(pattern):
                 self.assertIn(path.relative_to(ROOT).as_posix(), catalog)
+
+    def test_missing_markdown_example_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(['git', 'init', '-q', str(root)], check=True)
+            (root/'README.md').write_text('[Example](missing.i)')
+            with self.assertRaisesRegex(ValueError, 'broken Markdown link'):
+                site.check_markdown_links(root)
+            (root/'missing.i').touch()
+            self.assertEqual(site.check_markdown_links(root), 1)
 
     def test_stale_packaged_source_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:

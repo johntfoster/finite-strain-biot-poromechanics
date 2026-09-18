@@ -1,4 +1,4 @@
-# Spatial mass balances and nonlinear Biot coefficient
+# A closed-form Biot coefficient for finite-deformation poroplasticity
 
 This repository contains the manuscript, minimal MOOSE application, validation
 data, and agent workflow for computing a finite-deformation Biot coefficient
@@ -6,7 +6,7 @@ from matched logarithmic skeleton and mineral stress laws. Implicit
 differentiation gives a closed-form coefficient in terms of the current states.
 An implicit poroplastic material retains active history and pressure coupling.
 The closed-form derivation, verification results, and benchmark parameter
-adjustments are recorded in [the formulation consistency report](validation/formulation_consistency_2026-09-14.md).
+adjustments are recorded in [the verification index](validation/README.md).
 
 The physical specialization contains one deformable solid and one water phase.
 The global fields are Q2 displacement, continuous Q1 water pressure, and Q2
@@ -40,8 +40,10 @@ to regenerate their independent checks and data.
 opens the checked-in development container. Select an 8-core machine with
 64 GB storage or larger. The first setup downloads the pinned MOOSE framework
 and Conda packages, installs the plotting and LaTeX dependencies, and builds
-the application and paper. Wait for the post-create command to finish. Initial
-compilation can take tens of minutes. Codespaces usage is charged under your
+the application and paper with four build jobs. The editor opens while setup
+runs; follow `tail -f .agent-runtime/codespace-setup.log` and wait for the
+`Ready` message before running examples. Initial compilation can take tens of
+minutes. Local builds default to one job; `BUILD_JOBS` overrides that count. Codespaces usage is charged under your
 GitHub plan; stop the Codespace when finished.
 
 ```sh

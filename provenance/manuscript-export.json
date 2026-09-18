@@ -28,6 +28,10 @@
     ".agent/shared",
     "agent-profile.json",
     "licenses",
-    "LICENSE"
+    "LICENSE",
+    ".gitattributes",
+    ".gitignore",
+    ".githooks",
+    "research-dependencies.yml"
   ]
 }

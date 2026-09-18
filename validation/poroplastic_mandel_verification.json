@@ -62,7 +62,7 @@
     [
       "mpiexec",
       "-n",
-      "4",
+      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -78,7 +78,7 @@
     [
       "mpiexec",
       "-n",
-      "4",
+      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -94,7 +94,7 @@
     [
       "mpiexec",
       "-n",
-      "4",
+      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -110,7 +110,7 @@
     [
       "mpiexec",
       "-n",
-      "4",
+      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -126,7 +126,7 @@
     [
       "mpiexec",
       "-n",
-      "4",
+      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -167,47 +167,47 @@
       "off"
     ]
   ],
-  "created_utc": "2026-09-18T01:03:57.685770+00:00",
+  "created_utc": "2026-09-18T14:40:40.423893+00:00",
   "mass": {
     "temporal_coarse": {
-      "max_relative_mass_defect": 0.00478435531501893,
-      "max_relative_reaction_mass_defect": 0.001777025826346779,
-      "final_relative_mass_defect": 0.00478435531501893,
-      "max_relative_chain_rule_defect": 0.0017770258265346064,
-      "solid_mass_l2": 0.00017374740736854,
-      "mineral_eos_l2": 4.4054203749679e-17
+      "max_relative_mass_defect": 0.004784355315018685,
+      "max_relative_reaction_mass_defect": 0.0017770258263466456,
+      "final_relative_mass_defect": 0.004784355315018685,
+      "max_relative_chain_rule_defect": 0.00177702582653434,
+      "solid_mass_l2": 0.00017374740736855,
+      "mineral_eos_l2": 4.2916519390956e-17
     },
     "spatial_coarse": {
-      "max_relative_mass_defect": 0.012086298961710831,
-      "max_relative_reaction_mass_defect": 0.000890265897215259,
-      "final_relative_mass_defect": 0.012086298961710831,
-      "max_relative_chain_rule_defect": 0.000890265898284315,
-      "solid_mass_l2": 8.680902432304e-05,
-      "mineral_eos_l2": 4.3891123767968e-17
+      "max_relative_mass_defect": 0.012086298961710297,
+      "max_relative_reaction_mass_defect": 0.0008902658972156364,
+      "final_relative_mass_defect": 0.012086298961710297,
+      "max_relative_chain_rule_defect": 0.0008902658982853363,
+      "solid_mass_l2": 8.6809024323019e-05,
+      "mineral_eos_l2": 4.7794880056672e-17
     },
     "fine": {
-      "max_relative_mass_defect": 0.005719762044383892,
-      "max_relative_reaction_mass_defect": 0.0008894966300280195,
-      "final_relative_mass_defect": 0.005719762044383892,
-      "max_relative_chain_rule_defect": 0.0008894966301625119,
-      "solid_mass_l2": 8.6757337643352e-05,
-      "mineral_eos_l2": 4.2434708286262e-17
+      "max_relative_mass_defect": 0.005719762044383781,
+      "max_relative_reaction_mass_defect": 0.000889496630028286,
+      "final_relative_mass_defect": 0.005719762044383781,
+      "max_relative_chain_rule_defect": 0.0008894966301613352,
+      "solid_mass_l2": 8.6757337643386e-05,
+      "mineral_eos_l2": 4.3442251979736e-17
     },
     "temporal_fine": {
-      "max_relative_mass_defect": 0.006188576625957422,
-      "max_relative_reaction_mass_defect": 0.00044509239626806536,
-      "final_relative_mass_defect": 0.006188576625957422,
-      "max_relative_chain_rule_defect": 0.0004450923984147926,
-      "solid_mass_l2": 4.3354043720347e-05,
-      "mineral_eos_l2": 4.4813891415767e-17
+      "max_relative_mass_defect": 0.006188576625957022,
+      "max_relative_reaction_mass_defect": 0.0004450923962690424,
+      "final_relative_mass_defect": 0.006188576625957022,
+      "max_relative_chain_rule_defect": 0.0004450923984161471,
+      "solid_mass_l2": 4.3354043720351e-05,
+      "mineral_eos_l2": 4.4021443139087e-17
     },
     "spatial_fine": {
-      "max_relative_mass_defect": 0.00290576391963755,
-      "max_relative_reaction_mass_defect": 0.00044498919420101764,
-      "final_relative_mass_defect": 0.00290576391963755,
-      "max_relative_chain_rule_defect": 0.00044498919420501445,
-      "solid_mass_l2": 4.3347477130545e-05,
-      "mineral_eos_l2": 4.1629330462419e-17
+      "max_relative_mass_defect": 0.002905763919637772,
+      "max_relative_reaction_mass_defect": 0.000444989194200729,
+      "final_relative_mass_defect": 0.002905763919637772,
+      "max_relative_chain_rule_defect": 0.00044498919420465915,
+      "solid_mass_l2": 4.3347477130541e-05,
+      "mineral_eos_l2": 4.1631129880564e-17
     }
   },
   "elastic_limit": {
@@ -237,11 +237,11 @@
       "pressure_x0": 3.300664418400079e-05,
       "side_displacement": 3.571784338000927e-05,
       "biot_average": 1.2645312459924618e-05,
-      "delta_b_average": 1.546444049200027e-06,
+      "delta_b_average": 1.5464440492997736e-06,
       "ap_average": 1.0825058899932571e-05
     },
     "mesh_20x2_to_40x4": {
-      "pressure_x0": 8.414507888998837e-06,
+      "pressure_x0": 8.414507888000458e-06,
       "side_displacement": 9.006965559998914e-06,
       "biot_average": 3.1873243099278525e-06,
       "delta_b_average": 3.9006967279993365e-07,
@@ -262,30 +262,30 @@
   "spatial_structure": {
     "temporal_fine": {
       "delta_b": {
-        "maximum_transverse_rms": 3.70503764356399e-16,
-        "final_x_second_difference_rms": 4.063494723772068e-06
+        "maximum_transverse_rms": 3.6801946566669954e-16,
+        "final_x_second_difference_rms": 4.063494723730016e-06
       },
       "ap": {
-        "maximum_transverse_rms": 2.00977967791608e-15,
-        "final_x_second_difference_rms": 2.762150568984899e-05
+        "maximum_transverse_rms": 1.9916051915639303e-15,
+        "final_x_second_difference_rms": 2.7621505689762846e-05
       },
       "gamma": {
-        "maximum_transverse_rms": 5.1580024907228294e-15,
-        "final_x_second_difference_rms": 1.9484189531106568e-07
+        "maximum_transverse_rms": 5.13739634004502e-15,
+        "final_x_second_difference_rms": 1.9484189529143482e-07
       }
     },
     "spatial_fine": {
       "delta_b": {
-        "maximum_transverse_rms": 2.377487413286511e-16,
-        "final_x_second_difference_rms": 1.1488789496467663e-06
+        "maximum_transverse_rms": 2.1717012826175793e-16,
+        "final_x_second_difference_rms": 1.1488789496615377e-06
       },
       "ap": {
-        "maximum_transverse_rms": 1.4307454068737404e-15,
-        "final_x_second_difference_rms": 7.767413081819432e-06
+        "maximum_transverse_rms": 1.3460738804684947e-15,
+        "final_x_second_difference_rms": 7.7674130819014e-06
       },
       "gamma": {
-        "maximum_transverse_rms": 7.098576311294798e-16,
-        "final_x_second_difference_rms": 4.897570505447413e-08
+        "maximum_transverse_rms": 7.03742031356536e-16,
+        "final_x_second_difference_rms": 4.8975705084239885e-08
       }
     }
   },
@@ -320,80 +320,80 @@
     "definition": "difference between piecewise-constant element averages on the common reference domain",
     "mesh_20x2_to_40x4": {
       "0.04": {
-        "rms": 6.054266085848453e-06,
-        "maximum": 1.0417975091443277e-05
+        "rms": 6.05426608584951e-06,
+        "maximum": 1.0417975091518141e-05
       },
       "0.1": {
-        "rms": 7.195555468341859e-06,
-        "maximum": 2.3813448499498957e-05
+        "rms": 7.195555468345793e-06,
+        "maximum": 2.3813448499599137e-05
       },
       "0.2": {
-        "rms": 2.5415842778547867e-05,
-        "maximum": 6.3509324400194e-05
+        "rms": 2.5415842778553755e-05,
+        "maximum": 6.350932440030675e-05
       },
       "0.3": {
-        "rms": 1.8258981326932197e-05,
-        "maximum": 3.385369475464653e-05
+        "rms": 1.8258981326946228e-05,
+        "maximum": 3.3853694754539844e-05
       },
       "0.5": {
-        "rms": 1.1858466433116657e-05,
-        "maximum": 2.3478782126724884e-05
+        "rms": 1.1858466433125992e-05,
+        "maximum": 2.3478782126494166e-05
       },
       "0.7": {
-        "rms": 8.2474455700273e-06,
-        "maximum": 1.840399851528885e-05
+        "rms": 8.247445570042673e-06,
+        "maximum": 1.8403998515232473e-05
       }
     },
     "time_001_to_0005": {
       "0.04": {
-        "rms": 4.468615624295795e-06,
-        "maximum": 8.558246226853504e-06
+        "rms": 4.468615624297693e-06,
+        "maximum": 8.558246226800595e-06
       },
       "0.1": {
-        "rms": 8.286381891806611e-06,
-        "maximum": 1.1909293031504495e-05
+        "rms": 8.28638189180689e-06,
+        "maximum": 1.1909293031557838e-05
       },
       "0.2": {
-        "rms": 1.304536427509522e-05,
-        "maximum": 1.5211706530009195e-05
+        "rms": 1.3045364275110777e-05,
+        "maximum": 1.5211706530088992e-05
       },
       "0.3": {
-        "rms": 8.288230575641841e-06,
-        "maximum": 1.2056118878572657e-05
+        "rms": 8.288230575633388e-06,
+        "maximum": 1.2056118878622096e-05
       },
       "0.5": {
-        "rms": 3.64942356125661e-06,
-        "maximum": 4.6348985571582554e-06
+        "rms": 3.6494235612508543e-06,
+        "maximum": 4.6348985572302465e-06
       },
       "0.7": {
-        "rms": 1.659169335154879e-06,
-        "maximum": 1.9582138393809193e-06
+        "rms": 1.6591693351687825e-06,
+        "maximum": 1.958213839538779e-06
       }
     },
     "time_0005_to_00025": {
       "0.04": {
-        "rms": 2.281328137970815e-06,
-        "maximum": 4.469922467978903e-06
+        "rms": 2.2813281379631124e-06,
+        "maximum": 4.469922467985408e-06
       },
       "0.1": {
-        "rms": 4.182030085423473e-06,
-        "maximum": 6.034710810141897e-06
+        "rms": 4.18203008544087e-06,
+        "maximum": 6.034710810202612e-06
       },
       "0.2": {
-        "rms": 6.554961144969318e-06,
-        "maximum": 7.66639315840506e-06
+        "rms": 6.5549611449647845e-06,
+        "maximum": 7.666393158294905e-06
       },
       "0.3": {
-        "rms": 4.143907080589944e-06,
-        "maximum": 6.040082453933997e-06
+        "rms": 4.143907080608741e-06,
+        "maximum": 6.040082453983436e-06
       },
       "0.5": {
-        "rms": 1.8032839505475293e-06,
-        "maximum": 2.2725040972971025e-06
+        "rms": 1.803283950536479e-06,
+        "maximum": 2.2725040975538416e-06
       },
       "0.7": {
-        "rms": 8.176635913295458e-07,
-        "maximum": 1.054475708925709e-06
+        "rms": 8.176635912799625e-07,
+        "maximum": 1.0544757086229997e-06
       }
     }
   },

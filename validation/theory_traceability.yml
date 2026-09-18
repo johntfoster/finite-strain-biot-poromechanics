@@ -96,4 +96,4 @@ classification:
   - coupled_plastic_history
   - coupled_plastic_field
   independent_physical_validation: []
-legacy_audit: validation/manuscript_constitutive_audit_2026-09-08.md
+verification_index: validation/README.md

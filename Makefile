@@ -1,5 +1,6 @@
 PYTHON ?= python3
 LATEXMK ?= latexmk
+BUILD_JOBS ?= 1
 export TEXMFVAR := $(CURDIR)/.agent-runtime/tex-cache/var
 export TEXMFCACHE := $(CURDIR)/.agent-runtime/tex-cache/cache
 export MPLCONFIGDIR := $(CURDIR)/.agent-runtime/matplotlib
@@ -20,7 +21,7 @@ sync-push:
 	tools/sync_biot_moose.py push
 
 build:
-	$(MOOSE_ENV) run -- $(MAKE) -C moose_app -j1
+	$(MOOSE_ENV) run -- $(MAKE) -C moose_app -j$(BUILD_JOBS)
 
 test: build
 	cd moose_app && ../$(MOOSE_ENV) run -- $(PYTHON) \

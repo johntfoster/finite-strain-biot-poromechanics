@@ -12,6 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "validation/provenance.yml"
 
 FILES = [
+    ".devcontainer/Dockerfile",
+    ".devcontainer/devcontainer.json",
+    ".devcontainer/post-create.sh",
+    ".github/workflows/pages.yml",
+    "tools/setup_reproduction.sh",
+    "scripts/build_site.py",
     "validation/poroplastic_mandel_numerical_notes.md",
     "validation/poroplastic_spatial_stability.md",
     "validation/poroplastic_spatial_stability.json",
@@ -37,7 +43,7 @@ FILES = [
     "docs/assets/img/poroplastic_mandel_biot_ratio.png",
     "docs/assets/img/poroplastic_mandel_history.png",
     "scripts/reproduce_mandel_publication.py",
-    "validation/formulation_consistency_2026-09-14.md",
+    "validation/README.md",
     "validation/poroplastic_domain_checks.json",
     "validation/scripts/check_stress_trace_derivation.py",
     "validation/scripts/check_stress_trace_biot_fraction.py",
@@ -55,7 +61,6 @@ FILES = [
     "validation/equation_to_moose_map.yml",
     "validation/theory_traceability.yml",
     "validation/acceptance.yml",
-    "validation/manuscript_constitutive_audit_2026-09-08.md",
     "references/notes/manuscript_reference_audit_2026-09-08.md",
     "paper/sections/poroplastic_results.tex",
     "paper/sections/mandel_analytical_appendix.tex",
@@ -152,7 +157,12 @@ def main() -> int:
             "moose_libmesh": "2026.02.18_f8a1758",
             "moose_tools": "2026.02.16",
             "petsc": "3.24.4",
-            "pandas": "3.0.1"
+            "pandas": "3.0.1",
+            "numpy": "2.4.2",
+            "scipy": "1.17.1",
+            "sympy": "1.14.0",
+            "matplotlib": "3.10.8",
+            "pyyaml": "6.0.3"
         },
         "commands": {
             "reproduce": "make reproduce",
@@ -160,6 +170,10 @@ def main() -> int:
             "tests": "make test",
             "derivation": "make derivation",
             "plastic": "make plastic",
+            "plastic_flow": "make plastic-flow",
+            "stability": "make stability",
+            "setup": "make setup",
+            "site": "make site",
             "mandel": "make mandel",
             "figures": "make figures",
             "paper": "make paper",

@@ -42,19 +42,25 @@ if not record.get('accepted') or record['parameters']['hardening_modulus_Pa'] !=
     raise ValueError('Publication figures require verified isotropic-hardening results')
 history = read("implicit_poroplastic_history.csv")
 fig, axes = plt.subplots(1, 2, figsize=(6.4, 2.7))
-for lo, hi, label, color in [
-    (0, 1, "loading", "#356e9d"),
-    (1, 2, "unloading", "#c57a26"),
-    (2, 3, "reloading", "#3c8b68"),
+for lo, hi, label, color, linestyle in [
+    (0, 1, "loading", "#356e9d", "-"),
+    (1, 2, "unloading", "#c57a26", "-"),
+    (2, 3, "reloading", "#3c8b68", "--"),
 ]:
     rows = [r for r in history if lo - 1e-8 <= r["time"] <= hi + 1e-8]
     axes[0].plot(
         [1 - r["compression"] for r in rows],
         [r["b_avg"] for r in rows],
         color=color,
+        linestyle=linestyle,
         label=label,
     )
-    axes[1].plot([r["time"] for r in rows], [r["a_p_avg"] for r in rows], color=color)
+    axes[1].plot(
+        [r["time"] for r in rows],
+        [r["a_p_avg"] for r in rows],
+        color=color,
+        linestyle=linestyle,
+    )
 virgin = sorted(history, key=lambda r: 1 - r["compression"])
 axes[0].plot(
     [1 - r["compression"] for r in virgin],

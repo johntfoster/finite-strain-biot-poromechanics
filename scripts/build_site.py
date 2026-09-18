@@ -7,6 +7,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 import re
 import shutil
+import subprocess
 from urllib.parse import parse_qs, unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -65,6 +66,9 @@ def examples_catalog():
         if test.is_file():
             links.append(source_link(test, 'test specification'))
         sections.append(f'<li>{source_link(deck)}<br>'+ ' · '.join(links)+'</li>')
+    sections.append('</ul></section><section class="section"><h2>Verification and figure scripts</h2><ul>')
+    for folder in ('scripts', 'validation/scripts'):
+        sections += [f'<li>{source_link(p)}</li>' for p in sorted((ROOT/folder).glob('*.py'))]
     sections.append('</ul></section>')
     return '\n'.join(sections)
 
@@ -94,7 +98,28 @@ def check_links(site, sources=False):
     return count
 
 
+def check_markdown_links(root=ROOT):
+    paths = subprocess.check_output(
+        ['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z', '*.md'],
+        cwd=root, text=True).split('\0')
+    count = 0
+    for name in set(paths) - {''}:
+        page = root/name
+        if not page.is_file():
+            continue
+        for link in re.findall(r'\[[^\]]*\]\(([^)]+)\)', page.read_text()):
+            parsed = urlsplit(link)
+            if parsed.scheme or parsed.netloc or not parsed.path:
+                continue
+            target = (page.parent/unquote(parsed.path)).resolve()
+            if not target.is_relative_to(root.resolve()) or not target.exists():
+                raise ValueError(f'{name}: broken Markdown link {link}')
+            count += 1
+    return count
+
+
 def build():
+    markdown_count = check_markdown_links()
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     shutil.copytree(ROOT/'docs', OUTPUT)
@@ -118,11 +143,27 @@ def build():
     shutil.copy2(ROOT/'moose_app/src/main.C', default)
     (OUTPUT/'.nojekyll').touch()
     count = check_links(OUTPUT, sources=True)
+    local_objects = {p.stem for p in (ROOT/'moose_app/src').rglob('*.C')}
+    all_selected = set()
+    for deck in (ROOT/'moose_app/test/tests').rglob('*.i'):
+        all_selected.update(re.findall(r'^\s*type\s*=\s*(\w+)', deck.read_text(), re.M))
+    unused = local_objects - all_selected - {'main', 'NonlinearBiotADApp'}
+    if unused:
+        raise ValueError(f'Application objects lack a retained input: {sorted(unused)}')
+    selected = set()
+    for deck in (ROOT/'moose_app/test/tests/mandel_implicit_biot').glob('*.i'):
+        selected.update(re.findall(r'^\s*type\s*=\s*(\w+)', deck.read_text(), re.M))
+    documented = set(re.findall(r'moose_app/src/[^"?]+/(\w+)\.C',
+                                (OUTPUT/'mandel.html').read_text()))
+    expected = (selected & local_objects) | {'NonlinearBiotADApp'}
+    if documented != expected:
+        raise ValueError(f'Mandel object links disagree with inputs: {documented ^ expected}')
     catalog_text = catalog.read_text()
     for source in (ROOT/'moose_app/src').rglob('*.C'):
         if source.relative_to(ROOT).as_posix() not in catalog_text:
             raise ValueError(f'Uncatalogued implementation: {source.relative_to(ROOT)}')
     print(f'PASS {count} local site links; every implementation and example catalogued')
+    print(f'PASS {markdown_count} repository Markdown links')
     print('Site: .agent-runtime/site')
 
 
