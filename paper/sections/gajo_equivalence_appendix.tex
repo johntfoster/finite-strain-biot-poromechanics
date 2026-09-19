@@ -72,12 +72,12 @@ Subtracting pore pressure from the single-prime Cauchy stress gives
  -\left(1-\frac{K\bar J}{JK_s}\right)p,
  % equation-id: eq:gajo-plastic-total-mean-stress
 \\
- &=\frac13\tr\bs\sigma^{\prime\prime}_d-B_d p.
+ &=\frac13\tr\bs\sigma^{\prime\prime}_d-\alpha p.
  % equation-id: eq:gajo-plastic-drained-mean-stress
 \end{align*}
 This agrees with Gajo's equations~(48) and (51) and the volumetric part of
 \eqref{eq:total-stress-drained-pressure-split}.  Here the drained stress
-retains the current plastic deformation, and \(B_d\) is evaluated using
+retains the current plastic deformation, and \(\alpha\) is evaluated using
 the mineral volume at the current pressure.
 
 To identify reversible pressure coupling, hold both total deformation and
@@ -93,7 +93,7 @@ plastic deformation fixed.  Differentiating
 Substituting into the derivative of the total mean stress yields
 \begin{align*}
  -\left.\pder{}{p}\left(\frac13\tr\bs\sigma\right)\right|_{\mbf F,\mbf F^p}
- &=B_d+p\left.\pder{B_d}{p}\right|_{\mbf F,\mbf F^p},
+ &=\alpha+p\left.\pder{\alpha}{p}\right|_{\mbf F,\mbf F^p},
  % equation-id: eq:gajo-plastic-finite-tangent-relation
 \\
  &=1-\frac{K\bar J}

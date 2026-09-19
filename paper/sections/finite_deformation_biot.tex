@@ -843,12 +843,11 @@ We now compare the current stress with the stress at zero pressure while
 holding total and plastic deformation fixed.  The multiplier of pore
 pressure in this finite stress difference is
 \begin{equation*}
- B_d\equiv 1-\frac{\bar{J} K}{JK_s}.
+ \alpha\equiv 1-\frac{\bar{J} K}{JK_s}.
  % equation-id: eq:finite-drained-pressure-multiplier
 \end{equation*}
-The subscript \(d\) identifies the drained stress used as the reference;
-\(B_d\) is evaluated at the current pressure, rather than at zero pressure.
-Both \(B_d\) and \(B\) reduce to \(B_0=1-K/K_s\) in the
+The multiplier \(\alpha\) is evaluated at the current pressure, rather than
+at zero pressure.  Both \(\alpha\) and \(B\) reduce to \(B_0=1-K/K_s\) in the
 linearized undeformed, zero-pressure limit.
 Here \(\bar J\) is evaluated at the current pressure.  Using
 \(\bs\sigma^{\prime\prime}=J^{-1}\mbf P^{\prime\prime}\mbf F^T\) in
@@ -856,14 +855,14 @@ Here \(\bar J\) is evaluated at the current pressure.  Using
 stress relations
 \begin{gather}
  \bs\sigma^{\prime\prime}
- =\bs\sigma^{\prime\prime}_d+(B-B_d)p\mbf I,
+ =\bs\sigma^{\prime\prime}_d+(B-\alpha)p\mbf I,
  \notag
  % equation-id: eq:double-prime-drained-pressure-split
 \\
- \boxed{\bs\sigma=\bs\sigma^{\prime\prime}_d-B_d p\mbf I},
+ \boxed{\bs\sigma=\bs\sigma^{\prime\prime}_d-\alpha p\mbf I},
  \label{eq:total-stress-drained-pressure-split}\\
  \bs\sigma^{\prime}
- =\bs\sigma^{\prime\prime}_d+(1-B_d)p\mbf I.
+ =\bs\sigma^{\prime\prime}_d+(1-\alpha)p\mbf I.
  \label{eq:single-prime-drained-pressure-split}
 \end{gather}
 These expressions separate the pressure-independent drained stress from
@@ -873,18 +872,18 @@ and preserve the stress driving plastic flow.  In particular, \(B\)
 cancels from the reduced finite stress expressions; its value remains
 fixed by the mineral response and the Legendre-transform derivative.
 
-At fixed deformation and plastic state, \(B_d\) varies with pressure
+At fixed deformation and plastic state, \(\alpha\) varies with pressure
 through \(\bar J\).  Differentiating
 \eqref{eq:total-stress-drained-pressure-split} and applying
 \eqref{eq:total-stress-pressure-tangent} gives
 \begin{equation*}
- B=B_d+p\left.\pder{B_d}{p}\right|_{\mbf F,\mbf F^p}.
+ B=\alpha+p\left.\pder{\alpha}{p}\right|_{\mbf F,\mbf F^p}.
  % equation-id: eq:biot-tangent-finite-pressure-multiplier
 \end{equation*}
-Thus \(B_d\) measures a finite stress difference from zero pressure,
+Thus \(\alpha\) measures a finite stress difference from zero pressure,
 whereas \(B\) measures the local reversible slope.  They coincide at zero
 pressure and generally differ at nonzero pressure.  On a smooth branch
-connected to zero pressure, \(B_d\) is the pressure average of \(B\)
+connected to zero pressure, \(\alpha\) is the pressure average of \(B\)
 between zero and the current pressure, with deformation and plastic history
 held fixed throughout that comparison.
 
@@ -895,7 +894,7 @@ including bulk moduli obtained in unloading.  A small drained mechanical
 unload--reload cycle measures a tangent stiffness.  Additional pore-volume
 measurements or complementary poroelastic tests are needed to infer the
 Biot coefficient.  In the present notation, that reversible Biot coefficient
-corresponds to \(B\); \(B_d\) instead compares stresses over a finite
+corresponds to \(B\); \(\alpha\) instead compares stresses over a finite
 pressure interval at fixed deformation.  Directly, a reversible pressure
 perturbation at fixed deformation measures \(B\) through
 \eqref{eq:total-stress-pressure-tangent}, while at constant pressure it is
@@ -903,10 +902,11 @@ the ratio of pore-volume change to total-volume change.  Plastic variables
 must remain fixed during these small perturbations.  Experimental tangent
 moduli are evaluated at the tested state and must be distinguished from the
 reference parameters \(K\) and \(K_s\) in our constitutive energy.
-Makhnenko and Labuz use \(\alpha\) for the Biot coefficient and \(B\) for
-Skempton's coefficient; their symbols therefore differ from ours.
+Makhnenko and Labuz use \(\alpha\) for the reversible Biot coefficient and
+\(B\) for Skempton's coefficient; here \(\alpha\) instead denotes the finite
+pressure multiplier and \(B\) denotes the reversible Biot coefficient.
 
-For the elastic specialization, \(B_d\) is Gajo's pressure factor
+For the elastic specialization, \(\alpha\) is Gajo's pressure factor
 in his equation~(3.48), while the coupling fraction in his rate
 relations~(5.12) and (5.14) reduces to our \(B\) \citep{gajo2010}.
 His plastic extension retains the same volumetric closure under the

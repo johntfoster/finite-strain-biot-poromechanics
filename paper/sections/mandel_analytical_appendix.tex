@@ -36,48 +36,48 @@ Substitution into the exact water balance yields
  % equation-id: eq:mandel-linearized-water-balance
 \end{equation*}
 The coefficient of the pressure rate defines the reciprocal of the
-linearized storage modulus \(M_{\mathrm{lin}}\).  It measures the change in
+linearized storage modulus \(M_0\).  It measures the change in
 stored water, divided by reference water density, per unit pressure change
 at fixed deformation.  We use this modulus in the analytical comparison.
 Following \citet{chengdetournay1988}, the remaining poroelastic parameters are
 
 % equation-id: eq:mandel-derived-parameters
 
- \begin{align}
-  \frac{1}{M_{\mathrm{lin}}}
-  &=\frac{\phi_{s0}}{K_s}-\frac{K}{K_s^2}+\frac{\phi_{f0}}{K_f},
+ \begin{gather}
+  \frac{1}{M_0}
+  =\frac{\phi_{s0}}{K_s}-\frac{K}{K_s^2}+\frac{\phi_{f0}}{K_f},
   \label{eq:mandel-storage-modulus}\\
-  K_u&=K+B_0^2M_{\mathrm{lin}},
+  K_u=K+B_0^2M_0,
   \notag
  % equation-id: eq:mandel-undrained-bulk-modulus
 \\
-  B_{\mathrm{Sk}}&=\frac{B_0M_{\mathrm{lin}}}{K_u},
+  S=\frac{B_0M_0}{K_u},
   \notag
  % equation-id: eq:mandel-skempton-coefficient
 \\
-  \nu&=\frac{3K-2G}{2(3K+G)},
+  \nu=\frac{3K-2G}{2(3K+G)},
   \qquad
   \nu_u=\frac{3K_u-2G}{2(3K_u+G)},
   \notag
  % equation-id: eq:mandel-poisson-ratios
 \\
-  c&=\frac{
+  c=\frac{
    2G(1-\nu)(\nu_u-\nu)\kappa
   }{
    B_0^2(1-\nu_u)(1-2\nu)^2\mu_f
   }.
   \notag
  % equation-id: eq:mandel-consolidation-coefficient
- \end{align}
+ \end{gather}
 
-Here \(K_u\) is the undrained bulk modulus, \(B_{\mathrm{Sk}}\) is the Skempton
+Here \(K_u\) is the undrained bulk modulus, \(S\) is the Skempton
 coefficient, \(\nu\) and \(\nu_u\) are the drained and undrained Poisson
 ratios, respectively, and \(c\) is the consolidation coefficient.
 
 The storage in \eqref{eq:mandel-storage-modulus} also has the classical
 single-mineral Biot form,
 \begin{equation*}
- \frac{1}{M_{\mathrm{lin}}}
+ \frac{1}{M_0}
  =\frac{B_0-\phi_{f0}}{K_s}+\frac{\phi_{f0}}{K_f}.
  % equation-id: eq:classical-biot-storage-comparison
 \end{equation*}
@@ -97,7 +97,7 @@ The corresponding analytical water pressure is
 \citep{chengdetournay1988}
 \begin{align*}
  p(X,t)
- ={}&\frac{2P_0B_{\mathrm{Sk}}(1+\nu_u)}{3}
+ ={}&\frac{2P_0S(1+\nu_u)}{3}
  \sum_{n=1}^{\infty}
  \frac{
   \sin\alpha_n\cos\left(\alpha_n X/L\right)
