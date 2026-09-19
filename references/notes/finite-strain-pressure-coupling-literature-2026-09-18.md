@@ -28,7 +28,8 @@ The direct source for the Gajo full-text extraction is the
 Initial publisher and institutional retrieval attempts returned HTTP 403.
 That access limitation was resolved on 2026-09-19 using the user-supplied
 published PDF, retrieved from Hamilton and stored as
-[the local Gajo source](../pdfs/gajo-2010-compressible-constituents.pdf).
+`references/pdfs/gajo-2010-compressible-constituents.pdf`. The public source
+record is the [published article](https://doi.org/10.1098/rspa.2010.0018).
 The 27-page PDF was ingested with the repository research-store script;
 extracted text and retrieval state remain under `.agent-runtime/research/`.
 The source and received copies have SHA-256
