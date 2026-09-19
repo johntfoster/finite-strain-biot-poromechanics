@@ -17,10 +17,12 @@ def digest(path):
 
 def inputs(root):
     paths = set()
+    source_suffixes = {'.C', '.c', '.cc', '.cpp', '.h', '.hh', '.hpp', '.tcc', '.inc'}
     for pattern in ('moose_app/src/**/*', 'moose_app/include/**/*',
-                    'moose_app/test/src/**/*', 'moose_app/test/include/**/*',
-                    'moose_app/patches/**/*'):
-        paths.update(p for p in root.glob(pattern) if p.is_file())
+                    'moose_app/test/src/**/*', 'moose_app/test/include/**/*'):
+        paths.update(p for p in root.glob(pattern)
+                     if p.is_file() and p.suffix in source_suffixes)
+    paths.update(p for p in root.glob('moose_app/patches/**/*') if p.is_file())
     paths.update(root/p for p in (
         'moose_app/Makefile', 'tools/setup_reproduction.sh', '.devcontainer/Dockerfile',
         '.agent/shared/skills/setup-moose-conda/scripts/moose_conda_env.sh'))

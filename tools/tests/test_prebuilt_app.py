@@ -27,6 +27,13 @@ class PrebuiltTests(unittest.TestCase):
             record = dict(inputs=app.inputs(image), executable_sha256=app.digest(executable))
             (image/'.agent-runtime/prebuilt-app.json').write_text(json.dumps(record))
             shutil.copytree(image, checkout)
+            # A compiled image has libtool products next to main.C, while a
+            # fresh workspace contains only source. These are not build inputs.
+            for name in ('main.opt.lo', 'main.opt.lo.d', '.libs/main.opt.o'):
+                generated = image/'moose_app/src'/name
+                generated.parent.mkdir(parents=True, exist_ok=True)
+                generated.write_bytes(b'generated build product')
+            self.assertEqual(app.inputs(image), record['inputs'])
             shutil.rmtree(checkout/'.agent-runtime/moose')
             (checkout/'.agent-runtime/moose').symlink_to(image/'.agent-runtime/moose')
             self.assertTrue(app.reusable(checkout, image))
