@@ -41,7 +41,7 @@ pore volume.
 Let \(\bar\rho_s\) be the solid intrinsic density, the mass of solid per
 unit volume of mineral, and let \(\phi_s\) be its volume fraction.  The
 solid partial density measures the same mass per unit current mixture
-volume, including the pore space:
+volume, including the pore space, and is given by
 \begin{equation*}
  \rho_s=\phi_s\bar\rho_s.
  % equation-id: eq:solid-volume-fraction-relation
@@ -120,7 +120,7 @@ The single-prime first Piola stress is the deformation derivative of
 transformed potential \(W^{\prime}\) at fixed pressure.  The density-response
 terms cancel in the latter derivative by
 \eqref{eq:intrinsic-pressure-free-energy}.  The double-prime stress differentiates \(W^{\prime\prime}\) at
-fixed pressure \citep[eqs.~(34)--(36)]{fosterxu2025}:
+fixed pressure \citep[eqs.~(34)--(36)]{fosterxu2025}, giving
 \begin{align}
  \mbf P^{\prime}
  &=\left.\pder{W_s}{\mbf F}\right|_{\bar J}
@@ -160,7 +160,7 @@ The corresponding Biot coefficient is
  B=1-\phi_{s0}\left.\pder{\bar J}{J}\right|_p.
  \label{eq:finite-deformation-biot-coefficient}
 \end{equation}
-Our earlier work expresses the same coefficient in terms of the intrinsic
+Our earlier work expresses the same Biot coefficient in terms of the intrinsic
 solid specific volume \(\bar v_s=1/\bar\rho_s\) as
 \(B=1-(1/v_0^s)\left.\partial\bar v_s/\partial J\right|_p\), where
 \(v_0^s=1/\rho_{s0}\) and its solid Jacobian is the present \(J\)
@@ -193,7 +193,7 @@ Here \(\bs\sigma^{\prime}=J^{-1}\mbf P^{\prime}\mbf F^T\), with the same
 push-forward for the double-prime stress, and \(\mbf I\) is the identity
 tensor.  Subtracting the pore-pressure work from \(W^{\prime}\) gives a
 potential for total stress, while differentiating \(W^{\prime}\) with
-respect to pressure gives mineral volume:
+respect to pressure gives mineral volume, so
 \begin{align*}
  \mbf P
  &=\left.\pder{\left(W^{\prime}-pJ\right)}{\mbf F}\right|_p,
@@ -348,7 +348,7 @@ Then taking the variation of \(\mbf F=\mbf F^e\mbf F^p\) at fixed
  \label{eq:total-volumetric-deformation-variation}
 \end{align}
 The variation \eqref{eq:elastic-volumetric-deformation-variation}
-preserves the normalized elastic shape \((J^e)^{-1/3}\mbf F^e\):
+preserves the normalized elastic shape \((J^e)^{-1/3}\mbf F^e\), since
 \begin{align}
  \delta\left[(J^e)^{-1/3}\mbf F^e\right]
  &=(J^e)^{-1/3}\left(\delta\mbf F^e
@@ -395,7 +395,7 @@ The double contraction
 equals \(\tr(\mbf P^{\prime\prime}\mbf F^T)\).  Equation
 \eqref{eq:drained-energy-cauchy-work} uses the Cauchy-stress transformation
 \(\bs\sigma^{\prime\prime}=J^{-1}\mbf P^{\prime\prime}\mbf F^T\).
-Rearranging this transformation defines the double-prime Kirchhoff stress:
+Rearranging this transformation defines the double-prime Kirchhoff stress as
 \begin{equation*}
  \bs\tau^{\prime\prime}\equiv\mbf P^{\prime\prime}\mbf F^T
  =J\bs\sigma^{\prime\prime}.
@@ -561,7 +561,7 @@ conservation \eqref{eq:distension}, \(J\phi_s=\phi_{s0}\bar J\), gives
 At fixed plastic state and elastic shape, the fixed-density stress derivative
 \eqref{eq:single-prime-fixed-density-conjugate} and pressure relation
 \eqref{eq:intrinsic-pressure-free-energy} give the energy variation in the
-independent arguments \((J^e,\bar J)\):
+independent arguments \((J^e,\bar J)\) as
 \begin{align}
  \delta W_s
  &=\frac13\tr\bs\tau^{\prime}\,\delta\ln J^e
@@ -641,7 +641,7 @@ Applying the pressure-equilibrium relation
 Collecting the logarithmic terms in
 \eqref{eq:constitutive-characteristic-volume-relation} yields the implicit
 mineral equation of state, written with all terms on the left so that its
-residual vanishes at equilibrium:
+residual vanishes at equilibrium,
 \begin{equation}
  \boxed{
  K_s\ln\bar J
@@ -823,7 +823,7 @@ the momentum balance and constitutive computations is
 
 To separate the calibrated skeleton response from the pressure contribution,
 define the drained double-prime stress at zero pressure and the same total
-and plastic deformation:
+and plastic deformation by
 \begin{align*}
  \bs\sigma^{\prime\prime}_d(\mbf F,\mbf F^p)
  &\equiv\left.\bs\sigma^{\prime\prime}(\mbf F,p,\mbf F^p)\right|_{p=0},
@@ -894,7 +894,7 @@ poroelastic response using drained, undrained, and unjacketed measurements,
 including bulk moduli obtained in unloading.  A small drained mechanical
 unload--reload cycle measures a tangent stiffness.  Additional pore-volume
 measurements or complementary poroelastic tests are needed to infer the
-Biot coefficient.  In the present notation, that reversible coefficient
+Biot coefficient.  In the present notation, that reversible Biot coefficient
 corresponds to \(B\); \(B_d\) instead compares stresses over a finite
 pressure interval at fixed deformation.  Directly, a reversible pressure
 perturbation at fixed deformation measures \(B\) through
@@ -912,7 +912,7 @@ relations~(5.12) and (5.14) reduces to our \(B\) \citep{gajo2010}.
 His plastic extension retains the same volumetric closure under the
 matched logarithmic laws and reversible mineral-volume assumption
 \citep{gajo2011}.  The present construction identifies the reversible
-coefficient through the pressure Legendre transformation and evaluates it
+Biot coefficient through the pressure Legendre transformation and evaluates it
 from the scalar mineral equation.  This connects its thermodynamic,
 constitutive, and experimental meanings within the same description.
 \Cref{sec:gajo-elastic-equivalence} gives the explicit elastic reduction.
@@ -998,7 +998,7 @@ changes the stored energy.  To identify the stress that does work on this
 flow, we first write the single-prime Kirchhoff stress and then transform it
 to the intermediate configuration between plastic and elastic deformation.
 This transformation gives the Mandel stress; removing its mean part gives
-the deviatoric stress:
+the deviatoric stress, giving
 \begin{align}
  \bs\tau^{\prime}
  &=\mbf P^{\prime}\mbf F^T,
@@ -1056,7 +1056,7 @@ compression-positive mean and equivalent shear stresses by
 The prime distinguishes the mean stress used in the plastic law from pore
 pressure \(p\).  We choose a Drucker--Prager yield surface, for which the
 shear stress required to initiate plastic flow increases with compressive
-mean stress.  The flow rule specifies both shear deformation and dilation:
+mean stress.  The yield condition, flow rule, and complementarity conditions are
 \begin{align}
  f&=q-Mp^{\prime}-c\leq0,
  \notag
@@ -1101,9 +1101,9 @@ volume.  Because
 reference volume is
 \begin{align*}
  \mc D^p
- &=\mbf M^{\prime}:\left[\dot{\mbf F}^p(\mbf F^p)^{-1}\right] \\
+ &=\mbf M^{\prime}:\left[\dot{\mbf F}^p(\mbf F^p)^{-1}\right], \\
  &=\dot\gamma\left(
- \frac{3}{2q}\mbf S:\mbf S-\beta p^{\prime}\right) \\
+ \frac{3}{2q}\mbf S:\mbf S-\beta p^{\prime}\right), \\
  &=\dot\gamma(q-\beta p^{\prime}),
  % equation-id: eq:plastic-power
 \\

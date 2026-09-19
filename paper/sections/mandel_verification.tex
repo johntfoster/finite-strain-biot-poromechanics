@@ -159,7 +159,7 @@ The pressure, lateral displacement, nominal stress, and Biot coefficient are
 predictions of this displacement-controlled calculation.
 The stress can be evaluated in the reduced drained form
 \eqref{eq:total-stress-drained-pressure-split}, equivalent to the implemented
-double-prime correction and Biot transformation.  The plotted coefficient
+double-prime correction and Biot transformation.  The plotted Biot coefficient
 is the reversible derivative \(B\), not the finite multiplier \(B_d\).
 This elastic calculation therefore exercises the pressure coupling before
 plastic history is introduced.  The reported profiles characterize the
@@ -200,7 +200,7 @@ and mineral. In the drained elastic limit, \(p=0\) and \(a^p=1\),
 Since \(K/(\phi_{s0}K_s)=4/9<1\), compression increases
 \(\bar J/J\): the porous specimen contracts more than the mineral, so the
 solid volume fraction increases and \(B\) falls below \(B_0\).
-This change is reversible in the elastic model; the coefficient need not
+This change is reversible in the elastic model; the Biot coefficient need not
 remain constant during a finite elastic deformation.
 
 At fixed total volume, positive pore pressure reduces the mineral volume and
@@ -208,7 +208,7 @@ increases the denominator in \eqref{eq:poroplastic-biot-correction}, raising
 \(B\). This pressure contribution opposes the decrease caused by bulk
 compression and accounts for the transient increase in the undrained interior.
 Drainage removes this contribution while the imposed compression remains,
-leaving a coefficient below its initial value. The drained expression explains
+leaving a Biot coefficient below its initial value. The drained expression explains
 the trend, while the plotted transient values use the full pressure-dependent
 mineral solution.
 
@@ -256,7 +256,7 @@ calculation is checked through local identities, assembled derivatives,
 mass balances, and refinement.
 
 Figure~\ref{fig:poroplastic-mandel-biot-ratio} plots \(B/B_0\), where
-\(B\) is the current coefficient including plasticity and
+\(B\) is the current Biot coefficient including plasticity and
 \(B_0=1-K/K_s=0.6\) is its reference value.  This normalization matches
 \cref{fig:mandel-normalized-biot-contours}.  The spatial distribution reflects
 both the evolving mineral state and stored plastic distention.
@@ -269,7 +269,7 @@ both the evolving mineral state and stored plastic distention.
  Each panel shows the element-averaged \(B/B_0\).
  The snapshot times, color scale, and panel dimensions match
  \cref{fig:mandel-normalized-biot-contours};
- a value of one denotes the reference coefficient. The panels use solid
+ a value of one denotes the reference Biot coefficient. The panels use solid
  reference coordinates. Black curves, where present, bound elements whose average plastic
  multiplier increment exceeds \(10^{-9}\).
  The vertical plotting scale is enlarged.  The element values are shown
@@ -297,7 +297,7 @@ the suction values characterize the stated constitutive model.
  \label{fig:poroplastic-mandel-history}
 \end{figure}
 
-Plastic dilation raises the coefficient through a different mineral state.
+Plastic dilation raises the Biot coefficient through a different mineral state.
 At fixed \(J\) and \(p\), increasing \(a^p\) reduces \(J^e=J/a^p\)
 and the stable mineral-volume root \(\bar J\), thereby increasing \(B\).
 The resulting pore-volume evolution also changes pressure and lateral
@@ -310,7 +310,7 @@ They characterize the dilative flow law used here; plastic compaction would
 require a different constitutive model.
 
 To isolate the effect of plastic history, we also evaluate the virgin
-elastic coefficient at each plastic calculation's local pressure and total
+elastic Biot coefficient at each plastic calculation's local pressure and total
 volume.  This comparison holds the current pressure and volume fixed while
 changing only the plastic history.  The difference \(B-B_{\mathrm{el}}(p,J)\) remains positive
 during the hold for this dilative law. Its magnitude is a prediction of the
@@ -320,16 +320,16 @@ material.
 Comparing the
 \(20\times2\) and \(40\times4\) meshes at the same
 \(0.0025\ \mathrm{s}\) step changes the spatial average of the difference
-between the current and virgin elastic coefficients by less than
+between the current and virgin elastic Biot coefficients by less than
 \(4.0\times10^{-7}\) over the complete history.  The local field is more
 sensitive: at \(0.7\ \mathrm{s}\), the root-mean-square and maximum
 differences between the piecewise-constant element-average fields on the
 common reference domain are \(8.3\times10^{-6}\) and
 \(1.9\times10^{-5}\), respectively.  The positive plastic-history
 contribution persists under these refinements.  The maximum root-mean-square
-variation of this coefficient difference through the specimen height is below \(10^{-14}\) over the fine-grid histories at
+variation of this Biot coefficient difference through the specimen height is below \(10^{-14}\) over the fine-grid histories at
 steps of \(0.0025\) and \(0.00125\ \mathrm{s}\).  Halving this step changes
-the local coefficient difference by at most \(3.9\times10^{-6}\) across the six snapshots.
+the local Biot coefficient difference by at most \(3.9\times10^{-6}\) across the six snapshots.
 
 A locally unique mineral solution does not by itself ensure that the
 mechanical response remains stable during plastic flow.  We therefore
@@ -340,7 +340,7 @@ unit normal in the reference plane.  We differentiate the constitutive
 update during plastic loading as the load increment tends to zero, holding
 pressure and the previous plastic history fixed.  This gives the loading
 tangent.  Contracting it with a normal direction gives the acoustic tensor,
-which we use to test for a possible loss of ellipticity:
+which we use to test for a possible loss of ellipticity.  These tensors are
 \begin{align*}
  \mc A_{ijkl}
  &=\left.\frac{\mathrm dP_{ij}}{\mathrm dF_{kl}}\right|_{p,\mathrm{active}},

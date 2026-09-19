@@ -67,24 +67,24 @@ uses the derived constitutive law, stress and the Biot coefficient are
 evaluated from the same current plastic state.  We refer to this as the
 consistent calculation.  A companion calculation follows the
 same deformation and pressure history, initial cohesion, and hardening modulus,
-but substitutes the virgin elastic coefficient at the current total volume
+but substitutes the virgin elastic Biot coefficient at the current total volume
 and pressure only in the transformation from double-prime to single-prime
 stress.  Both calculations evaluate the same double-prime constitutive law,
 including its mineral-dependent pressure correction, at their respective
 current plastic states.  This comparison measures sensitivity to the
-coefficient used in the stress transformation.  The companion is a deliberate
+Biot coefficient used in the stress transformation.  The companion is a deliberate
 modification of that transformation; its stress is not derived from the same
 coupled energy as the consistent calculation.
 In the consistent law, the two pressure contributions combine into
 \eqref{eq:single-prime-drained-pressure-split}, so \(B\) is not an
 independently adjustable multiplier of the plastic driving stress.  The modified calculation changes only one contribution, so this
 cancellation no longer holds.  Its purpose is to measure the effect of that
-change on predicted plastic flow.  Replacing the reversible coefficient by
+change on predicted plastic flow.  Replacing the reversible Biot coefficient by
 the finite multiplier \(B_d\) would be a different comparison.
 
 \Cref{fig:implicit-poroplastic-feedback} shows that the two plastic responses
 coincide at zero pressure and separate as pressure increases.  In this example,
-at a common candidate plastic state, the larger current coefficient gives a
+at a common candidate plastic state, the larger current Biot coefficient gives a
 smaller isotropic contribution \((1-B)pJ\mbf I\) than the virgin coefficient
 in \eqref{eq:single-prime-kirchhoff-stress}.  The consistent transformation
 therefore gives greater compressive mean stress at that state.  Over the
@@ -103,7 +103,7 @@ parameters and loading path.
  and pore-pressure loading to \(F_{yy}=0.65\).  Left: the final Biot coefficient and the virgin elastic
  coefficient at the same total deformation and pressure.  Right: final plastic
  distention using the consistent stress transformation and substituting the
- virgin coefficient only in that transformation.  Each point
+ virgin Biot coefficient only in that transformation.  Each point
  represents a complete constitutive loading path.}
  \label{fig:implicit-poroplastic-feedback}
 \end{figure}

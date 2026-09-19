@@ -11,7 +11,7 @@ identifies the range in which that solution is locally unique and gives
 the change in mineral volume per unit change in total volume at fixed
 pressure.  This derivative determines the finite-deformation Biot
 coefficient.  The pressure Legendre transformation identifies this
-coefficient through reversible pore-volume change, the effective-stress
+Biot coefficient through reversible pore-volume change, the effective-stress
 relation, and the local pressure sensitivity of total stress.  Eliminating
 Gajo's mineral deformation factors establishes the correspondence with his
 logarithmic elastic response and, for reversible mineral volume change,
@@ -21,9 +21,9 @@ The reduced finite stress relation is
 \(\bs\sigma=\bs\sigma^{\prime\prime}_d-B_d p\mbf I\).
 The drained stress retains the current plastic history and is independent
 of pressure.  The finite multiplier \(B_d\) depends on mineral volume,
-while the local reversible coefficient satisfies
+while the local reversible Biot coefficient satisfies
 \(B=B_d+p\left.\partial B_d/\partial p\right|_{\mbf F,\mbf F^p}\).
-The latter is the coefficient to compare with incremental poroelastic
+The latter is the Biot coefficient to compare with incremental poroelastic
 measurements.  The derivation from the pressure potential and the scalar
 mineral equation
 makes this distinction explicit: the finite stress difference and the local
@@ -39,7 +39,7 @@ from the virgin response at the same total deformation.  At nonzero
 pressure, the reduced single-prime stress combines the drained response
 with the mineral-compression contribution.  The same result follows from
 the double-prime stress and its Biot transformation.  Using
-the current coefficient produces less dilation than substituting the virgin
+the current Biot coefficient produces less dilation than substituting the virgin
 coefficient only in that transformation for the selected loading paths.
 This comparison measures sensitivity to the modified transformation.
 The constitutive update solves for plastic deformation and mineral volume
@@ -65,7 +65,7 @@ For the selected dilative material, the compression-and-hold calculation
 produces a positive plastic-history contribution to the Biot coefficient at
 matched pressure and total volume. Dilation reverses fluid exchange from
 initial outflow to inflow,
-and the coefficient retains its plastic contribution during the hold.
+and the Biot coefficient retains its plastic contribution during the hold.
 For the perfectly plastic model, the acoustic tensor becomes singular
 during the hold, indicating a loss of ellipticity of the mechanical
 equations.
