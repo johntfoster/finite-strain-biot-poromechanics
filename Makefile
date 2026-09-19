@@ -21,7 +21,7 @@ sync-push:
 	tools/sync_biot_moose.py push
 
 build:
-	$(MOOSE_ENV) run -- $(MAKE) -C moose_app -j$(BUILD_JOBS)
+	python3 tools/prebuilt_app.py use || $(MOOSE_ENV) run -- $(MAKE) -C moose_app -j$(BUILD_JOBS)
 
 test: build
 	cd moose_app && ../$(MOOSE_ENV) run -- $(PYTHON) \

@@ -32,6 +32,9 @@
     ".gitattributes",
     ".gitignore",
     ".githooks",
-    "research-dependencies.yml"
+    "research-dependencies.yml",
+    "submission",
+    ".dockerignore",
+    "CITATION.cff"
   ]
 }

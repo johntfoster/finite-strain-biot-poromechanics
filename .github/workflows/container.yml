@@ -1,0 +1,69 @@
+name: Tested computational environment
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: container-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-test-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE: ghcr.io/johntfoster/finite-strain-biot-poromechanics
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - name: Make room for the numerical toolchain
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /usr/local/.ghcup
+          df -h /
+      - uses: docker/setup-buildx-action@v3
+      - name: Build the candidate image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: .devcontainer/Dockerfile
+          load: true
+          tags: biot-candidate:${{ github.sha }}
+          build-args: |
+            SOURCE_REVISION=${{ github.sha }}
+            BUILD_JOBS=2
+          cache-from: type=gha,scope=biot-container
+          cache-to: type=gha,scope=biot-container,mode=max
+      - name: Test the image through the Codespaces startup path
+        run: |
+          mkdir -p .agent-runtime/ci
+          chmod 777 .agent-runtime/ci
+          docker run --rm --shm-size=1g \
+            -v "$PWD/.agent-runtime/ci:/ci-output" \
+            biot-candidate:${{ github.sha }} bash tools/test_container.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-${{ github.sha }}
+          path: .agent-runtime/ci/
+      - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish only the tested image
+        if: github.event_name != 'pull_request'
+        run: |
+          docker tag biot-candidate:${{ github.sha }} "$IMAGE:sha-${{ github.sha }}"
+          docker tag biot-candidate:${{ github.sha }} "$IMAGE:latest"
+          docker push "$IMAGE:sha-${{ github.sha }}"
+          docker push "$IMAGE:latest"
+          docker inspect "$IMAGE:sha-${{ github.sha }}" --format '{{json .RepoDigests}}' >> "$GITHUB_STEP_SUMMARY"

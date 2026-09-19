@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import html
+import os
 from html.parser import HTMLParser
 from pathlib import Path
 import re
@@ -99,9 +100,19 @@ def check_links(site, sources=False):
 
 
 def check_markdown_links(root=ROOT):
-    paths = subprocess.check_output(
-        ['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z', '*.md'],
-        cwd=root, text=True).split('\0')
+    if (root/'.git').exists():
+        paths = subprocess.check_output(
+            ['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z', '*.md'],
+            cwd=root, text=True).split('\0')
+    else:
+        # Publication archives contain source but no Git administrative files.
+        paths = []
+        excluded = {'.git', '.agent-runtime', 'build', '__pycache__', '.agent',
+                    '.codex', '.claude', '.opencode'}
+        for directory, folders, files in os.walk(root, followlinks=False):
+            folders[:] = [name for name in folders if name not in excluded]
+            paths.extend(str((Path(directory)/name).relative_to(root))
+                         for name in files if name.endswith('.md'))
     count = 0
     for name in set(paths) - {''}:
         page = root/name

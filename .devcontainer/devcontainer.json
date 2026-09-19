@@ -1,8 +1,5 @@
 {
   "name": "Nonlinear Biot: MOOSE and manuscript",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
   "remoteUser": "vscode",
   "hostRequirements": {
     "cpus": 8,
@@ -58,5 +55,6 @@
     "ghcr.io/devcontainers/features/sshd:1": {
       "version": "latest"
     }
-  }
+  },
+  "image": "ghcr.io/johntfoster/finite-strain-biot-poromechanics:latest"
 }

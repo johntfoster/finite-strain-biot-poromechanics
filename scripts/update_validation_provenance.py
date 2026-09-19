@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import argparse
+import subprocess
 from pathlib import Path
 
 
@@ -137,7 +139,10 @@ FILES = sorted(set(FILES) | {
         "moose_app/src/**/*.C", "moose_app/include/**/*.h",
         "moose_app/test/tests/**/*.i", "moose_app/test/tests/**/tests",
         "validation/scripts/*.py", "figures/*.png", "figures/*.pgf", "figures/*.pdf",
-        "docs/assets/img/*.png", "docs/*.html",
+        "docs/assets/img/*.png", "docs/*.html", "submission/*",
+        "paper/sections/*.tex", ".devcontainer/*", ".github/workflows/*",
+        "tools/prebuilt_app.py", "tools/test_container.sh", "tools/package_submission.py",
+        "tools/tests/test_prebuilt_app.py", ".dockerignore", "CITATION.cff", ".githooks/*",
         "validation/*_execution_provenance.json",
     )
     for path in ROOT.glob(pattern)
@@ -153,9 +158,18 @@ def sha256(path: Path) -> str:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--check-staged', action='store_true',
+                        help='Refuse to hash publication inputs not present in the commit index')
+    args = parser.parse_args()
     missing = [name for name in FILES if not (ROOT / name).is_file()]
     if missing:
         raise SystemExit("missing provenance inputs: " + ", ".join(missing))
+    if args.check_staged:
+        for name in FILES:
+            staged = subprocess.run(['git', 'show', ':'+name], cwd=ROOT, capture_output=True)
+            if staged.returncode or staged.stdout != (ROOT/name).read_bytes():
+                raise SystemExit('Stage the complete publication input before committing: '+name)
     record = {
         "schema_version": 2,
         "required_environment": {

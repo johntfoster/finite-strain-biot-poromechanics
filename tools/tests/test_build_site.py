@@ -13,6 +13,18 @@ spec.loader.exec_module(site)
 
 
 class SiteTests(unittest.TestCase):
+    def test_archive_checks_links_without_git(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root/'README.md').write_text('[Data](validation/data.csv)')
+            with self.assertRaisesRegex(ValueError, 'broken Markdown link'):
+                site.check_markdown_links(root)
+            (root/'validation').mkdir()
+            (root/'validation/data.csv').touch()
+            (root/'.agent-runtime').mkdir()
+            (root/'.agent-runtime/ignored.md').write_text('[Ignored](missing)')
+            self.assertEqual(site.check_markdown_links(root), 1)
+
     def test_numbered_reproduction_recipe_matches_make(self):
         text = (ROOT/'docs/reproduction.html').read_text()
         steps = text.split('<h3>1 ·', 1)[1].split('</section>', 1)[0]

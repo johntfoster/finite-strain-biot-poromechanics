@@ -1,0 +1,5 @@
+A common energy couples mineral compression and permanent pore-volume change.
+An explicit Biot coefficient follows from the matched logarithmic mineral law.
+Finite pressure coupling differs from the reversible Biot coefficient.
+Implicit poroplastic updates retain coupled automatic-differentiation tangents.
+Mandel and independent constitutive checks verify the numerical implementation.

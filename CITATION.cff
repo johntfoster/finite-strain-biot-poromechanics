@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "Please cite the manuscript and identify the release or commit used for reproduction."
+type: software
+title: "Pressure coupling and the Biot coefficient in finite-strain poroelasticity and poroplasticity"
+authors:
+  - family-names: Foster
+    given-names: John T.
+repository-code: "https://github.com/johntfoster/finite-strain-biot-poromechanics"
+url: "https://johntfoster.github.io/finite-strain-biot-poromechanics/"
+license: Apache-2.0
+abstract: "MOOSE implementation, numerical verification, curated data, and manuscript source for finite-strain Biot poromechanics. Manuscript, documentation, and original data are licensed separately under CC BY 4.0."

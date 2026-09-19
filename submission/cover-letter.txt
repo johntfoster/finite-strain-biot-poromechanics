@@ -1,0 +1,29 @@
+Dear Editors,
+
+Please consider "Pressure coupling and the Biot coefficient in finite-strain
+poroelasticity and poroplasticity" for publication in the Journal of the
+Mechanics and Physics of Solids.
+
+The manuscript derives pressure coupling from a common stored energy for
+mineral compression and permanent pore-volume change. It distinguishes the
+reversible Biot coefficient from the multiplier of a finite pressure change,
+and implements the coupled mineral and plastic update with automatic
+differentiation. Constitutive checks, assembled Jacobian comparisons, the
+analytical Mandel benchmark, and refinement studies support the numerical
+results. The calculations use synthetic material parameters; experimental
+validation remains future work.
+
+The accompanying public repository provides the implementation, input decks,
+curated numerical data, verification drivers, figure scripts, and development
+history. A versioned release identifies the submission package. The companion
+website and configured development container support inspection and
+reproduction. The manuscript discloses the use of generative AI tools and
+describes the author's responsibility for the work.
+
+The manuscript is not under consideration elsewhere. I have no competing
+financial interests or personal relationships that could have influenced this
+work.
+
+Sincerely,
+John T. Foster
+The University of Texas at Austin

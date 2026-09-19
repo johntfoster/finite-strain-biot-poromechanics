@@ -56,7 +56,7 @@
       <pre><code>git submodule update --init --recursive
 make setup</code></pre>
 
-      <p><a href="https://codespaces.new/johntfoster/finite-strain-biot-poromechanics">Launch a configured Codespace</a>. Setup installs MOOSE, builds the application and manuscript, and prepares the website. The editor opens during setup. Follow <code>tail -f .agent-runtime/codespace-setup.log</code> and wait for the <code>Ready</code> message before running commands. Use <code>make serve</code> and forwarded port 8000 to preview the site.</p>
+      <p><a href="https://codespaces.new/johntfoster/finite-strain-biot-poromechanics">Launch a configured Codespace</a>. The prebuilt image supplies the pinned numerical environment and compiled MOOSE framework and application. Startup checks the application source hashes, builds the manuscript, and prepares the website. Only changed application sources require compilation. The editor opens during setup. Follow <code>tail -f .agent-runtime/codespace-setup.log</code> and wait for the <code>Ready</code> message before running commands. Use <code>make serve</code> and forwarded port 8000 to preview the site.</p>
       <p><a href="moose-catalog.html#examples">Every example input and its implementation links</a>.</p>
       <h3>1 · Shared-source integrity check</h3>
       <pre><code>tools/sync_biot_moose.py check</code></pre>
@@ -140,6 +140,14 @@ make validate</code></pre>
     </section>
 
     <section class="section">
+      <h2>Tested container and submission snapshot</h2>
+      <p>Every push to main builds and tests a container before publishing it to
+      <code>ghcr.io/johntfoster/finite-strain-biot-poromechanics</code>. Codespaces
+      uses the latest passing image. Ordinary solver tests, derivation checks,
+      the manuscript build, and repository validation run in that same image;
+      the heavy studies remain separate. Commit tags and image digests identify
+      reproducible versions. The <a href="source.html?f=submission/README.md">submission
+      package</a> freezes the curated evidence, source, website, and Git history.</p>
       <h2>Canonical Make targets</h2>
       <table>
         <thead><tr><th>Target</th><th>What it does</th></tr></thead>

@@ -3,6 +3,8 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -21,6 +23,24 @@ package = load('update_validation_provenance', 'scripts/update_validation_proven
 
 
 class ProvenanceTests(unittest.TestCase):
+    def test_commit_hash_refresh_rejects_unstaged_inputs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(['git', 'init', '-q', str(root)], check=True)
+            (root/'input').write_text('staged')
+            subprocess.run(['git', '-C', str(root), 'add', 'input'], check=True)
+            with patch.object(package, 'ROOT', root), patch.object(package, 'FILES', ['input']), \
+                 patch.object(package, 'OUTPUT', root/'provenance.json'), \
+                 patch.object(package, 'execution_records', return_value={}), \
+                 patch.object(sys, 'argv', ['update_validation_provenance.py', '--check-staged']):
+                (root/'input').write_text('unstaged')
+                with self.assertRaisesRegex(SystemExit, 'Stage the complete'):
+                    package.main()
+                (root/'input').write_text('staged')
+                self.assertEqual(package.main(), 0)
+                self.assertEqual(json.loads((root/'provenance.json').read_text())['sha256']['input'],
+                                 package.sha256(root/'input'))
+
     def test_actual_packages_are_observed_and_missing_packages_remain_unknown(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -37,14 +37,24 @@ to regenerate their independent checks and data.
 ## Launch and reproduce
 
 [Open in GitHub Codespaces](https://codespaces.new/johntfoster/finite-strain-biot-poromechanics)
-opens the checked-in development container. Select an 8-core machine with
-64 GB storage or larger. The first setup downloads the pinned MOOSE framework
-and Conda packages, installs the plotting and LaTeX dependencies, and builds
-the application and paper with four build jobs. The editor opens while setup
-runs; follow `tail -f .agent-runtime/codespace-setup.log` and wait for the
-`Ready` message before running examples. Initial compilation can take tens of
-minutes. Local builds default to one job; `BUILD_JOBS` overrides that count. Codespaces usage is charged under your
-GitHub plan; stop the Codespace when finished.
+opens the tested, prebuilt development container. Select an 8-core machine
+with 64 GB storage or larger. The image already contains the pinned Conda
+environment and compiled MOOSE framework and application. Startup links these
+to the checkout, checks the application source hashes, and builds the website
+and manuscript. Follow `tail -f .agent-runtime/codespace-setup.log` until the
+`Ready` message appears. Downloading the image still takes time; unchanged
+application sources require no MOOSE compilation. Edited application sources
+are rebuilt against the installed framework. Local builds default to one job;
+`BUILD_JOBS` overrides that count. Stop the Codespace when finished.
+
+Every push to `main` builds a candidate image, runs the ordinary MOOSE tests,
+derivation checks, tooling tests, manuscript build, and repository audit, then
+publishes the passing image to
+`ghcr.io/johntfoster/finite-strain-biot-poromechanics`. Codespaces uses `latest`,
+which always denotes the most recently passing image. Each published revision
+also has a `sha-COMMIT` tag; use the recorded image digest for an immutable
+reproduction environment. Pull requests run the same checks without publishing.
+Heavy refinement and stability studies remain explicit reproduction targets.
 
 ```sh
 make test       # standard MOOSE tests, including active AD Jacobians
@@ -149,3 +159,9 @@ to Pages on pushes to `main`; pull requests run the site checks without deployin
 
 Code is licensed under Apache 2.0; manuscript, documentation, and original data
 are licensed under CC BY 4.0. See [licenses and third-party notices](LICENSES.md).
+
+## Submission release
+
+The [submission package](submission/README.md) describes the frozen source,
+curated evidence, manuscript files, and Git history. Create it from a clean
+committed revision with `python3 tools/package_submission.py --tag TAG`.
