@@ -144,11 +144,6 @@ smaller spatial sensitivity on the tested grids.  These pairwise comparisons
 measure sensitivity over the reported transient rather than an asymptotic
 convergence order.
 
-The assembled-Jacobian checks described in
-Sec.~\ref{sec:weak-residuals-and-spaces} also pass for this problem.
-The mineral EOS residual and referential solid-mass drift are recorded
-separately.  The accompanying validation records give numerical errors,
-tolerances, and sampling definitions.
 \FloatBarrier
 
 \subsection{Finite-deformation continuation}
@@ -160,6 +155,13 @@ increases linearly to \(-0.1H\) over \(0.2\ \mathrm{s}\) and is then held. The e
 and \(\Delta t=0.002\ \mathrm{s}\).
 The pressure, lateral displacement, nominal stress, and Biot coefficient are
 predictions of this displacement-controlled calculation.
+The stress includes the mineral-pressure contribution in
+\eqref{eq:matched-logarithmic-single-prime-stress} and the double-prime
+correction in \eqref{eq:matched-logarithmic-double-prime-stress}.
+This elastic calculation therefore exercises the pressure coupling before
+plastic history is introduced.  The reported profiles characterize the
+combined effects of constitutive pressure coupling, finite kinematics, and
+fluid transport.
 
 \begin{figure}[ht]
  \centering
@@ -251,10 +253,7 @@ Figure~\ref{fig:poroplastic-mandel-biot-ratio} plots \(B/B_0\), where
 \(B\) is the current coefficient including plasticity and
 \(B_0=1-K/K_s=0.6\) is its reference value.  This normalization matches
 \cref{fig:mandel-normalized-biot-contours}.  The spatial distribution reflects
-both the evolving mineral state and stored plastic distention.  The companion
-coefficient \(B_{\mathrm{el}}(p,J)\), evaluated at the same local pressure and
-total volume with \(a^p=1\), separately isolates the plastic-history contribution
-in the coefficient histories and numerical diagnostics.
+both the evolving mineral state and stored plastic distention.
 
 \begin{figure}[ht]
  \centering
@@ -324,15 +323,15 @@ steps of \(0.0025\) and \(0.00125\ \mathrm{s}\).  Halving this step changes
 the local contrast by at most \(3.9\times10^{-6}\) across the six snapshots.
 
 The role of hardening is assessed separately from scalar mineral stability.
-Let \(\mbf P\) denote the total first Piola stress and let \(\mbf n\) be a
+Let \(\mbf P\) denote the total first Piola stress and let \(\mbf N\) be a
 unit normal in the reference plane.  Differentiating the active return in the
 vanishing-increment limit, at fixed pressure and previous plastic history,
 gives the loading tangent and its acoustic tensor,
 \begin{align}
- \mc A_{iJkL}
- &=\left.\frac{\mathrm dP_{iJ}}{\mathrm dF_{kL}}\right|_{p,\mathrm{active}},
+ \mc A_{ijkl}
+ &=\left.\frac{\mathrm dP_{ij}}{\mathrm dF_{kl}}\right|_{p,\mathrm{active}},
  \label{eq:poroplastic-loading-tangent}\\
- Q_{ik}(\mbf n)&=\mc A_{iJkL}n_Jn_L.
+ Q_{ik}(\mbf N)&=\mc A_{ijkl}N_jN_l.
  \label{eq:poroplastic-acoustic-tensor}
 \end{align}
 A sign change of \(\det\mbf Q\) between normal directions implies a
@@ -344,8 +343,9 @@ minimum is \(-0.00891\ \mathrm{GPa}^2\).  The positive mineral tangent remains
 far from zero, so the scalar root condition does not prevent this mechanical
 loss of ellipticity.  Halving the time step and, separately, setting
 \(\beta=M\) while retaining \(H=0\) leave both the acoustic sign change
-and the spatial oscillations.  With \(H=100\ \mathrm{MPa}\), the minimum over the
-sampled active states at three positions is
+and the spatial oscillations.  With \(H=100\ \mathrm{MPa}\) on the
+\(40\times4\) mesh at \(\Delta t=0.0025\ \mathrm{s}\), the minimum
+over the sampled active states at three positions is
 \(0.03797\ \mathrm{GPa}^2\), and the spatial oscillations disappear.
 The diagnostic scans in-plane normal directions at \(0.25^\circ\) intervals
 and checks sensitivity to the finite-difference increment.  Positive values

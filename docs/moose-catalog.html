@@ -41,8 +41,8 @@
       <ul class="file-list">
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADSolidReferenceKinematics.C">ADSolidReferenceKinematics</a>
-          <span class="desc">Deformation gradient <code>F</code>, Jacobian <code>J</code>, <code>J̇</code>, <code>F⁻¹</code>, and <code>J F⁻ᵀ</code> from the displacement gradients.</span>
-          <span class="why">Why: the solid-reference kinematics consumed by every pull-back and the Biot transform.</span>
+          <span class="desc">Deformation gradient <code>F</code>, Jacobian <code>J</code>, <code>J̇</code>, <code>F⁻¹</code>, and <code>J F⁻¹</code> from the displacement gradients.</span>
+          <span class="why">Why: the solid-reference kinematics consumed by every pull-back and the effective-stress relations.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C">ADLocalElasticMineralBiotMaterial</a>
@@ -61,7 +61,7 @@
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADReferenceSolidStressMaterial.C">ADReferenceSolidStressMaterial</a>
-          <span class="desc">Applies the inverse Biot transform to <code>P″</code> and assembles the total first Piola stress.</span>
+          <span class="desc">Combines <code>P″</code> with the pore-pressure contribution to assemble the total first Piola stress.</span>
           <span class="why">Why: forms the total mixture stress for momentum.</span>
         </li>
         <li>
@@ -97,7 +97,7 @@
 
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADConstantDeformationGradientMaterial.C">ADConstantDeformationGradientMaterial</a>
-          <span class="desc">Prescribes a uniform diagonal <code>F</code> (optionally time-ramped).</span>
+          <span class="desc">Prescribes a homogeneous deformation gradient with optional time ramp, AD axial stretch, and superposed rotation.</span>
           <span class="why">Why: drives single-element material tests without a displacement solve.</span>
         </li>
       </ul>
@@ -119,7 +119,7 @@
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADMaterialPropertyResidual.C">ADMaterialPropertyResidual</a>
           <span class="desc">Weak algebraic residual using an AD material property.</span>
-          <span class="why">Why: assembles the local constraint residuals into the Newton system.</span>
+          <span class="why">Why: probes returned material quantities in constitutive Jacobian tests. The production mineral and plastic constraints are solved inside materials.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADReferenceSolidMomentum.C">ADReferenceSolidMomentum</a>
@@ -166,6 +166,18 @@
         theory-to-implementation trace in
         <a href="source.html?f=../validation/theory_traceability.yml">theory_traceability.yml</a>. The <a href="source.html?f=validation/README.md">verification index</a> links the current evidence and reproduction commands.
       </p>
+      <p>The map covers every numbered manuscript equation and every local
+      material, kernel, and postprocessor. Supporting entries identify
+      derivations, limiting cases, and analytical Mandel formulas separately
+      from equations assembled by MOOSE. Each entry links the relevant source
+      or verification calculation. <code>make validate</code> rejects missing
+      coverage, deleted equation labels, unknown objects, and missing tests.</p>
+      <p>The shared objects also expose general simulator options, including
+      pressure enrichment, extra stresses, and additional fluxes. Those
+      options are inactive in the paper's input decks. The reported formulation
+      uses continuous Q1 pressure, zero gravity, and the single-water Darcy flux.</p>
+      <p>The <a href="source.html?f=validation/consistency_review_2026-09-18.md">submission consistency review</a>
+      records the mathematical correspondence, corrections, and verification scope.</p>
     </section>
   </div>
 </main>

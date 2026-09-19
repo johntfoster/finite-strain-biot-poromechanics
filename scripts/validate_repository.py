@@ -139,7 +139,7 @@ def audit_finite_deformation_results() -> None:
     # This is a curated-data regression value for the matched logarithmic model.
     # The independent constitutive acceptance limit remains 1e-12.
     biot_error = max(row["biot_analytic_error_l2"] for row in rows)
-    require(abs(biot_error - 4.6829394935328e-17) <= 1e-28,
+    require(abs(biot_error - 4.6945015734244e-17) <= 1e-28,
             "finite-deformation Biot diagnostic differs from the recorded result")
     require(biot_error <= 1e-12, "finite-deformation Biot identity failed")
 
@@ -168,7 +168,10 @@ def audit_implicit_poroplastic_results() -> None:
             record.get('parameters', {}).get('hardening_modulus_Pa') == 1e8,
             'material-point publication does not use the coupled hardening parameters')
     limits = {"accumulated": 1e-10, "mass": 1e-10, "eos": 1e-10, "biot": 5e-8, "flow": 1e-9,
-              "yield_residual": 1e-9, "stress": 2e-7, "determinant": 1e-9}
+              "yield_residual": 1e-9, "stress": 2e-7, "determinant": 1e-9,
+              "drained_stress": 2e-7, "double_prime_stress": 2e-7,
+              "stress_transforms": 2e-7, "pressure_tangent": 2e-7,
+              "pressure_integral": 2e-7}
     for name in ("history", "nonaxisymmetric", "rotated", "pressure_4e+08"):
         require(name in record, f"missing constitutive verification case: {name}")
         for metric, limit in limits.items():
@@ -241,7 +244,12 @@ def audit_poroplastic_spatial_stability() -> None:
 
 def audit_provenance() -> None:
     record = json.loads((ROOT / "validation/provenance.yml").read_text(encoding="utf-8"))
-    require(record.get("schema_version") == 1, "unsupported provenance schema")
+    require(record.get("schema_version") == 2, "unsupported provenance schema")
+    require('required_environment' in record and 'environment' not in record,
+            'required and observed environments must be distinguished')
+    require(set(record.get('execution_provenance', {})) ==
+            {'material_point', 'coupled_plastic', 'spatial_stability', 'elastic_mandel', 'supplementary'},
+            'missing execution provenance status')
     for name, expected in record.get("sha256", {}).items():
         path = ROOT / name
         require(path.is_file(), f"missing provenance input: {name}")
@@ -301,11 +309,22 @@ def audit_manuscript() -> None:
     require((ROOT / "moose_app/nonlinear_biot_ad-opt").is_file(), "standalone MOOSE executable is missing")
 
 
+def audit_equation_traceability() -> None:
+    # PyYAML is pinned in the MOOSE environment, not required of system Python.
+    result = subprocess.run(
+        [str(ROOT / ".agent/shared/skills/setup-moose-conda/scripts/moose_conda_env.sh"),
+         "run", "--", "python", "scripts/check_equation_traceability.py"],
+        cwd=ROOT, text=True, capture_output=True, check=False,
+    )
+    require(result.returncode == 0, result.stderr.strip() or result.stdout.strip())
+
+
 def main() -> int:
     audits = (
         audit_portability,
         audit_q2_q1_scope,
         audit_sync,
+        audit_equation_traceability,
         audit_curated_data,
         audit_finite_deformation_results,
         audit_implicit_poroplastic_results,

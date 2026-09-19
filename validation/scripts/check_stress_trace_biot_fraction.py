@@ -12,8 +12,8 @@ closed-form Biot coefficient in
   * the solid-volume-fraction and porosity forms in
     ``eq:biot-solid-volume-fraction-form`` and ``eq:biot-porosity-form``;
   * the reference limit ``B0 = 1 - K/K_s`` and drained path ``B(J,0)``;
-  * the mixed-derivative relation and compatible mineral equation
-    ``eq:constitutive-compatible-mineral-pde``.
+  * supplementary mixed-derivative and compatibility identities implied by
+    ``eq:verification-mineral-factors`` and ``eq:total-stress-pressure-tangent``.
 
 The numbered check identifiers below retain their original meanings.
 
@@ -48,25 +48,25 @@ def main() -> int:
     K, Ks, phi_s0, p, J, Jbar = sp.symbols("K K_s phi_s0 p J Jbar", real=True)
     alpha = 1 - K / (phi_s0 * Ks)  # 1 - K/(phi_s0 K_s)
 
-    # eq. (87): implicit scalar mineral residual R(Jbar, J, p) = 0.
+    # eq:verification-mineral-factors: scalar residual R(Jbar, J, p) = 0.
     R = Ks * sp.log(Jbar) + alpha * p * Jbar - (K / phi_s0) * sp.log(J)
 
-    # eq. (88): implicit differentiation of (87) at fixed p.
+    # eq:solid-pressure-implicit-tangent: differentiation at fixed p.
     #   (dR/dJbar)(dJbar/dJ) + dR/dJ = 0  =>  [K_s/Jbar + alpha p] dJbar/dJ = K/(phi_s0 J)
     dR_dJbar = sp.diff(R, Jbar)
     dR_dJ = sp.diff(R, J)
     zero("eq88_bracket", dR_dJbar - (Ks / Jbar + alpha * p))
     zero("eq88_rhs", -dR_dJ - K / (phi_s0 * J))
 
-    # eq. (89): explicit tangent from (88).
+    # eq:solid-density-eos-tangent: explicit volume tangent.
     dJbar_dJ = sp.simplify((K / (phi_s0 * J)) / (Ks / Jbar + alpha * p))
     zero("eq89_tangent", dJbar_dJ - K * Jbar / (phi_s0 * J * (Ks + alpha * p * Jbar)))
 
-    # eq. (90): closed-form coefficient B = 1 - phi_s0 dJbar/dJ.
+    # eq:poroplastic-biot-correction: B = 1 - phi_s0 dJbar/dJ.
     B_closed = sp.simplify(1 - phi_s0 * dJbar_dJ)
     zero("eq90_closed_form", B_closed - (1 - K * Jbar / (J * (Ks + alpha * p * Jbar))))
 
-    # Proper-fraction rewrite of eq. (90): single quotient, numerator < denominator.
+    # Equivalent single quotient; numerator < denominator on the stable branch.
     B_proper = (J * (Ks + alpha * p * Jbar) - K * Jbar) / (J * (Ks + alpha * p * Jbar))
     zero("eq90_proper_fraction", B_closed - B_proper)
     num = sp.expand(J * (Ks + alpha * p * Jbar) - K * Jbar)
@@ -100,8 +100,8 @@ def main() -> int:
     B_drained_expected = 1 - (K / Ks) * J ** (exponent - 1)
     zero("drained_path", B_drained - B_drained_expected)
 
-    # eq. (85) and Maxwell reciprocity (eq. 83-84), via the implicit function
-    # theorem: dJbar/dp = -(dR/dp)/(dR/dJbar).
+    # eq:trace-mineral-pressure-tangent and supplementary Maxwell reciprocity:
+    # the implicit-function theorem gives dJbar/dp = -(dR/dp)/(dR/dJbar).
     dR_dp = sp.diff(R, p)
     dJbar_dp = sp.simplify(-dR_dp / dR_dJbar)
     zero("compatible_mineral_pde", J * dJbar_dJ - (p + Ks / Jbar) * dJbar_dp - Jbar)

@@ -15,11 +15,15 @@ from pathlib import Path
 import numpy as np
 from scipy.linalg import logm
 from scipy.optimize import brentq
+from numpy.polynomial.legendre import leggauss
+from run_provenance import observe, complete
 
 ROOT = Path(__file__).resolve().parents[2]
 DECK = ROOT / "moose_app/test/tests/implicit_poroplastic/material_path.i"
 BINARY = ROOT / "moose_app/nonlinear_biot_ad-opt"
 G, K, KS, PHI0, M, BETA = 0.75e9, 1e9, 2.5e9, 0.8, 0.6, 0.4
+PRESSURE_NODES, PRESSURE_WEIGHTS = leggauss(16)
+RUN_PROVENANCE = []
 
 
 def tensor(row, prefix):
@@ -35,8 +39,8 @@ def mineral_volume(elastic_J, pressure):
     return np.exp(log_volume)
 
 
-def energy(Fe, pressure):
-    """Pressure Legendre energy; differentiate independently to obtain tau'."""
+def energy(Fe, pressure, double_prime=False):
+    """Reduced or pressure Legendre energy for independent stress derivatives."""
     Je = np.linalg.det(Fe)
     z = mineral_volume(Je, pressure)
     alpha = 1 - K / (PHI0 * KS)
@@ -44,7 +48,59 @@ def energy(Fe, pressure):
         G / 2 * (Je ** (-2 / 3) * np.sum(Fe * Fe) - 3)
         + K / 2 * np.log(Je) ** 2
         + PHI0 * alpha / (2 * KS) * (pressure * z) ** 2
-        + PHI0 * pressure * z
+        + (0.0 if double_prime else PHI0 * pressure * z)
+    )
+
+
+def energy_stress(Fe, pressure, double_prime=False):
+    """Kirchhoff stress from differences of energy at fixed pressure/history."""
+    Pe = np.zeros((3, 3))
+    for i in range(3):
+        for j in range(3):
+            plus, minus = Fe.copy(), Fe.copy()
+            plus[i, j] += 2e-6
+            minus[i, j] -= 2e-6
+            Pe[i, j] = (energy(plus, pressure, double_prime)
+                        - energy(minus, pressure, double_prime)) / 4e-6
+    return Pe @ Fe.T
+
+
+def pressure_checks(Fe, J, pressure, tau, B):
+    """Hold Fe and total J fixed: pressure probes must not advance plastic flow."""
+    Je = np.linalg.det(Fe)
+    ap = J / Je
+    shape = Fe @ Fe.T
+    drained = (G * Je**(-2/3) * (shape - np.trace(shape)/3 * np.eye(3))
+               + K * np.log(Je) * np.eye(3))
+    double = energy_stress(Fe, pressure, double_prime=True)
+    single = energy_stress(Fe, pressure)
+    total = tau - J * pressure * np.eye(3)
+
+    # Pressure integration uses mineral-volume differences, not the production
+    # closed coefficient. Re-solve the mineral state at each quadrature pressure.
+    def independent_B(p):
+        h = 1e-5
+        return 1 - PHI0 * (mineral_volume((J+h)/ap, p)
+                          - mineral_volume((J-h)/ap, p)) / (2*h)
+    integral = pressure/2 * sum(w * independent_B(pressure*(x+1)/2)
+                               for x, w in zip(PRESSURE_NODES, PRESSURE_WEIGHTS))
+    integrated_total = drained - J * integral * np.eye(3)
+
+    # Independent stress from the energy: use a fourth-order pressure difference
+    # with a wider pressure step to resolve the nested energy differences.
+    h = 1e-3 * KS
+    pressure_tangent = (energy_stress(Fe, pressure-2*h)
+                        - 8*energy_stress(Fe, pressure-h)
+                        + 8*energy_stress(Fe, pressure+h)
+                        - energy_stress(Fe, pressure+2*h)) / (12*h)
+    norm = lambda a: float(np.max(np.abs(a)))
+    return dict(
+        drained_stress=norm(energy_stress(Fe, 0., True)-drained)/G,
+        double_prime_stress=norm(double-(tau-(1-B)*pressure*J*np.eye(3)))/G,
+        stress_transforms=max(norm(single-double-(1-B)*pressure*J*np.eye(3)),
+                              norm(double-B*pressure*J*np.eye(3)-total))/G,
+        pressure_tangent=norm(pressure_tangent-J*(1-B)*np.eye(3))/J,
+        pressure_integral=norm(integrated_total-total)/G,
     )
 
 
@@ -59,6 +115,11 @@ def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotatio
         stress=0.0,
         determinant=0.0,
         accumulated=0.0,
+        drained_stress=0.0,
+        double_prime_stress=0.0,
+        stress_transforms=0.0,
+        pressure_tangent=0.0,
+        pressure_integral=0.0,
     )
     Fpold = np.eye(3)
     accumulated = 0.0
@@ -130,18 +191,11 @@ def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotatio
         if gamma < -1e-12 or gamma * (q - BETA * mean) < -1e-5:
             raise AssertionError("Negative plastic multiplier or dissipation")
         # Numerical energy derivatives supply an independent stress reconstruction.
-        Pe = np.zeros((3, 3))
-        for i in range(3):
-            for j in range(3):
-                plus, minus = Fe.copy(), Fe.copy()
-                plus[i, j] += 2e-6
-                minus[i, j] -= 2e-6
-                Pe[i, j] = (
-                    energy(plus, current_pressure) - energy(minus, current_pressure)
-                ) / 4e-6
         worst["stress"] = max(
-            worst["stress"], float(np.max(np.abs(Pe @ Fe.T - tau))) / G
+            worst["stress"], float(np.max(np.abs(energy_stress(Fe, current_pressure) - tau))) / G
         )
+        for name, error in pressure_checks(Fe, J, current_pressure, tau, row['b_avg']).items():
+            worst[name] = max(worst[name], error)
         Fpold = Fp
     limits = dict(
         mass=1e-10,
@@ -152,6 +206,11 @@ def check(rows, pressure=0.0, transverse=1.0, out_of_plane=1.0, dt=0.02, rotatio
         stress=2e-7,
         determinant=1e-9,
         accumulated=1e-10,
+        drained_stress=2e-7,
+        double_prime_stress=2e-7,
+        stress_transforms=2e-7,
+        pressure_tangent=2e-7,
+        pressure_integral=2e-7,
     )
     for name, value in worst.items():
         if value > limits[name]:
@@ -169,6 +228,7 @@ def run(
     transverse=1.0,
     out_of_plane=1.0,
     monotonic=False,
+    final_stretch=0.8,
     rotation=0.0,
     hardening=0.0,
     cohesion=0.0,
@@ -189,7 +249,7 @@ def run(
         )
     if monotonic:
         text = text.replace("x = '0 1 2 3'", "x = '0 1'").replace(
-            "y = '1 0.8 0.9 0.76'", "y = '1 0.8'"
+            "y = '1 0.8 0.9 0.76'", f"y = '1 {final_stretch:.16g}'"
         )
     text = text.replace("dt = 0.02", f"dt = {dt:.16g}").replace(
         "end_time = 3", f"end_time = {end:.16g}"
@@ -207,8 +267,10 @@ def run(
     text = text.replace("csv = true", "csv = true\n  console = false")
     deck = directory / (name + ".i")
     deck.write_text(text)
+    command = [str(BINARY), "-i", str(deck), "--no-color"]
+    observed = observe(BINARY, command)
     result = subprocess.run(
-        [str(BINARY), "-i", str(deck), "--no-color"],
+        command,
         cwd=directory,
         capture_output=True,
         text=True,
@@ -216,6 +278,9 @@ def run(
     (directory / (name + ".log")).write_text(result.stdout + result.stderr)
     if result.returncode:
         raise RuntimeError(f'MOOSE failed: {name}; see {directory/(name+".log")}')
+    provenance = complete(observed, [deck, directory/(name+"_out.csv")])
+    (directory/(name+'.run.json')).write_text(json.dumps(provenance, indent=2)+'\n')
+    RUN_PROVENANCE.append(provenance)
     with (directory / (name + "_out.csv")).open() as stream:
         return [{k: float(v) for k, v in row.items()} for row in csv.DictReader(stream)]
 
@@ -333,9 +398,12 @@ def main():
         if differences[1] >= differences[0] or differences[1] > 1e-3:
             raise AssertionError(f"Nonaxisymmetric refinement failed: {differences}")
         report["nonaxisymmetric_refinement_differences"] = differences
-        for p in [0.0, 0.5e8, 1e8, 2e8, 4e8]:
+        report["feedback_loading"] = dict(final_axial_stretch=0.65,
+                                          final_pressures_Pa=[0., 2e8, 4e8, 6e8, 8e8, 1e9])
+        for p in report["feedback_loading"]["final_pressures_Pa"]:
             coupled = run_case(
-                directory, f"pressure_{p:g}", pressure=p, end=1.0, monotonic=True
+                directory, f"pressure_{p:g}", pressure=p, end=1.0, monotonic=True,
+                final_stretch=0.65,
             )
             reference = run_case(
                 directory,
@@ -344,8 +412,12 @@ def main():
                 end=1.0,
                 monotonic=True,
                 reference=True,
+                final_stretch=0.65,
             )
             report[f"pressure_{p:g}"] = check_case(coupled, pressure=p)
+            for path in (coupled, reference):
+                if not all(0 < r["solid_fraction"] < 1 for r in path):
+                    raise AssertionError("Feedback path left the admissible solid-fraction range")
             cp, rf = coupled[-1], reference[-1]
             if p == 0 and abs(cp["a_p_avg"] - rf["a_p_avg"]) > 1e-12:
                 raise AssertionError("Pressure-free feedback comparison must coincide")
@@ -362,6 +434,21 @@ def main():
                     a_p_reference=rf["a_p_avg"],
                 )
             )
+        report["feedback_refinement"] = {}
+        for reference_mode, coarse in ((False, coupled), (True, reference)):
+            values = [coarse[-1]["a_p_avg"]]
+            for dt in (0.01, 0.005):
+                rr = run_case(directory, f"feedback_refined_{reference_mode}_{dt}",
+                              pressure=1e9, end=1., monotonic=True, final_stretch=0.65,
+                              reference=reference_mode, dt=dt)
+                if not reference_mode:
+                    report[f"feedback_refined_{dt}"] = check_case(rr, pressure=1e9, dt=dt)
+                values.append(rr[-1]["a_p_avg"])
+            differences = [abs(values[i + 1] - values[i]) for i in range(2)]
+            if differences[1] > 1e-10 and (differences[1] >= differences[0] or differences[1] > 1e-4):
+                raise AssertionError(f"Feedback refinement failed: {differences}")
+            report["feedback_refinement"]["reference" if reference_mode else "consistent"] = dict(
+                final_distention=values, differences=differences)
         if args.curate:
             write_csv(ROOT / "validation/implicit_poroplastic_history.csv", rows)
             write_csv(ROOT / "validation/implicit_poroplastic_feedback.csv", feedback)
@@ -369,6 +456,7 @@ def main():
                                 cohesion_Pa=parameters['cohesion'],
                                 hardening_modulus_Pa=parameters['hardening'])
     report["accepted"] = True
+    report['execution_provenance'] = RUN_PROVENANCE
     report["scope"] = (
         "material state, fixed-current-plastic-state Biot derivative, return consistency; separate PETSc test checks active outer AD"
     )

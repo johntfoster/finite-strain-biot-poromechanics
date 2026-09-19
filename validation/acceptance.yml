@@ -2,6 +2,13 @@ schema_version: 1
 study: finite-deformation solid-water spatial-mass and fixed-pressure Biot verification
 evidence_class: implementation_verification_and_analytical_benchmark
 entries:
+- id: optional_virgin_comparator
+  governing_reduction: an admissible plastic mineral state does not require an admissible virgin comparator
+  observables: [production coefficient, comparator availability, explicit unavailable value, required-companion rejection]
+  authoritative_reference: paper/sections/finite_deformation_biot.tex
+  tolerance: plastic coefficient error <= 1e-10; unavailable coefficient is NaN and availability is zero; required companion rejects the state
+  result: validation/scripts/check_comparator_domain.py
+  status: pass
 - id: ad_time_integrator_storage
   governing_reduction: chain-rule time derivatives of the pulled-back solid and water
     accumulations
@@ -91,6 +98,7 @@ entries:
   status: pass
 - id: implicit_poroplastic_consistency
   publication_parameters: initial cohesion 20 MPa; isotropic hardening modulus 100 MPa; reference solid fraction 0.8
+  feedback_loading: axial stretch 0.65; final pressure 0 to 1 GPa; both transformations retain admissible solid volume fractions and pass endpoint load-step refinement
   governing_reduction: matched logarithmic mineral state at Je=J/a_p with a closed-form
     fixed-current-plastic-state coefficient; implicit exponential flow and yield consistency
   observables:
@@ -98,6 +106,9 @@ entries:
   - mineral EOS
   - centered fixed-state Biot tangent
   - energy-derived stress
+  - drained double-prime calibration and finite-pressure energy extension
+  - relations between double-prime, single-prime and total stress
+  - fixed-plastic-state pressure tangent and pressure integral
   - matrix-logarithm flow
   - determinant increment
   - yield
@@ -106,7 +117,8 @@ entries:
   - increment refinement
   authoritative_reference: paper/sections/finite_deformation_biot.tex
   tolerance: mass and EOS <= 1e-10; Biot <= 5e-8; flow and determinant <= 1e-9; normalized
-    yield <= 1e-9; normalized stress <= 2e-7; normalized objectivity <= 1e-10
+    yield <= 1e-9; normalized stress, drained stress, double-prime stress, stress transformations,
+    pressure integral and dimensionless pressure tangent <= 2e-7; normalized objectivity <= 1e-10
   result: validation/implicit_poroplastic_verification.json
   status: pass
 - id: implicit_poroplastic_outer_ad

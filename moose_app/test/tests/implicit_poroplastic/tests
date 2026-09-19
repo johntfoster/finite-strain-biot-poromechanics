@@ -1,6 +1,12 @@
 [Tests]
-  design = 'validation/manuscript_constitutive_audit_2026-09-08.md'
+  design = 'validation/equation_to_moose_map.yml'
   issues = ''
+  [virgin_comparator_domain]
+    type = RunCommand
+    command = 'python3 ../../../../validation/scripts/check_comparator_domain.py'
+    max_time = 120
+    requirement = 'An unavailable optional virgin comparator shall leave the admissible plastic state solvable, while a companion stress law requiring it shall fail.'
+  []
   [implicit_plastic_active_jacobian]
     type = PetscJacobianTester
     input = active_jacobian.i

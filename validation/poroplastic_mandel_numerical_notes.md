@@ -103,8 +103,8 @@ perfectly plastic response before the pronounced late-time pattern. The
 approved isotropic hardening law increases cohesion with accumulated plastic
 multiplier inside the same local return. Existing zero-hardening tests remain
 in place. On the corrected fine grid, the maximum transverse RMS variation of
-B − B_el is 2.38e-16 over the saved history. Its final unscaled second difference
-along X is 1.15e-6, compared with 4.07e-6 on the corrected coarse grid.
+B − B_el is 2.34e-16 over the saved history. Its final unscaled second difference
+along X is 1.15e-6, compared with 4.06e-6 on the corrected coarse grid.
 The minimum sampled fixed-pressure acoustic determinant is 0.03797 GPa^2.
 Halving the fine-grid time step to 0.00125 s retains transverse variation below
 7.4e-16 and a positive sampled acoustic minimum of 0.03795 GPa^2. The maximum

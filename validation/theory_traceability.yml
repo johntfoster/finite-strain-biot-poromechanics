@@ -62,6 +62,12 @@ implementation:
     hardening: optional linear increase of cohesion with accumulated plastic multiplier; zero modulus recovers perfect plasticity
     publication_parameters: initial cohesion 20 MPa and hardening modulus 100 MPa in both material-point and coupled examples; material-point reference solid fraction 0.8 retains admissible pore volume
     hardening_history: previous accumulated multiplier is fixed during the local solve; its current increment retains outer AD dependence
+    calibration: zero-pressure tests supply the double-prime skeleton response through K and G; the mineral law and reference solid fraction determine its pressure extension
+    pressure_verification: independent energy differences recover both effective stresses; pressure probes and quadrature fix total deformation and plastic history
+    feedback_comparator: substitutes the virgin coefficient only in the stress transformation, retaining the double-prime law; a constitutive sensitivity experiment
+    feedback_loading: simultaneous compression to axial stretch 0.65 and pressure ramps ending between zero and 1 GPa; endpoint distention checked under load-step refinement for both transformations
+    comparator_domain: optional virgin coefficient is evaluated after convergence; an unavailable or disabled comparator is NaN with availability zero, and cannot restrict production states
+    initial_history: optional isotropic plastic distention initializes Fp and the matching accumulated multiplier; the default remains the virgin state
 evidence:
   local_elastic_tangent: validation/mandel_implicit_biot.yml
   outer_ad_jacobian: moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i

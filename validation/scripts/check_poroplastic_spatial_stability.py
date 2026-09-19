@@ -97,6 +97,7 @@ def main():
                ROOT/'moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C',
                ROOT/'moose_app/include/materials/ADImplicitPoroplasticBiotMaterial.h',
                ROOT/'moose_app/test/tests/poroplastic_mandel/compression.i']
+    sources.append(ROOT/'validation/scripts/run_provenance.py')
     result = dict(status='complete', accepted=True, cases=records,
                   corrected_spatial_differences=spatial, corrected_temporal_differences=temporal,
                   assumptions=['fixed-pressure in-plane active acoustic tangent',

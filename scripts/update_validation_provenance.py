@@ -12,12 +12,17 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "validation/provenance.yml"
 
 FILES = [
+    "Makefile",
+    "scripts/reproduce_examples.py",
     ".devcontainer/Dockerfile",
     ".devcontainer/devcontainer.json",
     ".devcontainer/post-create.sh",
     ".github/workflows/pages.yml",
     "tools/setup_reproduction.sh",
     "scripts/build_site.py",
+    "scripts/check_equation_traceability.py",
+    "tools/tests/test_equation_traceability.py",
+    "validation/consistency_review_2026-09-18.md",
     "validation/poroplastic_mandel_numerical_notes.md",
     "validation/poroplastic_spatial_stability.md",
     "validation/poroplastic_spatial_stability.json",
@@ -132,6 +137,7 @@ FILES = sorted(set(FILES) | {
         "moose_app/test/tests/**/*.i", "moose_app/test/tests/**/tests",
         "validation/scripts/*.py", "figures/*.png", "figures/*.pgf", "figures/*.pdf",
         "docs/assets/img/*.png", "docs/*.html",
+        "validation/*_execution_provenance.json",
     )
     for path in ROOT.glob(pattern)
 })
@@ -150,8 +156,8 @@ def main() -> int:
     if missing:
         raise SystemExit("missing provenance inputs: " + ", ".join(missing))
     record = {
-        "schema_version": 1,
-        "environment": {
+        "schema_version": 2,
+        "required_environment": {
             "moose_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
             "moose_dev": "2026.02.20",
             "moose_libmesh": "2026.02.18_f8a1758",
@@ -181,9 +187,35 @@ def main() -> int:
         },
         "sha256": {name: sha256(ROOT / name) for name in FILES}
     }
+    # Package requirements describe the tested setup, never an observed run.
+    # Preserve observations made by the drivers; do not relabel historical data
+    # with the environment in which this hashing command happens to execute.
+    record['execution_provenance'] = execution_records()
     OUTPUT.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(OUTPUT.relative_to(ROOT))
     return 0
+
+
+def execution_records():
+    missing = {'status': 'not_recorded',
+               'reason': 'Historical results lack execution-time observations; rerun the driver to record them'}
+    records = {}
+    for name, path in (
+        ('material_point', 'validation/implicit_poroplastic_verification.json'),
+        ('coupled_plastic', 'validation/poroplastic_mandel_verification.json'),
+    ):
+        value = json.loads((ROOT/path).read_text())
+        records[name] = value.get('execution_provenance', missing)
+    stability = json.loads((ROOT/'validation/poroplastic_spatial_stability.json').read_text())
+    records['spatial_stability'] = {
+        name: case.get('run_manifest', {}).get('execution_provenance', missing)
+        for name, case in stability['cases'].items()}
+    mandel = ROOT/'validation/mandel_execution_provenance.json'
+    records['elastic_mandel'] = json.loads(mandel.read_text()) if mandel.exists() else missing
+    supplementary = ROOT/'validation/supplementary_execution_provenance.json'
+    records['supplementary'] = (json.loads(supplementary.read_text())
+                                if supplementary.exists() else missing)
+    return records
 
 
 if __name__ == "__main__":

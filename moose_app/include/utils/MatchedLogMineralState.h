@@ -2,7 +2,9 @@
 
 #include "MooseError.h"
 #include "metaphysicl/raw_type.h"
+#include <algorithm>
 #include <cmath>
+#include <limits>
 
 /** Matched logarithmic mineral state on the positive-tangent branch.
  * Solve in log(volume) to preserve positivity. Raw bracketing selects the branch;
@@ -40,6 +42,11 @@ matchedLogMineralVolume(const T & J, const T & pressure, double K, double Ks, do
   for (unsigned int i = 0; i < 100; ++i)
   {
     const double mid = 0.5 * (lo + hi);
+    // Stop at floating-point resolution; AD Newton updates below recover sensitivities.
+    const double tolerance = 4.0 * std::numeric_limits<double>::epsilon() *
+                             std::max(1.0, std::max(std::abs(lo), std::abs(hi)));
+    if (hi - lo <= tolerance || mid == lo || mid == hi)
+      break;
     if (residual(mid) > 0.0)
       hi = mid;
     else
@@ -57,7 +64,7 @@ matchedLogMineralVolume(const T & J, const T & pressure, double K, double Ks, do
   return z;
 }
 
-/** Equation (68), evaluated with the mineral volume from equation (63).
+/** Manuscript eq:poroplastic-biot-correction, using eq:verification-mineral-factors.
  * J is total volume; plastic history enters the mineral solve through Je.
  */
 template <typename T>

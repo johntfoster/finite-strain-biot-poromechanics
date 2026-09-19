@@ -10,8 +10,8 @@ ADReferenceComponentFluxTerm::validParams()
       "Atomic reference-flux contribution -Grad(test) dot W. Instantiate independently for "
       "phase advection, unresolved dispersion, molecular diffusion, or any other mass flux in "
       "the reference component balances. A solid-phase deck omits bulk advection and supplies "
-      "only J F^{-1} j_disp and J F^{-1} j_diff for "
-      "eq:solid_reference_solid_component_balance.");
+      "only J F^{-1} j_disp and J F^{-1} j_diff. The single-water Biot application "
+      "uses the Darcy flux in manuscript eq:fluid-pressure-weak-residual.");
   params.addRequiredParam<MaterialPropertyName>("reference_flux_name",
                                                  "AD reference component-flux property.");
   params.addParam<Real>("scale", 1.0, "Signed flux multiplier.");

@@ -63,7 +63,7 @@
     {
       "biot": "moose_app/include/utils/MatchedLogMineralState.h",
       "master": "moose_app/include/utils/MatchedLogMineralState.h",
-      "sha256": "c96b27088968cbb4f2640e9a6d3cf17ca3871c52cc6cdd4d2014fa3184be6bff"
+      "sha256": "4227605bb143421379a654c810cb19d711c8afcec2561bbc1df041be0e0ab4aa"
     },
     {
       "biot": "moose_app/include/postprocessors/ADMaterialScalarL2Error.h",
@@ -78,7 +78,7 @@
     {
       "biot": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C",
       "master": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C",
-      "sha256": "98d22a1419b61f62bc15226f680ede04b3e4d2cdaefe5c8980f478b444b1b948"
+      "sha256": "383b1faa093217673c90b6abb95c4a522fc0ab41fea4af8be937fdc899c58875"
     },
     {
       "biot": "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C",
@@ -167,7 +167,7 @@
     }
   ],
   "manifest_sha256": "88073da3c39d0ea18e21a970d9d6440d04ec54e938ce620bc5dca6e9a6143ae9",
-  "master_commit": "9674548eac2d11f20efcb045ebe5ff344a43794a",
-  "synchronized_at_utc": "2026-09-14T05:47:12.702171+00:00",
+  "master_commit": "7f8979d30b37392a72d8d396bf7d7f8ff2a61c8e",
+  "synchronized_at_utc": "2026-09-18T23:02:20.997553+00:00",
   "version": 1
 }

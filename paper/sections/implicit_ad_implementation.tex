@@ -12,10 +12,13 @@ provides the derivatives of these calculations for Newton's method.
 At each integration point, the elastic or poroplastic constitutive update
 solves the nonlinear scalar residual
 \eqref{eq:verification-mineral-factors} using
-\(x=\ln\bar J\) as the numerical unknown on the branch defined by
-\eqref{eq:trace-mineral-stability-domain}.  A bracketing search locates the
-root, and Newton iterations carried out with AD variables at that root supply
-the first and second derivatives of the scalar equation.  After convergence,
+\(x=\ln\bar J\) as the numerical unknown, restricting the solution to satisfy
+\eqref{eq:trace-mineral-stability-domain}.  A sign-changing interval is
+constructed within the region where the scalar residual has positive slope,
+and bisection determines the mineral solution.  Newton updates evaluated
+with AD variables then recover the solution's derivatives with respect to
+elastic volume and pore pressure, which enter the constitutive and global
+Newton Jacobians.  After convergence,
 the update recovers \(\bar J=\exp x\).  Intrinsic density follows from
 \(\bar\rho_s=\bar\rho_{s0}/\bar J\), and the volume fraction is
 \(\phi_s=\rho_s/\bar\rho_s\), using the current solid partial density.
@@ -25,12 +28,12 @@ scalar derivative.
 
 When plastic flow occurs, the seven equations
 \eqref{eq:implicit-plastic-flow-increment}--\eqref{eq:discrete-consistency}
-determine the six independent components of \(\mbf W\) and
+determine the six independent components of \(\bs\Delta^p\) and
 \(\Delta\gamma\).  Each Newton iteration recomputes \(J^e\), mineral
 volume, \(B\), and driving stress from the candidate plastic state.
 For positive \(H\), the cohesion is evaluated at
-\(\kappa^p_n+\Delta\gamma\); its derivative therefore enters the same
-local consistency Jacobian.  Both \(\mbf F^p_n\) and \(\kappa^p_n\) remain
+\(\gamma_n+\Delta\gamma\); its derivative therefore enters the same
+local consistency Jacobian.  Both \(\mbf F^p_n\) and \(\gamma_n\) remain
 fixed during the current solve.
 Forward-mode differentiation evaluates the local Jacobian with respect to
 these seven unknowns.  Newton iteration first solves their values.  At the
@@ -92,9 +95,10 @@ Let \(\Omega_0\) be the solid reference domain, and let \(\delta\mbf u\),
 \(\mbf u=\mbf x-\mbf X\), pressure, and solid partial density.  Let
 \(\Gamma_t\) and \(\Gamma_f\) be the portions of the reference boundary with
 prescribed nominal traction
-\(\bar{\mbf t}_0=\mbf P\mbf N\) and prescribed outward referential fluid mass
-flux \(\bar m_f=\mbf W_f\mathbin{\cdot}\mbf N\), respectively, where
-\(\mbf N\) is the outward unit normal.  The displacement and pressure test
+\(\mbf T_0=\mbf P\mbf N\) and prescribed outward referential fluid mass
+flux \(M_f=\mbf W_f\mathbin{\cdot}\mbf N\), respectively, where
+\(\mbf N\) is the outward unit normal to the boundary in the reference
+configuration.  The displacement and pressure test
 functions vanish on their corresponding essential boundaries.  With zero body
 force, the residuals are
 \begin{align}
@@ -102,14 +106,14 @@ force, the residuals are
  &=\int_{\Omega_0}\nabla_{\mbf X}\delta\mbf u:
  \left(\mbf P^{\prime\prime}-BpJ\mbf F^{-T}\right)\dd V_0 \notag\\
  &\quad-\int_{\Gamma_t}\delta\mbf u\mathbin{\cdot}
- \bar{\mbf t}_0\dd A_0,
+ \mbf T_0\dd A_0,
  \label{eq:momentum-weak-residual}\\
  R_p(\delta p)
  &=\int_{\Omega_0}\delta p\pder{}{t}
  \left[J(1-\phi_s)\bar\rho_f(p)\right]\dd V_0 \notag\\
  &\quad-\int_{\Omega_0}\nabla_{\mbf X}\delta p\mathbin{\cdot}
  \mbf W_f\dd V_0 \notag\\
- &\quad+\int_{\Gamma_f}\delta p\,\bar m_f\dd A_0,
+ &\quad+\int_{\Gamma_f}\delta p\,M_f\dd A_0,
  \label{eq:fluid-pressure-weak-residual}\\
  R_{\rho_s}(\delta\rho_s)
  &=\int_{\Omega_0}\delta\rho_s
@@ -175,40 +179,10 @@ plastic increment remains in the outer AD Jacobian.  Positive plastic
 distention increases pore volume at fixed total volume and pressure and
 therefore contributes positively to water storage.
 
-\subsection{Verification of the discrete residuals}
-
 At a finite time step, the chain-rule rates used above are generally not equal
-to backward differences of the complete nonlinear accumulations.  We therefore
-measure the referential solid-mass drift and verify that it decreases under
-time-step refinement.  A separate elastic BDF2 regression confirms that the same
-chain-rule calculation accepts rates from a different MOOSE time integrator
-without modification.
-
-The Jacobian tests check the derivatives of these discrete residuals,
-including the constitutive rates entering fluid storage.  PETSc forms a finite-difference approximation of
-the residual Jacobian and compares it with the Jacobian assembled from the
-MOOSE AD derivatives.  The relative and absolute Frobenius-norm differences
-must remain below \(10^{-7}\) and \(10^{-5}\), respectively.  The elastic
-coupled-field test includes momentum, solid mass, fluid storage, and Darcy
-flow.  A separate active-plastic test applies the same comparison to algebraic
-residuals containing the returned stress invariants, plastic distention, and
-Biot coefficient at nonzero pressure and unequal principal stretches.  Each
-finite-difference perturbation repeats the return mapping, so the comparison
-tests the derivative of the converged local update carried into the outer
-Newton Jacobian.  A further coupled poroplastic test includes all four field
-residuals during compression and the subsequent hold.  A temporal predictor
-moves the initial Newton guess away from the elastic--plastic switching
-surface, and every assembled Jacobian is compared on the resulting path.
-The finite-difference scale parameter is \(10^{-9}\) in the unit-scaled diagnostic;
-the same relative and absolute tolerances apply.  At the switching surface
-itself, perturbations can select different active branches, so a single smooth
-Jacobian does not describe both sides.
-
-An independent check perturbs total volume, pressure, solid partial density,
-and plastic distention at sampled quadrature points, solves the scalar
-mineral equation independently, and differences the complete water
-accumulation.  It verifies the plastic storage contribution separately from
-the assembled Jacobian.  Integrated Darcy outflow and the pressure-boundary
-reaction are compared with water-mass change.  The reaction sums only nodes
-carrying pressure degrees of freedom.  Time-step refinement measures the
-mass drift introduced by the chain-rule time discretization.
+to backward differences of the complete nonlinear mass accumulations.
+The resulting mass-balance drift is assessed by time-step refinement in
+Sec.~\ref{sec:mandel-verification}.
+Independent finite-difference checks verify the constitutive storage terms
+and the assembled AD Jacobian.  The companion code repository documents
+the test procedures and tolerances.

@@ -4,6 +4,7 @@ from pathlib import Path
 import tempfile
 import subprocess
 import unittest
+import re
 
 ROOT = Path(__file__).resolve().parents[2]
 spec = importlib.util.spec_from_file_location('build_site', ROOT/'scripts/build_site.py')
@@ -12,6 +13,16 @@ spec.loader.exec_module(site)
 
 
 class SiteTests(unittest.TestCase):
+    def test_numbered_reproduction_recipe_matches_make(self):
+        text = (ROOT/'docs/reproduction.html').read_text()
+        steps = text.split('<h3>1 ·', 1)[1].split('</section>', 1)[0]
+        commands = re.findall(r'make ([a-z-]+)', steps)
+        expected = re.search(r'^reproduce: (.*)$', (ROOT/'Makefile').read_text(), re.M).group(1).split()
+        # The numbered recipe exposes build explicitly; test also requires it.
+        commands = [name for name in commands if name != 'build']
+        commands.insert(0, 'sync-check')  # Step 1 spells out the synchronization command.
+        self.assertEqual(commands, expected)
+
     def test_source_paths_cannot_escape_repository(self):
         for path in ('../../outside', '/etc/passwd', 'https://example.com/file'):
             with self.subTest(path=path), self.assertRaises(ValueError):

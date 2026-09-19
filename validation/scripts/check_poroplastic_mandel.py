@@ -17,6 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import numpy as np
 from scipy.optimize import brentq
+from run_provenance import observe, complete
 
 ROOT = Path(__file__).resolve().parents[2]
 DECK = ROOT / 'moose_app/test/tests/poroplastic_mandel/compression.i'
@@ -67,13 +68,15 @@ def run(name, nx=10, ny=1, dt=.01, end=.7, samples=False, extra=(), reuse=False)
     manifest = base.with_suffix('.run.json')
     signature = signature.hexdigest()
     cached = (reuse and manifest.exists() and base.with_suffix('.csv').exists()
-              and json.loads(manifest.read_text()).get('signature') == signature)
+              and json.loads(manifest.read_text()).get('signature') == signature
+              and 'execution_provenance' in json.loads(manifest.read_text()))
     if not cached:
         manifest.unlink(missing_ok=True)
         if samples:
             for path in RUNTIME.glob(name + '_storage_samples_*.csv'):
                 path.unlink()
         print('RUN', name, flush=True)
+        observed = observe(EXE, cmd)
         with base.with_suffix('.log').open('w') as log:
             subprocess.run(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True)
     rows = read(base.with_suffix('.csv'))
@@ -84,7 +87,10 @@ def run(name, nx=10, ny=1, dt=.01, end=.7, samples=False, extra=(), reuse=False)
         raise AssertionError(f'{name} changed the prescribed refinement step')
     if not all(np.isfinite(v) for r in rows for v in r.values()):
         raise AssertionError(f'{name} has nonfinite output')
-    manifest.write_text(json.dumps(dict(signature=signature,completed=True))+'\n')
+    if not cached:
+        evidence = complete(observed, [base.with_suffix('.csv')])
+        manifest.write_text(json.dumps(dict(signature=signature, completed=True,
+                                            execution_provenance=evidence))+'\n')
     return rows, [arg.replace(str(ROOT) + '/', '') for arg in cmd]
 
 
@@ -174,14 +180,18 @@ def elastic_reference(reuse=False):
     manifest = base.with_suffix('.run.json')
     signature = signature.hexdigest()
     cached = (reuse and manifest.exists() and base.with_suffix('.csv').exists()
-              and json.loads(manifest.read_text()).get('signature') == signature)
+              and json.loads(manifest.read_text()).get('signature') == signature
+              and 'execution_provenance' in json.loads(manifest.read_text()))
     if not cached:
         manifest.unlink(missing_ok=True)
+        observed = observe(EXE, cmd)
         with base.with_suffix('.log').open('w') as log:
             subprocess.run(cmd,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,check=True)
     rows=read(base.with_suffix('.csv'))
     if abs(rows[-1]['time']-.24)>1e-10: raise AssertionError('Elastic reference incomplete')
-    manifest.write_text(json.dumps(dict(signature=signature,completed=True))+'\n')
+    if not cached:
+        manifest.write_text(json.dumps(dict(signature=signature, completed=True,
+            execution_provenance=complete(observed, [base.with_suffix('.csv')])) )+'\n')
     return rows,[arg.replace(str(ROOT)+'/', '') for arg in cmd]
 
 
@@ -361,7 +371,12 @@ def main():
         'moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C',
         'moose_app/src/kernels/ADReferenceSolidMomentum.C',
         'moose_app/include/utils/MatchedLogMineralState.h']]
+    sources.append(ROOT/'validation/scripts/run_provenance.py')
     record['source_sha256']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
+    names = ['storage', 'jacobian', *cases, 'elastic_reference', 'elastic_limit']
+    record['execution_provenance'] = {
+        name: json.loads((RUNTIME/(name+'.run.json')).read_text())['execution_provenance']
+        for name in names}
     (RUNTIME/'verification.json').write_text(json.dumps(record,indent=2)+'\n')
     if args.curate:
         write(ROOT/'validation/poroplastic_mandel_history.csv',cases['spatial_fine'])

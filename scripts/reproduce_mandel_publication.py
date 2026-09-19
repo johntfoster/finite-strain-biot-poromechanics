@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'validation/scripts'))
 import check_mandel_implicit_biot as mandel
+from run_provenance import observe, complete
 
 # Resolve the overshoot, then increase the step to 0.016 s during drainage.
 PROFILE_TIMES = sorted(set(
@@ -104,6 +105,10 @@ def curate(output, benchmark_summary):
                     '--exodus', str(output / 'large_fine.e')], check=True, cwd=ROOT)
     record_path = ROOT / 'validation/mandel_implicit_biot.yml'
     record = yaml.safe_load(record_path.read_text())
+    evidence_path = output/'execution_provenance.json'
+    evidence = (json.loads(evidence_path.read_text()) if evidence_path.exists() else
+                {'status': 'not_recorded', 'reason': 'Historical run lacks execution-time observations'})
+    record['execution_provenance'] = evidence
     record['finite_deformation_continuation'].pop('spatial_field_regeneration', None)
     if benchmark_summary:
         benchmark = json.loads(benchmark_summary.read_text())
@@ -158,6 +163,7 @@ def curate(output, benchmark_summary):
             result['coarse_maximum_referential_solid_mass_drift_l2'] = coarse_mass
         record['finite_deformation_continuation']['sensitivity'][name] = result
     record_path.write_text(yaml.safe_dump(record, sort_keys=False))
+    (ROOT/'validation/mandel_execution_provenance.json').write_text(json.dumps(evidence, indent=2)+'\n')
     print(json.dumps({'status': 'PASS', 'continuation': metrics}, indent=2))
 
 
@@ -174,12 +180,15 @@ def main():
     output = args.artifacts_dir.resolve()
     if not args.curate_existing:
         output.mkdir(parents=True, exist_ok=False)
+        observed = observe(args.executable, [sys.executable, *sys.argv])
         if args.verify_benchmark:
             subprocess.run([sys.executable, str(ROOT / "validation/scripts/check_mandel_implicit_biot.py"),
                             "--executable", str(args.executable.resolve()), "--artifacts-dir", str(output / "benchmark")],
                            check=True, cwd=ROOT)
             args.benchmark_summary = output / "benchmark/verification_summary.json"
         run_cases(output, args.executable.resolve())
+        evidence = complete(observed, sorted(output.glob('*.csv'))+sorted(output.glob('*.e')))
+        (output/'execution_provenance.json').write_text(json.dumps(evidence, indent=2)+'\n')
     if args.curate or args.curate_existing:
         curate(output, args.benchmark_summary)
 

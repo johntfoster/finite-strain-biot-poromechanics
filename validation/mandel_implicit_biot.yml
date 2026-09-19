@@ -18,9 +18,9 @@ metrics:
   maximum_load_relative_error: 0.0023756394890999946
   maximum_biot_reference_error: 8.881586539999375e-06
   maximum_biot_identity_l2: 5.1281786958836e-17
-  maximum_biot_centered_difference_l2: 1.5433905678451e-12
-  maximum_referential_solid_mass_drift_l2: 4.3951902499092e-10
-  maximum_mineral_eos_residual_l2: 2.4999783516314e-17
+  maximum_biot_centered_difference_l2: 1.5419654674004e-12
+  maximum_referential_solid_mass_drift_l2: 4.3951905579081e-10
+  maximum_mineral_eos_residual_l2: 2.5225400277337e-17
   mandel_cryer_pressure_increase: 0.027381295374146575
   mandel_cryer_peak_time_seconds: 0.014
   maximum_spatial_refinement_pressure_difference: 0.002490604417530413
@@ -29,7 +29,7 @@ metrics:
   analytical_12_vs_128_root_pressure_difference: 4.429042450450072e-07
   analytical_12_vs_128_root_displacement_difference_m: 2.160643166550218e-13
   maximum_horizontal_displacement_profile_normalized_error: 0.0006794105099420434
-  maximum_vertical_displacement_profile_normalized_error: 9.700644828429875e-14
+  maximum_vertical_displacement_profile_normalized_error: 9.948401965501757e-14
 profile_figure:
   classification: early-refined small-load profile run for the publication figure
   mesh:
@@ -44,7 +44,7 @@ profile_figure:
   - 0.206
   - 0.398
   pressure_profile_line_y_m: 0.05
-  maximum_plotted_pressure_profile_normalized_error: 0.009800931766740423
+  maximum_plotted_pressure_profile_normalized_error: 0.009800931766803014
   mandel_cryer_overshoot_demonstrated_at_seconds: 0.02
 finite_deformation_continuation:
   classification: synthetic finite-deformation implementation demonstration
@@ -71,15 +71,15 @@ finite_deformation_continuation:
     final_biot_minimum: 0.58209924671994
     final_biot_average: 0.58219459009679
     final_biot_maximum: 0.58224939716739
-    maximum_intrinsic_solid_density_ratio: 1.042620179423603
+    maximum_intrinsic_solid_density_ratio: 1.0426201794236027
     final_average_biot_relative_departure_from_reference: 0.02967568317201667
-    maximum_biot_identity_l2: 4.6829394935328e-17
-    maximum_referential_solid_mass_drift_l2: 2.7851894967972e-05
-    maximum_mineral_eos_residual_l2: 2.4208483193636e-17
+    maximum_biot_identity_l2: 4.6945015734244e-17
+    maximum_referential_solid_mass_drift_l2: 2.7851894967973e-05
+    maximum_mineral_eos_residual_l2: 2.4405154778272e-17
     final_vertical_nominal_stress_pa: -214958859.88189
     last_snapshot_time_seconds: 0.7
     last_snapshot_intrinsic_solid_density_ratio_range:
-    - 1.035646692887852
+    - 1.0356466928878523
     - 1.0357106810841445
   sensitivity:
     spatial_20x2_vs_40x4_at_dt_0p002:
@@ -88,7 +88,7 @@ finite_deformation_continuation:
     temporal_dt_0p004_vs_0p002_on_40x4:
       maximum_pressure_difference_over_peak: 0.003283046274353241
       maximum_average_biot_difference: 3.563407927997808e-05
-      coarse_maximum_referential_solid_mass_drift_l2: 5.5726726702781e-05
+      coarse_maximum_referential_solid_mass_drift_l2: 5.5726726702779e-05
 reproduction:
   build: make build
   tests: make test
@@ -99,3 +99,312 @@ reproduction:
   executable: moose_app/nonlinear_biot_ad-opt
   input: moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i
 provenance: validation/provenance.yml
+execution_provenance:
+  schema_version: 1
+  captured_at_utc: '2026-09-18T23:06:49.778426+00:00'
+  python: 3.14.0
+  packages:
+    numpy: 2.4.2
+    scipy: 1.17.1
+    sympy: 1.14.0
+    pandas: 3.0.1
+    matplotlib: 3.10.8
+    pyyaml: 6.0.3
+  conda_packages:
+    moose-dev:
+      version: 2026.02.20
+      build: openmpi
+    moose-libmesh:
+      version: 2026.02.18_f8a1758
+      build: openmpi_0
+    moose-tools:
+      version: 2026.02.16
+      build: py314hc4e95f2_0
+    openmpi:
+      version: 5.0.8
+      build: h611b0e2_111
+  framework_commit: abafb58b67a6037c6723ffeb19647c84484466da
+  executable:
+    path: moose_app/nonlinear_biot_ad-opt
+    sha256: 07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c
+  command:
+  - python
+  - scripts/reproduce_mandel_publication.py
+  - --verify-benchmark
+  - --curate
+  outputs:
+    .agent-runtime/mandel-publication/20260918T230649647641Z/large_fine.csv: f1cb06654744e81ff0273a8e4650a86dfcc1923812ae4f9bc275e1d9fb7a07d8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/large_spatial_coarse.csv: ee27674617d231c08c5ee1cb9aa97a866678ad377b228748a42b40743d958f39
+    .agent-runtime/mandel-publication/20260918T230649647641Z/large_temporal_coarse.csv: 9d33186cfadf8e774668936c47ab033244b0479dc97f5ba2c8c3041afb00c319
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report.csv: 226526345d6bd51c81d4712a0d268ab92c4f475e261540d8c2c16adb012522ba
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0001.csv: a51c987e7455e63d5ae35a367893422b53912c70b9cbe028115c05e540f963cd
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0002.csv: 886e976829f75b00c5c3dd15b7b45a7ae614e9a230dab79aca661cde82d0d73a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0003.csv: caea966db8d93e9f1df7c0b794c49ee21ff0688d7caab9a559056706d468fbd8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0004.csv: d97d5849325b608cf9710f14b219ac57ef24f9692949ee7970d80033683fc1ed
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0005.csv: fff8932c412ffa4cb32eb7e151f7c2499fdd7a6103484e4f1a9cf20b318b0088
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0006.csv: d254335c649285cf46d535deaccc6935b5b656bf16710386d8eee64fa1bda709
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0007.csv: 787f32144350e486b28fa904037be80313a47d7264ccda4b32319ac1a4872f1f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0008.csv: aa3cf2a0499a5051147d744c6e4b36ea46119e5ae8b81c7396096d4fbdbbd9f3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0009.csv: 208d3c25f8a4c79d1e677a35a387611f6a1e37a1d128cf3b9ccfdd17f9b49a61
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0010.csv: 11629189b03b7ec315aa76c92a31253dbed775fb3021f27721ed835487295606
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0011.csv: 380eea539c5d74d66b20c43fe1681cc8079c5dca3de6574152dcf2f17a558957
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0012.csv: 03762cfd2c02586ab84876a6325bdde0115c9522e7876a2efdcea0a41bd5dc7e
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0013.csv: 3107cb95d141c2be14e87a2debafd9851e7af951a8d376214f2511e107519534
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0014.csv: cf6d391084b908d560af4822bb8d749dfdcc534ae9eb6d6569101ed607e27456
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0015.csv: af89c50a3fff53317dbb982b3f0e9a0e59b82e3fde6363673054be81e746f465
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0016.csv: e473c7a02f78382389be0ac7999b84e40a5c4058460cf3d1b07de2e171c6009f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0017.csv: 29ed161c9c7f279f5f6e1c14ad265f8e048c6b9dd4b209db579c7e949577b88f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0018.csv: a01d6b9d02cde31a1f5b41520b8b320008f12fb82d131aae4c51a0d8a399b598
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0019.csv: c98a061fe8ee17c0cd95cd0b2f078e5d704f81ab16281ebb4e940e6ac69655b7
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0020.csv: 0f4ebfb1924c86df1763b45a29134fc1cfb0ba1e7e6452053004167f75393fb8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0021.csv: 56c5803891168676a45d6f0d0b4506bb8a65eabb35bcc523467073d2da2b7b4e
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0022.csv: a797efacbeefc9b9c0c8e5cee0a9f89ed4eaeecf6fcee9bd972c32ceaf8d4e2a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0023.csv: 33e9ccf4e1aed7b675ac53b556438fc749f23962861f409dddb966a2f68aaf79
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0024.csv: 88e930796dfceb42a6df30ddd25b13f986ea40787b69bfd4b646c8f67b18a97a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0025.csv: 1f9d7bc6dd73d4e82f2d2c9b313d086f796c5b6cbc3465a012c90ab4b786e7ce
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0026.csv: 0146cebb2bca507b262f096a7d8bdf3e59838b24ad6a0806afcdb2c9ca289792
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0027.csv: 3d8d0c86a68374b156f24741a22d41bcb21cde2dc0d28683d2391334be3a4973
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0028.csv: b690625c576de5adf9a7887d2e0c4d0cccde73ae4a6e87132e0f2ace3441e53c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0029.csv: 31d0dafb1b95ea763960a40c89c59d760b80624c20e8d69933ade0085795a944
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0030.csv: a7956e4c12722d7f440eed77ac9a568180ac9a8d17ceb03dc5e7e43545274d2d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0031.csv: 68e511d16fd4201ef20ddb1408e836a8082be813920550e2dbce22c9df66cec2
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0032.csv: 3d055d8bd254cc1564d2b8789f06043983c859b1ee86d084c26e720a6268c034
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0033.csv: e2d2892514f295f5b5f3f5e19fd6951571d10183b3a10b5a6f271bf3db48f13f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0034.csv: 6ada2931a8a03699529b6212ce7f99a4e462d1081a6ddcaaab26a827944ba3d1
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0035.csv: c21e4685046112b955fb1c635b56d1ecce085b5721948c514480714ccafd7481
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0036.csv: 2ce173cd5bb6b3b641026ceb03d51e577059cd3a067629be33e463759cb9e299
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0037.csv: eb524e7c36235ce677603cb41ba0cfbf02106603c3b3c7b9da5ab205a5187f78
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0038.csv: fe20c170ac389ec9ca543f0eae458ab1c4c75adcfe6699deb5765306efd637bb
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0039.csv: 3a5bb732b220cf0f2f9e6877f345d72ca84c53d14f0637a5892cd583bdc4b644
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0040.csv: 0712ecad15112271f195f52997f9b1050bb37d435bb6ead40ea47e7a1ebe3cef
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0041.csv: e7e711004092b82a6089867733edcb78b51e01230f3c2955c270febf4d54af8f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0042.csv: 8d7f6475465089edd333703e403c40b8e0a6e794e1460d1b8829f159a30c6326
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0043.csv: 9d0c5967af43f52b8a196cfafc3dce069644811896d50b0f45fe3d77404ea5f8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0044.csv: 26fd4d73bc4c557ae3e40f995f46fa1d3c0b329fa75cbd7f3c41c0828ed27de5
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0045.csv: 0c196fec62cd96f7cb555923f9ca7f030517fa5f1a7953dd2b510f737c4148e4
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0046.csv: d0b02ba19b4ab417787b3c357baab7064cee9bd28ff7fb2bd8d709b2745e69e3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0047.csv: 4412c8134ce8ca60e114c26c42ec312a02f23c13757e73ed18d67a9936fef5cf
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0048.csv: aac2a77e9d10f579a1177518f2a0afeeacc10c9de3d4d35507291aec6a992b63
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0049.csv: 336f41d39e43bf1a39b940d25af20763c278b47b9d33757edb8057a5606295f6
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0050.csv: 69b099c5a18724401eff35f23a87473567c514aa7f4ebd526227440c02f2a585
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0051.csv: 97e42b7e96d5362d2dedd3beca7a8157dcd49c75c0d7aa0cdbff2486b319cbc8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0052.csv: 19169f2727c5898d85486447f0cbd01a9e8a162c04f37c930a76ee674c9f9c70
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0053.csv: 9fcce0a5924ad1e450c57e5f5c8618cdb0cd8e941ee8ef9d47fc4b665e97854d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0054.csv: 43054dba051dd9e9012a639fa052d7f1cc9b95db7c7f0cf39f9545aba2e647fb
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0055.csv: 501828d7204738077ce3bab3d87ac30c6b8eb05174df67d5e7bf7595807c7d64
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0056.csv: a024ce2f886fae875c0f74112ea7edd032df11bb942861019a787075e2ff46ea
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0057.csv: 2c5d9369363b93e3e1346419d5598b9d5d7ce0a9bb68ab4078b270a20db99c5b
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0058.csv: 36492c90b95cca4199436c2b256bdc77828fd9f403bb0655f7eb50308ddd5bfc
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0059.csv: 148c091b0db94dffb1aae1d5ae9bc23fb1ddd01ce8dc9d93a7562d99db668a2a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0060.csv: 0a444175a949d9d8c011eb088bf31b8c507af381d23507ec59676d23ac78b799
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0061.csv: 3468fb378de72420c1c83bab1c77466ae03c3be0a44853f8c4ed7546bce4ff24
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0062.csv: 85acc785fa36f2ce2f831c68d6d7948b21b3d5e25d9163efb9aa3463746ba09d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0063.csv: a0aec6782d37d0f10ec8a22e9976eb9c5178c9ac6f1af1a957862e18ae03b506
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0064.csv: b9f65e54b1b6ee53749458e14ac4b02631fdc9d50354ad46d6d56af6f56b593f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0065.csv: 982720c92240d22758d061f5ec43697e9c78a977e26d70ccbb99b4d2043120e3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0066.csv: 7a9ae83453db804dac70b0db7922fc32b5731c4947d057bbccca016cd52e2ff9
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0067.csv: c6c4d816384054c7a7e46a25276c1efad7beef57625f66540244a861bf55d246
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0068.csv: 010d44579be69a70fc6233e364e3d7fe4447518fff6a8b934091b7f07d04804c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0069.csv: a7f35930967743871bda37d1bbf218ddea1ce7379e334a52e7c909b249473b39
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0070.csv: b0e20447cb63be0f50e42fad086043e215015e931d789c2dd73ead14825b8b8a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0071.csv: b313a1132ffa3a53269b8edd83b95bbe0aa1bb098aca3618b524f25854e05f17
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0072.csv: 8e66bbcccaf2f7f363da3801876b4aa5ef3d95d56fc49e5a0c9536c3967e1c06
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0073.csv: 23f778f32966d21148cf92437a6456c57163b29dbe7b1732d636ba81ba14672a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0074.csv: 1e5276f7c33ba2f47412ee98d6ca64b4f411adc51f90aa22b24481f75358e326
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0075.csv: 20cb7a6949a4ec88eac72e6b6185994fd4a5a19d1f050bdfe81301fe411135f5
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0076.csv: 9f26fce62f15eead5cb55c5333e1427482094913cccdafec83bcd16963b0e14b
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0077.csv: c087cb9fcdb21f36208445965c7308cfd52454d8374c8315e4b14dfff3463290
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0078.csv: ac0d586222718ab985f45079e5828fe0d8c648e5e8b8dea5fd40b1488f6deb6a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0079.csv: 6f60ad0948982748f519b23d8f1d6b7e403a02f8c52e06b0a0b4e99f8af9d190
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0080.csv: 0911c5783ed4f48b87d2c5c382c7ac31fc4f1a96623538f4b565a06222cf4bf8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0081.csv: 4c816525a9bd3a831862901b9842fa06647b64d55129092934b6b05464dbceb0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0082.csv: 9a0aea349cfdc67e8a6539426a7ecb713e266b3c0fc3a5607f0966644fb5f526
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0083.csv: 74bf89f2b4b05ea0377709a78e4e4bda1292755918dfb7d4a32db1024c84ef76
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0084.csv: 2ed92e9d5d44238d13efc213178c5ba4a841eb7edbcd87d26ec2f6b4d706609c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0085.csv: 43943a3d0c2caf23685bbc3eb9e2ef9854ec8da638ee528c5bc8ee49ae96a301
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0086.csv: bd06e99d37eef2b2c282a52995bd7b67f2d977ac411bd1bb615ac812e81d5fb5
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0087.csv: 0f71061723a7b8352fcbdd9f938de1c5c0fe7e89dd2ba55c6fedb4dba95c904e
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0088.csv: 561973fda5b921bf29411113fcf67700c0a709c472c7d7e353d24ab249fcc2a9
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0089.csv: 939c396d58bec3db0476447cf33d15bf1697fe79c80415164bd1651623bcf125
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0090.csv: a0f9224ef984dbedb6106534347f70322d81b886b7a6cc82f33247fb2e676e93
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0001.csv: 324ef8433de7158a8cbf48863278da11aa412b41e77322017963d46efab541a6
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0002.csv: daa84fa3ba13ae80fb7bed2855e7fb53a6c17f83bdb9a4cc5ddc95db0b08286c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0003.csv: c5db6fea5a5c223b1d8ad768fad85a488df358396dba9efaf695fccee7a867f8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0004.csv: 5f2021697d993ac613d2e4d5455fcac3fdd3eb46f42072f328127b776be26143
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0005.csv: fee5c71bd682875d4526e710dc3a35a862585b41aa95dde9c24ba112913199ae
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0006.csv: fd210807613b6061cd8f18f27aa9f016e45efff97d7f630d3a6370780bd50278
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0007.csv: 7b1b0eb2d751ad40cc0c48435a01d750c18a4e1347515b1137631157df12a0c3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0008.csv: 535a04c15f44e3c13fc7c00d6788ec5b3c62dcd49f7f635a9518d5721004534f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0009.csv: d76789622ba3f917292dd2037808ff19bc9965c02c660e63c77aba707b6df478
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0010.csv: 8b873f3055bed486b6f595f6f103f44c2836404e009a06af85e3f2b541b9c8a6
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0011.csv: dcf632692b2c57248f559cea656288d1b366f4a33d13acc0604f214b346ff391
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0012.csv: 1b08b5a8ecfb1cd27098d5103f9c2ff9b5d5beac4e20acc22ffc8383c9bd0c8d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0013.csv: 7d484c8a150fe5fea434b38a86b0657d9375bc0842d144f7fe1eb336e194c059
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0014.csv: 2465c034b99b93da357e73c82ce3f78ae47f00923196851d6f8847d3eb0b8ae9
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0015.csv: 65baacf7bae30e683434112e64f553c8165d025b67e4c9bdc1c59b261daa16cf
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0016.csv: 26c335dfc7d54fc16103aad169c84efe506d124fb6452f310b94dd9a6ea53546
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0017.csv: d1088f41a533a0cfe88fc0bdd5e26cb5d1199d00b417373dc6b0bcb314b75732
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0018.csv: 8834bc1f5ca7552dd238d59f4de314b4823c499bdf192f5d43829f1ea7304880
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0019.csv: 17e4945b3ab862a38634ee3da38782afc5ed6efc90aebd212b5a241e97b64a03
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0020.csv: f1a255db5134af78c7dcd570b6f7481af611a779dd5d40503a1bc3c234e341eb
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0021.csv: 1dd64d01c254de40eebcf7f16024b3b428b3f1749d5f8472fc893e383e7993b7
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0022.csv: d6b2a399954d2e4e314e59a2428d6c4cff94a48bf4f2c9e470d29899d59d7ca0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0023.csv: ad68dc7b07e07830bc2cfe7c93fd3a7b60ab27c1b6a10411164bf40598f00eba
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0024.csv: 35ecf681a75862c268c5369888bd9fadbe99fea65bdf93177a9b1c0a9efb1cd0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0025.csv: 7b761e1c1cf613fc98baa52a14e591384905bae359b1375bff1ffd6bd46bba41
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0026.csv: 6896b56cbbffc26ed8f2c57f6e203d95c4465cbc767268079c3897386ec9c687
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0027.csv: 48246bbc725d92cdd59804e48b0fc13638f039e87c4e0c670dd10ec2cb571acd
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0028.csv: 32fbc7ca0bb20750784da14d0b25eb8b94bae65d9f692f215ec024290e8d71fb
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0029.csv: 9fd1c88a649496fd32da258906ff0d3cd091e15ba6f2fe448430d593800252a2
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0030.csv: ada1ca73d32ab12bc6d058eb116c8de0eabcf3ee229fc36f74784d4bbe29ed39
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0031.csv: 9694ed6366e48d87249cb244920cf6db3ab82a853b610bed925db40d4f33af49
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0032.csv: 84b6a22e2d09fbe0bd31e8af2c424c75cbf9948ca1dde59535febf55d764caa7
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0033.csv: 040de7fec731278140cd68fb773d52844a4fbc84c0e6eafdada12b8d964ba3a8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0034.csv: 7bed10b55a56b4a6ca679a85fbe53c60fd56c6f702a7cb185826ce63a423af0f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0035.csv: f855d8f048e3ea163a02183d1c99b27827e2fd5207f323eb2b9a0b7a0661d785
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0036.csv: 43a7e82ac367074bc4d2a75bd8a6d9cac70f3d50d3da52221a6c131de3bcd4fe
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0037.csv: 73ff67fd8bf26ef9e38b2bf96bc5a59c0b059e622ae4ab8c779aeb78af7f5ae8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0038.csv: e214b988dcc31050ac63845ec26c2b7e3319422b14f41cc19f60d3ef892ef10f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0039.csv: f52d1b6b5caeb537b8d40658e1342a0fa433412a83959067299bbb6bda0008dc
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0040.csv: 07ac3f5f8cbe32b3a13da30ead2c31079d36fbad4f0f451ec0acdfe9fa54f3b9
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0041.csv: 5b652700e6f3d2dc4b915be48bee9b33b130f8a68061009da093161e3ee5b746
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0042.csv: 84cd9644e0ca7de11836449ed9bd1ef88d9ff16ee1a9f814f07422f6050fd08f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0043.csv: 5aa1c69e4afca5fb1cc55b48cb05fc2150058ee937309c16a86cc3c7b04e7363
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0044.csv: c478f73fac70945ea60a71f0a07953d8113cd45f709004e1962f08fc89e3fea0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0045.csv: 2b7427029228543112c4e03421e42a0e739292f3bb9d31f102e1ba5e2ee0d4d8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0046.csv: d90f08405e380c5cc14e0593cf9a8ef33455204c5925ab31c06c313f7353c008
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0047.csv: 4d952e860cc657ca54610fb93811e0195afd728fdbbf2e8efd85dd9516531c64
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0048.csv: e6c9230707f4b1e0a51f084a1a7bf1cc98413635148bd1ece4c40cb9e11b4994
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0049.csv: 7bdf663627dde2f00dcef0612c25602e76ecbbe494f6e0b686e7ba15a3beb794
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0050.csv: b6fac1ee7dbc31f970d20b32f1e0f1f45152c40af7b925e74928af06106d7e58
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0051.csv: c1bff64036109c553648311a423f3f1eb458685026507dce32008a487e822b56
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0052.csv: fe7b9799aa34be1e5596bd42403da62928986e88a57d9f1ea7b0349ffbd30659
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0053.csv: d4b44bd3c284926a715d89a7664c7ed3a4905b5ca23a7adc3aaeb570673945e4
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0054.csv: 8cf17c8955c3483665e055324c34fbb7625860d9ffe5d7ea4bf46aa54e4041ef
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0055.csv: 5bf6e7ee41db116eb5f856111aeb3022086f04d9fafed4202468d28aff9d0342
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0056.csv: ff37222c4162fe120183a67c74e64b5f54ae7246399444d3285ad86da41219cb
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0057.csv: b5a81ba20ad7229b12f16c40fa8ff79721c4990ae8bdb437a50f1f02ea30dfcb
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0058.csv: 9818e41318f42e1ce0b7a61470c30fabb056c1e16d24e0534f83d57ec92bd607
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0059.csv: d36b558ddc430bd3999e3981ff7abc5cc3cb306ac411c61ed58078b21392b117
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0060.csv: 45acd77f8296e530749dbd8d43ddda7abe75e39391a912526faca631f85ecdfd
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0061.csv: 1e0c097ca69fdd9ed8194647b9e255e7a8a6c86a9bb3a7944253dabcb6e6ca5b
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0062.csv: d22c4f8804f12ad8de482358d6b10840480e1359d87890dc652f0bce0fa53c0c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0063.csv: aaa87fe9b051e1aa9e627ab9e2b085bfa2122b904f4e1f486b490bb963065aa0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0064.csv: 6cfae131b9996489a660f2776c9317bc4860e05f13e7d260b046738d2ff3f750
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0065.csv: 9720cd393d0435af70af406daec76bc9cc5e14d3fa4c96f48d3a744da54f94f6
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0066.csv: f0152543f4cb36bcbeb35c909c751b703e4e6183ebfe38bae80faf31f9f34275
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0067.csv: d61522ed91c52ac230f5c97575f9b89bd22e18727ab7ba6d25271eff22e7eb49
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0068.csv: 1267b8893d1c9866374b19d28f163d88ffe6eab95fea4d4c30de8bbfa33225f9
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0069.csv: 5e54d8912c29027b73ce0a8b3a9a8b7e55cd063035866bf9240d38ebdb9c7dec
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0070.csv: 2d1b5bc326dd5434cca04f74d392b7a91048b03c0877e95a2403dd8e9db0e05d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0071.csv: 37d189934bafc3deeb64085ebf78b898363ffd8b3626e34f0510cbcddee58e2d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0072.csv: 08c9fb3c26fbe4da305ae03c3a34002df6f8d49ce3c0133c58c928824fea35a0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0073.csv: cd3d82bd8d39bb00c60dee34341a7e8bc05426233f9a10292da07acc54647a0d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0074.csv: d7ce124eee347106a4d09afd038f5bdb93057c5439731f0c9d86fed1450e55b4
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0075.csv: 58e279cc6168c18f071f22a41d2972955b61f2ad294fc10d0060f964576b1757
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0076.csv: 7b19ec80e7b503803bde91336e90da7f18060a655053a11908483992e70746be
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0077.csv: 744e2f3c821bb4ae9069860eec475fd795d6bd477483b227268a4d2b882e66dd
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0078.csv: fe5d2ab5716edbab0bfaf9af237fa8aacbd405bc3c1c4c851beb2e0de2a5021a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0079.csv: cc371b71bc52e5ea8b393503a293f8d73a8586ff4fc45bbbc7c1d970a83e93cf
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0080.csv: e2b6d007cec134da6584e915d0e671882f50922a5bc6fa8f49dd6a9a40726072
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0081.csv: b9ad70bf387fa2a938751b29ec19cbba7744d3aa451c3fc12ec5811f705c131f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0082.csv: 25e4331828e57c559aa37a7cf3b4b3fb75d7b91ba6ee96d089819de2364d7ca4
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0083.csv: 41cc41d141277c679b855db3ae53b18789846bf5fa4d405664a18d12425ab151
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0084.csv: 1462a2890e676bc47ed11deb601ce06e89ac5acb33776135fd07f56dca3bcc36
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0085.csv: 467181756e3286108ff8f0a9d1827afc3339d2ba1134713e18ff03f0fe41311d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0086.csv: 0a05e5dd5e7b57a06d1d0a474959e081e2c57289128c11206480b4284c37485a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0087.csv: ec0a2e3b0e871dda326fd7233baac0e58e0873d8d0f75ade6f4fefb33adaa752
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0088.csv: d4e6c5203fb4d9ba3b87bfb96bda03c021c429ce8f1d2b477f8f543370dcd9ed
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0089.csv: 51782cc221f328ca010a255d2f96749edf0249f193db7c72b01b1bdec9a45114
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0090.csv: 73966a8d22c5021dfd48513300ebf876c63b3990208d011ca734e7e8a57d5ed4
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0001.csv: 05565b67a23a4da4edd9204ec5eda0bab28854d59b82fee651d8d6f97a7e7a17
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0002.csv: 05834ccb41e681682ad824bf40b7049ade7d44be1afd3af87097d4c91beaa4ff
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0003.csv: a10f0865ee3e9f92b121d8fa1a7e7019e2ec94355d2096cafa12520faf659c7a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0004.csv: 2a521bab5e96716f0327f4765968ee3d2dcb88ee5961d3302c9dc3b28e6d15e7
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0005.csv: 458f7b1ced8adbbb099a24b7e1816b2097952e90499368b9f1fa821cacf53738
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0006.csv: 82c13e050e500f791868fe2016c2482f73d6f45b3c16ed26729d7f63c3acb631
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0007.csv: 09c98f9000c033ab94f02f29b68070b32209a23f7136f29737d7a29938f9ccd8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0008.csv: 25fd1d833c2fc42c45afb31a1a32ccb2d823fe4ec440be8006308328aef6661a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0009.csv: 43824d64b74b5e0b227fca8f3af7b03ccfe77f77e9767732d3157b1b58275e06
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0010.csv: b060dd7d7c0df6477268ae8b4be3aa3d884b9eaa2ada0e189608ba7086d41f4c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0011.csv: 8ab09bfabbfe1e24c428cccce8197a5380134d14454d79ef6054e73f92e1dfa0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0012.csv: 1231f93fe23c82cca35a0c1b56247a5b84878ce4253fad7602ca310edd068493
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0013.csv: 25ae2ba5439491cefad9d8849aa15deb3668a7d87274889b84a89d04e13f86f3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0014.csv: 4a2e56a6f0f99a0d86099c462340f16a8443e60f5e2e9dd7285f959d08483226
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0015.csv: b8062200347079693cd7d95616d2d19efc68b4b8d492b39a447547bd732a9819
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0016.csv: 8266c5a2003a2f6f412424fb2ecd57f7f728f180d01478bad9e5217b087debd0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0017.csv: fa9502c5bc606bb69075545d6ab9373e2d06830beaa2b206bf61e82ba6d99071
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0018.csv: afde79f1bf86e286d8f60931f91e004c4b1d624096dd0be4ec4bd458cb9ddff9
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0019.csv: 0e67708a2d3e51d3006f9da371249409e68118b135b264b9765913beac7d61b6
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0020.csv: 103e1bc3ddd3ed34530f571bd47b871f3f857ff26598cc7932f7b3f31c46829b
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0021.csv: d6b1c4649552dcf0ef3195446fe1c628ca847f39d0f7799c3d342bd3dcb02f3b
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0022.csv: edc9e90930a25f0bf8bb3996ce143b28e2ac2f0d68a93142aafb313242b0d68f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0023.csv: 98e4eccb67af5995de042949325b7416e7eebf7267e03c88d8afddf0ff35818a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0024.csv: 0950f04670d8f3c80afceaf31884b442872f458b280f02327030ee87db17c285
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0025.csv: 725d9d9f6a2a43a6a937b86fd1464bc7977729a4ef46b6b7bf271c15e9b705bb
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0026.csv: 37e1037b78084ae368a6b04de63737847176059e44e1ae0275cf1fcb729ffaae
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0027.csv: d5c9a716ec4675dcba0cc6bfe8aeeeffeacc5b2b27d12de7aacd05b69ef7d64d
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0028.csv: 478a2c1fb1e520e2accfe1e8a00716e7081ba0c2f2218b19e5ba34eed3e37143
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0029.csv: dddbd259a154e69a2a0bdaec499f2dfaaaa9945d64e25cf76c4349eb9539584a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0030.csv: 6c29a8e5a0f63541abba9913aa38a122735669105ae5ad15b5a5e938c6cebded
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0031.csv: 7d209a99ab07bc7779ae39f97ec18db7a57838eef4d4989ae749cab62309180c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0032.csv: dd9343e4d6145df42488e159852643ca84e5ba32c98a7459930b0c4fa1723edf
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0033.csv: de21065c21a24f476153b5086046f70027f4fdd565b75e91de71b89ada757dbc
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0034.csv: 661a3b06b5108e68568779f44f0f05b77827a27bc86914870521ecb4b2a5a885
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0035.csv: 6121ca75b1f7a21cb801c2b2cbeaee993377bf33dd72101f161aea4f5fa955d6
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0036.csv: 1e4fa5eddf30ea00f3de211654b3365449080a886e154c8be48406e637bdb8c4
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0037.csv: 0f6fcbaf77b165f7ba88330811a11eee38bbc7d8ebd3aa23a806981b9d419eef
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0038.csv: 15e9e47988421b241cb4a64bc22df7f6c570670846aead174b237277fd21ca14
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0039.csv: f04492ddb0abae3700f6d1c67501aec61cec5f15d976e01ad023d1ac744ee339
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0040.csv: d32199f2b4727dd72d4c4131b39a30a99ae2e0e9a9c3e0c7b0cd74af7f7162f0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0041.csv: 4da821b3d916affcffc40bce31c324f2c2ebcb8bc51a2638035fc7afd5d52035
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0042.csv: e5c6a3c685cff18dd089eda26e900cb791afadc93f0dcab8f57ad15c5bdcf4c8
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0043.csv: 83e6dde8bf66963243d17a2363324b43c6ef153cb5a6ee806393b19d07721422
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0044.csv: a069121be6cd4ae2870220ed66c0047a2d03e79bc103591f7bd2e4fc9ccc89e3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0045.csv: 9aa2498b9521e345779e13a0870aacdbb1cb3e14e2c3fe6b20da3301a5b028dc
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0046.csv: 4a34525086e8fb5512dd4b47aa8db1c9e5193baa1ad4a40144040ed4bbaf9ad1
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0047.csv: 30fff63176977d5815700d0c642b92662f9e1a0f9b4145b30cd07c11071d2197
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0048.csv: 18e77ea619f568e267de425ee61655b4efe7815d9c288fdb442d7176dbb2a8fe
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0049.csv: 63275d99ff8966c6c70ca3db6af0f84640fcd2d356aacc13a886dedb03168e06
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0050.csv: f650453938930e6905a274d356fd21c5b8dc9fb91073e7554e6583af30d39ce0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0051.csv: 89750092b5f659de7a69ceb8aeb07841cc15289dc62f4b46085791ae3d2fcffa
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0052.csv: cd57b146f58b656c2da3310aeabbc7314c10fe3d013754ecb14b8c5ca58f4646
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0053.csv: 0cb623ac90224b49b78defc65740ef0a19c620e71184f57a8ab9e973b139ffa3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0054.csv: e541f3851cfa01e680be18b20e2bfe7c3851a8cd12b9fb22a5ac5f00d1421466
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0055.csv: 07867e45327ff3352c76779c2e09561fa346f6bf26417881016f54b98a04b070
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0056.csv: a93960728f21c640ff6fc3cdb2062b419f7d83ef99d47c8f7d8fead72aef9dbe
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0057.csv: 56e88708726f6828affc34fce1b305aed9ec8cf4e653cc62be38828021c3f23a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0058.csv: 34180a675fc323d439eb097f57a0cf407cb85c250882ccdd21da718442c5da7f
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0059.csv: 176e4951888615c3c7040f30a2ed7493eea04431d417267a8b3c0f85469e54d0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0060.csv: 5f18c650d3866ade20b3363c720c44f8bf3cfd998422e1e31328ad522ec6bb1b
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0061.csv: 00490a93b8a42a80ef3ab3fca34b5e0c234b71c603cda1427e4ec557ac2abe78
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0062.csv: 6ffe147eb01236bf50c1b540d7d858d46280bca582b58a795dbc5bf5502fe872
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0063.csv: 0aa62699860ce208216d1cf8b1c037403a1917acf14569e2fb844e6173407b87
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0064.csv: d8fa569177f414e4436ce0f4ecdfd42e2ace451113e7973c4bd020df17f5f4c3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0065.csv: 84b429feb9be20da33249310bae800612e5c9ea30e511132991ee77d6f4d060c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0066.csv: ce85dc1cbbf5f3e3f5ac342080124820de79bf81667bed3f0b29d142e799bf0a
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0067.csv: 68ecbf67bd1e40ef9fe3dfc9c03e12d5914eecd48ae18fd8fe7f6ddc8664ce40
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0068.csv: 041c55ea354305bbe86fd11240f45aafb7e05ae6472a163c6afd080d520249b5
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0069.csv: b1e80b37d61af227b7a98f03b54cbfcd9c9120caa13f8d6aa11e4c6d9caad849
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0070.csv: db77a9fa6d81ca712732ddb73d5bdba95ac6c2e4f3cfb8a56c3bbb725061bce3
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0071.csv: 1e75a72b4f4e4ea78b845cff267a2c66f293ec070b109dca8e5256615315d578
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0072.csv: 82bfa717471b8110540f20feb0833a9247b1265f4c1188506b1ab61b54dcb028
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0073.csv: 2c46f65de861b6e4e9cd95df20e62b717f1a0f35bf68313400fab86b4702d617
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0074.csv: 412a830ee7e0d4def97dfebd51fede20fb3962d17a49adf20e143c612ac42511
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0075.csv: 618b23c149aad688b7c3564aa4080e97bfb987956b01bfe7b99a51f609ec356c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0076.csv: 87422bc34c3a73749b89cd074acb2cc515ce78d6cd72b22d5f40e0c452a8108c
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0077.csv: 2b8415d9a01333125d51a44daba571252433c24f302f4219aca28773aa1a94d0
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0078.csv: 842dafcf1ac8df2d264f765b1b2c5783e24c520dbcfa5679015aad1118be9d42
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0079.csv: baed843cb866c90f1bd52794d4a6c85ae05a86b47c0d57962817e692a8a6a8c9
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0080.csv: 7fb21b45b484eeedeb12f455c39b450ff7efeeb3832b976eef51bc0b1b0e2102
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0081.csv: 2885778f78e0c2129713384707840b1d1baa3f0ce55fb17f19ed35f8037049b9
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0082.csv: f2225d5b6af4b2eaba62cecae15c46817b0e3e41ffc8596cdb6c723d532629f7
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0083.csv: 9582789a7715c7c3a1c1e9db8475592fac2999359324f1b37d51feeba22f8398
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0084.csv: e1b91a8278dca3d7c7dcc4546917a95e396fc54f4c0ff01fabccb91fd214151e
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0085.csv: 6f9dd18bef8b97a125c055a39ff06ea96fe924cb9cd84aeb043d892d5507ad11
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0086.csv: 32df355d2c4ac16625d3e3ff7cfc4611e0b5613f95e13ce00cc1583f3d7bc4c4
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0087.csv: 76b43be043d1d80637233b1d35ae8e4d0d2094e81ea9d6e3ba3a3711896ac266
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0088.csv: 969ad04f1332888881d70316c12eed87c6b34c4c420845caa1a6be8d4702a5ee
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0089.csv: fd18e533563ff950dd39d256b61c63c965fb7251652983200aa63ac290334f13
+    .agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0090.csv: 564b3adc10b8d1d8118fc0ec6d9c74635a06107fa40a5156cccc992a31fdf9fd
+    .agent-runtime/mandel-publication/20260918T230649647641Z/large_fine.e: a9dad139e78d1c245561ca5b6bb11ef4a12caa47247693c07ff5c98b3cfbff32

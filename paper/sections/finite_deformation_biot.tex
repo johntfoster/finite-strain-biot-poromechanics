@@ -276,7 +276,7 @@ right by \(\mbf F^e\) gives
  \delta\mbf F^e=\frac13\mbf F^e\,\delta\ln J^e.
  \label{eq:elastic-volumetric-deformation-variation}
 \end{equation}
-Then differentiating \(\mbf F=\mbf F^e\mbf F^p\) at fixed
+Then taking the variation of \(\mbf F=\mbf F^e\mbf F^p\) at fixed
 \(\mbf F^p\) gives
 \begin{align}
  \delta\mbf F&=\delta\mbf F^e\mbf F^p,
@@ -384,10 +384,10 @@ right by \(\bar{\mbf F}^e\) gives
  =\frac13\bar{\mbf F}^e\frac{\delta\bar J}{\bar J}.
  \label{eq:mineral-volumetric-deformation-variation}
 \end{equation}
-The factor \(\bar J^{-1/3}\) removes the volumetric stretch from
-\(\bar{\mbf F}^e\).  The resulting isochoric deformation
-\(\bar J^{-1/3}\bar{\mbf F}^e\) is unchanged by this variation through the
-same cancellation shown in \eqref{eq:elastic-shape-variation-expansion}.
+The variation \eqref{eq:mineral-volumetric-deformation-variation} changes
+the mineral volume while preserving its normalized elastic shape,
+\(\bar J^{-1/3}\bar{\mbf F}^e\), by the same cancellation shown in
+\eqref{eq:elastic-shape-variation-expansion}.
 This variation changes \(J^e=a^e\bar J\) together with \(\bar J\), and
 pressure is allowed to change.  The drained skeleton variation instead
 fixes pressure and allows elastic distention to adjust.
@@ -523,8 +523,7 @@ terms of \(\ln a^e\) and integrating fixes the distention energy.  With zero ene
  \label{eq:distention-mineral-volumetric-energy}
 \end{equation}
 Here \(a^e=J^e/\bar J\) has been substituted so that the energy is expressed
-in the independent arguments \((J^e,\bar J)\).  On the zero-pressure
-equilibrium branch, substitution of
+in the independent arguments \((J^e,\bar J)\).  At equilibrium under zero pressure, substitution of
 \eqref{eq:drained-mineral-volume-matching}--\eqref{eq:drained-distention-volume-matching}
 into \eqref{eq:distention-mineral-volumetric-energy} recovers the prescribed
 drained skeleton energy \(K(\ln J^e)^2/2\).
@@ -562,6 +561,10 @@ mineral EOS residual
  -\frac{K}{\phi_{s0}}\ln J^e=0.}
  \label{eq:verification-mineral-factors}
 \end{equation}
+For virgin elasticity, \(J^e=J\), this residual also follows by eliminating
+the mineral deformation factors from Gajo's logarithmic constitutive
+relations \citep[Eqs.~(3.27), (3.32), and (3.34)]{gajo2010}, with his
+\(J_s=\bar J\) and \(1-n_0=\phi_{s0}\).
 Once the positive root of \eqref{eq:verification-mineral-factors} is found,
 mass conservation \eqref{eq:distension} gives
 \(\bar\rho_s=\bar\rho_{s0}/\bar J\) and
@@ -579,7 +582,8 @@ negative to positive infinity as \(\bar J\) increases, so its positive
 root is unique.  At \(p=0\), \eqref{eq:verification-mineral-factors} gives
 \(K_s\ln\bar J=(K/\phi_{s0})\ln J^e\), or
 \(\bar J=(J^e)^{K/(\phi_{s0}K_s)}\).  For \(p<0\), multiple positive roots
-can exist; at fixed \(J^e\), we follow the branch from this root.
+can exist; at fixed \(J^e\), we select the solution that varies continuously
+from this zero-pressure root as pressure decreases.
 
 We retain this solution only while the residual in
 \eqref{eq:verification-mineral-factors} has a
@@ -593,7 +597,7 @@ derivative positive.  We also require \(0<\bar J<e\) for positive mineral
 stiffness and \(0<\phi_s<1\) for positive solid and pore volumes.
 
 
-\subsection{Closed-form coefficient from implicit differentiation}
+\subsection{Closed-form Biot coefficient from implicit differentiation}
 
 The derivative defining \(B\) in \eqref{eq:finite-deformation-biot-coefficient}
 fixes pore pressure and the current plastic configuration; the referential
@@ -652,8 +656,8 @@ denote the Biot coefficient evaluated with this mineral state by
 \(B_{\mathrm{el}}(p,J)\).
 At \(J=\bar J=1\) and \(p=0\), \eqref{eq:poroplastic-biot-correction} recovers
 \(B_0=1-K/K_s\) \citep{biotwillis1957}.  At fixed total volume and pressure,
-increased plastic distention reduces \(J^e\) and \(\bar J\) on the stable
-branch, and hence increases \(B\).  This dependence follows from the
+increased plastic distention reduces \(J^e\) and \(\bar J\) while
+\eqref{eq:trace-mineral-stability-domain} holds, and hence increases \(B\).  This dependence follows from the
 mineral equation \eqref{eq:verification-mineral-factors} and the Biot
 coefficient \eqref{eq:poroplastic-biot-correction}.
 
@@ -707,11 +711,89 @@ the momentum balance and constitutive computations is
 \(\bs\sigma=\bs\sigma^{\prime\prime}-Bp\mbf I\), with \(B\) given by
 \eqref{eq:poroplastic-biot-correction}.
 
-Drained skeleton moduli are typically calibrated in tests conducted at zero
-gauge pore pressure.  At \(p=0\), the final term in
-\eqref{eq:matched-logarithmic-double-prime-stress} vanishes, so the measured
-response depends only on \(G\) and \(K\).  At nonzero pore pressure, the
-mineral state and \(B\) determine the additional poromechanical contribution.
+The term \((K/K_s)p\bar J\) in
+\eqref{eq:matched-logarithmic-single-prime-stress} expresses the contribution
+of mineral compression to the mean effective stress.  It remains active in
+purely elastic deformation, where \(\mbf F^p=\mbf I\).  In that case, the
+total Kirchhoff stress agrees with Gajo's logarithmic elastic specialization
+\citep[eq.~(3.47)]{gajo2010}.  Gajo's pressure factor in his equation~(3.48)
+is defined relative to the drained elastic stress.  Here \(B\) is the
+fixed-pressure mineral-volume derivative, and
+\eqref{eq:matched-logarithmic-double-prime-stress} retains the corresponding
+pressure correction in the double-prime stress.  These definitions distinguish
+the coefficient multiplying pressure relative to a drained stress from the
+coefficient measuring the incremental pressure response.
+For the logarithmic elastic specialization, the coupling factor in Gajo's
+rate equations~(5.12) and~(5.14) reduces to the present \(B\).
+
+The small-strain elastic limit recovers the classical Biot effective-stress
+relation.  First, pushing forward
+\eqref{eq:matched-logarithmic-double-prime-stress} gives
+\begin{align}
+ \bs\sigma^{\prime\prime}
+ &=J^{-1}\mbf P^{\prime\prime}\mbf F^T,
+ \label{eq:double-prime-cauchy-push-forward}\\
+ &=\frac{G}{J}(J^e)^{-2/3}
+ \operatorname{dev}\left(\mbf F^e(\mbf F^e)^T\right) \notag\\
+ &\quad+\left\{\frac{K}{J}\ln J^e
+ +\left[\frac{K\bar J}{JK_s}-(1-B)\right]p\right\}\mbf I.
+ \label{eq:matched-logarithmic-double-prime-cauchy-stress}
+\end{align}
+Linearize about the undeformed, zero-pressure state with
+\(\mbf F^p=\mbf I\), so \(\mbf F^e=\mbf F\), and define the infinitesimal
+strain by
+\begin{equation}
+ \bs\varepsilon=\frac12\left[
+ \nabla_{\mbf X}\mbf u_s+(\nabla_{\mbf X}\mbf u_s)^T\right].
+ \label{eq:biot-limit-infinitesimal-strain}
+\end{equation}
+To first order in displacement gradient and pressure,
+\begin{align}
+ \ln J^e&\simeq\tr\bs\varepsilon,
+ \label{eq:biot-limit-logarithmic-volume}\\
+ \operatorname{dev}\left(\mbf F^e(\mbf F^e)^T\right)
+ &\simeq2\operatorname{dev}\bs\varepsilon.
+ \label{eq:biot-limit-isochoric-strain}
+\end{align}
+The coefficient multiplying \(p\) in
+\eqref{eq:matched-logarithmic-double-prime-cauchy-stress} is zero at
+\(J=\bar J=1\), since \(1-B_0=K/K_s\).  Its variation multiplied by
+\(p\) is second order.  Likewise, variations of the prefactors multiplying
+strain contribute only at second order.  The linearized effective and total
+stresses are therefore
+\begin{align}
+ \bs\sigma^{\prime\prime}
+ &\simeq2G\operatorname{dev}\bs\varepsilon
+ +K\tr\bs\varepsilon\,\mbf I,
+ \label{eq:biot-limit-effective-stress}\\
+ \bs\sigma
+ &\simeq2G\operatorname{dev}\bs\varepsilon
+ +K\tr\bs\varepsilon\,\mbf I-B_0p\mbf I.
+ \label{eq:biot-limit-total-stress}
+\end{align}
+Thus, with tensile stress positive, adding \(B_0p\mbf I\) to the total
+stress recovers the drained elastic stress in the linearized theory.
+
+Zero-pressure calibration supplies the drained double-prime skeleton stress.
+For the assumed elastic law, these tests determine \(G\) and \(K\): at
+\(p=0\), the pressure correction in
+\eqref{eq:matched-logarithmic-double-prime-stress} vanishes and the stress
+measures coincide.  The mineral modulus \(K_s\) and reference solid fraction
+\(\phi_{s0}\) supply additional information for the coupled energy.
+That energy and local pressure equilibrium extend the double-prime response
+to nonzero pressure.  The effective-stress relations then supply the single-prime
+stress driving plastic flow and the total stress entering momentum balance.
+Thus the double-prime stress at nonzero pressure includes both the calibrated
+drained response and the pressure correction derived from the mineral law.
+
+At fixed deformation and plastic state, with mineral volume in local
+equilibrium, the Biot coefficient measures the sensitivity of total stress
+to pore pressure:
+\begin{equation}
+ \left.\pder{\bs\sigma}{p}\right|_{\mbf F,\mbf F^p}
+ =-B\mbf I.
+ \label{eq:total-stress-pressure-tangent}
+\end{equation}
 
 For an elastic specimen in the unjacketed test, where the pore fluid and the
 external boundary carry the same hydrostatic pressure, \(J=\bar J\),
@@ -747,11 +829,12 @@ The chain rule therefore contributes
 \(-\mbf M^{\prime}:\dot{\mbf F}^p(\mbf F^p)^{-1}\) to the stored-energy
 rate and the opposite-signed term to the dissipation.  Thus
 \(\mbf M^{\prime}\) is work conjugate to the plastic velocity gradient, as in
-standard multiplicative plasticity \citep{yamakawaetal2021}.  The stress is
-single-prime because \(W^{\prime}\) is the fixed-intrinsic-density potential.
-Its deformation derivative, evaluated in the pressure representation at fixed
-\(p\), is \(\mbf P^{\prime}\) by
-\eqref{eq:single-prime-energy-conjugate}.
+standard multiplicative plasticity \citep{yamakawaetal2021}.  The single-prime
+stress is obtained by differentiating \(W_s\) with respect to deformation at
+fixed intrinsic density.  Equivalently, it is the deformation derivative of
+the pressure Legendre transform \(W^{\prime}\) at fixed pore pressure, with
+the plastic state held fixed in both derivatives
+\eqref{eq:single-prime-fixed-density-conjugate}--\eqref{eq:single-prime-energy-conjugate}.
 
 Drumheller's mixture dissipation analysis writes the true-plastic and
 plastic-distention powers per unit current volume using a Cauchy-type stress
@@ -788,20 +871,20 @@ The prime distinguishes the plastic mean-stress argument from pore pressure
 \end{align}
 Here \(M\) is the friction slope, \(c\) is cohesion, and \(\beta\) is the
 dilation slope, with \(0\leq\beta\leq M\) and \(c\geq0\).  We consider
-the smooth cone branch \(q>0\).  To permit isotropic hardening, let
-\(\kappa^p\) be the accumulated plastic multiplier and prescribe
+the smooth part of the yield cone, where \(q>0\).  To permit isotropic hardening, let
+\(\gamma\) be the accumulated plastic multiplier and prescribe
 \begin{align}
- c(\kappa^p)&=c_0+H\kappa^p,
+ c(\gamma)&=c_0+H\gamma,
  \qquad c_0\geq0,\quad H\geq0,
  \label{eq:plastic-isotropic-hardening}\\
- \dot{\kappa}^p&=\dot\gamma,
- \qquad \kappa^p(0)=0.
+ \gamma(t)&=\int_0^t\dot\gamma(s)\dd s,
+ \qquad \gamma(0)=0.
  \label{eq:plastic-accumulated-multiplier}
 \end{align}
 Here \(H\) has units of stress.  This dissipative hardening law increases
 the yield strength with plastic history while retaining the nonassociated
 flow direction and the stated stored energy.  The choice \(H=0\) recovers
-perfect plasticity.  Taking the trace of the flow rule gives
+perfect plasticity.  Taking the trace of the flow rule \eqref{eq:dp-flow} gives
 \begin{equation}
  \frac{\dot a^p}{a^p}=\beta\dot\gamma.
  \label{eq:reconstruct-pore-allocation}
@@ -824,24 +907,26 @@ inequality follows from the yield condition and the stated parameter
 restrictions, with \(c\) evaluated at the current accumulated multiplier.
 These equations specify a dilative model with optional isotropic hardening.
 Representing pore collapse, a cap, or the cone apex would require additional
-constitutive branches.
+constitutive equations for those cases.
 
-Over a load increment, introduce the symmetric plastic flow increment
-\(\mbf W\) and solve
+For each load increment, subscripts \(n\) and \(n+1\) denote the known
+state at the beginning of the increment and the state to be determined at
+its end, respectively.  Introduce the symmetric logarithmic plastic increment
+\(\bs\Delta^p\) and solve
 \begin{align}
- \mbf F^p_{n+1}&=\exp(\mbf W)\mbf F^p_n,
+ \mbf F^p_{n+1}&=\exp\left(\bs\Delta^p\right)\mbf F^p_n,
  \label{eq:plastic-exponential-update}\\
- \mbf W&=\Delta\gamma\left(
+ \bs\Delta^p&=\Delta\gamma\left(
  \frac{3\mbf S_{n+1}}{2q_{n+1}}+\frac{\beta}{3}\mbf I\right),
  \label{eq:implicit-plastic-flow-increment}\\
  f_{n+1}&=0
- \quad\text{on the active branch}.
+ \quad\text{during plastic flow}.
  \label{eq:discrete-consistency}
 \end{align}
 This exponential update evaluates the flow direction at the returned state.
 The accumulated multiplier is updated by
 \begin{equation}
- \kappa^p_{n+1}=\kappa^p_n+\Delta\gamma.
+ \gamma_{n+1}=\gamma_n+\Delta\gamma.
  \label{eq:discrete-plastic-hardening}
 \end{equation}
 Substitution into \eqref{eq:plastic-isotropic-hardening} places the hardening
@@ -853,7 +938,7 @@ The elastic trial at the current increment holds the plastic history fixed at
 The trial stress and \(f^{\mathrm{tr}}_{n+1}\) are evaluated from this
 candidate state at \(n+1\).  A trial state inside the yield surface leaves
 the plastic history unchanged.  An active trial requires a coupled
-solve for the six independent components of \(\mbf W\) and \(\Delta\gamma\).  At every local iteration,
+solve for the six independent components of \(\bs\Delta^p\) and \(\Delta\gamma\).  At every local iteration,
 \(\mbf F^e\), intrinsic density, \(B\), and stress are recomputed from the
 same candidate state.  The determinant identity
 \(a^p_{n+1}=a^p_n\exp(\beta\Delta\gamma)\) provides an independent check

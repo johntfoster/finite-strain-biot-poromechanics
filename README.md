@@ -1,4 +1,4 @@
-# A closed-form Biot coefficient for finite-deformation poroplasticity
+# Pressure coupling and the Biot coefficient in finite-strain poroelasticity and poroplasticity
 
 This repository contains the manuscript, minimal MOOSE application, validation
 data, and agent workflow for computing a finite-deformation Biot coefficient
@@ -16,9 +16,9 @@ fraction, and any inelastic internal variables. A scalar solve determines the
 mineral volume, and the closed-form expression supplies the fixed-pressure Biot
 coefficient. A general two-state implicit tangent and centered differences of
 perturbed mineral solves independently verify that coefficient. Spatial water mass balance
-uses a barotropic pressure--density equation of state. The Biot transform maps
-the constitutive double-prime stress to the single-prime material stress and
-the total mixture stress. These local dependencies remain in the outer MOOSE
+uses a barotropic pressure--density equation of state. The effective-stress
+relations connect the constitutive double-prime stress to the single-prime
+material stress and the total mixture stress. These local dependencies remain in the outer MOOSE
 automatic-differentiation Jacobian.
 
 The water-filled Mandel benchmark compares spatial pressure and displacement

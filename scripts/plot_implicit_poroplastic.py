@@ -95,7 +95,7 @@ axes[1].plot(
     [r["a_p"] for r in rows],
     "-o",
     color="#356e9d",
-    label="closed coefficient",
+    label="consistent transform",
     ms=3,
 )
 axes[1].plot(
@@ -103,7 +103,7 @@ axes[1].plot(
     [r["a_p_reference"] for r in rows],
     "--",
     color=".35",
-    label="virgin coefficient in stress",
+    label=r"virgin $B$ in transform",
 )
 axes[0].set_ylabel(r"Biot coefficient, $B$")
 axes[1].set_ylabel(r"Plastic distention, $a^p$")

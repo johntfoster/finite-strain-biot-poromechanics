@@ -52,8 +52,8 @@
       <ul class="file-list">
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADSolidReferenceKinematics.C">ADSolidReferenceKinematics</a>
-          <span class="desc">Computes the deformation gradient <code>F</code>, its Jacobian <code>J</code>, the material rate <code>J̇</code>, <code>F⁻¹</code>, and <code>J F⁻ᵀ</code> from the displacement gradients.</span>
-          <span class="why">Why: supplies the solid-reference kinematics that every pull-back and the Biot stress transform consume.</span>
+          <span class="desc">Computes the deformation gradient <code>F</code>, its Jacobian <code>J</code>, the material rate <code>J̇</code>, <code>F⁻¹</code>, and <code>J F⁻¹</code> from the displacement gradients.</span>
+          <span class="why">Why: supplies the solid-reference kinematics used by every pull-back and the effective-stress relations.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C">ADLocalElasticMineralBiotMaterial</a>
@@ -68,11 +68,11 @@
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C">ADVolumetricBarotropicSkeletonStressMaterial</a>
           <span class="desc">Pressure-coupled double-prime skeleton stress from the matched logarithmic model and its compatible reduced potential.</span>
-          <span class="why">Why: produces the double-prime first Piola stress <code>P″</code> entering the Biot transform.</span>
+          <span class="why">Why: produces the double-prime first Piola stress <code>P″</code> entering the effective-stress relations.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADReferenceSolidStressMaterial.C">ADReferenceSolidStressMaterial</a>
-          <span class="desc">Applies the inverse Biot transform to <code>P″</code> and assembles the total first Piola stress with the nonlinear pressure contribution.</span>
+          <span class="desc">Combines <code>P″</code> with the nonlinear pore-pressure contribution to assemble the total first Piola stress.</span>
           <span class="why">Why: forms the total mixture stress that the momentum residual integrates.</span>
         </li>
         <li>
@@ -190,8 +190,11 @@
 
     <section class="section">
       <h2>Validation data</h2>
-      <p>The full benchmark passes the existing pressure (3.71%), side-displacement
-        (0.649%), and load (0.238%) error limits. At ten-percent platen compression,
+      <p>The full benchmark's maximum pressure, side-displacement, and load errors
+        are 3.71%, 0.649%, and 0.238%, respectively, below their acceptance limits
+        of 4.0%, 0.8%, and 0.3%. Pressure error is normalized by the analytical
+        pressure scale; displacement and load errors use their reference values.
+        At ten-percent platen compression,
         the final mean coefficient is 0.58219, a 2.97% departure from B<sub>0</sub> = 0.6.
         The matched logarithmic laws recover classical single-mineral storage at the reference state.</p>
       <ul class="file-list">

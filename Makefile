@@ -41,11 +41,7 @@ plastic-flow: build
 	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_poroplastic_mandel.py --curate
 
 examples: build
-	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/curate_poroplastic_delta_b.py
-	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_poroplastic_general_path.py
-	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_poroplastic_load_unload.py
-	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_poroplastic_b_feedback.py
-	$(MOOSE_ENV) run -- $(PYTHON) validation/scripts/check_tensorial_load_unload.py
+	$(MOOSE_ENV) run -- $(PYTHON) scripts/reproduce_examples.py
 
 figures:
 	mkdir -p "$(TEXMFVAR)" "$(TEXMFCACHE)" "$(MPLCONFIGDIR)"

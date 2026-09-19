@@ -134,8 +134,13 @@ evaluate(const Matrix<T> & F,
   // Closed solution of the fixed-p, fixed-reference-mass, fixed-Fp tangent.
   // d(log Je)/dJ = 1/J: the denominator uses total J even in plastic states.
   s.B = matchedLogBiotCoefficient(J, p, z, c.K, c.Ks, c.phi0);
-  const T virgin_z = matchedLogMineralVolume(J, p, c.K, c.Ks, c.phi0);
-  s.B_el = matchedLogBiotCoefficient(J, p, virgin_z, c.K, c.Ks, c.phi0);
+  // Only the diagnostic companion law needs a virgin state during the return.
+  // Production diagnostics are evaluated after convergence below.
+  if (c.frozen_reference)
+  {
+    const T virgin_z = matchedLogMineralVolume(J, p, c.K, c.Ks, c.phi0);
+    s.B_el = matchedLogBiotCoefficient(J, p, virgin_z, c.K, c.Ks, c.phi0);
+  }
 
   const auto FeinvT = transpose(inverse(s.Fe));
   T I1 = 0.;
@@ -251,6 +256,10 @@ ADImplicitPoroplasticBiotMaterial::validParams()
       "use_elastic_coefficient_in_trial",
       false,
       "Diagnostic comparison using the virgin coefficient at total J in the driving stress.");
+  params.addParam<bool>("compute_elastic_coefficient", true,
+      "Evaluate the virgin coefficient after convergence; unavailable values are NaN with availability zero.");
+  params.addRangeCheckedParam<Real>("initial_plastic_distention", 1.,
+      "initial_plastic_distention>=1", "Initial isotropic plastic distention; accumulated multiplier is log(ap)/beta.");
   return params;
 }
 ADImplicitPoroplasticBiotMaterial::ADImplicitPoroplasticBiotMaterial(const InputParameters & p)
@@ -266,6 +275,8 @@ ADImplicitPoroplasticBiotMaterial::ADImplicitPoroplasticBiotMaterial(const Input
     _cohesion(getParam<Real>("dp_cohesion")),
     _hardening(getParam<Real>("dp_hardening_modulus")),
     _frozen_reference(getParam<bool>("use_elastic_coefficient_in_trial")),
+    _compute_elastic(getParam<bool>("compute_elastic_coefficient")),
+    _initial_ap(getParam<Real>("initial_plastic_distention")),
     _Fp_history(declareProperty<RankTwoTensor>("implicit_plastic_history")),
     _Fp_old(getMaterialPropertyOld<RankTwoTensor>("implicit_plastic_history")),
     _accumulated_history(declareProperty<Real>("implicit_plastic_accumulated_history")),
@@ -278,6 +289,7 @@ ADImplicitPoroplasticBiotMaterial::ADImplicitPoroplasticBiotMaterial(const Input
     _ap(declareADProperty<Real>("plastic_pore_allocation")),
     _B(declareADProperty<Real>("poroplastic_biot_coefficient")),
     _B_el(declareADProperty<Real>("plastic_elastic_biot_coefficient")),
+    _B_el_available(declareProperty<Real>("plastic_elastic_biot_coefficient_available")),
     _ratio(declareADProperty<Real>("implicit_plastic_density_ratio")),
     _phi(declareADProperty<Real>("implicit_plastic_solid_fraction")),
     _gamma(declareADProperty<Real>("plastic_multiplier_increment")),
@@ -291,12 +303,14 @@ ADImplicitPoroplasticBiotMaterial::ADImplicitPoroplasticBiotMaterial(const Input
     paramError("skeleton_bulk_modulus", "Require K < phi_s0 Ks for stable mineral storage.");
   if (_M < 0. || _beta < 0. || _beta > _M || _cohesion < 0.)
     paramError("dp_dilation_slope", "Require 0 <= beta <= M and nonnegative cohesion.");
+  if (_initial_ap > 1. && _beta == 0.)
+    paramError("initial_plastic_distention", "Positive initial dilation requires beta>0.");
 }
 void
 ADImplicitPoroplasticBiotMaterial::initQpStatefulProperties()
 {
-  _Fp_history[_qp] = RankTwoTensor(RankTwoTensor::initIdentity);
-  _accumulated_history[_qp] = 0.;
+  _Fp_history[_qp] = std::cbrt(_initial_ap) * RankTwoTensor(RankTwoTensor::initIdentity);
+  _accumulated_history[_qp] = _beta > 0. ? std::log(_initial_ap) / _beta : 0.;
 }
 void
 ADImplicitPoroplasticBiotMaterial::computeQpProperties()
@@ -423,7 +437,28 @@ ADImplicitPoroplasticBiotMaterial::computeQpProperties()
     }
   _ap[_qp] = state.ap;
   _B[_qp] = state.B;
-  _B_el[_qp] = state.B_el;
+  _B_el_available[_qp] = 0.;
+  _B_el[_qp] = std::numeric_limits<Real>::quiet_NaN();
+  if (_compute_elastic || _frozen_reference)
+  {
+    const ADReal J = determinant(F);
+    const Real j = raw_value(J);
+    const Real a = (1. - _K / (_phi0 * _Ks)) * raw_value(_pressure[_qp]) / _Ks;
+    const Real c = _K / (_phi0 * _Ks) * std::log(j);
+    // The stable root lies below the first of the mineral-stiffness,
+    // pore-volume, and tensile turning-point bounds iff this residual is positive.
+    Real upper = std::min(1., std::log(j / _phi0));
+    if (a < 0.)
+      upper = std::min(upper, std::log(-1. / a));
+    if (std::isfinite(a) && upper + a * std::exp(upper) - c > 0.)
+    {
+      const ADReal virgin = matchedLogMineralVolume(J, _pressure[_qp], _K, _Ks, _phi0);
+      _B_el[_qp] = matchedLogBiotCoefficient(J, _pressure[_qp], virgin, _K, _Ks, _phi0);
+      _B_el_available[_qp] = 1.;
+    }
+    else if (_frozen_reference)
+      mooseError(name(), ": virgin coefficient required by the companion stress law is unavailable.");
+  }
   _ratio[_qp] = state.ratio;
   _phi[_qp] = state.phi;
   _gamma[_qp] = x[6];

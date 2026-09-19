@@ -64,34 +64,79 @@ make setup</code></pre>
       <h3>2 · Build the MOOSE application</h3>
       <pre><code>make build</code></pre>
 
-      <h3>3 · Run the standard MOOSE regression tests</h3>
+      <h3>3 · Verify the constitutive derivation and run standard tests</h3>
+      <pre><code>make derivation</code></pre>
       <pre><code>make test</code></pre>
 
-      <h3>4 · Verify and regenerate implicit poroplastic data</h3>
-      <pre><code>make plastic
-make examples</code></pre>
-      <p>The current material checks physical mass, mineral compression,
-      energy-derived stress, flow, yield, objectivity and derivatives. Supplementary
-      loading and frozen-history examples use the same constitutive law. The
-      feedback sweep records an independently identified inadmissible apex state
-      separately from its smooth-cone solutions.</p>
-
-      <h3>5 · Mandel analytical + AD verification</h3>
+      <h3>4 · Mandel analytical + AD verification</h3>
       <pre><code>make mandel</code></pre>
       <p>The closed-form Biot coefficient is checked against the general implicit
       tangent and centered differences of perturbed mineral solves. The coupled
       outer AD Jacobian, mass and EOS residuals, and analytical profiles are
       checked separately.</p>
 
-      <h3>6 · Regenerate all figures</h3>
-      <pre><code>make figures</code></pre>
+      <h3>5 · Verify and regenerate implicit poroplastic data</h3>
+      <pre><code>make plastic</code></pre>
+      <p>The material checks physical mass, mineral compression, energy-derived
+      stress, flow, yield, objectivity and derivatives.</p>
 
-      <h3>7 · Build the manuscript</h3>
+      <h3>6 · Regenerate coupled plastic and stability studies</h3>
+      <pre><code>make plastic-flow
+make stability</code></pre>
+      <p>These full studies include coupled storage, elastic recovery, mesh and
+      time refinement, and the six-case stability matrix. They can take hours.
+      Set <code>POROPLASTIC_MPI_RANKS</code> no higher than the allocated CPU
+      count to use MPI. The standard test suite skips these two heavy drivers.</p>
+
+      <h3>7 · Regenerate supplementary examples</h3>
+      <pre><code>make examples</code></pre>
+      <p>Loading and frozen-history examples use the same constitutive law.
+      The feedback sweep records an independently identified inadmissible apex
+      state separately from its smooth-cone solutions.</p>
+
+      <h3>8 · Regenerate all figures</h3>
+      <pre><code>make figures</code></pre>
+      <p>This target renders the curated numerical data. Running it alone
+      redraws the figures without rerunning their simulations; the preceding
+      steps regenerate the numerical evidence.</p>
+
+      <h3>9 · Build the manuscript</h3>
       <pre><code>make paper</code></pre>
 
-      <h3>8 · Provenance hashes and repository validation</h3>
+      <h3>10 · Provenance hashes and repository validation</h3>
       <pre><code>make provenance
 make validate</code></pre>
+      <p>The provenance record separates required package versions from the
+      environments observed by simulation drivers. New runs record package
+      versions, the framework revision, executable hash, and output hashes.
+      Reusing a completed run preserves its original observations. Historical
+      results without those records are explicitly marked as not recorded;
+      regenerating file hashes does not supply missing execution history.</p>
+    </section>
+
+    <section class="section" id="constitutive-verification">
+      <h2>Constitutive verification</h2>
+      <p>Independent checks reconstruct the mineral state, recover both
+      effective stresses from the energy, and verify plastic flow, distention,
+      hardening, yield consistency, and dissipation. The checks include unequal
+      principal stretches at nonzero pore pressure, the perfectly plastic
+      limit, and load-increment refinement on the smooth yield surface.</p>
+      <p>Run <code>make plastic</code> for the material-point checks. The
+      <a href="source.html?f=../validation/README.md">verification documentation</a>
+      describes the procedures and links to the driver and recorded results.</p>
+    </section>
+
+    <section class="section" id="discrete-verification">
+      <h2>Verification of the discrete residuals</h2>
+      <p>Independent finite differences check the constitutive fluid-storage
+      terms and the assembled AD Jacobians in elastic, active-plastic, and
+      coupled poroplastic calculations. Integrated fluid exchange is compared
+      with water-mass change, and time-step refinement measures the mass drift
+      from the chain-rule time discretization.</p>
+      <p>The <a href="source.html?f=../validation/README.md">verification
+      documentation</a> gives the test procedures, tolerances, and treatment of
+      elastic–plastic switching. Run <code>make test</code> for the ordinary
+      regressions and <code>make plastic-flow</code> for the full coupled study.</p>
     </section>
 
     <section class="section">

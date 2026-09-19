@@ -40,10 +40,10 @@ at 0.3 s. It reaches −0.00891130 GPa^2 at 0.4 s. Other directions retain
 positive determinants. Halving the finite-difference perturbation changes
 these minima by less than 2e-10 GPa^2. Thus the original constitutive response
 loses ellipticity before the prominent 0.5 s and 0.7 s contour pattern.
-The wider three-point scan gives a minimum of −0.00903929 GPa^2.
+The wider three-point scan gives a minimum of −0.00903897 GPa^2.
 
-The original final-time transverse RMS variation of B − B_el is 4.58697e-4
-on the 40 × 4 grid. Its unscaled second difference along X has RMS 6.93222e-4,
+The original final-time transverse RMS variation of B − B_el is 4.58671e-4
+on the 40 × 4 grid. Its unscaled second difference along X has RMS 6.93293e-4,
 compared with 6.87334e-6 on the 20 × 2 grid at the same time step. Smooth
 specimen averages and a correct residual Jacobian do not rule out this local
 constitutive instability. The grid can select the spatial structure once the
@@ -51,9 +51,9 @@ homogeneous branch loses stability; the original contour pattern should not
 be interpreted as a resolved physical localization band.
 
 Halving the zero-hardening time step from 0.0025 s to 0.00125 s leaves
-the maximum transverse RMS coefficient contrast at 4.48232e-4 and the final
-X-direction second-difference RMS at 6.71902e-4. The minimum sampled acoustic
-determinant remains negative, at −0.00913830 GPa^2. Time-step reduction alone
+the maximum transverse RMS coefficient contrast at 4.48327e-4 and the final
+X-direction second-difference RMS at 6.72205e-4. The minimum sampled acoustic
+determinant remains negative, at −0.00913836 GPa^2. Time-step reduction alone
 therefore does not remove the observed spatial instability.
 
 ## Constitutive change
@@ -92,7 +92,7 @@ absolute error 2.71333e-6, below the unchanged 1e-7 and 1e-5 limits.
 The corrected 20 × 2, 40 × 4, and half-time-step 40 × 4 runs are complete.
 Their minimum sampled acoustic determinants are respectively 0.0380591,
 0.0379669, and 0.0379504 GPa^2. On the 40 × 4 mesh, the maximum transverse RMS
-variation of B − B_el is 2.14e-16 at the 0.0025 s step and 7.37e-16 at the
+variation of B − B_el is 2.34e-16 at the 0.0025 s step and 7.36e-16 at the
 0.00125 s step. The largest local coefficient-contrast difference between these
 time steps is 3.85e-6 across the six snapshots; the final-time maximum is
 6.53e-7. Pressure and solved solid-density fields also retain transverse
@@ -103,9 +103,9 @@ complete comparison matrix passes its acceptance checks. The curated record
 spatial metrics, refinement differences, configurations, and source hashes.
 
 The associated-flow control sets beta = M = 0.6 with H = 0. Its minimum
-sampled acoustic determinant is −0.00636515 GPa^2, with positive values in
+sampled acoustic determinant is −0.00636518 GPa^2, with positive values in
 other directions. Its maximum transverse RMS coefficient contrast is
-2.48487e-4, and its final X-direction second-difference RMS is 3.99219e-4.
+2.48155e-4, and its final X-direction second-difference RMS is 3.98679e-4.
 Changing the flow direction alone therefore does not remove the instability
 on this coupled loading path. These controls identify the loss of ellipticity
 of the tested perfectly plastic response; they do not attribute it solely to
@@ -113,12 +113,12 @@ nonassociation.
 
 | Case | Minimum sampled det(Q), GPa^2 | Maximum transverse RMS of B − B_el |
 | --- | ---: | ---: |
-| Original, H = 0 | −0.00903929 | 4.58697e-4 |
-| H = 0, half time step | −0.00913830 | 4.48232e-4 |
-| H = 0, associated flow | −0.00636515 | 2.48487e-4 |
-| H = 100 MPa, 20 × 2 | 0.0380591 | 3.71e-16 |
-| H = 100 MPa, 40 × 4 | 0.0379669 | 2.14e-16 |
-| H = 100 MPa, 40 × 4, half time step | 0.0379504 | 7.37e-16 |
+| Original, H = 0 | −0.00903897 | 4.58671e-4 |
+| H = 0, half time step | −0.00913836 | 4.48327e-4 |
+| H = 0, associated flow | −0.00636518 | 2.48155e-4 |
+| H = 100 MPa, 20 × 2 | 0.0380591 | 3.70e-16 |
+| H = 100 MPa, 40 × 4 | 0.0379669 | 2.34e-16 |
+| H = 100 MPa, 40 × 4, half time step | 0.0379504 | 7.36e-16 |
 
 The corrected fine/coarse final second-difference RMS ratio is 0.283, below
 the 0.6 acceptance limit. The publication plots show B/B0, where B includes
@@ -150,7 +150,8 @@ make provenance
 make validate
 ```
 
-The general material-point tests remain zero-hardening tests. The additional
+The ordinary material-point regressions retain zero-hardening controls; the
+publication examples use H = 100 MPa. The additional
 `implicit_plastic_hardening_history` and `implicit_plastic_hardening_jacobian`
 regressions exercise the new constitutive option. The heavy
 `poroplastic_spatial_stability` regression runs the comparison matrix without

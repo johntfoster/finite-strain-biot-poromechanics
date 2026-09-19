@@ -2,26 +2,37 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-We derived a closed-form finite-deformation Biot coefficient for a saturated
-solid with logarithmic skeleton and mineral laws and plastic distention.
-A scalar equation determines mineral volume, and the Biot coefficient follows
-directly from that volume, total volume, and pore pressure.  The expression
-recovers \(B_0=1-K/K_s\) at the reference state and connects the pressure
-contribution to total stress with the stress that drives plastic flow.
+We derived a coupled stored energy, its effective stresses, and a closed-form
+finite-deformation Biot coefficient for a saturated solid with logarithmic
+skeleton and mineral laws.  Mineral compression produces a pressure
+contribution to the elastic stress, and the fixed-pressure energy derivative
+retains a pressure correction in the double-prime effective stress.  The
+elastic total-stress response recovers the logarithmic specialization of
+\citet{gajo2010}; linearization about the undeformed, zero-pressure state
+recovers classical Biot elasticity.  A scalar equation determines mineral
+volume, and the Biot coefficient follows from that volume, total volume, and
+pore pressure, with \(B_0=1-K/K_s\) at the reference state.
 
 Plastic distention carries loading history into the Biot coefficient.  The
 material-point calculations show that unloading follows a different path
 from the virgin response at the same total deformation.  At nonzero
-pressure, the change in the Biot coefficient feeds back into the driving
-stress and restrains dilation for the chosen energy and flow law.  The implicit return
+pressure, the coupled energy extends the calibrated drained double-prime
+response, and the effective-stress relation supplies the driving stress.  Using
+the current coefficient produces less dilation than substituting the virgin
+coefficient only in that transformation for the selected loading paths.
+This comparison measures sensitivity to the modified transformation.
+The implicit return
 mapping advances these quantities together, and automatic differentiation
 retains their coupled change in the Newton Jacobian.  Independent checks of
 mass conservation, the energy-derived stress, the flow rule, yield
 consistency, and the derivatives verify the update on the smooth
-Drucker--Prager branch.
+part of the Drucker--Prager yield surface.
 
 The coupled finite-element calculations recover the elastic Mandel pressure
-and horizontal-displacement solution and verify fluid storage during plastic
+and horizontal-displacement solution.  At larger elastic compression, the
+Biot coefficient changes reversibly with deformation and drainage, separating
+the finite-strain elastic response from the additional effect of plastic
+history.  The poroplastic calculations verify fluid storage during plastic
 flow.  Independent differences of water accumulation and assembled-Jacobian
 comparisons check the plastic pore-volume contribution and its derivatives.
 Water-mass change is also checked against boundary flow, and time-step

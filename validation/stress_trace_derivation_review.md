@@ -23,6 +23,22 @@ supports the selected construction on a local admissible elastic branch.
 
 ## Verified identities
 
+Zero-pressure calibration supplies the double-prime skeleton response through
+`K` and `G`. The mineral modulus and reference solid fraction determine its
+energy-consistent pressure extension. At fixed total deformation and plastic
+history, `d(tau')/dp = J(1-B) I` and `d(sigma)/dp = -B I`. Integrating the latter
+from zero pressure reconstructs total stress from the drained double-prime
+response. The pointwise transformation uses the double-prime stress at the
+current pressure, including its pressure correction.
+
+`check_implicit_poroplastic.py` now checks the MOOSE single-prime stress against
+differences of the Legendre energy and the reconstructed double-prime stress
+against differences of the reduced energy. It also checks the drained response,
+both transformations, and the pressure tangent and integral with plastic
+history fixed. The integral uses mineral-volume differences and independent
+pressure quadrature. The virgin-coefficient companion changes only the stress
+transformation and is treated as a constitutive sensitivity experiment.
+
 The reference data are `barJ(1,0)=1` and the entire drained skeleton stress
 curve. The reference tangent is `B_0=1-K/K_s`; it is not an independently
 prescribed boundary value for every pressure. The finite-pressure skeleton

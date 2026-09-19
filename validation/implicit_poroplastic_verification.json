@@ -7,7 +7,12 @@
     "yield_residual": 1.352528731028239e-14,
     "stress": 1.373585065205892e-10,
     "determinant": 1.676386893884052e-13,
-    "accumulated": 6.696032617270475e-16
+    "accumulated": 6.696032617270475e-16,
+    "drained_stress": 1.3735675811767578e-10,
+    "double_prime_stress": 1.373585065205892e-10,
+    "stress_transforms": 1.373585065205892e-10,
+    "pressure_tangent": 1.1880679079423473e-09,
+    "pressure_integral": 1.4756123224894207e-13
   },
   "nonaxisymmetric": {
     "mass": 4.929390229335695e-14,
@@ -17,7 +22,12 @@
     "yield_residual": 1.0964771111806233e-14,
     "stress": 1.2623099486033122e-10,
     "determinant": 1.1652473690809684e-13,
-    "accumulated": 7.008282842946301e-16
+    "accumulated": 7.008282842946301e-16,
+    "drained_stress": 1.3348499933878582e-10,
+    "double_prime_stress": 1.3422234853108724e-10,
+    "stress_transforms": 1.3422234853108724e-10,
+    "pressure_tangent": 1.7833737361150335e-09,
+    "pressure_integral": 1.059095064798991e-12
   },
   "rotated": {
     "mass": 4.929390229335695e-14,
@@ -27,7 +37,12 @@
     "yield_residual": 6.469587484995524e-15,
     "stress": 1.4181164900461832e-10,
     "determinant": 1.165646355480443e-13,
-    "accumulated": 9.43689570931383e-16
+    "accumulated": 9.43689570931383e-16,
+    "drained_stress": 1.4272705713907877e-10,
+    "double_prime_stress": 1.4266754190127054e-10,
+    "stress_transforms": 1.4266753196716308e-10,
+    "pressure_tangent": 6.689445627198558e-09,
+    "pressure_integral": 9.589195251464843e-13
   },
   "objectivity_stress_error": 1.0172526041666666e-14,
   "history_0.01": {
@@ -38,7 +53,12 @@
     "yield_residual": 1.2859702110290528e-14,
     "stress": 1.4340070883433023e-10,
     "determinant": 1.519347256513648e-13,
-    "accumulated": 5.412337245047638e-16
+    "accumulated": 5.412337245047638e-16,
+    "drained_stress": 1.4354413747787476e-10,
+    "double_prime_stress": 1.4340070883433023e-10,
+    "stress_transforms": 1.4340070883433023e-10,
+    "pressure_tangent": 1.3679865819555935e-09,
+    "pressure_integral": 1.494288444519043e-13
   },
   "history_0.005": {
     "mass": 5.46229728115577e-14,
@@ -48,7 +68,12 @@
     "yield_residual": 1.3835728168487549e-14,
     "stress": 1.3932939370473227e-10,
     "determinant": 1.740810729074227e-13,
-    "accumulated": 5.48172618408671e-16
+    "accumulated": 5.48172618408671e-16,
+    "drained_stress": 1.393801768620809e-10,
+    "double_prime_stress": 1.3932939370473227e-10,
+    "stress_transforms": 1.3932939370473227e-10,
+    "pressure_tangent": 1.3165788125459094e-09,
+    "pressure_integral": 1.6609827677408853e-13
   },
   "refinement_differences": [
     0.0,
@@ -62,71 +87,186 @@
     "yield_residual": 1.1589378118515014e-14,
     "stress": 1.4808877503188947e-10,
     "determinant": 1.4867908336782532e-13,
-    "accumulated": 5.551115123125783e-16
+    "accumulated": 5.551115123125783e-16,
+    "drained_stress": 1.471936119099458e-10,
+    "double_prime_stress": 1.473028560479482e-10,
+    "stress_transforms": 1.473028560479482e-10,
+    "pressure_tangent": 7.533867928764942e-09,
+    "pressure_integral": 9.3535582224528e-13
   },
   "nonaxis_0.005": {
     "mass": 5.3290705182007514e-14,
     "eos": 8.370561188630887e-14,
     "biot": 9.594658401113065e-12,
-    "flow": 9.66409569556903e-14,
-    "yield_residual": 1.0712693134943645e-14,
+    "flow": 9.659861886085475e-14,
+    "yield_residual": 1.0728836059570312e-14,
     "stress": 1.682733694712321e-10,
     "determinant": 1.8305290009484887e-13,
-    "accumulated": 7.251144129583054e-16
+    "accumulated": 7.251144129583054e-16,
+    "drained_stress": 1.67472243309021e-10,
+    "double_prime_stress": 1.674984097480774e-10,
+    "stress_transforms": 1.674984097480774e-10,
+    "pressure_tangent": 6.9077029508130906e-09,
+    "pressure_integral": 1.051187515258789e-12
   },
   "nonaxisymmetric_refinement_differences": [
     0.00028543618029563787,
     0.00014929215601271385
   ],
+  "feedback_loading": {
+    "final_axial_stretch": 0.65,
+    "final_pressures_Pa": [
+      0.0,
+      200000000.0,
+      400000000.0,
+      600000000.0,
+      800000000.0,
+      1000000000.0
+    ]
+  },
   "pressure_0": {
-    "mass": 4.75175454539567e-14,
-    "eos": 8.671188767017668e-14,
-    "biot": 1.4356960065242674e-11,
-    "flow": 8.540976086102159e-14,
-    "yield_residual": 1.352528731028239e-14,
-    "stress": 1.373585065205892e-10,
-    "determinant": 1.676386893884052e-13,
-    "accumulated": 6.696032617270475e-16
-  },
-  "pressure_5e+07": {
-    "mass": 5.229150445984487e-14,
-    "eos": 8.583325022959443e-14,
-    "biot": 8.75810535205801e-12,
-    "flow": 7.227454312114245e-14,
-    "yield_residual": 1.1075288057327271e-14,
-    "stress": 1.414834956328074e-10,
-    "determinant": 1.4791184770046595e-13,
-    "accumulated": 6.106226635438361e-16
-  },
-  "pressure_1e+08": {
-    "mass": 5.10702591327572e-14,
-    "eos": 8.75775146846891e-14,
-    "biot": 9.354739205491569e-12,
-    "flow": 7.994039458170121e-14,
-    "yield_residual": 1.2569129467010497e-14,
-    "stress": 9.7880224386851e-11,
-    "determinant": 1.5606038596821525e-13,
-    "accumulated": 5.273559366969494e-16
+    "mass": 5.084821452783217e-14,
+    "eos": 8.24618151540335e-14,
+    "biot": 1.7228551918435642e-11,
+    "flow": 8.65312595882406e-14,
+    "yield_residual": 1.0882814725240071e-14,
+    "stress": 1.3533381621042887e-10,
+    "determinant": 1.7427682560966495e-13,
+    "accumulated": 4.8155923693116165e-15,
+    "drained_stress": 1.3533854484558105e-10,
+    "double_prime_stress": 1.3533381621042887e-10,
+    "stress_transforms": 1.3533381621042887e-10,
+    "pressure_tangent": 5.317529835261544e-09,
+    "pressure_integral": 1.4756123224894207e-13
   },
   "pressure_2e+08": {
-    "mass": 4.929390229335695e-14,
-    "eos": 8.491124470211275e-14,
-    "biot": 9.53925827218427e-12,
-    "flow": 9.129784601935587e-14,
-    "yield_residual": 1.2842317422231039e-14,
-    "stress": 1.139487624168396e-10,
-    "determinant": 1.7453280574258878e-13,
-    "accumulated": 5.967448757360216e-16
+    "mass": 4.618527782440651e-14,
+    "eos": 8.370214243935692e-14,
+    "biot": 1.702415985960215e-11,
+    "flow": 8.237724738457963e-14,
+    "yield_residual": 1.3095637162526449e-14,
+    "stress": 1.49337371190389e-10,
+    "determinant": 1.6839307726002062e-13,
+    "accumulated": 4.9682480351975755e-15,
+    "drained_stress": 1.5430569648742675e-10,
+    "double_prime_stress": 1.4874879519144693e-10,
+    "stress_transforms": 1.4874871571858725e-10,
+    "pressure_tangent": 4.3063855900052986e-09,
+    "pressure_integral": 2.2524197896321615e-12
   },
   "pressure_4e+08": {
-    "mass": 4.6851411639181606e-14,
-    "eos": 9.000786227453261e-14,
-    "biot": 8.632095038763055e-12,
-    "flow": 9.062347226806988e-14,
-    "yield_residual": 5.48859437306722e-15,
-    "stress": 1.3315529624621073e-10,
-    "determinant": 1.864156615530299e-13,
-    "accumulated": 5.551115123125783e-16
+    "mass": 4.574118861455645e-14,
+    "eos": 7.662620538084752e-14,
+    "biot": 1.347855160815925e-11,
+    "flow": 9.192776748156994e-14,
+    "yield_residual": 1.1784334977467855e-14,
+    "stress": 1.3779846827189127e-10,
+    "determinant": 1.7965295050215158e-13,
+    "accumulated": 4.8155923693116165e-15,
+    "drained_stress": 1.241297721862793e-10,
+    "double_prime_stress": 1.252772013346354e-10,
+    "stress_transforms": 1.2527716159820556e-10,
+    "pressure_tangent": 9.327400335790621e-09,
+    "pressure_integral": 4.156748453776042e-12
+  },
+  "pressure_6e+08": {
+    "mass": 4.873879078104437e-14,
+    "eos": 9.232198339148567e-14,
+    "biot": 1.3463341552721886e-11,
+    "flow": 8.766208245414298e-14,
+    "yield_residual": 1.2894471486409505e-14,
+    "stress": 1.534829537073771e-10,
+    "determinant": 1.842070333074597e-13,
+    "accumulated": 5.134781488891349e-15,
+    "drained_stress": 1.5851521492004394e-10,
+    "double_prime_stress": 1.583998998006185e-10,
+    "stress_transforms": 1.583998998006185e-10,
+    "pressure_tangent": 1.8702332417784252e-08,
+    "pressure_integral": 6.29425048828125e-12
+  },
+  "pressure_8e+08": {
+    "mass": 4.596323321948148e-14,
+    "eos": 8.061606937559418e-14,
+    "biot": 1.547728611939192e-11,
+    "flow": 7.18188529480468e-14,
+    "yield_residual": 1.3147791226704915e-14,
+    "stress": 1.2323989470799765e-10,
+    "determinant": 1.4920530089224115e-13,
+    "accumulated": 4.413136522884997e-15,
+    "drained_stress": 1.1429361502329509e-10,
+    "double_prime_stress": 1.1324540774027507e-10,
+    "stress_transforms": 1.1324540774027507e-10,
+    "pressure_tangent": 1.1750897780228704e-08,
+    "pressure_integral": 8.572578430175781e-12
+  },
+  "pressure_1e+09": {
+    "mass": 5.10702591327572e-14,
+    "eos": 8.358591596646647e-14,
+    "biot": 1.4326539954367945e-11,
+    "flow": 9.792514021889076e-14,
+    "yield_residual": 1.3942519823710124e-14,
+    "stress": 1.5239710609118145e-10,
+    "determinant": 1.8767821498288928e-13,
+    "accumulated": 4.8433479449272454e-15,
+    "drained_stress": 1.5414573748906453e-10,
+    "double_prime_stress": 1.539614200592041e-10,
+    "stress_transforms": 1.5396145979563396e-10,
+    "pressure_tangent": 1.8144773149926296e-08,
+    "pressure_integral": 1.1654218037923178e-11
+  },
+  "feedback_refinement": {
+    "consistent": {
+      "final_distention": [
+        1.0840396538717,
+        1.0840396538717,
+        1.0840396538717
+      ],
+      "differences": [
+        0.0,
+        0.0
+      ]
+    },
+    "reference": {
+      "final_distention": [
+        1.0848480642632,
+        1.0848480642632,
+        1.0848480642632
+      ],
+      "differences": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "feedback_refined_0.01": {
+    "mass": 5.10702591327572e-14,
+    "eos": 8.88872309090516e-14,
+    "biot": 1.4326539954367945e-11,
+    "flow": 9.191692545984509e-14,
+    "yield_residual": 1.195073127746582e-14,
+    "stress": 1.5239377319812775e-10,
+    "determinant": 1.800768735515934e-13,
+    "accumulated": 5.10702591327572e-15,
+    "drained_stress": 1.5414573748906453e-10,
+    "double_prime_stress": 1.5395808219909668e-10,
+    "stress_transforms": 1.5395812193552654e-10,
+    "pressure_tangent": 1.8144773149926296e-08,
+    "pressure_integral": 1.1728604634602865e-11
+  },
+  "feedback_refined_0.005": {
+    "mass": 5.1514348342607263e-14,
+    "eos": 8.786547878170126e-14,
+    "biot": 1.4725110020208376e-11,
+    "flow": 8.912000911548423e-14,
+    "yield_residual": 1.2621283531188965e-14,
+    "stress": 1.5239683911204337e-10,
+    "determinant": 1.8048366620670997e-13,
+    "accumulated": 5.218048215738236e-15,
+    "drained_stress": 1.595308780670166e-10,
+    "double_prime_stress": 1.5909349918365478e-10,
+    "stress_transforms": 1.5909353892008463e-10,
+    "pressure_tangent": 2.1643623508423444e-08,
+    "pressure_integral": 1.1654218037923178e-11
   },
   "parameters": {
     "K": 1000000000.0,
@@ -139,5 +279,1065 @@
     "hardening_modulus_Pa": 100000000.0
   },
   "accepted": true,
+  "execution_provenance": [
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:06:33.974292+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/history.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/history.i": "586ea9cb8f2b472dd6254d3024144961830fddc73072db2c0b287c071500bfc7",
+        ".agent-runtime/implicit_poroplastic/history_out.csv": "ab95324751755a1252223a7c4587afe81a4e9cd752fb878a7ee60e1770eb23a8"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:06:37.815906+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/nonaxis.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/nonaxis.i": "bec8d31d77201641ec90f6d39b08c3a2603798e38e04ee9266ee192f0d05aa72",
+        ".agent-runtime/implicit_poroplastic/nonaxis_out.csv": "5b86ac446d8e3cc13dd06cd436a90d240fa00abe681e90deae73e68fe8868168"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:06:40.310664+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/rotated.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/rotated.i": "8f97c8f307d8f49d976a7c101c3a5ba7250e5283ba3b05ed36b4bcd6a9ee2ef5",
+        ".agent-runtime/implicit_poroplastic/rotated_out.csv": "ec30aba32ec56af8f452b9c226a160da64a50d12ae6843bfd2b7bd6df58c9994"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:06:42.853869+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/history_0.01.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/history_0.01.i": "f8dca681dd37fa52dcbd331b7c3b4dfee0c430b9a068f268330f0cbb246aa114",
+        ".agent-runtime/implicit_poroplastic/history_0.01_out.csv": "061050f3912718b8b686eb7bddb120524e3d95606040eb49ced254afde5c41ee"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:06:49.375448+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/history_0.005.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/history_0.005.i": "866009dc611baea33e5a43b91b1ccf08ba5b0b0346ce77e635e4c17024f72448",
+        ".agent-runtime/implicit_poroplastic/history_0.005_out.csv": "9ce7f4e0d2e38e0b7636a55ec43381b0d35d462171e65c2677fe5f43dadc7cb9"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:02.794932+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/nonaxis_0.01.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/nonaxis_0.01.i": "a1203eb7c6c7aaf4bc294baa76f911c42132ce76144c05793ca523e122d6be60",
+        ".agent-runtime/implicit_poroplastic/nonaxis_0.01_out.csv": "c3740149d29cd4fe2ca1d785296629e04e6bdbd31b4bbe09e34db583d5c14314"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:07.684806+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/nonaxis_0.005.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/nonaxis_0.005.i": "5fd36a061b55c8aa8036322fc78b2c0dcdd434395a896da3067a757e44a1c7d1",
+        ".agent-runtime/implicit_poroplastic/nonaxis_0.005_out.csv": "43a82d35812c87163a97862a0754b152e952fb45e27845c2481b132896311947"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:15.744960+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/pressure_0.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/pressure_0.i": "8664b37876dc06407de212d14dd866852fe283909828b98fd47e8cb7a0d2ca39",
+        ".agent-runtime/implicit_poroplastic/pressure_0_out.csv": "22beda10fd13c288df3876ed6adbdc549efce908e68ea7b47de685adefb284bc"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:18.416333+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/reference_0.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/reference_0.i": "0cc14601fea2db148a3a3a9899b8b4bea4f4302e98fb9fa4630c2a0c259a9374",
+        ".agent-runtime/implicit_poroplastic/reference_0_out.csv": "22beda10fd13c288df3876ed6adbdc549efce908e68ea7b47de685adefb284bc"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:21.737961+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/pressure_2e+08.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/pressure_2e+08.i": "3c3362e24579f54dfe07ec84b2bd43fcac7c7035c6940e7ad69a73db9a15c9b0",
+        ".agent-runtime/implicit_poroplastic/pressure_2e+08_out.csv": "0cb958c0b0c58a2ccc76fbc77ef34060824613e7b30ee401b3f500831f38bc8b"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:24.457736+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/reference_2e+08.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/reference_2e+08.i": "8ca948e68db5ea7779b6771a2b03ee48c3b3cc0b35900a7c6f8c09faddbab395",
+        ".agent-runtime/implicit_poroplastic/reference_2e+08_out.csv": "aec2ddf39a79231694820d007e99a936a7c054b9768bbfe2181ba50ca18f357c"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:27.959700+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/pressure_4e+08.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/pressure_4e+08.i": "ddc4f1247b490085ba29002a59c8b9944caf5a6fb6bae604ce67c7a86fbefbf8",
+        ".agent-runtime/implicit_poroplastic/pressure_4e+08_out.csv": "70eb75eb6eb5b0293a0656289ee2c69ee4efa9b90b24958cf2bb89d4e2bffc83"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:30.678976+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/reference_4e+08.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/reference_4e+08.i": "170c312ec184e99697cf6f4cf2cc970ab38595a7842da9c5dcdf01a1befc85e0",
+        ".agent-runtime/implicit_poroplastic/reference_4e+08_out.csv": "f6fb4453755a9b88eb363aa8af9d174361bb524520737898ca292123a77f2525"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:34.195455+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/pressure_6e+08.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/pressure_6e+08.i": "94ce3a4865c333f742f0dc92ccda668dbddb73b558a66605d0e8e332b9ae687d",
+        ".agent-runtime/implicit_poroplastic/pressure_6e+08_out.csv": "f62411999803ab6b69f39e29f0d39889f546a5f2133a151796141c362a43cd14"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:36.906669+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/reference_6e+08.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/reference_6e+08.i": "706c7cc0a20518013f63a2d151661d519d2ac2dea1b48e9ea12ef06cf3a6f8bf",
+        ".agent-runtime/implicit_poroplastic/reference_6e+08_out.csv": "861d81e3ed2b6b2ccea2c2ec8b4fe153d1bdf83363223016d0d981d4658e4a4c"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:40.454913+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/pressure_8e+08.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/pressure_8e+08.i": "0e9e5890ec7b98538a785f7f3706bbedcb50e00f31f1c04f0ac32f1818c8f946",
+        ".agent-runtime/implicit_poroplastic/pressure_8e+08_out.csv": "7074753d3d81a13774a52dd5bc3ee7dd189ddba5c2a766622d48597aae10bcdf"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:43.184262+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/reference_8e+08.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/reference_8e+08.i": "fce3ede9ccc97050c062f8643578216aee87a621940571e5f780dacee31baf3e",
+        ".agent-runtime/implicit_poroplastic/reference_8e+08_out.csv": "e65938b1b8d4c5679ec59dba378ff1afb67b98b30a5c0ba33658046c8e3a2267"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:46.752229+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/pressure_1e+09.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/pressure_1e+09.i": "fc2066bf409b195fdd61002b3e3e6816802d35c1a42347e6880ef866fe694af7",
+        ".agent-runtime/implicit_poroplastic/pressure_1e+09_out.csv": "121c6dcf38cdee93ec86a2b47294659f165c88386d9031b778fa21a3eb540b39"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:49.502992+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/reference_1e+09.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/reference_1e+09.i": "bfa59a063a2e1e8ceb0a3cd7df8d11cfddc8a379dc95182cf909187863e96bda",
+        ".agent-runtime/implicit_poroplastic/reference_1e+09_out.csv": "f2e6dc8148b45bcd9df193ae2d01c3510429f21378520c4e0d9f4000a848a1eb"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:53.049457+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/feedback_refined_False_0.01.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/feedback_refined_False_0.01.i": "9318a5424953afb60591c1778f92698150e7e65ebb7039d1cf6ab8a66ab83459",
+        ".agent-runtime/implicit_poroplastic/feedback_refined_False_0.01_out.csv": "ff187ed49d3db64cc9fc0494fb3123115ddaf18bcaa9d42e0197a7b7fa2fe5d8"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:07:58.067062+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/feedback_refined_False_0.005.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/feedback_refined_False_0.005.i": "eaded6b871cfc63d59e312441e9da77b3b08f1461d3128e2ab3bb236aab07c6c",
+        ".agent-runtime/implicit_poroplastic/feedback_refined_False_0.005_out.csv": "54fe0c0a814ed90bf0aee232f82f988478e168f750522d3aa577b1b0cedb6b8c"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:08:06.303312+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/feedback_refined_True_0.01.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/feedback_refined_True_0.01.i": "1f158793ee7b970a8801d9dd3d86a4983651253de716fb35029f88570aa383d9",
+        ".agent-runtime/implicit_poroplastic/feedback_refined_True_0.01_out.csv": "3ec8ed0b0d681e05aa1bcc0c47cd27f7d7d6e593f1a878e5e35fc324fd6359dd"
+      }
+    },
+    {
+      "schema_version": 1,
+      "captured_at_utc": "2026-09-18T23:08:09.838087+00:00",
+      "python": "3.14.0",
+      "packages": {
+        "numpy": "2.4.2",
+        "scipy": "1.17.1",
+        "sympy": "1.14.0",
+        "pandas": "3.0.1",
+        "matplotlib": "3.10.8",
+        "pyyaml": "6.0.3"
+      },
+      "conda_packages": {
+        "moose-dev": {
+          "version": "2026.02.20",
+          "build": "openmpi"
+        },
+        "moose-libmesh": {
+          "version": "2026.02.18_f8a1758",
+          "build": "openmpi_0"
+        },
+        "moose-tools": {
+          "version": "2026.02.16",
+          "build": "py314hc4e95f2_0"
+        },
+        "openmpi": {
+          "version": "5.0.8",
+          "build": "h611b0e2_111"
+        }
+      },
+      "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+      "executable": {
+        "path": "moose_app/nonlinear_biot_ad-opt",
+        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+      },
+      "command": [
+        "moose_app/nonlinear_biot_ad-opt",
+        "-i",
+        ".agent-runtime/implicit_poroplastic/feedback_refined_True_0.005.i",
+        "--no-color"
+      ],
+      "outputs": {
+        ".agent-runtime/implicit_poroplastic/feedback_refined_True_0.005.i": "7330d812b9a0d05e31c79868c9cc9c4015621ba6c9d89bd45c6e420957017451",
+        ".agent-runtime/implicit_poroplastic/feedback_refined_True_0.005_out.csv": "1aa721a65ec0ed202c0cc3ae055945340e4dddeebea94731cb636fa44e3f4610"
+      }
+    }
+  ],
   "scope": "material state, fixed-current-plastic-state Biot derivative, return consistency; separate PETSc test checks active outer AD"
 }

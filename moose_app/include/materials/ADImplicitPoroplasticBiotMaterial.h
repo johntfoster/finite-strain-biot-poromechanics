@@ -21,6 +21,8 @@ protected:
   const ADVariableValue & _pressure;
   const Real _G, _K, _Ks, _phi0, _M, _beta, _cohesion, _hardening;
   const bool _frozen_reference;
+  const bool _compute_elastic;
+  const Real _initial_ap;
   MaterialProperty<RankTwoTensor> & _Fp_history;
   const MaterialProperty<RankTwoTensor> & _Fp_old;
   MaterialProperty<Real> & _accumulated_history;
@@ -33,6 +35,7 @@ protected:
   ADMaterialProperty<Real> & _ap;
   ADMaterialProperty<Real> & _B;
   ADMaterialProperty<Real> & _B_el;
+  MaterialProperty<Real> & _B_el_available;
   ADMaterialProperty<Real> & _ratio;
   ADMaterialProperty<Real> & _phi;
   ADMaterialProperty<Real> & _gamma;
