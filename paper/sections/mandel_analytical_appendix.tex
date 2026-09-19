@@ -6,72 +6,81 @@ Cheng and Detournay give the plane-strain analytical solution for constant
 poroelastic coefficients \citep{chengdetournay1988}.  For the parameters in
 \cref{tab:mandel-parameters}, the analytical storage coefficient is obtained by
 linearizing the equations solved by the finite-element model.  At
-\(J=1\), \(\rho_s=\rho_{s0}\), \(\phi_s=\phi_{s0}\), and \(\bar J=1\), source-free solid
-mass gives \(\phi_s=\phi_{s0}\bar J/J\), and hence
+\(J=1\), \(\rho_s=\rho_{s0}\), \(\phi_s=\phi_{s0}\), and \(\bar J=1\), solid mass conservation in the absence of sources gives \(\phi_s=\phi_{s0}\bar J/J\), and hence
 \(J(1-\phi_s)=J-\phi_{s0}\bar J\).  At fixed deformation and plastic
 state, differentiation of \eqref{eq:verification-mineral-factors} gives
-\begin{equation}
+\begin{equation*}
  \left.\pder{\bar J}{p}\right|_{J,\mbf F^p}
  =-\frac{\left(1-\dfrac{K}{\phi_{s0}K_s}\right)\bar J^2}
  {K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J}.
- \label{eq:trace-mineral-pressure-tangent}
-\end{equation}
-The derivative is negative on the stability domain
+ % equation-id: eq:trace-mineral-pressure-tangent
+\end{equation*}
+The derivative is negative wherever the mineral residual satisfies
 \eqref{eq:trace-mineral-stability-domain}.  At the reference state, with
 \(a^p=1\) and \(p=0\), it reduces to
 \(\partial\bar J/\partial p=-(1-K/(\phi_{s0}K_s))/K_s\).
 Differentiating the pore-volume identity using this value gives
-\begin{equation}
+\begin{equation*}
  \frac{\partial}{\partial t}\left[J(1-\phi_s)\right]
  =B_0\dot J+\left(\frac{\phi_{s0}}{K_s}-\frac{K}{K_s^2}\right)\dot p.
- \label{eq:mandel-linearized-pore-volume-rate}
-\end{equation}
+ % equation-id: eq:mandel-linearized-pore-volume-rate
+\end{equation*}
 Substitution into the exact water balance yields
-\begin{equation}
+\begin{equation*}
  B_0\dot J
  +\left(
   \frac{\phi_{s0}}{K_s}-\frac{K}{K_s^2}+\frac{\phi_{f0}}{K_f}
  \right)\dot p
  +\frac{1}{\bar\rho_{f0}}
  \nabla_{\mbf X}\mathbin{\cdot}\mbf W_f=0.
- \label{eq:mandel-linearized-water-balance}
-\end{equation}
-This reduction defines the linearized storage modulus \(M_{\mathrm{lin}}\)
-used for the analytical comparison, evaluated from the solved phase states.
+ % equation-id: eq:mandel-linearized-water-balance
+\end{equation*}
+The coefficient of the pressure rate defines the reciprocal of the
+linearized storage modulus \(M_{\mathrm{lin}}\).  It measures the change in
+stored water, divided by reference water density, per unit pressure change
+at fixed deformation.  We use this modulus in the analytical comparison.
 Following \citet{chengdetournay1988}, the remaining poroelastic parameters are
-\begin{subequations}
- \label{eq:mandel-derived-parameters}
+
+% equation-id: eq:mandel-derived-parameters
+
  \begin{align}
   \frac{1}{M_{\mathrm{lin}}}
   &=\frac{\phi_{s0}}{K_s}-\frac{K}{K_s^2}+\frac{\phi_{f0}}{K_f},
   \label{eq:mandel-storage-modulus}\\
   K_u&=K+B_0^2M_{\mathrm{lin}},
-  \label{eq:mandel-undrained-bulk-modulus}\\
+  \notag
+ % equation-id: eq:mandel-undrained-bulk-modulus
+\\
   B_{\mathrm{Sk}}&=\frac{B_0M_{\mathrm{lin}}}{K_u},
-  \label{eq:mandel-skempton-coefficient}\\
+  \notag
+ % equation-id: eq:mandel-skempton-coefficient
+\\
   \nu&=\frac{3K-2G}{2(3K+G)},
   \qquad
   \nu_u=\frac{3K_u-2G}{2(3K_u+G)},
-  \label{eq:mandel-poisson-ratios}\\
+  \notag
+ % equation-id: eq:mandel-poisson-ratios
+\\
   c&=\frac{
    2G(1-\nu)(\nu_u-\nu)\kappa
   }{
    B_0^2(1-\nu_u)(1-2\nu)^2\mu_f
   }.
-  \label{eq:mandel-consolidation-coefficient}
+  \notag
+ % equation-id: eq:mandel-consolidation-coefficient
  \end{align}
-\end{subequations}
+
 Here \(K_u\) is the undrained bulk modulus, \(B_{\mathrm{Sk}}\) is the Skempton
 coefficient, \(\nu\) and \(\nu_u\) are the drained and undrained Poisson
 ratios, respectively, and \(c\) is the consolidation coefficient.
 
 The storage in \eqref{eq:mandel-storage-modulus} also has the classical
 single-mineral Biot form,
-\begin{equation}
+\begin{equation*}
  \frac{1}{M_{\mathrm{lin}}}
  =\frac{B_0-\phi_{f0}}{K_s}+\frac{\phi_{f0}}{K_f}.
- \label{eq:classical-biot-storage-comparison}
-\end{equation}
+ % equation-id: eq:classical-biot-storage-comparison
+\end{equation*}
 Thus the matched logarithmic mineral and skeleton laws recover both the
 reference Biot coefficient and the classical storage relation
 \citep{biotwillis1957}.  The analytical comparison verifies the small-strain
@@ -79,14 +88,14 @@ limit of the implemented constitutive equations.
 
 The Cheng--Detournay characteristic equation defines \(\alpha_n\) as its
 positive roots \citep{chengdetournay1988}:
-\begin{equation}
+\begin{equation*}
  \tan\alpha_n
  =\frac{1-\nu}{\nu_u-\nu}\alpha_n.
- \label{eq:mandel-root-equation}
-\end{equation}
+ % equation-id: eq:mandel-root-equation
+\end{equation*}
 The corresponding analytical water pressure is
 \citep{chengdetournay1988}
-\begin{align}
+\begin{align*}
  p(X,t)
  ={}&\frac{2P_0B_{\mathrm{Sk}}(1+\nu_u)}{3}
  \sum_{n=1}^{\infty}
@@ -96,14 +105,15 @@ The corresponding analytical water pressure is
  }{
   \alpha_n-\sin\alpha_n\cos\alpha_n
  }
- \notag\\
+ \\
  &\mathbin{\times}
  \exp\left(-\frac{\alpha_n^2ct}{L^2}\right).
- \label{eq:mandel-pressure-series}
-\end{align}
+ % equation-id: eq:mandel-pressure-series
+\end{align*}
 The corresponding displacement fields are \citep{chengdetournay1988}
-\begin{subequations}
- \label{eq:mandel-displacement-series}
+
+% equation-id: eq:mandel-displacement-series
+
  \begin{align}
   u_x(X,Y,t)
   ={}&\left[
@@ -120,7 +130,9 @@ The corresponding displacement fields are \citep{chengdetournay1988}
   \frac{\cos\alpha_n\sin\left(\alpha_n X/L\right)}
   {\alpha_n-\sin\alpha_n\cos\alpha_n}
   \exp\left(-\frac{\alpha_n^2ct}{L^2}\right),
-  \label{eq:mandel-horizontal-displacement-series}\\
+  \notag
+ % equation-id: eq:mandel-horizontal-displacement-series
+\\
   u_y(X,Y,t)
   ={}&\left[
   -\frac{P_0(1-\nu)}{2G}
@@ -132,7 +144,7 @@ The corresponding displacement fields are \citep{chengdetournay1988}
   \right]Y.
   \label{eq:mandel-vertical-displacement-series}
  \end{align}
-\end{subequations}
+
 The implementation retains twelve roots.  A comparison with a longer series
 checks truncation over the sampled positions and times; the numerical records
 include this check separately from the finite-element error.

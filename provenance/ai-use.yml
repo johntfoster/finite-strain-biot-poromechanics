@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "project": {
-    "title": "Implicit automatic differentiation of a finite-deformation Biot coefficient",
-    "public_repository_url": null,
-    "public_repository_url_status": "unknown_not_yet_assigned"
+    "title": "Pressure coupling and the Biot coefficient in finite-strain poroelasticity and poroplasticity",
+    "public_repository_url": "https://github.com/johntfoster/finite-strain-biot-poromechanics",
+    "public_repository_url_status": "assigned"
   },
   "manuscript_paths": [
     "paper/main.tex",
@@ -16,7 +16,8 @@
     "submission_tag": null,
     "authors_retained_responsibility": true,
     "ai_output_treated_as_scholarly_source": false,
-    "complete_prompt_history_available": false
+    "complete_prompt_history_available": false,
+    "development_record": "The repository commit workflow calls for sanitized summaries of the relevant development conversations, including decisions, alternatives, unsuccessful approaches, open questions, and next steps. The commit-message hook requires this structured narrative, and the pre-commit hook regenerates the AI-use disclosure. These records preserve a summary of the development history; the hooks do not collect or archive verbatim chats, and the public repository does not contain a complete prompt history."
   },
   "uses": [
     "proposing and critiquing prose",

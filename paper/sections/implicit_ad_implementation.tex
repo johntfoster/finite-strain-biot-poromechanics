@@ -2,10 +2,15 @@
 \section{Numerical implementation and verification}
 \label{sec:implicit-ad-implementation}
 
-The implementation evaluates the mineral volume and Biot coefficient at
-integration points, updates plastic deformation when the yield condition is
-reached, and assembles the phase balances.  Automatic differentiation (AD)
-provides the derivatives of these calculations for Newton's method.
+The numerical solution has two levels.  At each finite-element integration
+point, a local constitutive calculation determines mineral volume, the Biot
+coefficient, and any plastic deformation.  The global calculation uses these
+quantities to solve momentum balance and the solid and water mass balances.
+Automatic differentiation (AD) applies the chain rule through these
+calculations to obtain the derivatives required by Newton's method.  The
+local constitutive Jacobian contains derivatives with respect to the local
+unknowns; the global finite-element Jacobian contains derivatives of the
+assembled balance residuals with respect to the nodal fields.
 
 \subsection{Mineral state and plastic update}
 
@@ -13,9 +18,9 @@ At each integration point, the elastic or poroplastic constitutive update
 solves the nonlinear scalar residual
 \eqref{eq:verification-mineral-factors} using
 \(x=\ln\bar J\) as the numerical unknown, restricting the solution to satisfy
-\eqref{eq:trace-mineral-stability-domain}.  A sign-changing interval is
-constructed within the region where the scalar residual has positive slope,
-and bisection determines the mineral solution.  Newton updates evaluated
+\eqref{eq:trace-mineral-stability-domain}.  We first find an interval whose
+endpoints give opposite signs of the residual and throughout which its
+slope is positive.  Bisection then determines the mineral solution.  Newton updates evaluated
 with AD variables then recover the solution's derivatives with respect to
 elastic volume and pore pressure, which enter the constitutive and global
 Newton Jacobians.  After convergence,
@@ -33,17 +38,21 @@ determine the six independent components of \(\bs\Delta^p\) and
 volume, \(B\), and driving stress from the candidate plastic state.
 For positive \(H\), the cohesion is evaluated at
 \(\gamma_n+\Delta\gamma\); its derivative therefore enters the same
-local consistency Jacobian.  Both \(\mbf F^p_n\) and \(\gamma_n\) remain
+Jacobian of the local plastic equations.  Both \(\mbf F^p_n\) and \(\gamma_n\) remain
 fixed during the current solve.
-Forward-mode differentiation evaluates the local Jacobian with respect to
-these seven unknowns.  Newton iteration first solves their values.  At the
-converged root, the implicit-function theorem supplies their outer AD
-derivatives by solving the same local Jacobian against the derivatives of
-the residual with respect to the global fields, with previous-step history
-fixed.  Scaling and squaring with a Taylor polynomial
-through order 20 evaluates the matrix exponential using only algebraic
-operations on AD scalars.  This construction avoids differentiating a spectral
-decomposition when principal values coincide.
+Forward-mode AD carries derivatives alongside the calculated values and
+forms the local Jacobian with respect to these seven unknowns.  Newton
+iteration first determines their converged values.  We then differentiate
+the converged residual equations with respect to the global fields, holding
+the previous time step's history fixed.  Solving the resulting linear systems
+with the same local Jacobian gives the derivatives of the converged plastic
+update.  These are the outer AD derivatives passed to the global calculation.
+
+To evaluate the matrix exponential, we first scale its argument, evaluate a
+Taylor polynomial through order 20, and then recover the exponential by
+repeated squaring.  All operations retain AD derivatives.  This procedure
+avoids computing derivatives of eigenvectors, which are not uniquely defined
+when eigenvalues coincide.
 
 The elastic and poroplastic MOOSE materials share the scalar mineral solver
 and closed-form Biot coefficient.  The mineral solve uses \(J^e=J/a^p\), while
@@ -64,7 +73,9 @@ assembled residual Jacobian \citep{lindsayetal2021ad}.
 The coupled boundary-value calculations use the elastic and poroplastic
 specializations of the preceding constitutive model.  The solid mass balance determines partial
 density, and the local mineral state determines solid volume fraction.
-Fluid storage uses that pore volume and the barotropic EOS
+The water mass stored in a material region depends on both its pore volume
+and its water density.  We take water density to depend only on pressure,
+using the barotropic equation of state
 \begin{align}
  \bar\rho_f(p)&=\bar\rho_{f0}
  \exp\left(\frac{p-p_0}{K_f}\right).
@@ -74,19 +85,19 @@ Here \(K_f\) is the constant fluid bulk modulus and
 \((p_0,\bar\rho_{f0})\) is its reference state.  Let \(\mbf w_f\)
 be the fluid mass flux relative to the solid.  Its reference flux is
 \(\mbf W_f=J\mbf F^{-1}\mbf w_f\).  The fluid balance is
-\begin{equation}
+\begin{equation*}
  \left.\pder{}{t}\right|_{\mbf X}
  \left[J(1-\phi_s)\bar\rho_f\right]
  +\nabla_{\mbf X}\mathbin{\cdot}\mbf W_f=0.
- \label{eq:reference-fluid-mass-balance}
-\end{equation}
+ % equation-id: eq:reference-fluid-mass-balance
+\end{equation*}
 For isotropic permeability \(\kappa\), dynamic viscosity \(\mu_f\), and
 zero gravity, Darcy flow in reference coordinates is
-\begin{equation}
+\begin{equation*}
  \mbf W_f=-\bar\rho_fJ\mbf F^{-1}
  \frac{\kappa}{\mu_f}\mbf F^{-T}\nabla_{\mbf X}p.
- \label{eq:reference-darcy-flux}
-\end{equation}
+ % equation-id: eq:reference-darcy-flux
+\end{equation*}
 The Biot coefficient enters momentum through the pressure term in stress.  The
 same mineral volume determines fluid storage through \(\phi_s\).
 
@@ -99,15 +110,17 @@ prescribed nominal traction
 flux \(M_f=\mbf W_f\mathbin{\cdot}\mbf N\), respectively, where
 \(\mbf N\) is the outward unit normal to the boundary in the reference
 configuration.  The displacement and pressure test
-functions vanish on their corresponding essential boundaries.  With zero body
-force, the residuals are
+functions vanish where the corresponding displacement or pressure is
+prescribed.  With zero body force, the residuals are
 \begin{align}
  R_u(\delta\mbf u)
  &=\int_{\Omega_0}\nabla_{\mbf X}\delta\mbf u:
  \left(\mbf P^{\prime\prime}-BpJ\mbf F^{-T}\right)\dd V_0 \notag\\
  &\quad-\int_{\Gamma_t}\delta\mbf u\mathbin{\cdot}
  \mbf T_0\dd A_0,
- \label{eq:momentum-weak-residual}\\
+ \notag
+ % equation-id: eq:momentum-weak-residual
+\\
  R_p(\delta p)
  &=\int_{\Omega_0}\delta p\pder{}{t}
  \left[J(1-\phi_s)\bar\rho_f(p)\right]\dd V_0 \notag\\
@@ -124,15 +137,19 @@ The overdot follows the solid reference coordinate.  No boundary contribution
 appears in \(R_{\rho_s}\) because the solid reference moves with the skeleton
 and its mass balance contains no referential solid-flux divergence.  The
 discrete fields use
-\begin{equation}
+\begin{equation*}
  \mbf u^h\in[\mathcal Q_2]^2,
  \qquad p^h\in\mathcal Q_1,
  \qquad \rho_s^h\in\mathcal Q_2,
- \label{eq:finite-element-spaces}
-\end{equation}
-where \(\mathcal Q_k\) is the continuous tensor-product polynomial space.
-The pressure uses continuous \(\mathcal Q_1\) elements without stabilization.  Solid
-partial density is stored as \(\rho_s/\rho_{s0}\) for conditioning.
+ % equation-id: eq:finite-element-spaces
+\end{equation*}
+where \(\mathcal Q_k\) consists of continuous functions that are polynomial
+of degree at most \(k\) in each element coordinate.  Displacement and solid
+partial density therefore use quadratic interpolation in each coordinate,
+and pressure uses linear interpolation.  The pressure uses continuous
+\(\mathcal Q_1\) elements without stabilization.  Solid partial density is
+stored as \(\rho_s/\rho_{s0}\) to reduce differences in the numerical scales
+of the unknowns.
 
 In the reported calculations, the MOOSE Backward Euler time integrator
 supplies the rates of the displacement, pressure, and solid partial-density
@@ -144,7 +161,7 @@ which depends on the mineral response and the plastic update.  The following
 rates supply this constitutive contribution to
 \eqref{eq:fluid-pressure-weak-residual}.
 
-Since \(J^e=J/a^p\), differentiating the mineral EOS
+Since \(J^e=J/a^p\), differentiating the mineral equation of state
 \eqref{eq:verification-mineral-factors} along the current loading path gives
 \begin{align}
  \left[\frac{K_s}{\bar J}
@@ -156,20 +173,20 @@ Since \(J^e=J/a^p\), differentiating the mineral EOS
 \end{align}
 The identity \(\phi_s=\rho_s\bar J/\bar\rho_{s0}\) then combines this
 mineral-volume rate with the solved solid partial-density rate to give
-\begin{equation}
+\begin{equation*}
  \dot\phi_s=\phi_s\left(\frac{\dot\rho_s}{\rho_s}
  +\frac{\dot{\bar J}}{\bar J}\right).
- \label{eq:poroplastic-solid-fraction-rate}
-\end{equation}
+ % equation-id: eq:poroplastic-solid-fraction-rate
+\end{equation*}
 To evaluate the plastic contribution in
 \eqref{eq:poroplastic-mineral-volume-rate}, the exponential update
 \eqref{eq:plastic-exponential-update} supplies the logarithmic
 distention rate over the same backward-Euler step,
-\begin{equation}
+\begin{equation*}
  \frac{\ln a^p_n-\ln a^p_{n-1}}{\Delta t}
  =\frac{\beta\Delta\gamma}{\Delta t},
- \label{eq:discrete-plastic-distention-rate}
-\end{equation}
+ % equation-id: eq:discrete-plastic-distention-rate
+\end{equation*}
 which evaluates \(\dot a^p/a^p\) in
 \eqref{eq:poroplastic-mineral-volume-rate}.  Here \(n\) denotes the current
 time level and \(\Delta t\) the step.  The resulting solid-volume-fraction
@@ -181,8 +198,9 @@ therefore contributes positively to water storage.
 
 At a finite time step, the chain-rule rates used above are generally not equal
 to backward differences of the complete nonlinear mass accumulations.
-The resulting mass-balance drift is assessed by time-step refinement in
-Sec.~\ref{sec:mandel-verification}.
+Consequently, the accumulated mass can differ from the mass obtained by
+integrating the boundary flux.  We measure this mass-balance drift by
+reducing the time step in Sec.~\ref{sec:mandel-verification}.
 Independent finite-difference checks verify the constitutive storage terms
 and the assembled AD Jacobian.  The companion code repository documents
 the test procedures and tolerances.

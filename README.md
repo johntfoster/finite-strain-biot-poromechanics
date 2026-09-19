@@ -36,7 +36,7 @@ to regenerate their independent checks and data.
 
 ## Launch and reproduce
 
-[Open in GitHub Codespaces](https://codespaces.new/johntfoster/nonlinear_biot_ad_implementation)
+[Open in GitHub Codespaces](https://codespaces.new/johntfoster/finite-strain-biot-poromechanics)
 opens the checked-in development container. Select an 8-core machine with
 64 GB storage or larger. The first setup downloads the pinned MOOSE framework
 and Conda packages, installs the plotting and LaTeX dependencies, and builds
@@ -53,8 +53,8 @@ make paper      # paper/build/main.pdf
 make serve      # companion site on forwarded port 8000
 ```
 
-[Companion website](https://johntfoster.github.io/nonlinear_biot_ad_implementation/)
-includes the complete [object and example catalog](https://johntfoster.github.io/nonlinear_biot_ad_implementation/moose-catalog.html#examples).
+[Companion website](https://johntfoster.github.io/finite-strain-biot-poromechanics/)
+includes the complete [object and example catalog](https://johntfoster.github.io/finite-strain-biot-poromechanics/moose-catalog.html#examples).
 Every input links to the local materials and kernels it selects, its included
 base inputs, and its test specification. Website source files are packaged
 from the same checkout as the pages by `make site`.

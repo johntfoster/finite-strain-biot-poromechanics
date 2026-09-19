@@ -22,7 +22,7 @@ with Python from the prepared MOOSE environment, which supplies PyYAML.
 | Evidence | Current record | Command |
 | --- | --- | --- |
 | Governing-equation and object mapping | [Equation map](equation_to_moose_map.yml), [theory traceability](theory_traceability.yml) | `make validate` |
-| Constitutive identities and symbolic reductions | [Stress-trace derivation](stress_trace_derivation_review.md) | `make derivation` |
+| Constitutive identities and symbolic reductions | [Symbolic derivation checks](scripts/check_stress_trace_derivation.py) | `make derivation` |
 | Implicit return, fixed-history tangent, objectivity, and increment refinement | [Material-point verification](implicit_poroplastic_verification.json) | `make plastic` |
 | Assembled AD Jacobians and input regressions | [MOOSE tests](../moose_app/test/tests) | `make test` |
 | Analytical Mandel comparison and elastic finite-deformation continuation | [Mandel verification](mandel_implicit_biot.yml) | `make mandel` |
@@ -150,7 +150,7 @@ The supplementary smooth-cone domain rejection is retained in
 [poroplastic_domain_checks.json](poroplastic_domain_checks.json). It is an
 expected constitutive-domain rejection, not a converged data point.
 
-## Review response, 2026-09-18
+## Execution provenance and constitutive domain
 
 Execution provenance for new publication runs is recorded by the simulation
 drivers before execution, with observed package versions, framework commit,
@@ -169,14 +169,7 @@ using `initial_plastic_distention=2` to initialize isotropic history and its
 matching accumulated multiplier. Ordinary calculations retain the default
 unit initial distention.
 
-The [review response](peer_review_2026-09-18.md) records the focused regression
-and publication checks for these changes.
-
-The subsequent [consistency review](consistency_review_2026-09-18.md) checks
-the current manuscript against the implementation and companion website,
-including complete equation coverage and refreshed publication evidence.
-
-## Submission verification before the review, 2026-09-18
+## Reproduction record, 2026-09-18
 
 The pinned local toolchain passed all 21 ordinary MOOSE regressions. The two
 heavy studies were run separately through the full publication drivers:

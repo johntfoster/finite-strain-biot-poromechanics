@@ -2,30 +2,51 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-We derived a coupled stored energy, its effective stresses, and a closed-form
-finite-deformation Biot coefficient for a saturated solid with logarithmic
-skeleton and mineral laws.  Mineral compression produces a pressure
-contribution to the elastic stress, and the fixed-pressure energy derivative
-retains a pressure correction in the double-prime effective stress.  The
-elastic total-stress response recovers the logarithmic specialization of
-\citet{gajo2010}; linearization about the undeformed, zero-pressure state
-recovers classical Biot elasticity.  A scalar equation determines mineral
-volume, and the Biot coefficient follows from that volume, total volume, and
-pore pressure, with \(B_0=1-K/K_s\) at the reference state.
+We derived a scalar mineral equation of state by matching logarithmic
+drained skeleton and mineral responses within a common stored energy.
+Phase-stress averaging and reversible work determine the coupling between
+mineral compression and distention.  The resulting scalar equation
+determines mineral volume.  Its derivative
+identifies the range in which that solution is locally unique and gives
+the change in mineral volume per unit change in total volume at fixed
+pressure.  This derivative determines the finite-deformation Biot
+coefficient.  The pressure Legendre transformation identifies this
+coefficient through reversible pore-volume change, the effective-stress
+relation, and the local pressure sensitivity of total stress.  Eliminating
+Gajo's mineral deformation factors establishes the correspondence with his
+logarithmic elastic response and, for reversible mineral volume change,
+with the volumetric closure in his plastic extension \citep{gajo2010,gajo2011}.
+
+The reduced finite stress relation is
+\(\bs\sigma=\bs\sigma^{\prime\prime}_d-B_d p\mbf I\).
+The drained stress retains the current plastic history and is independent
+of pressure.  The finite multiplier \(B_d\) depends on mineral volume,
+while the local reversible coefficient satisfies
+\(B=B_d+p\left.\partial B_d/\partial p\right|_{\mbf F,\mbf F^p}\).
+The latter is the coefficient to compare with incremental poroelastic
+measurements.  The derivation from the pressure potential and the scalar
+mineral equation
+makes this distinction explicit: the finite stress difference and the local
+reversible slope follow from the same stored energy and mineral state.
+Linearization about the undeformed, zero-pressure state
+recovers classical Biot elasticity with \(B_0=1-K/K_s\).  These results
+establish the elastic constitutive construction before plastic distention
+is introduced to describe permanent changes in pore volume.
 
 Plastic distention carries loading history into the Biot coefficient.  The
 material-point calculations show that unloading follows a different path
 from the virgin response at the same total deformation.  At nonzero
-pressure, the coupled energy extends the calibrated drained double-prime
-response, and the effective-stress relation supplies the driving stress.  Using
+pressure, the reduced single-prime stress combines the drained response
+with the mineral-compression contribution.  The same result follows from
+the double-prime stress and its Biot transformation.  Using
 the current coefficient produces less dilation than substituting the virgin
 coefficient only in that transformation for the selected loading paths.
 This comparison measures sensitivity to the modified transformation.
-The implicit return
-mapping advances these quantities together, and automatic differentiation
-retains their coupled change in the Newton Jacobian.  Independent checks of
-mass conservation, the energy-derived stress, the flow rule, yield
-consistency, and the derivatives verify the update on the smooth
+The constitutive update solves for plastic deformation and mineral volume
+together while enforcing the yield condition.  Automatic differentiation
+carries their mutual dependence into the derivatives used by Newton's
+method.  Independent checks of mass conservation, the stress obtained from
+the energy, the flow rule, satisfaction of the yield condition, and the derivatives verify the update on the smooth
 part of the Drucker--Prager yield surface.
 
 The coupled finite-element calculations recover the elastic Mandel pressure
@@ -33,8 +54,10 @@ and horizontal-displacement solution.  At larger elastic compression, the
 Biot coefficient changes reversibly with deformation and drainage, separating
 the finite-strain elastic response from the additional effect of plastic
 history.  The poroplastic calculations verify fluid storage during plastic
-flow.  Independent differences of water accumulation and assembled-Jacobian
-comparisons check the plastic pore-volume contribution and its derivatives.
+flow.  Finite differences of the stored water mass independently check the
+contribution of plastic pore-volume change.  Comparisons of the assembled
+Jacobian with finite differences check the derivatives used by the global
+Newton solve.
 Water-mass change is also checked against boundary flow, and time-step
 refinement reduces the drift introduced by the chain-rule time discretization.
 
@@ -43,9 +66,12 @@ produces a positive plastic-history contribution to the Biot coefficient at
 matched pressure and total volume. Dilation reverses fluid exchange from
 initial outflow to inflow,
 and the coefficient retains its plastic contribution during the hold.
-The perfectly plastic specialization loses ellipticity along the hold.
-A positive isotropic hardening modulus retains the nonassociated flow rule
-and gives smooth spatial fields with decreasing differences under refinement.
+For the perfectly plastic model, the acoustic tensor becomes singular
+during the hold, indicating a loss of ellipticity of the mechanical
+equations.
+With positive isotropic hardening, the same dilation rule gives smooth
+spatial fields, and the differences between solutions decrease as the mesh
+and time step are refined.
 This hardening modulus is a constitutive choice for the synthetic test.
 
 Whether the dilative model reproduces both fluid exchange and Biot-coefficient

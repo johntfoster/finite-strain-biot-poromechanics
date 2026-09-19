@@ -1,0 +1,108 @@
+% !TeX root = ../main.tex
+\section{Reduction of Gajo's logarithmic constitutive relations}
+\label{sec:gajo-elastic-equivalence}
+
+A single reduction covers Gajo's elastic and poroplastic volumetric
+responses.  We use the separated volumetric and isochoric energies and
+logarithmic mineral law, with reversible mineral volume change as in
+Appendix~C.1 of \citet{gajo2011}.  Skeleton plastic volume may evolve:
+Gajo's \(J_p\) is our \(a^p\), so \(J^e=J/a^p\); the elastic case has
+\(\mbf F^p=\mbf I\).  His mineral-volume ratio \(J_s\), pore pressure
+\(p_w\), and reference solid fraction \(1-n_0\) correspond to
+\(\bar J\), \(p\), and \(\phi_{s0}\), while \(K\) and \(K_s\) retain
+their meanings.  We retain his elastic mineral factors \(J^e_{s-m}\) and
+\(J^e_{s-f}\) for contact loading and pore pressure.  The comparison also
+adopts his assumption that isotropic effective loading and pore pressure
+induce equivalent isotropic mineral strains \citep[Sec.~3(c)]{gajo2010}.
+
+In the present notation, Gajo's equations~(35)--(39), specialized with the
+logarithmic skeleton energy in his equation~(47), give \citep{gajo2011}
+\begin{align*}
+ \frac13\tr\bs\tau^{\prime}
+ &=K\left[\ln\left(\frac{J}{a^p}\right)-\ln J^e_{s-f}\right],
+ % equation-id: eq:gajo-plastic-skeleton-stress
+\\
+ \bar J&=J^e_{s-m}J^e_{s-f},
+ % equation-id: eq:gajo-plastic-mineral-factorization
+\\
+ K_s\ln J^e_{s-m}&=\frac{1}{3\phi_{s0}}\tr\bs\tau^{\prime},
+ % equation-id: eq:gajo-plastic-contact-compression
+\\
+ K_s\ln J^e_{s-f}&=-p\bar J.
+ % equation-id: eq:gajo-plastic-pressure-compression
+\end{align*}
+Eliminating the pressure factor from the skeleton stress gives
+\begin{equation*}
+ \frac13\tr\bs\tau^{\prime}
+ =K\left[\ln\left(\frac{J}{a^p}\right)+\frac{p\bar J}{K_s}\right].
+ % equation-id: eq:gajo-plastic-eliminated-stress
+\end{equation*}
+Taking the logarithm of the mineral factorization and substituting both
+loading relations then yields
+\begin{align*}
+ K_s\ln\bar J
+ &=\frac{1}{3\phi_{s0}}\tr\bs\tau^{\prime}-p\bar J,
+ % equation-id: eq:gajo-plastic-volume-stress-elimination
+\\
+ &=\frac{K}{\phi_{s0}}\ln\left(\frac{J}{a^p}\right)
+ +\frac{K}{\phi_{s0}K_s}p\bar J-p\bar J.
+ % equation-id: eq:gajo-plastic-volume-pressure-elimination
+\end{align*}
+Consequently, the mineral state satisfies
+\begin{equation}
+ K_s\ln\bar J
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p\bar J
+ -\frac{K}{\phi_{s0}}\ln\left(\frac{J}{a^p}\right)=0.
+ \label{eq:gajo-plastic-scalar-mineral-closure}
+\end{equation}
+This is \eqref{eq:verification-mineral-factors}, including its dependence
+on plastic distention.  Conversely, a positive root reconstructs the factors as
+\(J^e_{s-f}=\exp(-p\bar J/K_s)\) and
+\(J^e_{s-m}=\bar J/J^e_{s-f}\).  Substitution verifies all four factor
+relations above, establishing equivalence in both directions on the
+selected branch.  Setting \(\mbf F^p=\mbf I\) recovers the elastic
+relations in Gajo's equations~(3.27), (3.32), and (3.34) \citep{gajo2010}.
+
+The conversion from Kirchhoff to Cauchy stress uses total volume \(J\),
+even though the logarithmic skeleton response depends on \(J/a^p\).
+Subtracting pore pressure from the single-prime Cauchy stress gives
+\begin{align*}
+ \frac13\tr\bs\sigma
+ &=\frac{K}{J}\ln\left(\frac{J}{a^p}\right)
+ -\left(1-\frac{K\bar J}{JK_s}\right)p,
+ % equation-id: eq:gajo-plastic-total-mean-stress
+\\
+ &=\frac13\tr\bs\sigma^{\prime\prime}_d-B_d p.
+ % equation-id: eq:gajo-plastic-drained-mean-stress
+\end{align*}
+This agrees with Gajo's equations~(48) and (51) and the volumetric part of
+\eqref{eq:total-stress-drained-pressure-split}.  Here the drained stress
+retains the current plastic deformation, and \(B_d\) is evaluated using
+the mineral volume at the current pressure.
+
+To identify reversible pressure coupling, hold both total deformation and
+plastic deformation fixed.  Differentiating
+\eqref{eq:gajo-plastic-scalar-mineral-closure} gives
+\begin{equation*}
+ \left[\frac{K_s}{\bar J}
+ +\left(1-\frac{K}{\phi_{s0}K_s}\right)p\right]
+ \left.\pder{\bar J}{p}\right|_{\mbf F,\mbf F^p}
+ =-\left(1-\frac{K}{\phi_{s0}K_s}\right)\bar J.
+ % equation-id: eq:gajo-plastic-mineral-pressure-tangent
+\end{equation*}
+Substituting into the derivative of the total mean stress yields
+\begin{align*}
+ -\left.\pder{}{p}\left(\frac13\tr\bs\sigma\right)\right|_{\mbf F,\mbf F^p}
+ &=B_d+p\left.\pder{B_d}{p}\right|_{\mbf F,\mbf F^p},
+ % equation-id: eq:gajo-plastic-finite-tangent-relation
+\\
+ &=1-\frac{K\bar J}
+ {J\left[K_s+\left(1-\dfrac{K}{\phi_{s0}K_s}\right)p\bar J\right]}.
+ % equation-id: eq:gajo-plastic-biot-tangent-reduction
+\end{align*}
+The result is precisely \(B\) in \eqref{eq:poroplastic-biot-correction}.
+Plastic history enters through the mineral state, while the derivative
+measures a reversible perturbation with that history fixed.  The reduction therefore gives the same mineral equation, mean stresses,
+and reversible pressure response under the stated assumptions.  Equivalence
+of complete plastic loading paths would additionally require matching
+yield surfaces, flow rules, and hardening laws.

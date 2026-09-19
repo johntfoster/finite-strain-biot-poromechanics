@@ -65,6 +65,18 @@ class TraceabilityTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Unlabelled numbered display'):
                 trace.audit(root)
 
+    def test_unnumbered_equation_identifier(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.fixture(directory)
+            path = root/'paper/sections/model.tex'
+            path.write_text('\\begin{equation*}\na=b\n% equation-id: eq:balance\n\\end{equation*}\n')
+            labels, _, _ = trace.audit(root)
+            self.assertEqual(labels['eq:balance'], ('paper/sections/model.tex', 3))
+            with path.open('a') as stream:
+                stream.write('\\label{eq:balance}\n')
+            with self.assertRaisesRegex(ValueError, 'Duplicate manuscript label'):
+                trace.audit(root)
+
 
 if __name__ == '__main__':
     unittest.main()

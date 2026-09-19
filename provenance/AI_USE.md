@@ -11,9 +11,11 @@ From 3 August 2026 through the latest covered commit on 19 September 2026, the a
 
 - First manuscript-touching commit: `5e8b3a4cc8f75923ca6d62669bde64d77a88dd95` (3 August 2026).
 - Coverage endpoint: the latest covered commit on 19 September 2026.
-- Public record: Unknown: a public repository URL has not yet been assigned.
+- Public record: https://github.com/johntfoster/finite-strain-biot-poromechanics
 - Model versions: Unknown where the structured registry records `unknown_not_consistently_recorded`; no versions have been inferred retrospectively.
 - Git records accepted changes. It is not a complete transcript of prompts, rejected suggestions, transient output, or undocumented historical sessions.
+
+The repository commit workflow calls for sanitized summaries of the relevant development conversations, including decisions, alternatives, unsuccessful approaches, open questions, and next steps. The commit-message hook requires this structured narrative, and the pre-commit hook regenerates the AI-use disclosure. These records preserve a summary of the development history; the hooks do not collect or archive verbatim chats, and the public repository does not contain a complete prompt history.
 
 ## Recorded uses
 

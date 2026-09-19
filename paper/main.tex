@@ -34,27 +34,38 @@
 \maketitle
 
 \begin{abstract}
-Mineral compression and plastic changes in pore volume govern how pore
-pressure couples to deformation in a saturated porous solid.  For
-logarithmic skeleton and mineral laws, we derive a coupled stored energy,
-its effective stresses, and a closed-form Biot coefficient at finite
-strain.  Mineral compression introduces a pressure correction to the
-effective stress obtained from the energy at fixed pressure.  Linearization
-about the undeformed, zero-pressure state recovers classical Biot
-elasticity.  A scalar equation determines the mineral volume, from which
-the Biot coefficient follows directly using the current total volume and
-pore pressure.  The plastic formulation separates volume-preserving
-mineral deformation from permanent changes in pore volume.  We solve for
-the mineral state and plastic deformation together, using automatic
-differentiation to retain their coupling in Newton's method.
+Pore pressure changes the volume of both the mineral and the pore space in a
+saturated porous solid.  Permanent changes in pore volume also affect the
+subsequent reversible response.  We derive this pressure coupling by
+constructing a common stored energy that reproduces prescribed logarithmic
+laws for the drained skeleton and the mineral.  The construction gives one
+scalar equation for mineral volume and the conditions under which its
+solution is locally unique.  Changing the independent thermodynamic
+variable from mineral density to pore pressure identifies the reversible
+Biot coefficient in two ways: as the pore-volume change per unit change in
+total volume at fixed pressure, and as the pressure sensitivity of total
+stress at fixed deformation.  Differentiating the mineral equation gives
+an explicit expression for this coefficient and relates the effective
+stresses defined at fixed pressure and fixed mineral density.
+
+We also express total stress as the zero-pressure drained stress plus a
+pressure contribution determined by mineral compression.  The multiplier
+of this finite pressure contribution generally differs from the reversible
+Biot coefficient measured through small poroelastic perturbations.
+Linearization about the undeformed, zero-pressure state recovers classical
+Biot elasticity.  For plastic deformation, we separate changes in mineral
+shape that preserve its volume from permanent changes in pore volume.
+The numerical update solves for mineral volume and plastic deformation
+together.  Automatic differentiation includes their mutual dependence in
+the derivatives required by Newton's method.
 
 Independent checks verify mass conservation, the constitutive equations,
 and the derivatives used in the numerical solution.  The coupled
 finite-element formulation recovers the elastic Mandel solution and shows
 reversible changes in the Biot coefficient under larger compression and
-drainage.  Material-point calculations show how plastic history changes
-the coefficient during unloading and how its current value affects
-further plastic flow.  A poroplastic compression test verifies the plastic
+drainage.  Calculations with prescribed homogeneous deformation and pressure show how
+plastic history changes the coefficient during unloading.  They also show
+how mineral compression affects the stress driving further plastic flow.  A poroplastic compression test verifies the plastic
 contribution to fluid storage and shows a persistent increase in the
 coefficient relative to its elastic value at the same pressure and total
 volume.  For the selected synthetic geomaterial, plastic dilation reverses
@@ -74,8 +85,12 @@ mass balance; Mandel problem
 \paperinput{sections/mandel_verification.tex}
 \paperinput{sections/conclusions.tex}
 
+\paperinput{sections/acknowledgements.tex}
+\paperinput{../provenance/ai_use_statement.tex}
+
 \appendix
 \paperinput{sections/mandel_analytical_appendix.tex}
+\paperinput{sections/gajo_equivalence_appendix.tex}
 
 \bibliographystyle{plainnat}
 \IfFileExists{all.bib}{\bibliography{all}}{\bibliography{../all}}

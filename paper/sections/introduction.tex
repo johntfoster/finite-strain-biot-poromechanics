@@ -3,26 +3,43 @@
 \label{sec:introduction}
 
 Pore pressure deforms both the pore space and the mineral in a saturated
-porous solid.  At finite strain, mineral compressibility couples pressure
-to the elastic stress and changes the Biot coefficient as the body deforms.
-We derive the coupled stored energy, effective stresses, and a closed-form
-Biot coefficient for matched logarithmic skeleton and mineral laws.  The
-construction applies to purely elastic deformation and extends to
-poroplasticity, where plastic distention carries loading history into the
-Biot coefficient and the stress driving further plastic flow.
+porous solid.  The Biot coefficient measures the reversible change in pore
+volume with the volume of the body at fixed pore pressure.  In classical
+linear elasticity, it is determined by the ratio of the drained skeleton
+bulk modulus to the mineral bulk modulus \citep{biotwillis1957}.  At finite
+strain, mineral compression and permanent changes in pore space affect
+this coupling.  Measurements of sandstone during compaction, using
+unload--reload loops and unjacketed tests, show that the inferred coefficient
+varies with loading \citep{ingraham2017evolution}.  A constitutive description
+must therefore distinguish the reversible response at the current plastic
+state from the evolution of that state during further plastic flow.
 
-The Biot coefficient describes how pore volume changes with the volume of
-the body when pore pressure is held fixed.  In classical linear elasticity,
-it is determined by the ratio of the drained skeleton bulk modulus to the
-mineral bulk modulus \citep{biotwillis1957}.  After plastic deformation,
-the elastic response can change.  Measurements during sandstone compaction
-show this dependence on loading history: the drained modulus is measured
-from a small elastic unloading loop, and the mineral modulus from an
-unjacketed test \citep{ingraham2017evolution}.  These measurements motivate
-evaluating the coefficient from the reversible response at the current
-plastic state.  To predict further plastic deformation, we must also
-specify the stored energy and the law governing plastic flow.  We examine
-the consequences of those choices for a synthetic geomaterial with pressure-dependent yielding.
+The central contribution of this work is a derivation that connects the
+stored energy, mineral equation of state, and measurable reversible Biot
+coefficient for prescribed logarithmic skeleton and mineral laws.  We
+construct a common energy that reproduces both laws and reduce mineral
+pressure equilibrium to one scalar equation.  We then change the independent
+thermodynamic variable from mineral density to pore pressure by a Legendre
+transformation.  This step identifies the same Biot coefficient through
+pore-volume change, the relation between effective stresses, and the
+pressure derivative of total stress.  Differentiating the scalar mineral
+equation gives an explicit expression for the coefficient.  Its derivative
+also identifies the range in which the mineral solution is locally unique.
+
+A second result separates the pressure contribution to a finite stress
+change from the coefficient inferred through small reversible experiments.
+We express total stress relative to the drained stress at zero pressure,
+with total and plastic deformation held fixed.  The pressure multiplier
+in this relation describes the complete stress change from zero pressure;
+the reversible Biot coefficient describes the slope at the current state.
+For plastic deformation, the same construction shows how permanent changes
+in pore volume alter subsequent reversible pressure coupling.  Two states
+with the same total volume and pore pressure can therefore have different
+Biot coefficients because of their loading histories.  We demonstrate this
+history dependence during unloading and reloading.  The numerical
+contribution is a coupled update of mineral volume and plastic deformation,
+with independent checks of its derivatives, fluid storage, and
+finite-element response.
 
 An energy description connects mineral compression to the stress carried
 by the porous body.  Biot's finite-deformation theory uses deformation and
@@ -30,36 +47,63 @@ fluid mass as independent variables, allowing fluid to enter or leave a
 volume moving with the skeleton.  Derivatives of the energy give the stress
 and fluid potential \citep{biot1972}.  Gajo constructs this energy from the
 responses of the skeleton, mineral, and pore fluid, including the work
-associated with their coupling \citep{gajo2010}.  For logarithmic elastic laws, his energy
-gives a mineral-pressure contribution to the total stress, and his rate
-equations contain the elastic Biot coefficient obtained here
-\citep[Secs.~3(d) and 5]{gajo2010}.
+associated with their coupling \citep{gajo2010}.  His logarithmic elastic
+formulation describes mineral compression through separate deformation
+factors associated with contact loading and pore pressure.  Gajo's
+extension to finite-strain plasticity includes plastic-state dependence
+and treats reversible mineral volume change as a particular case
+\citep{gajo2011}.  For reversible mineral volume change and the logarithmic
+constitutive choices used here, eliminating his contact-loading and
+pressure-loading factors recovers our
+scalar mineral equation, including its dependence on plastic distention
+\citep[Eqs.~(35)--(39), (47), and Appendix~C.1]{gajo2011}.
+Gajo's finite stress multiplier and rate coupling provide the constitutive
+foundation for this comparison.  Our derivation uses the pressure Legendre
+transformation to identify the reversible coefficient and connect its
+experimental meaning to the scalar constitutive update.  We give the elastic
+correspondence explicitly in \cref{sec:gajo-elastic-equivalence}.
+
+Plastic loading also changes the incremental pressure response through
+the active plastic flow.  \citet{suvorovselvadurai2019} derive and plot an
+evolving tangent Biot coefficient for a composite-sphere model by
+eliminating the plastic-strain increment through the consistency condition.
+Here the Biot coefficient is evaluated with the plastic configuration
+held fixed.  Comparing this reversible coefficient at matched total volume
+and pore pressure isolates the effect of accumulated plastic deformation
+on subsequent elastic pressure coupling.  The plastic flow law determines how that
+constitutive state evolves.  Drained and unjacketed measurements, including
+elastic unloading moduli, characterize this reversible response
+\citep{makhnenkolabuz2016}; a mechanical unload--reload loop alone supplies
+a stiffness rather than a complete measurement of pressure coupling.
 
 Our derivation begins by separating changes in mineral volume from changes
 in pore space.  Drumheller describes this separation through mineral
 deformation and distention \citep{drumheller2000}.  In earlier work with
 Xu, we used the mineral-volume response at fixed pore pressure to derive
 the finite-deformation Biot coefficient \citep{fosterxu2025}.  Here we
-construct the stored energy for logarithmic skeleton and mineral laws and
-use it to distinguish the stress obtained at fixed pore pressure from that
-obtained at fixed mineral density.  The former includes a pressure
-correction determined by mineral compression; the latter supplies the
-stress that does work on plastic deformation in the model considered here.
-The Biot coefficient connects these two stresses.  The elastic total stress
-recovers Gajo's logarithmic response, and linearization about the undeformed,
-zero-pressure state recovers classical Biot elasticity.
+use phase-stress averaging and reversible work to construct the stored
+energy from the prescribed drained skeleton and mineral laws.  The resulting
+scalar pressure-equilibrium equation supplies mineral density, solid volume
+fraction, and the fixed-pressure tangent from a common constitutive state.
+Differentiating the solid energy with respect to deformation at fixed pore
+pressure gives an effective stress that includes the effect of mineral
+compression.  Taking the deformation derivative at fixed mineral density
+gives the effective stress that does work on plastic deformation in this
+model.  The Legendre transformation relates these two stresses through the
+Biot coefficient.  Expressing both relative to the zero-pressure drained
+stress then separates the finite pressure contribution from the local
+reversible response.  Both follow from the same mineral state.
+Linearization about the undeformed, zero-pressure state recovers classical
+Biot elasticity.
 
-The resulting expression gives the Biot coefficient directly from the
-current total volume, pore pressure, and mineral volume.  Mineral volume
-must first be found from a scalar equation expressing pressure equilibrium.
-In virgin elasticity, this equation is equivalent to Gajo's logarithmic
-mineral relations \citep[Eqs.~(3.27), (3.32), and (3.34)]{gajo2010}.
-Solid mass conservation then gives the mineral density and solid volume
-fraction.  During plastic loading, we solve for the mineral state and
-plastic deformation together.  The coefficient describes an elastic
-change at a fixed plastic state, while the stress driving further plastic
-flow depends on its value at that state.  This distinction allows us to
-follow how plastic changes in pore space affect subsequent deformation.
+The scalar mineral equation has a unique positive root at nonnegative
+pressure.  At negative pressure, more than one root can exist.  We follow
+the solution continuously from zero pressure and retain it while the
+derivative of the residual with respect to mineral volume remains positive.
+This condition permits both the mineral volume and its sensitivity to
+loading to be evaluated along the selected solution.
+During plastic loading, we solve for mineral volume and plastic deformation
+together, retaining their influence on the stress driving further flow.
 
 The numerical formulation couples this material response to fluid flow.
 Large-deformation models of gels and porous solids describe the interaction
@@ -82,7 +126,8 @@ conservation and momentum balance.  Pressure and displacement profiles are
 compared with the Mandel solution to test the elastic limit
 \citep{chengdetournay1988}.  Larger compression tests examine how the Biot
 coefficient varies through the body during elastic and plastic deformation.
-The plastic calculations also check the contribution of changing pore
-volume to fluid storage and compare the coefficient with its elastic value
-at the same pressure and total volume.  Finally, we examine the stability
-of the plastic response and the effect of hardening.
+The plastic calculations use a synthetic geomaterial with
+pressure-dependent yielding and check the contribution of changing pore
+volume to fluid storage.  They also compare the coefficient with its
+elastic value at the same pressure and total volume.  Finally, we examine
+the stability of the plastic response and the effect of hardening.

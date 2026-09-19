@@ -17,13 +17,18 @@ def manuscript_labels(root):
         if path in visited:
             return
         visited.add(path)
-        text = re.sub(r"(?<!\\)%[^\n]*", "", path.read_text())
+        source = path.read_text()
+        text = re.sub(r"(?<!\\)%[^\n]*", "", source)
         for environment, body in re.findall(
                 r'\\begin\{(equation|align|gather)\}(.*?)\\end\{\1\}', text, re.S):
             if not re.search(r'\\label\{eq:[^}]+\}', body):
                 raise ValueError(f"Unlabelled numbered display in {path.relative_to(root)}: {environment}")
-        for number, line in enumerate(text.splitlines(), 1):
-            for label in re.findall(r"\\label\{([^}]+)\}", line):
+        for number, (line, original) in enumerate(zip(text.splitlines(), source.splitlines()), 1):
+            # Unnumbered displays retain stable identifiers for implementation
+            # traceability without creating a rendered equation reference.
+            identifiers = re.findall(r"\\label\{([^}]+)\}", line)
+            identifiers += re.findall(r"^\s*% equation-id: (eq:[\w-]+)\s*$", original)
+            for label in identifiers:
                 if label in labels:
                     raise ValueError(f"Duplicate manuscript label: {label}")
                 labels[label] = (path.relative_to(root).as_posix(), number)

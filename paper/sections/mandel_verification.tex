@@ -16,27 +16,29 @@ lateral faces \citep{chengdetournay1988}.  Let \(X\) and \(Y\) denote the
 horizontal and vertical reference coordinates, and let \(L\) and \(H\) be the
 quarter-domain width and height, respectively.  Symmetry reduces the
 calculation to
-\begin{equation}
+\begin{equation*}
  \Omega_0=\left\{(X,Y):0\leq X\leq L,\ 0\leq Y\leq H\right\},
  \qquad
  L=1\ \mathrm{m},
  \qquad
  H=0.1\ \mathrm{m}.
- \label{eq:mandel-quarter-domain}
-\end{equation}
+ % equation-id: eq:mandel-quarter-domain
+\end{equation*}
 The mechanical symmetry conditions and drained pressure condition are
-\begin{subequations}
- \label{eq:mandel-boundary-conditions}
- \begin{align}
+
+% equation-id: eq:mandel-boundary-conditions
+
+ \begin{align*}
   u_x(0,Y,t)&=0,
   &u_y(X,0,t)&=0,
-  \label{eq:mandel-symmetry-boundaries}\\
+ % equation-id: eq:mandel-symmetry-boundaries
+\\
   p(L,Y,t)&=0,
   &\mbf W_f\mathbin{\cdot}\mbf N&=0
   \quad\text{on the remaining fluid boundaries}.
-  \label{eq:mandel-fluid-boundaries}
- \end{align}
-\end{subequations}
+ % equation-id: eq:mandel-fluid-boundaries
+ \end{align*}
+
 Here \(u_x\) and \(u_y\) are the components of \(\mbf u\), and \(\mbf N\) is
 the outward unit normal to the reference boundary.
 For the small-load benchmark, the top displacement is spatially uniform and
@@ -101,7 +103,7 @@ tests the small-strain limit of the finite-deformation implementation.
 The error and refinement study uses a \(40\times4\) mesh of nine-node
 quadrilaterals with uniform backward-Euler steps
 \(\Delta t=0.002\ \mathrm{s}\).  The spatial profiles use the same mesh with
-an early-refined sequence beginning at \(0.001\ \mathrm{s}\) and increasing
+a sequence with smaller time steps early in the response, beginning at \(0.001\ \mathrm{s}\) and increasing
 to \(0.016\ \mathrm{s}\).
 \Cref{fig:mandel-pressure-profiles} compares pressure along
 \(Y=0.05\ \mathrm{m}\) at several times.  The solution reproduces the
@@ -146,7 +148,7 @@ convergence order.
 
 \FloatBarrier
 
-\subsection{Finite-deformation continuation}
+\subsection{Elastic compression at finite deformation}
 \label{sec:mandel-finite-deformation-continuation}
 
 A second calculation uses the same domain, phase balances, and elastic
@@ -155,9 +157,10 @@ increases linearly to \(-0.1H\) over \(0.2\ \mathrm{s}\) and is then held. The e
 and \(\Delta t=0.002\ \mathrm{s}\).
 The pressure, lateral displacement, nominal stress, and Biot coefficient are
 predictions of this displacement-controlled calculation.
-The stress includes the mineral-pressure contribution in
-\eqref{eq:matched-logarithmic-single-prime-stress} and the double-prime
-correction in \eqref{eq:matched-logarithmic-double-prime-stress}.
+The stress can be evaluated in the reduced drained form
+\eqref{eq:total-stress-drained-pressure-split}, equivalent to the implemented
+double-prime correction and Biot transformation.  The plotted coefficient
+is the reversible derivative \(B\), not the finite multiplier \(B_d\).
 This elastic calculation therefore exercises the pressure coupling before
 plastic history is introduced.  The reported profiles characterize the
 combined effects of constitutive pressure coupling, finite kinematics, and
@@ -166,7 +169,7 @@ fluid transport.
 \begin{figure}[ht]
  \centering
  \figureinput{mandel_finite_deformation.pgf}
- \caption{Finite-deformation continuation of the coupled elastic system.
+ \caption{Compression and drainage of the coupled elastic system at finite deformation.
  Left: imposed platen compression and predicted lateral expansion.
  Right: spatial average and range of the Biot coefficient.  The vertical
  dotted line marks the end of the displacement ramp.}
@@ -185,14 +188,15 @@ and mineral. In the drained elastic limit, \(p=0\) and \(a^p=1\),
 \eqref{eq:verification-mineral-factors} gives
 \(\bar J=J^{K/(\phi_{s0}K_s)}\). Substitution into
 \eqref{eq:poroplastic-biot-correction} gives
-\begin{align}
+\begin{align*}
  \left.B\right|_{p=0,\,a^p=1}
  &=1-\frac{K}{K_s}J^{K/(\phi_{s0}K_s)-1},
- \label{eq:drained-elastic-biot-volume}\\
+ % equation-id: eq:drained-elastic-biot-volume
+\\
  &=1-0.4J^{-5/9}
  \quad\text{for the parameters in \cref{tab:mandel-parameters}}.
- \label{eq:drained-elastic-biot-parameters}
-\end{align}
+ % equation-id: eq:drained-elastic-biot-parameters
+\end{align*}
 Since \(K/(\phi_{s0}K_s)=4/9<1\), compression increases
 \(\bar J/J\): the porous specimen contracts more than the mineral, so the
 solid volume fraction increases and \(B\) falls below \(B_0\).
@@ -220,27 +224,29 @@ mineral solution.
  \label{fig:mandel-normalized-biot-contours}
 \end{figure}
 
-The Biot coefficient identity and the mineral EOS remain satisfied during
-this continuation.  The solid-mass diagnostic measures the discretization
-error of the weak chain-rule balance, and its drift decreases under time
-refinement.  Mesh and time-step comparisons also check pressure, lateral
+The Biot coefficient identity and the mineral equation of state remain
+satisfied during this compression and hold.  The solid-mass check measures
+the error introduced when the chain-rule mass balance is discretized in
+time and solved in weak form.  The resulting drift decreases as the time
+step is reduced.  Mesh and time-step comparisons also check pressure, lateral
 displacement, and the spatially averaged Biot coefficient.  This calculation
 tests the elastic model at finite deformation.  The next calculation activates
-plastic flow in the same geometry to exercise its contribution to fluid
-storage.
+plastic flow in the same geometry to check its contribution to fluid storage.
 \FloatBarrier
 
 \subsection{Coupled poroplastic compression and fluid exchange}
 \label{sec:coupled-poroplastic-mandel}
 
-Plastic pore-volume evolution is exercised on the same quarter-domain with
-matched elastic moduli, water properties, and boundary conditions.  The
+We next allow plastic pore-volume change in the same quarter-domain, using
+the same elastic moduli, water properties, and boundary conditions.  The
 platen again reaches ten-percent axial compression at \(0.2\ \mathrm{s}\)
 and remains fixed through \(0.7\ \mathrm{s}\).  The Drucker--Prager parameters
 are \(M=0.6\), \(\beta=0.4\), and \(c_0=20\ \mathrm{MPa}\), with
 isotropic hardening modulus \(H=100\ \mathrm{MPa}\).
-This synthetic modulus retains a positive sampled acoustic response over
-the loading path; calibration against material data is outside this test.
+For this choice of hardening modulus, the acoustic-tensor determinant
+remains positive at the sampled states and directions along the loading
+path, as examined below.  The value is selected for this synthetic test
+and has not been calibrated against material data.
 The reference solid fraction remains \(\phi_{s0}=0.9\).
 We solve the coupled poroplastic response on a \(40\times4\) mesh with
 \(\Delta t=0.0025\ \mathrm{s}\).  This loading path extends the
@@ -286,7 +292,7 @@ the suction values characterize the stated constitutive model.
  \caption{Coupled poroplastic response under a compression ramp and hold.
  Left: pressure at two positions on the symmetry edge \(Y=0\).
  Right: reference-volume averages of the current Biot coefficient and its
- elastic comparator at the same local pressure and volume.
+ virgin elastic value at the same local pressure and total volume.
  The dotted vertical line marks the end of platen motion.}
  \label{fig:poroplastic-mandel-history}
 \end{figure}
@@ -298,66 +304,81 @@ The resulting pore-volume evolution also changes pressure and lateral
 expansion. Thus \cref{fig:mandel-normalized-biot-contours,fig:poroplastic-mandel-biot-ratio}
 compare identical axial displacement histories, but different local pressure
 and deformation histories. The opposite late-time changes in \(B/B_0\)
-reflect both stored plastic distention and this coupled redistribution.
+reflect both accumulated plastic distention and the accompanying changes
+in the pressure and deformation fields.
 They characterize the dilative flow law used here; plastic compaction would
 require a different constitutive model.
 
-The elastic comparator at the plastic calculation's local pressure and total
-volume separates the direct plastic-history contribution from the change in
-coupled state. The difference \(B-B_{\mathrm{el}}(p,J)\) remains positive
+To isolate the effect of plastic history, we also evaluate the virgin
+elastic coefficient at each plastic calculation's local pressure and total
+volume.  This comparison holds the current pressure and volume fixed while
+changing only the plastic history.  The difference \(B-B_{\mathrm{el}}(p,J)\) remains positive
 during the hold for this dilative law. Its magnitude is a prediction of the
 uncalibrated constitutive example, rather than an estimate for a particular
 material.
 
 Comparing the
 \(20\times2\) and \(40\times4\) meshes at the same
-\(0.0025\ \mathrm{s}\) step changes the average coefficient contrast by less than
+\(0.0025\ \mathrm{s}\) step changes the spatial average of the difference
+between the current and virgin elastic coefficients by less than
 \(4.0\times10^{-7}\) over the complete history.  The local field is more
 sensitive: at \(0.7\ \mathrm{s}\), the root-mean-square and maximum
 differences between the piecewise-constant element-average fields on the
 common reference domain are \(8.3\times10^{-6}\) and
 \(1.9\times10^{-5}\), respectively.  The positive plastic-history
-contribution persists under these refinements.  The maximum transverse root-mean-square variation of the
-coefficient contrast is below \(10^{-14}\) over the fine-grid histories at
+contribution persists under these refinements.  The maximum root-mean-square
+variation of this coefficient difference through the specimen height is below \(10^{-14}\) over the fine-grid histories at
 steps of \(0.0025\) and \(0.00125\ \mathrm{s}\).  Halving this step changes
-the local contrast by at most \(3.9\times10^{-6}\) across the six snapshots.
+the local coefficient difference by at most \(3.9\times10^{-6}\) across the six snapshots.
 
-The role of hardening is assessed separately from scalar mineral stability.
+A locally unique mineral solution does not by itself ensure that the
+mechanical response remains stable during plastic flow.  We therefore
+examine the effect of hardening on the mechanical loading tangent, which
+includes the plastic deformation produced by a further load increment.
 Let \(\mbf P\) denote the total first Piola stress and let \(\mbf N\) be a
-unit normal in the reference plane.  Differentiating the active return in the
-vanishing-increment limit, at fixed pressure and previous plastic history,
-gives the loading tangent and its acoustic tensor,
-\begin{align}
+unit normal in the reference plane.  We differentiate the constitutive
+update during plastic loading as the load increment tends to zero, holding
+pressure and the previous plastic history fixed.  This gives the loading
+tangent.  Contracting it with a normal direction gives the acoustic tensor,
+which we use to test for a possible loss of ellipticity:
+\begin{align*}
  \mc A_{ijkl}
  &=\left.\frac{\mathrm dP_{ij}}{\mathrm dF_{kl}}\right|_{p,\mathrm{active}},
- \label{eq:poroplastic-loading-tangent}\\
+ % equation-id: eq:poroplastic-loading-tangent
+\\
  Q_{ik}(\mbf N)&=\mc A_{ijkl}N_jN_l.
- \label{eq:poroplastic-acoustic-tensor}
-\end{align}
+ % equation-id: eq:poroplastic-acoustic-tensor
+\end{align*}
 A sign change of \(\det\mbf Q\) between normal directions implies a
-singular acoustic tensor at an intervening direction.  For \(H=0\), an
-independent constitutive replay gives both positive and negative determinants
+singular acoustic tensor at an intervening direction.  At such a direction,
+the incremental equilibrium equations can admit a discontinuity in the
+deformation gradient, indicating a possible onset of localized deformation.
+For \(H=0\), an independent reevaluation of the constitutive loading history
+gives both positive and negative determinants
 at \(0.3\ \mathrm{s}\), before the pronounced late-time spatial oscillations.
 At \((X,Y)=(0.5125,0.0375)\ \mathrm{m}\) and \(0.4\ \mathrm{s}\), its
-minimum is \(-0.00891\ \mathrm{GPa}^2\).  The positive mineral tangent remains
-far from zero, so the scalar root condition does not prevent this mechanical
-loss of ellipticity.  Halving the time step and, separately, setting
+minimum is \(-0.00891\ \mathrm{GPa}^2\).  The derivative of the mineral residual remains positive and far from zero.
+Thus the mineral equation can still be solved locally even when the
+mechanical equations lose ellipticity.  Halving the time step and, separately, setting
 \(\beta=M\) while retaining \(H=0\) leave both the acoustic sign change
 and the spatial oscillations.  With \(H=100\ \mathrm{MPa}\) on the
 \(40\times4\) mesh at \(\Delta t=0.0025\ \mathrm{s}\), the minimum
-over the sampled active states at three positions is
+over the sampled states undergoing plastic loading at three positions is
 \(0.03797\ \mathrm{GPa}^2\), and the spatial oscillations disappear.
 The diagnostic scans in-plane normal directions at \(0.25^\circ\) intervals
 and checks sensitivity to the finite-difference increment.  Positive values
 at these samples characterize the tested loading path.
 
-The independent water-storage derivative and both Biot-coefficient checks
-pass during active flow.  The coupled Jacobian test also passes through
+The independent check of the water-storage derivative and both checks of
+the Biot coefficient pass during plastic flow.  The comparison of the
+assembled AD Jacobian with finite differences also passes through
 compression and the full hold, and suppressing yielding recovers the
 existing elastic solution.  On the \(20\times2\) mesh, reducing the step
 from \(0.01\) to \(0.005\) and \(0.0025\ \mathrm{s}\) reduces the maximum
-water-mass defect relative to integrated boundary reaction from
-\(0.178\%\) to \(0.089\%\) and \(0.045\%\) of initial water mass.  Solid-mass
+water-mass mismatch from
+\(0.178\%\) to \(0.089\%\) and \(0.045\%\) of initial water mass.
+Here the mismatch compares the change in stored water with the time
+integral of the boundary flux obtained from the pressure residual.  Solid-mass
 drift decreases similarly.  For the plotted \(40\times4\) calculation,
 the maximum mismatch between water-mass change and integrated Darcy outflow
 is \(0.291\%\) of initial water mass.  These checks verify the plastic
@@ -399,9 +420,10 @@ The continuation of the water law into tension also needs assessment:
 \citet{brantut2020} observed pressure drops reaching vapor pressure, a regime
 outside the single-phase description used here.
 
-The source archive contains the MOOSE materials and kernels, input decks,
-independent constitutive checks, analytical reference calculations, curated
-results, and figure-generation scripts.  The equation-to-object and theory
-maps link each test to its governing equations and assumptions.  The
-calculations verify the implementation for the stated constitutive laws;
-comparison with material data remains a separate task.
+The source archive contains the MOOSE constitutive materials and balance
+residuals, simulation input files, independent constitutive checks,
+analytical reference calculations, retained numerical results, and
+figure-generation scripts.  The accompanying tables identify which software
+objects implement each equation and which tests check its assumptions.
+These calculations verify the implementation; comparison with material data
+remains future work.

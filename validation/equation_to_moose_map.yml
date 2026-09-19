@@ -271,8 +271,30 @@ mappings:
   role: sum boundary reaction degrees of freedom without counting Q2 midside interpolation values
   tests: [poroplastic_mandel_storage, poroplastic_mandel_refinement]
 
-# Every numbered equation also has an explicit implementation or analytical role.
+# Every equation identifier has an explicit implementation or analytical role.
 supporting_mappings:
+- id: pressure_legendre_and_drained_stress_reduction
+  paper_equations:
+  - eq:total-stress-pressure-potential
+  - eq:legendre-pressure-volume-conjugate
+  - eq:legendre-mixed-pressure-deformation-derivative
+  - eq:legendre-biot-pressure-tangent
+  - eq:drained-double-prime-stress-definition
+  - eq:drained-double-prime-stress-law
+  - eq:finite-drained-pressure-multiplier
+  - eq:double-prime-drained-pressure-split
+  - eq:total-stress-drained-pressure-split
+  - eq:single-prime-drained-pressure-split
+  - eq:biot-tangent-finite-pressure-multiplier
+  role: derivation
+  sources:
+  - paper/sections/finite_deformation_biot.tex
+  - validation/scripts/check_stress_trace_derivation.py
+  interpretation: Mixed derivatives of the pressure Legendre potential identify the
+    reversible Biot coefficient. The drained stress and finite pressure multiplier
+    rearrange the existing constitutive stresses without changing the implemented
+    material law. Experimental interpretation requires reversible perturbations
+    at fixed plastic state.
 - id: motion_and_plastic_factorization
   paper_equations:
   - eq:inelastic-multiplicative-split
@@ -481,5 +503,32 @@ supporting_mappings:
   - moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C
   interpretation: The pressure derivative and linearized pore-volume rate give the storage modulus used
     by parameters(); mandel_roots(), analytical_solution() and analytical_displacement() implement the
-    series. Subequation parent labels name the corresponding groups. These are reference calculations,
+    series. Source comment identifiers also name unnumbered displays and equation groups. These are reference calculations,
     not extra MOOSE kernels.
+- id: gajo_logarithmic_elastic_equivalence
+  paper_equations:
+  - eq:gajo-plastic-skeleton-stress
+  - eq:gajo-plastic-mineral-factorization
+  - eq:gajo-plastic-contact-compression
+  - eq:gajo-plastic-pressure-compression
+  - eq:gajo-plastic-eliminated-stress
+  - eq:gajo-plastic-volume-stress-elimination
+  - eq:gajo-plastic-volume-pressure-elimination
+  - eq:gajo-plastic-scalar-mineral-closure
+  - eq:gajo-plastic-total-mean-stress
+  - eq:gajo-plastic-drained-mean-stress
+  - eq:gajo-plastic-mineral-pressure-tangent
+  - eq:gajo-plastic-finite-tangent-relation
+  - eq:gajo-plastic-biot-tangent-reduction
+  role: derivation
+  sources:
+  - paper/sections/gajo_equivalence_appendix.tex
+  - references/notes/finite-strain-pressure-coupling-literature-2026-09-18.md
+  interpretation: Elimination of the cited logarithmic elastic factor relations recovers
+    the scalar mineral closure. Reconstruction establishes the reverse implication on
+    a common admissible branch. Differentiating the mean total stress recovers the
+    fixed-pressure mineral-volume coefficient and distinguishes it from the finite
+    pressure multiplier relative to the drained stress. These are supporting algebraic
+    relations, not additional implemented equations. The appendix also maps the
+    volumetric closure of Gajo's 2011 plastic specialization with reversible mineral
+    volume change; equivalence of complete flow and hardening laws is not asserted.

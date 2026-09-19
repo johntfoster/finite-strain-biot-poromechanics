@@ -1,6 +1,6 @@
 # Finite-strain pressure coupling: literature comparison
 
-Search and verification date: 2026-09-18.
+Search date: 2026-09-18. Original-PDF verification: 2026-09-19.
 
 ## Question and finding
 
@@ -17,7 +17,7 @@ for the elastic coupling term or for coupled finite-strain energies generally.
 
 | Source | Evidence inspected | Verdict and role |
 | --- | --- | --- |
-| Gajo (2010), DOI [10.1098/rspa.2010.0018](https://doi.org/10.1098/rspa.2010.0018) | Author-uploaded published-paper full-text extraction, pp. 3072–3077, equations (3.26)–(3.48); rate relations on pp. 3082–3083. Crossref metadata confirms author, title, volume 466, issue 2122, pages 3061–3087. | Contradicts absence of the term; direct elastic constitutive precedent. Added as `gajo2010`. |
+| Gajo (2010), DOI [10.1098/rspa.2010.0018](https://doi.org/10.1098/rspa.2010.0018) | Local published PDF, pp. 3063–3065, 3073–3074, 3076–3078, and 3082–3083; original equation typography visually checked. Title-page metadata agrees with the BibTeX entry and prior Crossref verification. | Contradicts absence of the term; direct elastic constitutive precedent. Added as `gajo2010`. |
 | Sun, Ostien, and Salinger (2013), DOI [10.1002/nag.2161](https://doi.org/10.1002/nag.2161) | Local full PDF, equations (5)–(9), PDF pages 4–5. | Supports a narrower comparison: this implementation assumes a pressure-independent effective first Piola stress and uses the modulus-ratio Biot coefficient. Its phase stress already contains a `K/K_s` pressure contribution. Retained existing implementation citation. |
 | Kazemian et al. (2025), DOI [10.1016/j.ijsolstr.2025.113436](https://doi.org/10.1016/j.ijsolstr.2025.113436) | Published PDF, section 2, journal page 3, equations (6)–(9). | Related explicit alternative: a quadratic Hencky/porosity energy gives total Kirchhoff stress with a constant `b p` contribution. Different constitutive choice and stress-volume scaling; not evidence that coupling energy is generally absent. No manuscript citation added. |
 | MacMinn, Dufresne, and Wettlaufer (2016), DOI [10.1103/PhysRevApplied.5.044020](https://doi.org/10.1103/PhysRevApplied.5.044020) | Local full preprint, sections II–III. | Related-only for this question: incompressible constituents exclude the finite-mineral-compressibility mechanism. Retained as large-deformation context. |
@@ -25,10 +25,61 @@ for the elastic coupling term or for coupled finite-strain energies generally.
 
 The direct source for the Gajo full-text extraction is the
 [author-uploaded publication](https://www.researchgate.net/publication/243685858_A_general_approach_to_isothermal_hyperelastic_modelling_of_saturated_porous_media_at_finite_strains_with_compressible_constituents).
-The downloadable PDF and publisher XML returned HTTP 403; its original page
-images could not be visually checked or archived locally. Equation readings
-above are from the published PDF's extracted full text, not its abstract.
-This access limitation remains relevant for an independent typography check.
+Initial publisher and institutional retrieval attempts returned HTTP 403.
+That access limitation was resolved on 2026-09-19 using the user-supplied
+published PDF, retrieved from Hamilton and stored as
+[the local Gajo source](../pdfs/gajo-2010-compressible-constituents.pdf).
+The 27-page PDF was ingested with the repository research-store script;
+extracted text and retrieval state remain under `.agent-runtime/research/`.
+The source and received copies have SHA-256
+`68d3bb7d6f726a41b7d76e8c13271d4bb5a886047445792b20dbccb0d0f47217`.
+The duplicate root filename was moved to the same reference path on Hamilton.
+
+### Original-PDF audit of the contribution revision
+
+- **Metadata and variables: supports.** The title page confirms the author,
+  title, year, journal, volume, pages, and DOI in `gajo2010`. Equations
+  (2.6)–(2.7), journal p. 3065 (PDF p. 5), confirm `J_s=Jbar` and
+  `1-n_0=phi_s0`, including the current-volume fraction relation.
+- **Scalar closure: supports.** Equations (3.27), (3.32), and both parts of
+  (3.34), journal pp. 3073–3074 (PDF pp. 13–14), match every source relation
+  transcribed in the new appendix. The trace is divided by three, and the
+  contact-stress relation is divided by the reference solid fraction.
+  The pressure relation contains the total mineral ratio `J_s`, not the
+  pressure factor `J_(s-f)`. Elimination and reverse reconstruction are valid.
+- **Finite pressure factor: supports.** Equations (3.47)–(3.48), journal
+  p. 3077 (PDF p. 17), confirm the total Kirchhoff stress and
+  `alpha=1-K J_s/(J K_s)`. Dividing by total `J` gives the appendix's
+  mean Cauchy stress. Gajo's double-prime stress in this passage is the
+  drained stress; it is not the manuscript's current-pressure energy derivative.
+- **Rate coupling: supports.** The original typography on journal
+  pp. 3082–3083 (PDF pp. 22–23) distinguishes Greek `alpha` from Roman `a`:
+  `alpha=1-K J_s t/(J K_s)` and `a=K t/[K_s(1-n_0)]` in (5.4).
+  The ratio `[alpha+r(1-a)]/[1+r(1-a)]` in (5.12) and (5.14) reduces
+  to the manuscript's `B` when `t=1` and `r=p J_s/K_s`.
+  These equations include additional fluid/volume factors multiplying that
+  dimensionless ratio; the manuscript correctly identifies the coupling
+  factor rather than equating `B` with the whole rate-matrix entry.
+- **Energy and assumptions: supports within the stated specialization.**
+  Equation (3.39), journal p. 3076 (PDF p. 16), confirms the sign and
+  factors in the coupled energy comparison below. Pages 3063–3064 and
+  Sec. 3(c) require separated volumetric/isochoric energies, logarithmic
+  mineral response, and equivalent isotropic mineral strains under isotropic
+  macroscopic effective loading and pore pressure. The appendix now states
+  these assumptions explicitly. Plastic equivalence remains outside this audit.
+- **Rate-form interpretation and novelty: appropriately scoped.** The remark
+  on journal p. 3078 (PDF p. 18) concerns `alpha` for general skeleton
+  energies. Section 5 expresses its tangent quantities in the current state.
+  The manuscript's distinction between finite pressure change and local
+  tangent response is consistent with these equations. The explicit scalar
+  construction and reconstruction are defensible contribution statements;
+  the PDF does not establish first-in-literature priority for that reduction.
+
+No sign, scaling, or algebraic correction was needed in the new appendix.
+Independent symbolic checks reconfirmed the scalar elimination, pressure
+sensitivity, rate-factor reduction, and mapped elastic volumetric energy.
+The full-PDF check supersedes the previous extraction-only verification.
+
 The Kazemian PDF was acquired from the
 [University of Glasgow repository](https://eprints.gla.ac.uk/356644/1/356644.pdf)
 and saved as `references/pdfs/kazemian-2025-column-solid-compressibility.pdf`.
@@ -52,8 +103,8 @@ secant pressure factor. The manuscript's fixed-pressure volume derivative is
 These are distinct decompositions of the same elastic total stress. The
 double-prime stress in the manuscript is the derivative of the reduced solid
 energy at fixed pressure, so it retains the compensating pressure correction.
-Gajo's rate formulation contains the same elastic tangent coefficient. To
-distinguish the symbols obscured by PDF text extraction, use temporary names
+Gajo's rate formulation contains the same elastic tangent coefficient. The original PDF confirms the symbols previously obscured by text
+extraction. Use the source names
 `alpha=1-K Jbar/(J K_s)`, `a=K/(phi_s0 K_s)`, and `r=p Jbar/K_s`.
 For his logarithmic specialization the stiffness factor `t` is one.
 The rate coupling factor in equations (5.12) and (5.14) is
