@@ -3,7 +3,8 @@
   "project": {
     "title": "Pressure coupling and the Biot coefficient in finite-strain poroelasticity and poroplasticity",
     "public_repository_url": "https://github.com/johntfoster/finite-strain-biot-poromechanics",
-    "public_repository_url_status": "assigned"
+    "public_repository_url_status": "assigned",
+    "codespace_url": "https://codespaces.new/johntfoster/finite-strain-biot-poromechanics"
   },
   "manuscript_paths": [
     "paper/main.tex",
@@ -17,7 +18,9 @@
     "authors_retained_responsibility": true,
     "ai_output_treated_as_scholarly_source": false,
     "complete_prompt_history_available": false,
-    "development_record": "The repository commit workflow calls for sanitized summaries of the relevant development conversations, including decisions, alternatives, unsuccessful approaches, open questions, and next steps. The commit-message hook requires this structured narrative, and the pre-commit hook regenerates the AI-use disclosure. These records preserve a summary of the development history; the hooks do not collect or archive verbatim chats, and the public repository does not contain a complete prompt history."
+    "development_record": "The repository commit workflow calls for sanitized summaries of the relevant development conversations, including decisions, alternatives, unsuccessful approaches, open questions, and next steps. The commit-message hook requires this structured narrative, and the pre-commit hook regenerates the AI-use disclosure. These records preserve a summary of the development history; the hooks do not collect or archive verbatim chats, and the public repository does not contain a complete prompt history.",
+    "session_coverage_record": "provenance/session_coverage_2026-09-19.md",
+    "model_record": "Recorded model versions were recovered from request and turn metadata on Euler and Hamilton. Some older sessions lack model metadata, so this list is not exhaustive."
   },
   "uses": [
     "proposing and critiquing prose",
@@ -36,20 +39,47 @@
     {
       "name": "OpenAI Codex",
       "provider": "OpenAI",
-      "model_versions": null,
-      "model_versions_status": "unknown_not_consistently_recorded"
+      "model_versions": [
+        "GPT-5.6 Sol",
+        "GPT-5.6 Terra",
+        "GPT-6 Astra"
+      ],
+      "model_versions_status": "recorded_versions_recovered_history_incomplete",
+      "model_identifiers": [
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "gpt-6-astra"
+      ]
     },
     {
       "name": "GitHub Copilot",
       "provider": "GitHub",
-      "model_versions": null,
-      "model_versions_status": "unknown_not_consistently_recorded"
+      "model_versions": [
+        "DeepSeek V4 Flash",
+        "DeepSeek V4 Pro",
+        "Qwen3-Coder-Next (Q4_K_M)",
+        "Qwen3.6 (27B)"
+      ],
+      "model_versions_status": "recorded_versions_recovered_history_incomplete",
+      "model_identifiers": [
+        "deepseek/deepseek-v4-flash",
+        "deepseek/deepseek-v4-pro",
+        "qwen3-coder-next:q4_K_M",
+        "qwen3.6:27b"
+      ]
     },
     {
       "name": "OpenClaw",
       "provider": "OpenClaw",
-      "model_versions": null,
-      "model_versions_status": "unknown_not_consistently_recorded"
+      "model_versions": [
+        "GPT-5.6 Sol",
+        "DeepSeek V4 Flash"
+      ],
+      "model_versions_status": "recorded_versions_recovered_history_incomplete",
+      "model_identifiers": [
+        "gpt-5.6-sol",
+        "deepseek-v4-flash"
+      ]
     }
   ]
 }
