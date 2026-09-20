@@ -4,6 +4,22 @@ set -eu
 repository_root=$(git rev-parse --show-toplevel)
 cd "$repository_root"
 
+# Infrastructure-only maintenance: never run manuscript-mutating hooks while frozen.
+if [ "$(git config --bool --get research.manuscriptFreeze || printf true)" = "true" ]; then
+    python3 - <<'FREEZE_PY'
+import fnmatch, json, subprocess, sys
+from pathlib import Path
+manifest = json.loads(Path('research-project.yml').read_text())
+patterns = manifest['maintenance']['protected_paths']
+paths = subprocess.check_output(['git', 'diff', '--cached', '--no-renames', '--name-only', '-z']).decode().split('\0')
+blocked = [p for p in paths if p and any(fnmatch.fnmatchcase(p.lower(), g.lower()) for g in patterns)]
+if blocked:
+    print('Manuscript freeze rejects staged paths:', *blocked, sep='\n', file=sys.stderr)
+    sys.exit(1)
+FREEZE_PY
+    exit 0
+fi
+
 pending_date=$(date +%Y-%m-%d)
 python3 tools/update_ai_disclosure.py --pending-date "$pending_date"
 git add -- provenance/AI_USE.md provenance/ai_use_statement.tex

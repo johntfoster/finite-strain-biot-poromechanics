@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "id": "finite-strain-biot-poromechanics",
+  "repository": "https://github.com/johntfoster/finite-strain-biot-poromechanics",
+  "default_branch": "main",
+  "status": "active",
+  "scientific_scope": "theory-and-implementation",
+  "authority": {
+    "instructions": "AGENTS.md",
+    "profile": "agent-profile.json",
+    "manuscript": "paper/main.tex"
+  },
+  "workflow": {
+    "repository": "https://github.com/johntfoster/research-agent-workflows",
+    "path": ".agent/shared",
+    "revision": "46b234fb6ad30d5620decd9d02ed7b9050a1088d",
+    "release": "v0.1.2",
+    "migration_target": "v0.2.0"
+  },
+  "maintenance": {
+    "objective": "2026-09-19 research infrastructure migration",
+    "manuscript_edits": false,
+    "protected_paths": [
+      "*.tex",
+      "*.bib",
+      "*.sty",
+      "*.cls",
+      "*.bst",
+      "*.pdf",
+      "*.png",
+      "*.svg",
+      "*.eps",
+      "*.jpg",
+      "*.jpeg",
+      "paper/*",
+      "sections/*",
+      "figures/*",
+      "implementation_paper/*",
+      "submission/*",
+      "submissions/*"
+    ],
+    "local_freeze_config": "research.manuscriptFreeze"
+  },
+  "publication": {
+    "site": {
+      "url": "https://johntfoster.github.io/finite-strain-biot-poromechanics/",
+      "status": "configured"
+    },
+    "codespace": {
+      "url": "https://codespaces.new/johntfoster/finite-strain-biot-poromechanics",
+      "configuration": ".devcontainer/devcontainer.json",
+      "verification": "not-run"
+    },
+    "citation": "CITATION.cff",
+    "license": {
+      "path": "LICENSE",
+      "status": "existing"
+    },
+    "release": {
+      "url": null,
+      "status": "no-published-release-found"
+    },
+    "submission": {
+      "status": "not-audited"
+    }
+  },
+  "verification": {
+    "infrastructure": "pending",
+    "implementation": "not-run-in-this-migration",
+    "analytical": "not-run-in-this-migration",
+    "convergence": "not-run-in-this-migration",
+    "finite_deformation": "not-run-in-this-migration",
+    "physical_validation": "not-run-in-this-migration"
+  },
+  "next_milestone": "Verify infrastructure-only hooks and manifest; migrate the shared workflow pin only after consumer checks."
+}
