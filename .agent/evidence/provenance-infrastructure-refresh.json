@@ -1,0 +1,33 @@
+{
+  "scope": "Only infrastructure content hashes refreshed; scientific hashes and historical execution observations unchanged.",
+  "changes": {
+    ".devcontainer/devcontainer.json": {
+      "before": "941ac55de38449682e424d397bc7b9a7cf7c46d54133fb76af7dc73cd42cd5f1",
+      "after": "cc4cd161925073e2b0deec7ef4c3f9139665921fd2f6bdf4e4b3d50125b0803c"
+    },
+    ".devcontainer/post-create.sh": {
+      "before": "6b4500e04e7bc1c4d6c250bb51ee6a3337f309faaa67e62b167e7c4136ca877a",
+      "after": "b9fab7f57139ca9f745fac561d4aa0f5d9d95b2a52496b22fd5640b0305b4b4c"
+    },
+    ".githooks/pre-commit": {
+      "before": "d74862767a4bfd18911edabdabf1aef311c4c3984036cff553a00ae8545a4b99",
+      "after": "8fdfc8c1872fad5d2b2a4c65ad78f273b886d55b2f8bc32d2df1830d9847788a"
+    },
+    ".github/workflows/container.yml": {
+      "before": "1b3fc19c875b1060bc6d28ca327de6d357afd3e6c705e0f401a947e85910395e",
+      "after": "3632d7470c39859a000d9a17fff2138f720e85cde62f9267afe1a752819af0aa"
+    },
+    ".github/workflows/pages.yml": {
+      "before": "35a6cd86639869bbcd24097660b160527775fb8fa8911c4a3bcdc53415622f22",
+      "after": "c0828eabeb2da7fa7d16094774e1a4a76110e6ed38e88ccbc2422919ba0474f5"
+    },
+    "scripts/validate_repository.py": {
+      "before": "68044b848d8a4298fedd3a19eb73bbddde0dba60e79b985846c2e83056c27483",
+      "after": "43cfeef5829a865d59c95e4345ff957e42569b9c14fa3294d8bf05e8ddad010b"
+    },
+    "tools/test_container.sh": {
+      "before": "622f0f2e5e86ab956bb86e6f69388ffac6e679c3b52a566fd2062694c92581cf",
+      "after": "b452cf9d609940a8def4a8be5b2faba06dfc5730b96f63a293da3d58bbe7f2f1"
+    }
+  }
+}
