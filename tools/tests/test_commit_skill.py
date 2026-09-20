@@ -26,7 +26,8 @@ class CommitSkillTest(unittest.TestCase):
         self.git("config", "user.email", "commit-test@example.invalid")
         for name in ("tools/agentctl", "tools/validate_process_log.py",
                      "tools/update_ai_disclosure.py", "provenance/ai-use.yml",
-                     "AGENTS.md"):
+                     "AGENTS.md", "research-project.yml",
+                     ".agent/shared/tools/research_project.py"):
             destination = self.root / name
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ROOT / name, destination)
@@ -51,6 +52,8 @@ class CommitSkillTest(unittest.TestCase):
                               env=self.env, capture_output=True, text=True)
 
     def test_commit_runs_all_hooks_and_stages_disclosure(self):
+        # Explicitly exercise legacy mode only in this synthetic repository.
+        self.git("config", "research.manuscriptFreeze", "false")
         result = self.commit()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertNotEqual(self.git("rev-parse", "HEAD").stdout, self.before)
@@ -61,6 +64,29 @@ class CommitSkillTest(unittest.TestCase):
         self.assertIn("provenance/AI_USE.md", committed)
         self.assertIn("provenance/ai_use_statement.tex", committed)
         self.assertIn(VALID.strip(), self.git("log", "-1", "--format=%B").stdout)
+
+    def test_frozen_infrastructure_commit_never_generates_disclosure(self):
+        result = self.commit()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        committed = self.git("show", "--pretty=", "--name-only", "HEAD").stdout
+        self.assertEqual(committed.strip(), "change.txt")
+        self.assertFalse((self.root / "provenance/ai_use_statement.tex").exists())
+        self.assertEqual((self.root / "paper/main.tex").read_text(), "Seed manuscript\n")
+
+    def test_frozen_manuscript_edit_is_rejected(self):
+        (self.root / "paper/main.tex").write_text("Changed fixture\n")
+        self.git("add", "paper/main.tex")
+        result = self.commit()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("paper/main.tex", result.stdout + result.stderr)
+        self.assertEqual(self.git("rev-parse", "HEAD").stdout, self.before)
+
+    def test_frozen_manuscript_rename_is_rejected(self):
+        self.git("mv", "paper/main.tex", "renamed.txt")
+        result = self.commit()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("paper/main.tex", result.stdout + result.stderr)
+        self.assertEqual(self.git("rev-parse", "HEAD").stdout, self.before)
 
     def test_invalid_narrative_stops_before_commit(self):
         (self.root / "message.txt").write_text("Subject only\n")

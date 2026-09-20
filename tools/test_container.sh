@@ -14,5 +14,9 @@ make derivation
 make validate
 tools/agentctl check --profile manuscript
 cp moose_app/.previous_test_results.json /ci-output/moose-tests.json
-cp paper/build/main.log /ci-output/manuscript.log
+if python3 -c 'import json; raise SystemExit(not json.load(open("research-project.yml"))["maintenance"]["manuscript_edits"])'; then
+    cp paper/build/main.log /ci-output/manuscript.log
+else
+    printf '%s\n' '{"status":"skipped","reason":"manuscript maintenance freeze"}' > /ci-output/manuscript-status.json
+fi
 git diff --exit-code
