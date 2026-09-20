@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
+FROM mcr.microsoft.com/devcontainers/base@sha256:d94c97dd9cacf183d0a6fd12a8e87b526e9e928307674ae9c94139139c0c6eae # ubuntu-24.04
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential gfortran git curl ca-certificates python3 python3-venv \
