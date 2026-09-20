@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "project": "finite-strain-biot-poromechanics",
+  "observed_at": "2026-09-20T01:21:05.700918+00:00",
+  "workflow_revision": "bd82f7bed44ecb3ae7e2e6895a990ef456b8c23c",
+  "scope": "Infrastructure-only migration; no manuscript build, edits, staging, or scientific-release certification.",
+  "local_container": {
+    "project": "finite-strain-biot-poromechanics",
+    "image": "ghcr.io/johntfoster/finite-strain-biot-poromechanics@sha256:8a68ecc914ed365844c9180d35e0a32c238bc4d4144943101015ff97259a38a2",
+    "scope": "clean-clone infrastructure startup only; no manuscript/scientific build",
+    "exit_code": 0,
+    "tracked_and_untracked_status": ""
+  },
+  "hosted_codespace": {
+    "status": "passed",
+    "head": "3008f5c9a79b4921a4e37ab2b683870e7dc54885",
+    "instance": "expert-giggle-q54g549rj297v9",
+    "observed_at": "2026-09-20T01:20:21.069728+00:00",
+    "checks": [
+      "SSH access",
+      "post-create startup",
+      "source-matched prebuilt application reuse",
+      "site checks",
+      "manifest check",
+      "executable present",
+      "clean Git status"
+    ],
+    "scope": "MOOSE-enabled startup; numerical suite was run separately in the identical pinned image",
+    "cleanup": "temporary Codespace deleted after verification"
+  },
+  "site": {
+    "project": "finite-strain-biot-poromechanics",
+    "url": "https://johntfoster.github.io/finite-strain-biot-poromechanics/",
+    "status": 200,
+    "title": "Nonlinear-Biot AD \u2014 Examples &amp; Reproduction",
+    "sha256": "ab80a4c4af15e19f07fc22baeb8a89924fea7d99fb7c71bdd1060f4dbac117e7"
+  },
+  "release": {
+    "project": "finite-strain-biot-poromechanics",
+    "head": "3008f5c9a79b4921a4e37ab2b683870e7dc54885",
+    "url": "https://github.com/johntfoster/finite-strain-biot-poromechanics/releases/tag/infrastructure-v0.2.1",
+    "prerelease": true,
+    "assets": [
+      {
+        "name": "environment-verification.json",
+        "sha256": "b9af058de3b11f35562b35ebd78da19835f690c666e980fee266bac51c07178a",
+        "verification": "GitHub-reported uploaded-asset digest"
+      },
+      {
+        "name": "provenance.json",
+        "sha256": "54a880224eafea126c5fa66f40cc48f44d7aa135a7d1f0010b4e664c03353559",
+        "verification": "GitHub-reported uploaded-asset digest"
+      },
+      {
+        "name": "repository.bundle",
+        "sha256": "bf123defa31b49821586222bb899aded007ae8bd64cf5d1d94cc2a2b70297588",
+        "verification": "GitHub-reported uploaded-asset digest"
+      },
+      {
+        "name": "SHA256SUMS",
+        "sha256": "0d09a974398c98f419cfa60b3d6d931f99e4a1029a689b17974cfba6ba25739b",
+        "verification": "GitHub-reported uploaded-asset digest"
+      },
+      {
+        "name": "source.tar",
+        "sha256": "417ab3e6667b7c57166792a21ba42938e3017ad3e2c5406e7c688d213c09f2b0",
+        "verification": "GitHub-reported uploaded-asset digest"
+      }
+    ]
+  },
+  "ci": {
+    "Research infrastructure": {
+      "id": 35480771272,
+      "head_sha": "3008f5c9a79b4921a4e37ab2b683870e7dc54885",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/johntfoster/finite-strain-biot-poromechanics/actions/runs/35480771272"
+    },
+    "Companion website": {
+      "id": 35480771001,
+      "head_sha": "3008f5c9a79b4921a4e37ab2b683870e7dc54885",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/johntfoster/finite-strain-biot-poromechanics/actions/runs/35480771001"
+    },
+    "Tested computational environment": {
+      "id": 35480770980,
+      "head_sha": "3008f5c9a79b4921a4e37ab2b683870e7dc54885",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/johntfoster/finite-strain-biot-poromechanics/actions/runs/35480770980"
+    }
+  },
+  "preservation": {
+    "protected_files": 65,
+    "hashes_mtimes_inodes_unchanged": true,
+    "original_dirty_state_preserved": true
+  },
+  "existing_numerical_suite": {
+    "project": "finite-strain-biot-poromechanics",
+    "image": "ghcr.io/johntfoster/finite-strain-biot-poromechanics@sha256:8a68ecc914ed365844c9180d35e0a32c238bc4d4144943101015ff97259a38a2",
+    "head": "5e389fa57f30568afd40c6bd0c88c67f32f5e1d7",
+    "exit_code": 1,
+    "status": "",
+    "scope": "existing numerical tests, derivation and non-manuscript audits; no manuscript/figure build",
+    "numerical_tests": {
+      "passed": 22,
+      "skipped_heavy": 2,
+      "failed": 0
+    },
+    "derivation_checks": "both passed",
+    "final_audit_failure": "stale infrastructure provenance hashes; corrected in subsequent commit, separate audit retest required"
+  },
+  "post_refresh_repository_audit": {
+    "project": "finite-strain-biot-poromechanics",
+    "image": "ghcr.io/johntfoster/finite-strain-biot-poromechanics@sha256:8a68ecc914ed365844c9180d35e0a32c238bc4d4144943101015ff97259a38a2",
+    "head": "3008f5c9a79b4921a4e37ab2b683870e7dc54885",
+    "exit_code": 0,
+    "status": "",
+    "scope": "non-manuscript repository audit and tools tests after scoped infrastructure provenance refresh"
+  }
+}

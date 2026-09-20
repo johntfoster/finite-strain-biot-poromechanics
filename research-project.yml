@@ -43,12 +43,12 @@
   "publication": {
     "site": {
       "url": "https://johntfoster.github.io/finite-strain-biot-poromechanics/",
-      "status": "configured"
+      "status": "verified-http-200"
     },
     "codespace": {
       "url": "https://codespaces.new/johntfoster/finite-strain-biot-poromechanics",
       "configuration": ".devcontainer/devcontainer.json",
-      "verification": "not-run",
+      "verification": "local-clean-clone-passed; hosted-passed",
       "image": "ghcr.io/johntfoster/finite-strain-biot-poromechanics@sha256:8a68ecc914ed365844c9180d35e0a32c238bc4d4144943101015ff97259a38a2"
     },
     "citation": "CITATION.cff",
@@ -57,21 +57,24 @@
       "status": "existing"
     },
     "release": {
-      "url": null,
-      "status": "no-published-release-found"
+      "url": "https://github.com/johntfoster/finite-strain-biot-poromechanics/releases/tag/infrastructure-v0.2.1",
+      "status": "verified-infrastructure-prerelease",
+      "source_revision": "3008f5c9a79b4921a4e37ab2b683870e7dc54885",
+      "scientific_release": false
     },
     "submission": {
       "status": "not-audited"
-    }
+    },
+    "evidence": ".agent/evidence/infrastructure-2026-09-19.json"
   },
   "verification": {
-    "infrastructure": "manifest and hook tests passed; deployment/environment checks pending",
-    "implementation": "not-run-in-this-migration",
-    "analytical": "not-run-in-this-migration",
-    "convergence": "not-run-in-this-migration",
-    "finite_deformation": "not-run-in-this-migration",
+    "infrastructure": "Manifest, freeze/hooks, pinned core, local clean-clone startup, live site and source-package checks passed; hosted passed.",
+    "implementation": "Existing MOOSE suite: 22 passed, 2 heavy tests skipped, 0 failed; no numerical source changed.",
+    "analytical": "Both existing stress-trace derivation checks passed; no new derivation or validation claim.",
+    "convergence": "Two heavy tests skipped; no new convergence study.",
+    "finite_deformation": "Existing curated-result audits passed; no new continuation sweep.",
     "physical_validation": "not-run-in-this-migration"
   },
-  "next_milestone": "Verify pinned-image clean-clone startup, site deployment and infrastructure source package; manuscript remains frozen.",
+  "next_milestone": "Finish candidate-image CI; retain manuscript freeze. Pinned runtime verification is recorded separately.",
   "title": "Pressure coupling and the Biot coefficient in finite-strain poroelasticity and poroplasticity"
 }
