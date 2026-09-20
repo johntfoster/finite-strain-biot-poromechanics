@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import argparse
 import hashlib
 import json
 import re
@@ -319,7 +320,15 @@ def audit_equation_traceability() -> None:
     require(result.returncode == 0, result.stderr.strip() or result.stdout.strip())
 
 
-def main() -> int:
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--skip-manuscript", action="store_true",
+                        help="Report the manuscript audit as skipped during a declared maintenance freeze")
+    args = parser.parse_args(argv)
+    if args.skip_manuscript:
+        manifest = json.loads((ROOT / "research-project.yml").read_text())
+        require(manifest["maintenance"]["manuscript_edits"] is False,
+                "--skip-manuscript requires a declared manuscript maintenance freeze")
     audits = (
         audit_portability,
         audit_q2_q1_scope,
@@ -335,9 +344,13 @@ def main() -> int:
         audit_manuscript
     )
     for audit in audits:
+        if audit is audit_manuscript and args.skip_manuscript:
+            print("SKIP audit_manuscript: manuscript maintenance freeze")
+            continue
         audit()
         print(f"PASS {audit.__name__}")
-    print("PASS standalone nonlinear-Biot repository audit")
+    print("PASS non-manuscript repository audits" if args.skip_manuscript
+          else "PASS standalone nonlinear-Biot repository audit")
     return 0
 
 

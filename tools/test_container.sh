@@ -11,7 +11,12 @@ test -L .agent-runtime/moose
 make test
 make derivation
 .agent/shared/skills/setup-moose-conda/scripts/moose_conda_env.sh run -- python3 -m unittest discover -s tools/tests
-make validate
+if python3 -c 'import json; raise SystemExit(not json.load(open("research-project.yml"))["maintenance"]["manuscript_edits"])'; then
+    make validate
+else
+    make site
+    python3 scripts/validate_repository.py --skip-manuscript
+fi
 tools/agentctl check --profile manuscript
 cp moose_app/.previous_test_results.json /ci-output/moose-tests.json
 if python3 -c 'import json; raise SystemExit(not json.load(open("research-project.yml"))["maintenance"]["manuscript_edits"])'; then
