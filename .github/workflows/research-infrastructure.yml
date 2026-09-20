@@ -1,0 +1,13 @@
+name: Research infrastructure
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conformance:
+    uses: johntfoster/research-agent-workflows/.github/workflows/research-conformance.yml@bd82f7bed44ecb3ae7e2e6895a990ef456b8c23c
+  package:
+    uses: johntfoster/research-agent-workflows/.github/workflows/research-release.yml@bd82f7bed44ecb3ae7e2e6895a990ef456b8c23c

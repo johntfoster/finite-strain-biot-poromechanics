@@ -13,9 +13,8 @@
   "workflow": {
     "repository": "https://github.com/johntfoster/research-agent-workflows",
     "path": ".agent/shared",
-    "revision": "46b234fb6ad30d5620decd9d02ed7b9050a1088d",
-    "release": "v0.1.2",
-    "migration_target": "v0.2.0"
+    "revision": "bd82f7bed44ecb3ae7e2e6895a990ef456b8c23c",
+    "release": "v0.2.0"
   },
   "maintenance": {
     "objective": "2026-09-19 research infrastructure migration",
@@ -49,7 +48,8 @@
     "codespace": {
       "url": "https://codespaces.new/johntfoster/finite-strain-biot-poromechanics",
       "configuration": ".devcontainer/devcontainer.json",
-      "verification": "not-run"
+      "verification": "not-run",
+      "image": "ghcr.io/johntfoster/finite-strain-biot-poromechanics@sha256:8a68ecc914ed365844c9180d35e0a32c238bc4d4144943101015ff97259a38a2"
     },
     "citation": "CITATION.cff",
     "license": {
@@ -65,12 +65,13 @@
     }
   },
   "verification": {
-    "infrastructure": "pending",
+    "infrastructure": "manifest and hook tests passed; deployment/environment checks pending",
     "implementation": "not-run-in-this-migration",
     "analytical": "not-run-in-this-migration",
     "convergence": "not-run-in-this-migration",
     "finite_deformation": "not-run-in-this-migration",
     "physical_validation": "not-run-in-this-migration"
   },
-  "next_milestone": "Verify infrastructure-only hooks and manifest; migrate the shared workflow pin only after consumer checks."
+  "next_milestone": "Verify pinned-image clean-clone startup, site deployment and infrastructure source package; manuscript remains frozen.",
+  "title": "Pressure coupling and the Biot coefficient in finite-strain poroelasticity and poroplasticity"
 }

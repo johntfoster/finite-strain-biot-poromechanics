@@ -7,7 +7,7 @@
     "storage": "64gb"
   },
   "postCreateCommand": "bash .devcontainer/post-create.sh",
-  "waitFor": "updateContentCommand",
+  "waitFor": "postCreateCommand",
   "forwardPorts": [
     8000
   ],
@@ -51,10 +51,5 @@
       }
     }
   },
-  "features": {
-    "ghcr.io/devcontainers/features/sshd:1": {
-      "version": "latest"
-    }
-  },
-  "image": "ghcr.io/johntfoster/finite-strain-biot-poromechanics:latest"
+  "image": "ghcr.io/johntfoster/finite-strain-biot-poromechanics@sha256:8a68ecc914ed365844c9180d35e0a32c238bc4d4144943101015ff97259a38a2"
 }

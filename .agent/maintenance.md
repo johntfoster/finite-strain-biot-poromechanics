@@ -29,9 +29,11 @@ renames, and acceptance/rejection of synthetic process-log messages. Tests use
 temporary repositories; no manuscript build or scientific simulation is run.
 These checks are infrastructure evidence, not scientific validation.
 
-The shared pin remains v0.1.2 until v0.2.0 is released and consumer tests pass.
-The program-control repository and changes to the shared workflow repository
-await confirmation that they are included in the four-repository work limit.
-Missing sites, Codespaces, citation/license/release infrastructure remain open;
-the manifest records their current state without claiming deployment or verified
-reproduction. Missing licenses require an explicit owner choice.
+The shared core is explicitly pinned to v0.2.0; the program and core repositories
+are authorized infrastructure exceptions. Shared release CI and local core tests
+are separate from each paper's consumer evidence.
+
+The Codespace image is pinned by digest. Its startup checks infrastructure and
+reuses/builds the existing MOOSE application as required. While manuscript freeze
+is active, startup skips both the manuscript build and publication figure generation.
+Scientific checks remain separately requested and reported.

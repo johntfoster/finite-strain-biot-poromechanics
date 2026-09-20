@@ -15,5 +15,10 @@ else
 fi
 make build BUILD_JOBS=2
 make site
-make paper
+if python3 -c 'import json; from pathlib import Path; raise SystemExit(not json.loads(Path("research-project.yml").read_text())["maintenance"]["manuscript_edits"])'; then
+  make paper
+else
+  printf '\nManuscript freeze: skipping paper and publication-figure generation.\n'
+fi
+python3 .agent/shared/tools/research_project.py check
 printf '\nReady: make test, make figures, make reproduce, or make serve.\n'
