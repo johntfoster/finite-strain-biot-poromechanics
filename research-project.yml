@@ -13,8 +13,8 @@
   "workflow": {
     "repository": "https://github.com/johntfoster/research-agent-workflows",
     "path": ".agent/shared",
-    "revision": "bd82f7bed44ecb3ae7e2e6895a990ef456b8c23c",
-    "release": "v0.2.0"
+    "revision": "74309a56c009d65aa83f7729e6775fb8fea340ce",
+    "release": "v0.3.1"
   },
   "maintenance": {
     "objective": "2026-09-19 research infrastructure migration",
