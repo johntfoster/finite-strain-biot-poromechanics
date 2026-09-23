@@ -42,13 +42,13 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
     family = LAGRANGE
     order = FIRST
   []
-  [solid_spatial_mass_ratio]
-    family = LAGRANGE
-    order = SECOND
-  []
 []
 
 [AuxVariables]
+  [solid_spatial_mass_ratio_state]
+    family = MONOMIAL
+    order = CONSTANT
+  []
   [water_reaction]
     family = LAGRANGE
     order = FIRST
@@ -84,11 +84,6 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
 []
 
 [ICs]
-  [solid_spatial_mass_ratio_ic]
-    type = ConstantIC
-    variable = solid_spatial_mass_ratio
-    value = 1
-  []
 []
 
 [Functions]
@@ -103,6 +98,10 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
 []
 
 [Materials]
+  [reference_balance_state]
+    type = ADReferenceBalanceState
+    stress = implicit_plastic_total_P
+  []
   [plastic]
     type = ADImplicitPoroplasticBiotMaterial
     pressure = p
@@ -118,7 +117,6 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
   [pore_volume]
     type = ADPoroplasticPoreVolumeMaterial
     pressure = p
-    solid_spatial_mass_ratio = solid_spatial_mass_ratio
     skeleton_bulk_modulus = ${skeleton_bulk_modulus_pa}
     mineral_bulk_modulus = ${mineral_bulk_modulus_pa}
     reference_solid_volume_fraction = ${initial_solid_volume_fraction}
@@ -136,7 +134,6 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
   []
   [solid_spatial_mass]
     type = ADBinarySolidSpatialMassMaterial
-    solid_spatial_mass_ratio = solid_spatial_mass_ratio
   []
   [water_mass_storage]
     type = ADBiotPressureStorageMaterial
@@ -158,8 +155,7 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
   []
   [solid_material_mass_constraint]
     type = ADParsedMaterial
-    coupled_variables = solid_spatial_mass_ratio
-    material_property_names = solid_reference_J
+    material_property_names = 'solid_reference_J solid_spatial_mass_ratio'
     property_name = solid_material_mass_constraint
     expression = 'solid_reference_J*solid_spatial_mass_ratio-1'
   []
@@ -167,40 +163,29 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
 
 [Kernels]
   [solid_x]
-    first_piola_stress_name = implicit_plastic_total_P
-    type = ADReferenceSolidMomentum
+    type = ReferenceMomentum
     variable = ux
     component = 0
   []
   [solid_y]
-    first_piola_stress_name = implicit_plastic_total_P
-    type = ADReferenceSolidMomentum
+    type = ReferenceMomentum
     variable = uy
     component = 1
   []
-  [solid_mass_balance]
-    type = ADReferenceMaterialStorageRateTerm
-    variable = solid_spatial_mass_ratio
-    reference_storage_rate_name = solid_component_reference_storage_rate
-    scale = ${skeleton_bulk_modulus_pa}
-  []
   [water_storage]
     save_in = water_reaction
-    type = ADReferenceMaterialStorageRateTerm
+    type = ReferenceFluidMass
     variable = p
-    reference_storage_rate_name = water_reference_storage_rate
-    scale = '${fparse 1/water_density_kg_m3}'
-  []
-  [water_flux]
-    save_in = water_reaction
-    type = ADReferenceComponentFluxTerm
-    variable = p
-    reference_flux_name = water_reference_mass_flux
-    scale = '${fparse 1/water_density_kg_m3}'
   []
 []
 
 [AuxKernels]
+  [solid_density_output]
+    type = ADMaterialRealAux
+    variable = solid_spatial_mass_ratio_state
+    property = solid_spatial_mass_ratio
+    execute_on = 'INITIAL TIMESTEP_END'
+  []
   [gamma]
     type = ADMaterialRealAux
     variable = gamma
@@ -281,7 +266,7 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
   [outflow_reaction]
     type = ParsedPostprocessor
     pp_names = water_boundary_residual
-    expression = '-1000*water_boundary_residual'
+    expression = '-water_boundary_residual'
   []
   [water_mass]
     type = ADElementIntegralMaterialProperty
@@ -289,7 +274,7 @@ hardening_modulus_pa := '${fparse 0.1*stiffness_scale_pa}'
   []
   [water_rate]
     type = ADElementIntegralMaterialProperty
-    mat_prop = water_reference_storage_rate
+    mat_prop = water_reference_discrete_storage_rate
   []
   [outflow]
     type = ADSideIntegralMaterialProperty

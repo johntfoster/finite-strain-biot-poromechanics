@@ -2,13 +2,15 @@
   "accepted": true,
   "storage": {
     "errors": {
-      "storage_rate": 2.1029094909863487e-11,
-      "biot": 1.3323897540828966e-11,
-      "elastic_biot": 1.4911183399135552e-11,
-      "mineral": 6.816769371198461e-14,
-      "plastic_determinant": 9.231309293367129e-14
+      "discrete_storage": 6.617369763262104e-12,
+      "storage_rate": 2.157108269784658e-11,
+      "biot": 1.3085199590534558e-11,
+      "elastic_biot": 1.6620038678638593e-11,
+      "mineral": 7.904787935331115e-14,
+      "plastic_determinant": 9.395609290585583e-14
     },
     "tolerances": {
+      "discrete_storage": 2e-10,
       "storage_rate": 2e-07,
       "biot": 5e-08,
       "elastic_biot": 5e-08,
@@ -16,12 +18,12 @@
       "plastic_determinant": 1e-09
     },
     "active_samples": 807,
-    "omitted_plastic_rate_error_per_water_density": 0.11131413877052408
+    "omitted_plastic_rate_error_per_water_density": 0.11121953514603432
   },
   "jacobian": {
-    "comparisons": 53,
-    "relative": 2.22086e-08,
-    "absolute": 2.71333e-06,
+    "comparisons": 49,
+    "relative": 5.53973e-08,
+    "absolute": 3.46502e-07,
     "relative_tolerance": 1e-07,
     "absolute_tolerance": 1e-05
   },
@@ -56,13 +58,10 @@
       "cohesion_pa=.02",
       "Outputs/exodus=false",
       "-snes_test_err",
-      "1e-9",
+      "3e-10",
       "-snes_test_jacobian"
     ],
     [
-      "mpiexec",
-      "-n",
-      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -76,9 +75,6 @@
       "off"
     ],
     [
-      "mpiexec",
-      "-n",
-      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -92,9 +88,6 @@
       "off"
     ],
     [
-      "mpiexec",
-      "-n",
-      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -108,9 +101,6 @@
       "off"
     ],
     [
-      "mpiexec",
-      "-n",
-      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -124,9 +114,6 @@
       "off"
     ],
     [
-      "mpiexec",
-      "-n",
-      "8",
       "moose_app/nonlinear_biot_ad-opt",
       "-i",
       "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -167,85 +154,85 @@
       "off"
     ]
   ],
-  "created_utc": "2026-09-18T23:51:31.213653+00:00",
+  "created_utc": "2026-09-23T19:47:22.849700+00:00",
   "mass": {
     "temporal_coarse": {
-      "max_relative_mass_defect": 0.004784355315018419,
-      "max_relative_reaction_mass_defect": 0.0017770258263466235,
-      "final_relative_mass_defect": 0.004784355315018419,
-      "max_relative_chain_rule_defect": 0.0017770258265344288,
-      "solid_mass_l2": 0.00017374740736855,
-      "mineral_eos_l2": 4.23915667998e-17
+      "max_relative_mass_defect": 0.00665715840226926,
+      "max_relative_reaction_mass_defect": 1.900024582113247e-12,
+      "final_relative_mass_defect": 0.00665715840226926,
+      "max_relative_discrete_storage_defect": 4.963807143099076e-14,
+      "solid_mass_l2": 1.9450918692033e-17,
+      "mineral_eos_l2": 4.3499354843941e-17
     },
     "spatial_coarse": {
-      "max_relative_mass_defect": 0.012086298961710365,
-      "max_relative_reaction_mass_defect": 0.0008902658972169909,
-      "final_relative_mass_defect": 0.012086298961710365,
-      "max_relative_chain_rule_defect": 0.000890265898286824,
-      "solid_mass_l2": 8.6809024322952e-05,
-      "mineral_eos_l2": 4.6756179266062e-17
+      "max_relative_mass_defect": 0.01306990048518364,
+      "max_relative_reaction_mass_defect": 6.910028105266975e-14,
+      "final_relative_mass_defect": 0.01306990048518364,
+      "max_relative_discrete_storage_defect": 4.918287999089444e-14,
+      "solid_mass_l2": 2.2023828528003e-17,
+      "mineral_eos_l2": 4.6413972600373e-17
     },
     "fine": {
-      "max_relative_mass_defect": 0.00571976204438336,
-      "max_relative_reaction_mass_defect": 0.0008894966300285968,
-      "final_relative_mass_defect": 0.00571976204438336,
-      "max_relative_chain_rule_defect": 0.0008894966301620013,
-      "solid_mass_l2": 8.6757337643384e-05,
-      "mineral_eos_l2": 4.2342536076467e-17
+      "max_relative_mass_defect": 0.006657125722202696,
+      "max_relative_reaction_mass_defect": 3.1117330934193895e-13,
+      "final_relative_mass_defect": 0.006657125722202696,
+      "max_relative_discrete_storage_defect": 4.971578704271452e-14,
+      "solid_mass_l2": 1.963826690763e-17,
+      "mineral_eos_l2": 4.3112418338233e-17
     },
     "temporal_fine": {
-      "max_relative_mass_defect": 0.006188576625957244,
-      "max_relative_reaction_mass_defect": 0.00044509239626766567,
-      "final_relative_mass_defect": 0.006188576625957244,
-      "max_relative_chain_rule_defect": 0.00044509239841508127,
-      "solid_mass_l2": 4.335404372035e-05,
-      "mineral_eos_l2": 4.4475515292152e-17
+      "max_relative_mass_defect": 0.0066575949829352785,
+      "max_relative_reaction_mass_defect": 2.4962254485672026e-13,
+      "final_relative_mass_defect": 0.0066575949829352785,
+      "max_relative_discrete_storage_defect": 4.998224056862456e-14,
+      "solid_mass_l2": 2.0014830212434e-17,
+      "mineral_eos_l2": 4.3588462218403e-17
     },
     "spatial_fine": {
-      "max_relative_mass_defect": 0.002905763919637772,
-      "max_relative_reaction_mass_defect": 0.00044498919420052916,
-      "final_relative_mass_defect": 0.002905763919637772,
-      "max_relative_chain_rule_defect": 0.0004449891942043927,
-      "solid_mass_l2": 4.3347477130547e-05,
-      "mineral_eos_l2": 4.1195500661084e-17
+      "max_relative_mass_defect": 0.0033628868628389212,
+      "max_relative_reaction_mass_defect": 8.550715691058032e-13,
+      "final_relative_mass_defect": 0.0033628868628389212,
+      "max_relative_discrete_storage_defect": 5.0315307476012106e-14,
+      "solid_mass_l2": 1.9323985535988e-17,
+      "mineral_eos_l2": 4.1520541719506e-17
     }
   },
   "elastic_limit": {
     "max_delta_B": 0.0,
     "field_errors": {
-      "pressure_x0": 1.708000898361206e-12,
-      "side_displacement": 2.7199770213925945e-13,
-      "biot_average": 2.4003021792395884e-13
+      "pressure_x0": 1.1900067329406737e-13,
+      "side_displacement": 2.6999236180103026e-14,
+      "biot_average": 2.0095036745715333e-14
     }
   },
   "sensitivity": {
     "time_001_to_0005": {
-      "pressure_x0": 0.0002519295683009997,
-      "side_displacement": 0.0002897115473500106,
-      "biot_average": 0.00010463510968994338,
-      "delta_b_average": 1.2282514576800185e-05,
-      "ap_average": 8.253487709986018e-05
+      "pressure_x0": 0.0001433175735379979,
+      "side_displacement": 0.000168475057190004,
+      "biot_average": 5.901985990008907e-05,
+      "delta_b_average": 6.862163023199815e-06,
+      "ap_average": 4.609528060006696e-05
     },
     "time_0005_to_00025": {
-      "pressure_x0": 0.00012933242580700293,
-      "side_displacement": 0.00014542124810999757,
-      "biot_average": 5.259444831007265e-05,
-      "delta_b_average": 6.145422857799926e-06,
-      "ap_average": 4.1296680000080244e-05
+      "pressure_x0": 7.519172571599856e-05,
+      "side_displacement": 8.469197358999814e-05,
+      "biot_average": 2.9724972899991542e-05,
+      "delta_b_average": 3.4283254989999137e-06,
+      "ap_average": 2.3046114499880588e-05
     },
     "mesh_10x1_to_20x2": {
-      "pressure_x0": 3.300664418400079e-05,
-      "side_displacement": 3.571784338000927e-05,
-      "biot_average": 1.2645312459924618e-05,
-      "delta_b_average": 1.5464440492997736e-06,
-      "ap_average": 1.0825058899932571e-05
+      "pressure_x0": 3.3150941765997556e-05,
+      "side_displacement": 3.5904751249996036e-05,
+      "biot_average": 1.2713298299993347e-05,
+      "delta_b_average": 1.5546058761001236e-06,
+      "ap_average": 1.088089500012046e-05
     },
     "mesh_20x2_to_40x4": {
-      "pressure_x0": 8.414507888998837e-06,
-      "side_displacement": 9.006965559998914e-06,
-      "biot_average": 3.1873243099278525e-06,
-      "delta_b_average": 3.9006967279993365e-07,
-      "ap_average": 2.7302868998990704e-06
+      "pressure_x0": 8.432731426998973e-06,
+      "side_displacement": 9.03046892000714e-06,
+      "biot_average": 3.1958686299571326e-06,
+      "delta_b_average": 3.9109631140045453e-07,
+      "ap_average": 2.7373110000894485e-06
     }
   },
   "parameters": {
@@ -262,30 +249,30 @@
   "spatial_structure": {
     "temporal_fine": {
       "delta_b": {
-        "maximum_transverse_rms": 3.661495045078003e-16,
-        "final_x_second_difference_rms": 4.063494723753392e-06
+        "maximum_transverse_rms": 8.22051445047114e-14,
+        "final_x_second_difference_rms": 4.073212122123269e-06
       },
       "ap": {
-        "maximum_transverse_rms": 2.0082458459915767e-15,
-        "final_x_second_difference_rms": 2.7621505689885876e-05
+        "maximum_transverse_rms": 4.619619901937322e-13,
+        "final_x_second_difference_rms": 2.768787245006077e-05
       },
       "gamma": {
-        "maximum_transverse_rms": 5.1442577173876636e-15,
-        "final_x_second_difference_rms": 1.9484189530747374e-07
+        "maximum_transverse_rms": 1.1550323433943001e-12,
+        "final_x_second_difference_rms": 1.9535702201889013e-07
       }
     },
     "spatial_fine": {
       "delta_b": {
-        "maximum_transverse_rms": 2.2102314776351333e-16,
-        "final_x_second_difference_rms": 1.1488789496628633e-06
+        "maximum_transverse_rms": 8.62185268249958e-15,
+        "final_x_second_difference_rms": 1.1520052085728765e-06
       },
       "ap": {
-        "maximum_transverse_rms": 1.352012806454441e-15,
-        "final_x_second_difference_rms": 7.767413081945417e-06
+        "maximum_transverse_rms": 4.855800949023266e-14,
+        "final_x_second_difference_rms": 7.788512112177524e-06
       },
       "gamma": {
-        "maximum_transverse_rms": 6.559076683195812e-16,
-        "final_x_second_difference_rms": 4.897570509159884e-08
+        "maximum_transverse_rms": 1.2139102973553137e-13,
+        "final_x_second_difference_rms": 4.9107589450679884e-08
       }
     }
   },
@@ -320,80 +307,80 @@
     "definition": "difference between piecewise-constant element averages on the common reference domain",
     "mesh_20x2_to_40x4": {
       "0.04": {
-        "rms": 6.054266085849286e-06,
-        "maximum": 1.0417975091532128e-05
+        "rms": 6.042647492839283e-06,
+        "maximum": 1.039914348780846e-05
       },
       "0.1": {
-        "rms": 7.195555468347237e-06,
-        "maximum": 2.381344849961822e-05
+        "rms": 7.224455058433569e-06,
+        "maximum": 2.3901490994209483e-05
       },
       "0.2": {
-        "rms": 2.5415842778544705e-05,
-        "maximum": 6.350932440030415e-05
+        "rms": 2.5478178599507436e-05,
+        "maximum": 6.36680759654399e-05
       },
       "0.3": {
-        "rms": 1.82589813269375e-05,
-        "maximum": 3.385369475458408e-05
+        "rms": 1.8302583279089848e-05,
+        "maximum": 3.393585928156487e-05
       },
       "0.5": {
-        "rms": 1.1858466433122956e-05,
-        "maximum": 2.347878212666417e-05
+        "rms": 1.1885098890614504e-05,
+        "maximum": 2.3533161414694172e-05
       },
       "0.7": {
-        "rms": 8.24744557004012e-06,
-        "maximum": 1.8403998515183033e-05
+        "rms": 8.264641767706661e-06,
+        "maximum": 1.844543851081855e-05
       }
     },
     "time_001_to_0005": {
       "0.04": {
-        "rms": 4.468615624297553e-06,
-        "maximum": 8.558246226918935e-06
+        "rms": 4.720254508920496e-06,
+        "maximum": 8.09157975106763e-06
       },
       "0.1": {
-        "rms": 8.286381891794668e-06,
-        "maximum": 1.1909293031527046e-05
+        "rms": 6.102923208427378e-06,
+        "maximum": 9.690513126714428e-06
       },
       "0.2": {
-        "rms": 1.3045364275093439e-05,
-        "maximum": 1.521170652999445e-05
+        "rms": 7.337371559671688e-06,
+        "maximum": 8.855664654614653e-06
       },
       "0.3": {
-        "rms": 8.288230575628324e-06,
-        "maximum": 1.2056118878583932e-05
+        "rms": 3.968451871610349e-06,
+        "maximum": 6.140163699205198e-06
       },
       "0.5": {
-        "rms": 3.6494235612338653e-06,
-        "maximum": 4.63489855720943e-06
+        "rms": 1.0473833549016891e-06,
+        "maximum": 1.8405824303456206e-06
       },
       "0.7": {
-        "rms": 1.659169335177078e-06,
-        "maximum": 1.9582138394659207e-06
+        "rms": 5.460909012612428e-07,
+        "maximum": 1.891617917754683e-06
       }
     },
     "time_0005_to_00025": {
       "0.04": {
-        "rms": 2.2813281379771363e-06,
-        "maximum": 4.469922468003948e-06
+        "rms": 2.4099530382889084e-06,
+        "maximum": 4.252414347710276e-06
       },
       "0.1": {
-        "rms": 4.182030085438505e-06,
-        "maximum": 6.034710810134958e-06
+        "rms": 3.0901780862161967e-06,
+        "maximum": 4.923999723995855e-06
       },
       "0.2": {
-        "rms": 6.554961144991846e-06,
-        "maximum": 7.666393158401591e-06
+        "rms": 3.695384622113177e-06,
+        "maximum": 4.4745891423945625e-06
       },
       "0.3": {
-        "rms": 4.143907080603861e-06,
-        "maximum": 6.040082453970426e-06
+        "rms": 1.997544603516483e-06,
+        "maximum": 3.0858353302935446e-06
       },
       "0.5": {
-        "rms": 1.8032839505391875e-06,
-        "maximum": 2.2725040974939936e-06
+        "rms": 5.421245771730369e-07,
+        "maximum": 1.1147105966292578e-06
       },
       "0.7": {
-        "rms": 8.176635912684753e-07,
-        "maximum": 1.0544757085978462e-06
+        "rms": 3.3756198255384885e-07,
+        "maximum": 1.1400888809140822e-06
       }
     }
   },
@@ -421,28 +408,30 @@
   ],
   "evidence_class": "implementation verification and synthetic discrimination",
   "source_sha256": {
-    "moose_app/test/tests/poroplastic_mandel/compression.i": "d9163e8c2e7d2d7fd4c0be58c895689a6984e7f0648f832566012ec99af7da0c",
-    "moose_app/test/tests/poroplastic_mandel/storage_samples.i": "6335b66c5d3f3ad231de6bd9452a2439065dab8bb9cc30567f812d33c84bee01",
-    "validation/scripts/check_poroplastic_mandel.py": "a69f512a2776b5a9db361c6e7b0c6c2787446d327360b4f6ae2cc80963a8e619",
-    "moose_app/src/materials/ADPoroplasticPoreVolumeMaterial.C": "ccd943676d0dfaa9915eeeaab04a27521449bc91768ed34e35d6591563a3da2f",
-    "moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C": "3e776418101ced4b10617e2698ce2dbb3c7d7c03e6103b42b4432fedea619cab",
-    "moose_app/include/materials/ADPoroplasticPoreVolumeMaterial.h": "8fe4ab8c1108b00c6ddef740ef5705e88dccaf7ff8a4864aac5e73856612d51a",
-    "moose_app/include/materials/ADImplicitPoroplasticBiotMaterial.h": "8d0638ecb56011daed346cf314d332b88859c7ed33e48baf1a43111e06f830d7",
+    "moose_app/test/tests/poroplastic_mandel/compression.i": "2231994c10c7c7c86669d52cb617c6ee5217dd0e72379af546288e3d0264460b",
+    "moose_app/test/tests/poroplastic_mandel/storage_samples.i": "c57cd18f39fadf2a4f62c190b806348eaa417d00c205b3bb61f2bfd3a23a104f",
+    "validation/scripts/check_poroplastic_mandel.py": "e622379ebb73eb13a8e3eaacdc1dabd927224e1c411bd6369a75834b3c860401",
+    "moose_app/src/materials/ADPoroplasticPoreVolumeMaterial.C": "8b5318c5dc05bb43c6ed11d572b757995eaa3a000293a72cba2e55bb715ce4c4",
+    "moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C": "489a1d03339df48e31b8f1c557357ddfcebf4733e17cd5597092048ba7a62960",
+    "moose_app/include/materials/ADPoroplasticPoreVolumeMaterial.h": "99e03507fab4820957b37f857063a6c9950e9236a151b80cdecad40f3d23984c",
+    "moose_app/include/materials/ADImplicitPoroplasticBiotMaterial.h": "415acc775149f8d649340c0ebfd9c6f5fa52bdc8ff80e9e8d17c1aa44997726a",
     "moose_app/include/postprocessors/NodalDofSum.h": "97e592e6c89d6764083b6b8de5532bed35590caa76cfbb695d2d2d60813c07e7",
     "moose_app/src/postprocessors/NodalDofSum.C": "ad5c31ec3b68145c1463846b62749847da0517f367fde09b0d92e84f7c40f5dd",
     "moose_app/src/materials/ADBiotPressureStorageMaterial.C": "ff889d4b502934a8ea80aabbc973a7b6ee89d869dd7f8db4aea02b25eeb7f12d",
     "moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C": "127f3a46b7f96543c6fd8854c859fd24454a3ed92f0d2ddb856ff14a87bfc98c",
-    "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C": "a91cb763ec048927d93f330d12a021c1e0ad5c2451116263b168941609093db7",
+    "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C": "70df992a6471b0d0eb9e8be04fe55354477ef53ee9ca1805234bb12f08537007",
     "moose_app/src/materials/ADSolidReferenceKinematics.C": "9e714d7b167412a16811a268703c99e4b4cec7e91fb8bd0d9396c1bf57c81b35",
-    "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C": "37949b95362ac61164504f8ee11d4cbd090baaac345a30b9bb01f70b538314a9",
-    "moose_app/src/kernels/ADReferenceSolidMomentum.C": "a469a325d1e876422846b4b6841778b9016fadd5c8234c2336a9c02b3b0c0301",
+    "moose_app/src/kernels/ReferenceBalance.C": "1a16c9a559caafd5831166f90ea15c4d11deddf7c888ec7b441f38dad73bd1be",
+    "moose_app/include/kernels/ReferenceBalance.h": "35597027125468147409ab0d88e85b2b88fc16902cbc7c802502b44275822dbb",
+    "moose_app/src/materials/ADReferenceBalanceState.C": "a327ee4d93761fe3b92269a2eede994d7db6ce446ae0a20c5288daf436739e1e",
+    "moose_app/include/materials/ADReferenceBalanceState.h": "d20a30cc8fed544a5bff16fcd8d43b3cfcb56e1b0116e6cb3b5fc4ff0548d2ab",
     "moose_app/include/utils/MatchedLogMineralState.h": "4227605bb143421379a654c810cb19d711c8afcec2561bbc1df041be0e0ab4aa",
     "validation/scripts/run_provenance.py": "6f9ef6a9e0fe76d7b088993744358b9573c4b5096b23002ec74b5b31dbb3b009"
   },
   "execution_provenance": {
     "storage": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:04:33.995701+00:00",
+      "captured_at_utc": "2026-09-23T19:11:56.215291+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -473,7 +462,7 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
         "moose_app/nonlinear_biot_ad-opt",
@@ -490,12 +479,12 @@
         "off"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/storage.csv": "b726e5856b8f765b99e7edcf1672be83d89bef48172de4658ef33b22c82aeaec"
+        ".agent-runtime/poroplastic-mandel/storage.csv": "1c55d95d41aacd1c719fc322e18408d947eb91a66c146216128d3cc6ffb4550c"
       }
     },
     "jacobian": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:04:39.509013+00:00",
+      "captured_at_utc": "2026-09-23T19:12:01.777832+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -526,7 +515,7 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
         "moose_app/nonlinear_biot_ad-opt",
@@ -544,16 +533,16 @@
         "cohesion_pa=.02",
         "Outputs/exodus=false",
         "-snes_test_err",
-        "1e-9",
+        "3e-10",
         "-snes_test_jacobian"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/jacobian.csv": "23e3d168a3d0eb2fa4f7e60122797da29743dac18d62152c90ac0c21eb092242"
+        ".agent-runtime/poroplastic-mandel/jacobian.csv": "7a81ecd1484127aff185ad789015bc83a3ec7301014239bc3acc2ca1e2652537"
       }
     },
     "temporal_coarse": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:33:11.318811+00:00",
+      "captured_at_utc": "2026-09-23T19:12:31.977040+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -584,12 +573,9 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
-        "mpiexec",
-        "-n",
-        "8",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -603,12 +589,12 @@
         "off"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/temporal_coarse.csv": "b34a04c581259188b8bd44bb8df306432be607ac319445e2fa60109dbbe7ccf8"
+        ".agent-runtime/poroplastic-mandel/temporal_coarse.csv": "b37a10caffc4ac5724d92aca0a9b20d971c61826b49ab743fe01e0c8b38ac7da"
       }
     },
     "spatial_coarse": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:35:27.449519+00:00",
+      "captured_at_utc": "2026-09-23T19:14:04.966324+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -639,12 +625,9 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
-        "mpiexec",
-        "-n",
-        "8",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -658,12 +641,12 @@
         "off"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/spatial_coarse.csv": "7f02dd903502ca857cf57945c07f1916a9033e3b5ae351106f53b85078d55229"
+        ".agent-runtime/poroplastic-mandel/spatial_coarse.csv": "65a4bc1986d24f82b3cad9a06d44791d756118b499c33cfa98f59645fb35d9cb"
       }
     },
     "fine": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:38:02.888067+00:00",
+      "captured_at_utc": "2026-09-23T19:14:52.986435+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -694,12 +677,9 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
-        "mpiexec",
-        "-n",
-        "8",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -713,12 +693,12 @@
         "off"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/fine.csv": "000d90ed5b187d46b971a072cdfb506c8f37d8e8f81d35c5ab5ab1c28e1584d2"
+        ".agent-runtime/poroplastic-mandel/fine.csv": "0a9f50cf4744f75f8461508e94a0f9b4d94d9fb3d6f37c66f2685f39c07a5003"
       }
     },
     "temporal_fine": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:40:20.769945+00:00",
+      "captured_at_utc": "2026-09-23T19:17:54.425036+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -749,12 +729,9 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
-        "mpiexec",
-        "-n",
-        "8",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -768,12 +745,12 @@
         "off"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/temporal_fine.csv": "eccca2f50364e3a613134cac5ca5d178eeec7f33dd2e6a139610613a9602cf96"
+        ".agent-runtime/poroplastic-mandel/temporal_fine.csv": "2530ed91b8c19db0b49f83c615d78b0c4d8771fe3cfffe5ce2d85703e9060187"
       }
     },
     "spatial_fine": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:42:41.208288+00:00",
+      "captured_at_utc": "2026-09-23T19:23:42.095193+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -804,12 +781,9 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
-        "mpiexec",
-        "-n",
-        "8",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -823,12 +797,12 @@
         "off"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/spatial_fine.csv": "ddab83b10e4568683216a1b06f69fe8938a8a64bcb916ea3784d7972e62fb789"
+        ".agent-runtime/poroplastic-mandel/spatial_fine.csv": "c291beb9746c00155abaad234ad3f02ff5ed40b279361d4214240a87ba1d8274"
       }
     },
     "elastic_reference": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:51:23.789004+00:00",
+      "captured_at_utc": "2026-09-23T19:46:46.331958+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -859,7 +833,7 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
         "moose_app/nonlinear_biot_ad-opt",
@@ -875,12 +849,12 @@
         "off"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/elastic_reference.csv": "cc93bb3cf79ee5c3c76e8352158666937d74467a24919626679f596870625a0c"
+        ".agent-runtime/poroplastic-mandel/elastic_reference.csv": "e015fcdb5fec4a3268d212cc5093b471aa69e0af5dc10e93ca9f75a3288542df"
       }
     },
     "elastic_limit": {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-18T23:51:20.871857+00:00",
+      "captured_at_utc": "2026-09-23T19:46:43.702048+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -911,7 +885,7 @@
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "command": [
         "moose_app/nonlinear_biot_ad-opt",
@@ -928,7 +902,7 @@
         "cohesion_pa=1e12"
       ],
       "outputs": {
-        ".agent-runtime/poroplastic-mandel/elastic_limit.csv": "2893377bf2a33bac03fade7c1882b3f18f6038f975fb1486d61753f3fa8ee7a5"
+        ".agent-runtime/poroplastic-mandel/elastic_limit.csv": "657f730dc7d1b1ceb0422d38790f4e8bfa228709ffbc054eb6817607d96f64b2"
       }
     }
   }

@@ -17,10 +17,6 @@
     family = LAGRANGE
     order = FIRST
   []
-  [solid_spatial_mass_ratio]
-    family = LAGRANGE
-    order = SECOND
-  []
 []
 
 [Functions]
@@ -53,21 +49,18 @@
     variable = p
     function = pressure_initial
   []
-  [solid_spatial_mass]
-    type = FunctionIC
-    variable = solid_spatial_mass_ratio
-    function = solid_spatial_mass_initial
-  []
 []
 
 [Materials]
+  [reference_balance_state]
+    type = ADReferenceBalanceState
+  []
   [solid_kinematics]
     type = ADSolidReferenceKinematics
     displacements = ux
   []
   [solid_spatial_mass]
     type = ADBinarySolidSpatialMassMaterial
-    solid_spatial_mass_ratio = solid_spatial_mass_ratio
   []
   [double_prime_stress]
     type = ADVolumetricBarotropicSkeletonStressMaterial
@@ -81,7 +74,6 @@
     type = ADLocalElasticMineralBiotMaterial
     skeleton_bulk_modulus = 0.5
     pressure = p
-    solid_spatial_mass_ratio = solid_spatial_mass_ratio
     mineral_bulk_modulus = 2
     reference_solid_volume_fraction = 0.5
     biot_coefficient_name = solid_biot_coefficient
@@ -143,24 +135,13 @@
 
 [Kernels]
   [solid_momentum]
-    type = ADReferenceSolidMomentum
+    type = ReferenceMomentum
     variable = ux
     component = 0
   []
-  [solid_mass_storage]
-    type = ADReferenceMaterialStorageRateTerm
-    variable = solid_spatial_mass_ratio
-    reference_storage_rate_name = solid_component_reference_storage_rate
-  []
   [water_storage]
-    type = ADReferenceMaterialStorageRateTerm
+    type = ReferenceFluidMass
     variable = p
-    reference_storage_rate_name = water_reference_storage_rate
-  []
-  [water_flux]
-    type = ADReferenceComponentFluxTerm
-    variable = p
-    reference_flux_name = water_reference_mass_flux
   []
 []
 

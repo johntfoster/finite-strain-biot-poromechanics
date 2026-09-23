@@ -5,7 +5,7 @@
 /**
  * Local elastic mineral state, constraint residuals and closed-form Biot coefficient.
  *
- * The global solid variable stores the current solid partial density divided
+ * An AD material property stores the current solid partial density divided
  * by its reference value. The mineral EOS supplies the intrinsic solid density,
  * and the solid volume fraction follows from the material-mass identity. The
  * material publishes residual derivatives consumed by
@@ -19,12 +19,13 @@ public:
   ADLocalElasticMineralBiotMaterial(const InputParameters & parameters);
 
 protected:
+  void initQpStatefulProperties() override { computeQpProperties(); }
   void computeQpProperties() override;
 
   const ADVariableValue & _pressure;
   const ADVariableValue * _pressure_dot;
-  const ADVariableValue & _solid_spatial_mass_ratio;
-  const ADVariableValue * _solid_spatial_mass_ratio_dot;
+  const ADMaterialProperty<Real> & _solid_spatial_mass_ratio;
+  const ADMaterialProperty<Real> & _solid_spatial_mass_ratio_dot;
   const ADMaterialProperty<Real> & _J;
   const ADMaterialProperty<Real> & _J_dot;
   const Real _skeleton_bulk_modulus;

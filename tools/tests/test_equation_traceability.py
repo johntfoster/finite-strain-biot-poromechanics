@@ -17,7 +17,7 @@ class TraceabilityTests(unittest.TestCase):
         files = {
             'paper/main.tex': r'\paperinput{sections/model.tex}',
             'paper/sections/model.tex': '\\label{eq:balance}\n% \\label{eq:comment}\n',
-            'moose_app/src/kernels/Balance.C': '// eq:balance\n',
+            'moose_app/src/kernels/Balance.C': 'registerMooseObject("App", Balance); // eq:balance\n',
             'moose_app/test/tests/model/tests': '[Tests]\n [balance]\n []\n[]\n',
             'validation/equation_to_moose_map.yml': yaml.safe_dump({
                 'mappings': [{'id': 'balance', 'paper_equations': ['eq:balance'],
@@ -33,10 +33,28 @@ class TraceabilityTests(unittest.TestCase):
     def test_current_repository(self):
         trace.audit(ROOT)
 
+    def test_multiple_objects_in_one_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.fixture(directory)
+            path = root/'moose_app/src/kernels/Balance.C'
+            path.rename(path.with_name('SharedBalances.C'))
+            path = path.with_name('SharedBalances.C')
+            path.write_text('registerMooseObject("App",Balance);\n'
+                            'registerMooseObject("App", OtherBalance);\n')
+            with self.assertRaisesRegex(ValueError, 'Unmapped MOOSE objects.*OtherBalance'):
+                trace.audit(root)
+            inventory = root/'validation/equation_to_moose_map.yml'
+            data = yaml.safe_load(inventory.read_text())
+            data['mappings'][0]['moose_objects'].append('OtherBalance')
+            inventory.write_text(yaml.safe_dump(data))
+            _, _, objects = trace.audit(root)
+            self.assertEqual(set(objects), {'Balance', 'OtherBalance'})
+            self.assertEqual(objects['Balance'], objects['OtherBalance'])
+
     def test_unmapped_equation_and_object(self):
         for name, content, message in (
             ('paper/sections/model.tex', r'\label{eq:balance}\label{eq:new}', 'Unmapped manuscript'),
-            ('moose_app/src/kernels/New.C', '// new kernel', 'Unmapped MOOSE'),
+            ('moose_app/src/kernels/New.C', 'registerMooseObject("App", New);', 'Unmapped MOOSE'),
         ):
             with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
                 root = self.fixture(directory)
@@ -49,7 +67,7 @@ class TraceabilityTests(unittest.TestCase):
         for name, content, message in (
             ('paper/sections/model.tex', '', 'Stale manuscript label'),
             ('moose_app/test/tests/model/tests', '[Tests]', 'Unknown regression'),
-            ('moose_app/src/kernels/Balance.C', '// eq:deleted', 'Stale source equation'),
+            ('moose_app/src/kernels/Balance.C', 'registerMooseObject("App", Balance); // eq:deleted', 'Stale source equation'),
         ):
             with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
                 root = self.fixture(directory)

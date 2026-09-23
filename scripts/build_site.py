@@ -48,12 +48,32 @@ def source_link(path, label=None):
     return f'<a href="source.html?f={relative}">{html.escape(label or relative)}</a>'
 
 
+def registered_objects(root=ROOT):
+    """Map registered class names to source, including shared source files."""
+    return {name: path for path in (root/'moose_app/src').rglob('*.C')
+            for name in re.findall(r'registerMooseObject\s*\(\s*"[^"]+"\s*,\s*(\w+)\s*\)',
+                                   path.read_text())}
+
+
+def check_production_balances(root=ROOT):
+    """Keep the coupled publication inputs on the conservative balance kernels."""
+    required = {'ReferenceMomentum', 'ReferenceFluidMass'}
+    retained = {'ADReferenceSolidMomentum', 'ADReferenceMaterialStorageRateTerm',
+                'ADReferenceComponentFluxTerm'}
+    for name in ('mandel_implicit_biot/mandel_water_q2_q1.i',
+                 'poroplastic_mandel/compression.i'):
+        deck = root/'moose_app/test/tests'/name
+        selected = set(re.findall(r'^\s*type\s*=\s*(\w+)', deck.read_text(), re.M))
+        if not required <= selected or retained & selected:
+            raise ValueError(f'{name}: production inputs must use the conservative balance kernels')
+
+
 def examples_catalog():
     sections = ['<section class="section"><h2>Headers and shared utility</h2><ul>']
     sections += [f'<li>{source_link(p)}</li>' for p in sorted((ROOT/'moose_app/include').rglob('*.h'))]
     sections.append('</ul></section><section class="section" id="examples"><h2>All example and test inputs</h2>')
     sections.append('<p>Each input links to the local implementations it selects. Framework objects are supplied by the pinned MOOSE checkout. Inputs using <code>!include</code> also link to their base input. Run the test groups with <code>make test</code>; full publication calculations use the targets on the reproduction page.</p><ul>')
-    objects = {p.stem:p for p in (ROOT/'moose_app/src').rglob('*.C')}
+    objects = registered_objects()
     for deck in sorted((ROOT/'moose_app/test/tests').rglob('*.i')):
         content = deck.read_text()
         selected = sorted(set(re.findall(r'^\s*type\s*=\s*[\'\"]?(\w+)', content, re.M)))
@@ -154,19 +174,27 @@ def build():
     shutil.copy2(ROOT/'moose_app/src/main.C', default)
     (OUTPUT/'.nojekyll').touch()
     count = check_links(OUTPUT, sources=True)
-    local_objects = {p.stem for p in (ROOT/'moose_app/src').rglob('*.C')}
+    objects = registered_objects()
+    local_objects = set(objects)
+    # These shared operators remain available to other consumers. Publication
+    # inputs use the common conservative pair, checked separately below.
+    compatibility_objects = {'ADReferenceSolidMomentum', 'ADReferenceMaterialStorageRateTerm',
+                             'ADReferenceComponentFluxTerm'}
+    check_production_balances()
     all_selected = set()
     for deck in (ROOT/'moose_app/test/tests').rglob('*.i'):
         all_selected.update(re.findall(r'^\s*type\s*=\s*(\w+)', deck.read_text(), re.M))
-    unused = local_objects - all_selected - {'main', 'NonlinearBiotADApp'}
+    unused = local_objects - all_selected - compatibility_objects
     if unused:
         raise ValueError(f'Application objects lack a retained input: {sorted(unused)}')
     selected = set()
     for deck in (ROOT/'moose_app/test/tests/mandel_implicit_biot').glob('*.i'):
         selected.update(re.findall(r'^\s*type\s*=\s*(\w+)', deck.read_text(), re.M))
-    documented = set(re.findall(r'moose_app/src/[^"?]+/(\w+)\.C',
+    documented = set(re.findall(r'(moose_app/src/[^"?]+/\w+\.C)',
                                 (OUTPUT/'mandel.html').read_text()))
-    expected = (selected & local_objects) | {'NonlinearBiotADApp'}
+    expected = {objects[name].relative_to(ROOT).as_posix()
+                for name in (selected & local_objects) | compatibility_objects}
+    expected.add('moose_app/src/base/NonlinearBiotADApp.C')
     if documented != expected:
         raise ValueError(f'Mandel object links disagree with inputs: {documented ^ expected}')
     catalog_text = catalog.read_text()

@@ -303,12 +303,20 @@ ADImplicitPoroplasticBiotMaterial::ADImplicitPoroplasticBiotMaterial(const Input
     paramError("skeleton_bulk_modulus", "Require K < phi_s0 Ks for stable mineral storage.");
   if (_M < 0. || _beta < 0. || _beta > _M || _cohesion < 0.)
     paramError("dp_dilation_slope", "Require 0 <= beta <= M and nonnegative cohesion.");
+  getMaterialPropertyOld<RankTwoTensor>("deformation_gradient_name");
   if (_initial_ap > 1. && _beta == 0.)
     paramError("initial_plastic_distention", "Positive initial dilation requires beta>0.");
 }
 void
 ADImplicitPoroplasticBiotMaterial::initQpStatefulProperties()
 {
+  _Fp_history[_qp] = std::cbrt(_initial_ap) * RankTwoTensor(RankTwoTensor::initIdentity);
+  _accumulated_history[_qp] = _beta > 0. ? std::log(_initial_ap) / _beta : 0.;
+  _initializing = true;
+  computeQpProperties();
+  _initializing = false;
+  // Initial evaluation supplies the fluid mass, but must not commit an extra
+  // plastic increment before the first actual loading step.
   _Fp_history[_qp] = std::cbrt(_initial_ap) * RankTwoTensor(RankTwoTensor::initIdentity);
   _accumulated_history[_qp] = _beta > 0. ? std::log(_initial_ap) / _beta : 0.;
 }
@@ -321,17 +329,17 @@ ADImplicitPoroplasticBiotMaterial::computeQpProperties()
     for (unsigned j = 0; j < 3; ++j)
     {
       F[3 * i + j] = _F[_qp](i, j);
-      old[3 * i + j] = _Fp_old[_qp](i, j);
+      old[3 * i + j] = (_t_step == 0 ? (i == j ? std::cbrt(_initial_ap) : 0.) : _Fp_old[_qp](i, j));
     }
   if (raw_value(determinant(old)) <= 0.)
     mooseError(name(), ": requires a positive previous plastic Jacobian.");
   if (raw_value(determinant(F)) <= 0.)
     mooseException(name(), ": trial total Jacobian is nonpositive; reduce the Newton step.");
   const Parameters c{_G, _K, _Ks, _phi0, _M, _beta, _cohesion,
-                     _hardening, _accumulated_old[_qp], _frozen_reference};
+                     _hardening, _t_step == 0 ? (_beta > 0. ? std::log(_initial_ap) / _beta : 0.) : _accumulated_old[_qp], _frozen_reference};
   std::array<ADReal, 7> x{};
   auto state = evaluate(F, old, _pressure[_qp], x, c);
-  if (raw_value(state.yield) > 1.e-11 * _G)
+  if (!_initializing && raw_value(state.yield) > 1.e-11 * _G)
   {
     // Solve local values without repeatedly propagating global derivatives.
     // The implicit-function solve at the converged root recovers global AD derivatives.
@@ -462,7 +470,7 @@ ADImplicitPoroplasticBiotMaterial::computeQpProperties()
   _ratio[_qp] = state.ratio;
   _phi[_qp] = state.phi;
   _gamma[_qp] = x[6];
-  _accumulated[_qp] = _accumulated_old[_qp] + x[6];
+  _accumulated[_qp] = (_t_step == 0 ? (_beta > 0. ? std::log(_initial_ap) / _beta : 0.) : _accumulated_old[_qp]) + x[6];
   _accumulated_history[_qp] = raw_value(_accumulated[_qp]);
   _yield[_qp] = state.yield;
   _mean[_qp] = state.mean;

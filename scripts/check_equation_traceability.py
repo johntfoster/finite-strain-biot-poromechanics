@@ -49,8 +49,9 @@ def audit(root=ROOT):
     ids = [entry['id'] for entry in mappings]
     if len(ids) != len(set(ids)):
         raise ValueError('Duplicate equation mapping ID')
-    objects = {p.stem: p for folder in ('materials', 'kernels', 'postprocessors')
-               for p in (root/'moose_app/src'/folder).glob('*.C')}
+    objects = {name: p for folder in ('materials', 'kernels', 'postprocessors')
+               for p in (root/'moose_app/src'/folder).glob('*.C')
+               for name in re.findall(r'registerMooseObject\(\s*"[^"]+"\s*,\s*(\w+)\s*\)', p.read_text())}
     tests = {name for path in (root/'moose_app/test/tests').rglob('tests')
              for name in re.findall(r'^\s*\[([^]/]+)\]', path.read_text(), re.M)}
     covered = set()

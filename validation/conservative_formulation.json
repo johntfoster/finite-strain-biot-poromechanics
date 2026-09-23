@@ -1,0 +1,19 @@
+{
+  "upstream_repository": "https://github.com/johntfoster/anisotropic-biot-tensor",
+  "upstream_commit": "9bd261604b5d7d47c066f0883f477138c6f4dab3",
+  "files": {
+    "moose_app/src/kernels/ReferenceBalance.C": {
+      "upstream_sha256": "a02c52d671732eaf212eebffa0dbf08569a9231a2d6a24b599fce38d4900d375",
+      "local_sha256": "1a16c9a559caafd5831166f90ea15c4d11deddf7c888ec7b441f38dad73bd1be"
+    },
+    "moose_app/include/kernels/ReferenceBalance.h": {
+      "upstream_sha256": "35597027125468147409ab0d88e85b2b88fc16902cbc7c802502b44275822dbb",
+      "local_sha256": "35597027125468147409ab0d88e85b2b88fc16902cbc7c802502b44275822dbb"
+    }
+  },
+  "only_source_difference": "MOOSE application registration label",
+  "formulation": "Q2 displacement, Q1 pressure; exact eliminated solid density; backward difference of full reference fluid mass",
+  "constitutive_interface": "ADReferenceBalanceState publishes first_piola, fluid_mass, mass_flux; mineral and plastic constitutive updates retain their own equations",
+  "initialization": "Stateful upstream dependencies initialize mass from actual fields and prescribed history; initial plastic evaluation performs no return increment",
+  "continuous_rates": "Retained solely as independent diagnostics, not assembled in the production fluid residual"
+}

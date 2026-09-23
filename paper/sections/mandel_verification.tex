@@ -57,9 +57,9 @@ displacement is imposed and linear in \(Y\), its profile confirms the applied
 boundary condition rather than providing an independent benchmark
 comparison.
 
-The solid-mass residual in \eqref{eq:solid-mass-weak-residual} evolves
-\(\rho_s\) throughout the calculation.  At each integration point, the
-mineral equation determines intrinsic density, the density ratio gives
+Solid mass conservation gives \(\rho_s=\rho_{s0}/J\) at each
+integration point.  The mineral equation determines intrinsic density,
+the density ratio gives
 \(\phi_s\), and \eqref{eq:poroplastic-biot-correction} gives \(B\) with
 \(a^p=1\).  Water density follows
 \eqref{eq:barotropic-fluid-density}.  The small load keeps the Biot coefficient
@@ -225,10 +225,9 @@ mineral solution.
 \end{figure}
 
 The Biot coefficient identity and the mineral equation of state remain
-satisfied during this compression and hold.  The solid-mass check measures
-the error introduced when the chain-rule mass balance is discretized in
-time and solved in weak form.  The resulting drift decreases as the time
-step is reduced.  Mesh and time-step comparisons also check pressure, lateral
+satisfied during this compression and hold.  The solid-mass check verifies
+the pointwise identity \(J\rho_s=\rho_{s0}\).  Mesh and time-step
+comparisons check pressure, lateral
 displacement, and the spatially averaged Biot coefficient.  This calculation
 tests the elastic model at finite deformation.  The next calculation activates
 plastic flow in the same geometry to check its contribution to fluid storage.
@@ -327,9 +326,10 @@ differences between the piecewise-constant element-average fields on the
 common reference domain are \(8.3\times10^{-6}\) and
 \(1.9\times10^{-5}\), respectively.  The positive plastic-history
 contribution persists under these refinements.  The maximum root-mean-square
-variation of this Biot coefficient difference through the specimen height is below \(10^{-14}\) over the fine-grid histories at
+variation of this Biot coefficient difference through the specimen height is
+below \(10^{-12}\) over the fine-grid histories at
 steps of \(0.0025\) and \(0.00125\ \mathrm{s}\).  Halving this step changes
-the local Biot coefficient difference by at most \(3.9\times10^{-6}\) across the six snapshots.
+the local Biot coefficient difference by at most \(2.5\times10^{-6}\) across the six snapshots.
 
 A locally unique mineral solution does not by itself ensure that the
 mechanical response remains stable during plastic flow.  We therefore
@@ -355,16 +355,16 @@ the incremental equilibrium equations can admit a discontinuity in the
 deformation gradient, indicating a possible onset of localized deformation.
 For \(H=0\), an independent reevaluation of the constitutive loading history
 gives both positive and negative determinants
-at \(0.3\ \mathrm{s}\), before the pronounced late-time spatial oscillations.
-At \((X,Y)=(0.5125,0.0375)\ \mathrm{m}\) and \(0.4\ \mathrm{s}\), its
-minimum is \(-0.00891\ \mathrm{GPa}^2\).  The derivative of the mineral residual remains positive and far from zero.
+at \(0.2\ \mathrm{s}\), before the pronounced late-time spatial oscillations.
+At \((X,Y)=(0.1125,0.0375)\ \mathrm{m}\) and \(0.5\ \mathrm{s}\), its
+minimum is \(-0.00904\ \mathrm{GPa}^2\).  The derivative of the mineral residual remains positive and far from zero.
 Thus the mineral equation can still be solved locally even when the
 mechanical equations lose ellipticity.  Halving the time step and, separately, setting
 \(\beta=M\) while retaining \(H=0\) leave both the acoustic sign change
 and the spatial oscillations.  With \(H=100\ \mathrm{MPa}\) on the
 \(40\times4\) mesh at \(\Delta t=0.0025\ \mathrm{s}\), the minimum
 over the sampled states undergoing plastic loading at three positions is
-\(0.03797\ \mathrm{GPa}^2\), and the spatial oscillations disappear.
+\(0.03796\ \mathrm{GPa}^2\), and the spatial oscillations disappear.
 The diagnostic scans in-plane normal directions at \(0.25^\circ\) intervals
 and checks sensitivity to the finite-difference increment.  Positive values
 at these samples characterize the tested loading path.
@@ -373,17 +373,17 @@ The independent check of the water-storage derivative and both checks of
 the Biot coefficient pass during plastic flow.  The comparison of the
 assembled AD Jacobian with finite differences also passes through
 compression and the full hold, and suppressing yielding recovers the
-existing elastic solution.  On the \(20\times2\) mesh, reducing the step
-from \(0.01\) to \(0.005\) and \(0.0025\ \mathrm{s}\) reduces the maximum
-water-mass mismatch from
-\(0.178\%\) to \(0.089\%\) and \(0.045\%\) of initial water mass.
-Here the mismatch compares the change in stored water with the time
-integral of the boundary flux obtained from the pressure residual.  Solid-mass
-drift decreases similarly.  For the plotted \(40\times4\) calculation,
-the maximum mismatch between water-mass change and integrated Darcy outflow
-is \(0.291\%\) of initial water mass.  These checks verify the plastic
-storage contribution while measuring the time-discretization drift and
-boundary-flux spatial error separately.
+existing elastic solution.  Across the tested meshes and time steps,
+the maximum water-mass mismatch relative to initial water mass is below
+\(5.0\times10^{-12}\).  This mismatch compares the change in stored water
+with the boundary discharge obtained from the pressure residual, accumulated
+with the same end-step time quadrature.  The solid-mass diagnostic remains
+at roundoff because density is determined directly by conservation.
+For the plotted \(40\times4\) calculation, the maximum mismatch between
+water-mass change and the integrated Darcy outflow reconstructed from pressure
+gradients is \(0.336\%\) of initial water mass.  These checks verify the
+plastic storage contribution and distinguish algebraic mass-balance error
+from spatial error in the reconstructed boundary flux.
 \FloatBarrier
 
 \subsection{Physical interpretation, scope, and reproducibility}

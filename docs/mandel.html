@@ -31,7 +31,7 @@
       <h1>1 · Water-filled Mandel benchmark</h1>
       <p class="lead">
         The flagship example: the plane-strain <strong>Mandel consolidation</strong> problem
-        solved with a Q2 displacement / continuous Q1 water-pressure / Q2 solid partial-density
+        solved with a Q2 displacement / continuous Q1 water-pressure
         discretization and the state-based closed-form Biot coefficient from the matched logarithmic laws. The spatial
         water-pressure and displacement profiles are compared with the analytical
         Cheng–Detournay series, and a finite-deformation continuation reports the departure of
@@ -77,13 +77,21 @@
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C">ADBinarySolidSpatialMassMaterial</a>
-          <span class="desc">Source-free single-component solid partial-density balance pulled to the solid reference; exposes the normalized referential solid mass and its AD rate.</span>
-          <span class="why">Why: closes the spatial solid mass balance <code>d(Jρ<sub>s</sub>)/dt = 0</code> that evolves the partial-density field.</span>
+          <span class="desc">Evaluates solid partial density from its reference value divided by the deformation Jacobian, enforcing constant referential solid mass.</span>
+          <span class="why">Why: enforces <code>Jρ<sub>s</sub> = ρ<sub>s0</sub></code> at each integration point.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADBiotPressureStorageMaterial.C">ADBiotPressureStorageMaterial</a>
-          <span class="desc">Exact single-water mass storage pulled to the reference: <code>J(1−φ<sub>s</sub>)ρ̄<sub>f</sub>(p)</code> and its complete AD material time rate.</span>
+          <span class="desc">Exact single-water mass storage pulled to the reference: <code>J(1−φ<sub>s</sub>)ρ̄<sub>f</sub>(p)</code> and a separate continuous-rate diagnostic.</span>
           <span class="why">Why: supplies the water accumulation without a prescribed Biot storage modulus.</span>
+        </li>
+        <li>
+          <a href="source.html?f=moose_app/src/materials/ADReferenceBalanceState.C">ADReferenceBalanceState</a>
+          <span class="desc">Supplies total first Piola stress, current and previous reference fluid mass, and Darcy mass flux to the shared balance kernels.</span>
+        </li>
+        <li>
+          <a href="source.html?f=moose_app/src/kernels/ReferenceBalance.C">ReferenceMomentum and ReferenceFluidMass</a>
+          <span class="desc">Integrate total stress and the backward difference of complete fluid mass with reference Darcy transport. The kernel source agrees with the anisotropic companion apart from application registration.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C">ADBiotDarcyReferenceFluxMaterial</a>
@@ -92,18 +100,18 @@
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C">ADReferenceMaterialStorageRateTerm</a>
-          <span class="desc">Atomic conservative storage rate as an AD reference-rate property (time kernel).</span>
-          <span class="why">Why: assembles the time derivative of both the solid and water accumulations.</span>
+          <span class="desc">Integrates a supplied AD reference-rate property.</span>
+          <span class="why">Supporting kernel for a prescribed continuous material rate; the coupled examples use ReferenceFluidMass.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADReferenceComponentFluxTerm.C">ADReferenceComponentFluxTerm</a>
           <span class="desc">Atomic weak-divergence term for one named reference component flux.</span>
-          <span class="why">Why: assembles the Darcy transport term in the water balance.</span>
+          <span class="why">Supporting flux kernel; ReferenceFluidMass includes this term in the coupled examples.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADReferenceSolidMomentum.C">ADReferenceSolidMomentum</a>
           <span class="desc">Quasi-static solid-skeleton momentum component on the reference configuration.</span>
-          <span class="why">Why: the momentum residual for the displacement field.</span>
+          <span class="why">General momentum kernel with optional body forces; the coupled examples use ReferenceMomentum.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/postprocessors/ADMaterialScalarL2Error.C">ADMaterialScalarL2Error</a>
@@ -123,7 +131,7 @@
       <ul class="file-list">
         <li>
           <a href="source.html?f=../moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i">mandel_water_q2_q1.i</a>
-          <span class="desc">The full water-filled plane-strain Mandel problem: Q2 displacement, continuous Q1 pressure, Q2 solid partial density, pulled-back accumulations, and the fixed-pressure elastic Biot tangent.</span>
+          <span class="desc">The full water-filled plane-strain Mandel problem: Q2 displacement, continuous Q1 pressure, exact solid-density elimination, conservative reference fluid accumulation, and the fixed-pressure elastic Biot tangent.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i">implicit_biot_q2_q1_jacobian.i</a>
@@ -131,7 +139,7 @@
         </li>
         <li>
           <a href="source.html?f=moose_app/test/tests/mandel_implicit_biot/tests">tests</a>
-          <span class="desc">The MOOSE test specification (<code>smoke</code>, <code>bdf2</code>, <code>verification</code>, <code>jacobian</code>) with the acceptance requirements.</span>
+          <span class="desc">The MOOSE test specification (<code>smoke</code>, <code>conservative_step</code>, <code>verification</code>, <code>jacobian</code>) with the acceptance requirements.</span>
         </li>
       </ul>
     </section>
@@ -141,7 +149,7 @@
       <ul class="file-list">
         <li>
           <a href="source.html?f=../validation/scripts/check_mandel_implicit_biot.py">check_mandel_implicit_biot.py</a>
-          <span class="desc">Runs the Mandel deck on coarse/fine/finer meshes and time steps, evaluates the analytical pressure/displacement agreement, Biot identity, centered-difference tangent, solid-mass drift, and mineral-EOS residual, and reports the acceptance gates.</span>
+          <span class="desc">Runs the Mandel deck on coarse/fine/finer meshes and time steps, evaluates the analytical pressure/displacement agreement, Biot identity, centered-difference tangent, solid-mass conservation, and mineral-EOS residual, and reports the acceptance gates.</span>
         </li>
         <li>
           <a href="source.html?f=../scripts/reproduce_mandel_publication.py">reproduce_mandel_publication.py</a>
@@ -191,7 +199,7 @@
     <section class="section">
       <h2>Validation data</h2>
       <p>The full benchmark's maximum pressure, side-displacement, and load errors
-        are 3.71%, 0.649%, and 0.238%, respectively, below their acceptance limits
+        are 3.71%, 0.646%, and 0.237%, respectively, below their acceptance limits
         of 4.0%, 0.8%, and 0.3%. Pressure error is normalized by the analytical
         pressure scale; displacement and load errors use their reference values.
         At ten-percent platen compression,
@@ -211,7 +219,7 @@
       <h2>Reproduce</h2>
       <p>Build, run, verify, and plot this example with:</p>
       <pre><code>make build
-make test        # Mandel smoke / BDF2 / verification / Jacobian tests
+make test        # Mandel smoke / initial-mass / verification / Jacobian tests
 make mandel      # full benchmark, continuation, and publication-data curation
 make figures     # regenerate the figures above</code></pre>
       <p>See <a href="reproduction.html">Reproduce</a> for the complete manuscript pipeline.</p>

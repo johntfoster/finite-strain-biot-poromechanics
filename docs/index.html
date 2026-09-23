@@ -48,10 +48,11 @@
       <p class="lead">
         The work evaluates a <strong>finite-deformation Biot coefficient</strong> for a body
         containing one deformable solid and one water phase. Global fields are
-        <strong>Q2 displacement</strong>, continuous <strong>Q1 water pressure</strong>, and
-        <strong>Q2 solid partial density</strong>. A spatial solid mass balance evolves the
-        partial density, a general local constitutive update supplies the intrinsic solid
-        density and solid volume fraction. Matched logarithmic skeleton and mineral stress
+        <strong>Q2 displacement</strong> and continuous <strong>Q1 water pressure</strong>.
+        Solid mass conservation determines partial density as its reference value divided
+        by the deformation Jacobian. A local constitutive update supplies the intrinsic
+        solid density and solid volume fraction. Backward Euler differences the complete
+        reference fluid mass, including the converged plastic contribution. Matched logarithmic skeleton and mineral stress
         laws give a scalar mineral solve and a closed-form fixed-pressure Biot coefficient.
         A general implicit tangent and centered differences independently verify the coefficient.
       </p>

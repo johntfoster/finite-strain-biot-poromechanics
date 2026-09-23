@@ -22,7 +22,7 @@ def nodal_transverse_variation(name):
         order = np.lexsort((x, y))
         nx, ny = len(set(x)), len(set(y))
         result = {}
-        for key in ('p', 'solid_spatial_mass_ratio'):
+        for key in ('p',):
             values = data.variables[f'vals_nod_var{names.index(key)+1}'][:].copy()
             values = values[:, order].reshape(-1, ny, nx)
             variation = values-values.mean(axis=1, keepdims=True)
@@ -81,7 +81,7 @@ def main():
         for field, tolerance in [('delta_b', 1.e-8), ('ap', 1.e-7), ('gamma', 1.e-8)]:
             if record['spatial_structure'][field]['maximum_transverse_rms'] > tolerance:
                 raise AssertionError(f'{name}: unresolved transverse {field} variation')
-        for field, tolerance in [('p', 1.e-3), ('solid_spatial_mass_ratio', 1.e-9)]:
+        for field, tolerance in [('p', 1.e-3)]:
             if record['maximum_nodal_transverse_rms'][field] > tolerance:
                 raise AssertionError(f'{name}: unresolved transverse nodal {field} variation')
     spatial = field_sensitivity('hardening_coarse', 'hardening_fine')

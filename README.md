@@ -9,14 +9,15 @@ The closed-form derivation, verification results, and benchmark parameter
 adjustments are recorded in [the verification index](validation/README.md).
 
 The physical specialization contains one deformable solid and one water phase.
-The global fields are Q2 displacement, continuous Q1 water pressure, and Q2
-solid partial density. Spatial solid mass balance evolves the partial density;
-the local constitutive update supplies intrinsic solid density, solid volume
+The global fields are Q2 displacement and continuous Q1 water pressure.
+Solid mass conservation gives partial density as its reference value divided
+by the deformation Jacobian. The local constitutive update supplies intrinsic solid density, solid volume
 fraction, and any inelastic internal variables. A scalar solve determines the
 mineral volume, and the closed-form expression supplies the fixed-pressure Biot
 coefficient. A general two-state implicit tangent and centered differences of
 perturbed mineral solves independently verify that coefficient. Spatial water mass balance
-uses a barotropic pressure--density equation of state. The effective-stress
+uses a barotropic pressure--density equation of state and backward differences
+of the complete reference fluid mass. The effective-stress
 relations connect the constitutive double-prime stress to the single-prime
 material stress and the total mixture stress. These local dependencies remain in the outer MOOSE
 automatic-differentiation Jacobian.

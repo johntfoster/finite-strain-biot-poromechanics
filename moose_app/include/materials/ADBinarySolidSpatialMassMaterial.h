@@ -17,12 +17,13 @@ public:
   ADBinarySolidSpatialMassMaterial(const InputParameters & parameters);
 
 protected:
+  void initQpStatefulProperties() override { computeQpProperties(); }
   void computeQpProperties() override;
 
   const ADMaterialProperty<Real> & _J;
   const ADMaterialProperty<Real> & _J_dot;
-  const ADVariableValue & _solid_spatial_mass_ratio;
-  const ADVariableValue * _solid_spatial_mass_ratio_dot;
+  ADMaterialProperty<Real> & _solid_spatial_mass_ratio;
+  ADMaterialProperty<Real> & _solid_spatial_mass_ratio_dot;
 
   ADMaterialProperty<Real> & _reference_component_accumulation;
   ADMaterialProperty<Real> & _reference_component_storage_rate;

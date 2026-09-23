@@ -131,12 +131,25 @@ make validate</code></pre>
       <p>Independent finite differences check the constitutive fluid-storage
       terms and the assembled AD Jacobians in elastic, active-plastic, and
       coupled poroplastic calculations. Integrated fluid exchange is compared
-      with water-mass change, and time-step refinement measures the mass drift
-      from the chain-rule time discretization.</p>
+      with water-mass change using the same end-step quadrature as the conservative
+      fluid residual. Solid mass is enforced directly through density elimination;
+      mesh and time-step refinement measure changes in the predicted fields.</p>
       <p>The <a href="source.html?f=../validation/README.md">verification
       documentation</a> gives the test procedures, tolerances, and treatment of
       elastic–plastic switching. Run <code>make test</code> for the ordinary
       regressions and <code>make plastic-flow</code> for the full coupled study.</p>
+      <p>The conservative formulation records its
+      <a href="source.html?f=validation/conservative_formulation.json">shared-kernel provenance</a>,
+      sealed initial-state checks for
+      <a href="source.html?f=validation/conservative_initial_state.json">elastic response</a> and
+      <a href="source.html?f=validation/conservative_plastic_initial_state.json">prescribed plastic history</a>,
+      and the <a href="source.html?f=validation/conservative_jacobian_perturbations.json">Jacobian perturbation study</a>.
+      These checks retain the prescribed initial mass and verify derivatives of
+      the complete mass difference.</p>
+      <p>The <a href="source.html?f=validation/poroplastic_spatial_stability.json">complete spatial-stability matrix</a>
+      records the control and hardening runs. The
+      <a href="source.html?f=validation/provenance.yml">content-hash record</a>
+      connects the implementation, curated results, manuscript, and figures.</p>
     </section>
 
     <section class="section">

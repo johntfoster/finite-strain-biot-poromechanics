@@ -9,7 +9,6 @@ ADPoroplasticPoreVolumeMaterial::validParams()
   auto params = Material::validParams();
   params.addClassDescription("Pore volume and its chain-rule rate during implicit poroplastic flow.");
   params.addRequiredCoupledVar("pressure", "Water pressure.");
-  params.addRequiredCoupledVar("solid_spatial_mass_ratio", "Normalized solid partial density.");
   params.addRequiredParam<Real>("skeleton_bulk_modulus", "K.");
   params.addRequiredParam<Real>("mineral_bulk_modulus", "Ks.");
   params.addRequiredParam<Real>("reference_solid_volume_fraction", "Initial solid fraction.");
@@ -19,8 +18,8 @@ ADPoroplasticPoreVolumeMaterial::validParams()
 ADPoroplasticPoreVolumeMaterial::ADPoroplasticPoreVolumeMaterial(const InputParameters & p)
   : Material(p),
     _p(adCoupledValue("pressure")), _p_dot(adCoupledDot("pressure")),
-    _rho(adCoupledValue("solid_spatial_mass_ratio")),
-    _rho_dot(adCoupledDot("solid_spatial_mass_ratio")),
+    _rho(getADMaterialProperty<Real>("solid_spatial_mass_ratio")),
+    _rho_dot(getADMaterialProperty<Real>("solid_spatial_mass_ratio_dot")),
     _J(getADMaterialProperty<Real>("solid_reference_J")),
     _J_dot(getADMaterialProperty<Real>("solid_reference_J_dot")),
     _ratio(getADMaterialProperty<Real>("implicit_plastic_density_ratio")),

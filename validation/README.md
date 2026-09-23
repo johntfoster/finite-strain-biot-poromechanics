@@ -4,8 +4,9 @@ The canonical formulation is in `paper/main.tex`, with its constitutive
 specialization in `paper/sections/finite_deformation_biot.tex`. The matched
 logarithmic mineral equation uses elastic volume `Je = J/ap`; the coefficient
 uses total volume `J`. The production update and independent tangent checks
-share this convention. The global fields are Q2 displacement, continuous Q1
-water pressure, and Q2 solid partial density.
+share this convention. The global fields are Q2 displacement and continuous Q1
+water pressure. Solid partial density equals its reference value divided by
+`J`, enforcing solid conservation at every integration point.
 
 The [equation map](equation_to_moose_map.yml) covers every equation label,
 including subequation group labels, and every local material, kernel,
@@ -75,33 +76,39 @@ and their outcomes; `make test` includes the ordinary Jacobian regressions.
 
 ## Verification of the discrete residuals
 
-The implementation evaluates solid and fluid accumulation rates by applying
-the chain rule to field rates supplied by the MOOSE time integrator. At a
-finite time step, these rates generally differ from backward differences of
-the complete nonlinear accumulations. The verification therefore measures
-referential solid-mass drift and fluid mass-balance drift under time-step
-refinement. A separate elastic BDF2 regression checks that the same
-chain-rule calculation accepts rates from another MOOSE time integrator
-without modification.
+The implementation evaluates the fluid accumulation as the backward difference
+of the complete reference mass `rhobar_f(p) * (J - phi_s0 * Jbar)`. The
+previous mass is stored at each integration point, and initialization uses
+the prescribed initial deformation, pressure, and constitutive state.
+`ReferenceMomentum` integrates total first Piola stress; `ReferenceFluidMass`
+combines this conservative accumulation with the reference Darcy flux. Their
+source is shared with the anisotropic companion apart from application registration.
+The implemented time step is backward Euler. Constitutive continuous-rate
+properties remain separate diagnostics; they do not enter the production
+fluid residual.
 
 ### Jacobian comparisons
 
 PETSc forms a finite-difference approximation of the residual Jacobian and
 compares it with the Jacobian assembled from MOOSE AD derivatives, including
-constitutive rates entering fluid storage. The relative and absolute
+the current mineral and plastic state entering the complete fluid mass. The relative and absolute
 Frobenius-norm differences must remain below `1e-7` and `1e-5`, respectively.
-The finite-difference scale parameter is `1e-9` in the unit-scaled diagnostic.
+The elastic diagnostic uses finite-difference scale `1e-9`. The coupled plastic
+diagnostic uses `3e-10`, selected by the recorded [perturbation study](conservative_jacobian_perturbations.json)
+to resolve the conservative mass derivative between truncation and cancellation
+errors. Both use the same acceptance tolerances.
 
 The comparisons cover three settings:
 
-- The elastic coupled-field test includes momentum, solid mass, fluid storage,
-  and Darcy flow.
+- The elastic coupled-field test includes momentum, fluid storage, and Darcy
+  flow, with solid density determined by deformation.
 - The active-plastic test uses algebraic residuals containing the returned
   stress invariants, plastic distention, and Biot coefficient at nonzero
   pressure and unequal principal stretches. Each finite-difference
   perturbation repeats the return mapping, testing the derivative of the
   converged local update carried into the outer Newton Jacobian.
-- The coupled poroplastic test includes all four field residuals during
+- The coupled poroplastic test includes both displacement components and the
+  pressure residual during
   compression and the subsequent hold. A temporal predictor moves the initial
   Newton guess away from the elastic–plastic switching surface, and every
   assembled Jacobian is compared on that path using the same tolerances.
@@ -113,16 +120,28 @@ does not establish differentiability at the switch.
 
 ### Storage and integrated mass balance
 
-An independent check perturbs total volume, pressure, solid partial density,
-and plastic distention at sampled quadrature points, solves the scalar
-mineral equation independently, and differences the complete water
-accumulation. This verifies the plastic storage contribution separately from
-the assembled Jacobian.
+An independent directional-derivative check perturbs total volume, pressure,
+and plastic distention at sampled quadrature points, with the solid-density
+variation fixed by conservation. It solves the mineral equation independently
+and differences the complete water accumulation to verify the continuous-rate
+storage diagnostic. The assembled Jacobian checks the derivatives of the
+conservative discrete mass difference, including the converged plastic update.
 
 Integrated Darcy outflow and the pressure-boundary reaction are compared with
 water-mass change. The reaction sums only nodes carrying pressure degrees of
-freedom. Time-step refinement measures mass drift introduced by the chain-rule
-time discretization.
+freedom. The discharge is accumulated with the same end-step quadrature as
+the fluid residual. This separates algebraic conservation error from spatial
+error in the Darcy flux reconstructed at the boundary. Mesh and time-step
+refinement measure changes in the predicted fields.
+
+Sealed elastic and plastic initial-state tests use nonzero deformation and
+pressure; the plastic test also prescribes nonzero plastic distention. Both
+compare initial mass with an independent scalar mineral solve and verify
+constant mass and pressure over subsequent stationary steps. Their evidence is
+recorded in [the elastic initial-state check](conservative_initial_state.json)
+and [the plastic initial-state check](conservative_plastic_initial_state.json).
+The [kernel provenance](conservative_formulation.json) records the exact shared
+balance sources and the application-registration substitution.
 
 Run the ordinary input regressions with `make test` and the full coupled
 storage, Jacobian, and refinement study with `make plastic-flow`. The

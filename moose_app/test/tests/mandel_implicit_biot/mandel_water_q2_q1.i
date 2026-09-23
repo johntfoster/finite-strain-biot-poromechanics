@@ -1,6 +1,6 @@
 # Water-filled Mandel consolidation on the solid reference configuration.
 # The quarter-domain uses Q2 displacement and continuous Q1 pore pressure.
-# The solid partial density is solved globally; mineral state and Biot coefficient are local outputs.
+# Solid partial density is eliminated by exact solid conservation; mineral state and Biot coefficient are local outputs.
 
 mesh_nx := 20
 mesh_ny := 2
@@ -42,10 +42,6 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
     family = LAGRANGE
     order = FIRST
   []
-  [solid_spatial_mass_ratio]
-    family = LAGRANGE
-    order = SECOND
-  []
 []
 
 [AuxVariables]
@@ -64,11 +60,6 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
 []
 
 [ICs]
-  [solid_spatial_mass_ratio_ic]
-    type = ConstantIC
-    variable = solid_spatial_mass_ratio
-    value = 1
-  []
 []
 
 [Functions]
@@ -84,13 +75,15 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
 []
 
 [Materials]
+  [reference_balance_state]
+    type = ADReferenceBalanceState
+  []
   [solid_kinematics]
     type = ADSolidReferenceKinematics
     displacements = 'ux uy'
   []
   [solid_spatial_mass]
     type = ADBinarySolidSpatialMassMaterial
-    solid_spatial_mass_ratio = solid_spatial_mass_ratio
   []
   [double_prime_skeleton_stress]
     type = ADVolumetricBarotropicSkeletonStressMaterial
@@ -106,7 +99,6 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
     biot_finite_difference_name = biot_fixed_pressure_fd_check
     skeleton_bulk_modulus = ${skeleton_bulk_modulus_pa}
     pressure = p
-    solid_spatial_mass_ratio = solid_spatial_mass_ratio
     mineral_bulk_modulus = ${mineral_bulk_modulus_pa}
     reference_solid_volume_fraction = ${initial_solid_volume_fraction}
     biot_coefficient_name = solid_biot_coefficient
@@ -178,8 +170,7 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
   []
   [solid_material_mass_constraint]
     type = ADParsedMaterial
-    coupled_variables = solid_spatial_mass_ratio
-    material_property_names = solid_reference_J
+    material_property_names = 'solid_reference_J solid_spatial_mass_ratio'
     property_name = solid_material_mass_constraint
     expression = 'solid_reference_J*solid_spatial_mass_ratio-1'
   []
@@ -187,32 +178,18 @@ time_sequence := '0 0.002 0.006 0.014 0.03 0.046 0.062 0.078 0.094 0.11 0.126 0.
 
 [Kernels]
   [solid_x]
-    type = ADReferenceSolidMomentum
+    type = ReferenceMomentum
     variable = ux
     component = 0
   []
   [solid_y]
-    type = ADReferenceSolidMomentum
+    type = ReferenceMomentum
     variable = uy
     component = 1
   []
-  [solid_mass_balance]
-    type = ADReferenceMaterialStorageRateTerm
-    variable = solid_spatial_mass_ratio
-    reference_storage_rate_name = solid_component_reference_storage_rate
-    scale = ${skeleton_bulk_modulus_pa}
-  []
   [water_storage]
-    type = ADReferenceMaterialStorageRateTerm
+    type = ReferenceFluidMass
     variable = p
-    reference_storage_rate_name = water_reference_storage_rate
-    scale = '${fparse 1/water_density_kg_m3}'
-  []
-  [water_flux]
-    type = ADReferenceComponentFluxTerm
-    variable = p
-    reference_flux_name = water_reference_mass_flux
-    scale = '${fparse 1/water_density_kg_m3}'
   []
 []
 

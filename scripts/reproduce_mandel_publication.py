@@ -97,8 +97,8 @@ def curate(output, benchmark_summary):
             raise RuntimeError('finite-deformation constitutive identity failed')
     fine_mass = maximum(fine, 'solid_material_mass_constraint_l2')
     coarse_mass = maximum(temporal, 'solid_material_mass_constraint_l2')
-    if fine_mass >= coarse_mass:
-        raise RuntimeError('solid-mass drift did not decrease under time refinement')
+    if max(fine_mass, coarse_mass) > 1e-12:
+        raise RuntimeError('eliminated solid density violates pointwise mass conservation')
     subprocess.run([sys.executable, str(ROOT / 'scripts/curate_mandel_profiles.py'), str(output / 'report'),
                     '--large-source', str(output / 'large_fine.csv')], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ROOT / 'scripts/extract_mandel_density_contours.py'),

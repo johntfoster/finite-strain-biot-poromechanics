@@ -13,7 +13,7 @@
       },
       "acoustic": {
         "case": "baseline_perfect_plastic",
-        "exodus_sha256": "75ac7e4f9b7f238483f88a9e3ae0de3d67e5beb4980b2815e9dfe669ae98c1d0",
+        "exodus_sha256": "9c74f92407db332215b95b4b8a5986cc01304667e3effb1a9a24d48556474b40",
         "hardening_modulus_Pa": 0.0,
         "dilation_slope": 0.4,
         "sampled_point": "element central Gauss point",
@@ -25,329 +25,328 @@
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.04,
-            "pressure_Pa": 6781528.041864693,
-            "gamma": 0.0011606667092068346,
-            "minimum_determinant_GPa2": 0.053658696685814807,
-            "maximum_determinant_GPa2": 1.3828935136499505,
-            "determinant_changes_sign": false,
-            "angle_degrees": 141.75000000000003,
-            "minimum_symmetric_eigenvalue_GPa": 0.027160081721274543,
-            "determinant_step_difference_GPa2": 1.5478485854147905e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.10000000000000005,
-            "pressure_Pa": -6546125.236248266,
-            "gamma": 0.0012028049242764499,
-            "minimum_determinant_GPa2": 0.03602049394702721,
-            "maximum_determinant_GPa2": 1.5844032334892852,
-            "determinant_changes_sign": false,
-            "angle_degrees": 143.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.017980064510530858,
-            "determinant_step_difference_GPa2": 2.7585319445355694e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.20000000000000012,
-            "pressure_Pa": -28381882.0408851,
-            "gamma": 0.0013607776949385978,
-            "minimum_determinant_GPa2": 0.02365341975487504,
-            "maximum_determinant_GPa2": 1.9874773121708913,
-            "determinant_changes_sign": false,
-            "angle_degrees": 146.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.011654873218828354,
-            "determinant_step_difference_GPa2": 1.7316927752863975e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.3000000000000002,
-            "pressure_Pa": -23341679.001066588,
-            "gamma": 0.00013810959765620133,
-            "minimum_determinant_GPa2": 0.0021795721679145224,
-            "maximum_determinant_GPa2": 2.0248907954173307,
-            "determinant_changes_sign": false,
-            "angle_degrees": 147.25,
-            "minimum_symmetric_eigenvalue_GPa": -4.622235399281971e-05,
-            "determinant_step_difference_GPa2": 3.3523894424347667e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.4000000000000003,
-            "pressure_Pa": -18406957.601986684,
-            "gamma": 0.00016711740515525626,
-            "minimum_determinant_GPa2": -0.008401585672582295,
-            "maximum_determinant_GPa2": 2.0731443573259094,
-            "determinant_changes_sign": true,
-            "angle_degrees": 31.750000000000007,
-            "minimum_symmetric_eigenvalue_GPa": -0.006199735224790337,
-            "determinant_step_difference_GPa2": 7.617236650464543e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.5000000000000003,
-            "pressure_Pa": -14704358.217673134,
-            "gamma": 0.00013846560961842524,
-            "minimum_determinant_GPa2": -0.00903896985591482,
-            "maximum_determinant_GPa2": 2.1121511178171635,
-            "determinant_changes_sign": true,
-            "angle_degrees": 31.250000000000004,
-            "minimum_symmetric_eigenvalue_GPa": -0.006715282128988864,
-            "determinant_step_difference_GPa2": 6.044586567388599e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.6999999999999961,
-            "pressure_Pa": -9688859.604198381,
-            "gamma": 9.329398498384778e-05,
-            "minimum_determinant_GPa2": -0.002591528053220685,
-            "maximum_determinant_GPa2": 2.1617245981271713,
-            "determinant_changes_sign": true,
-            "angle_degrees": 30.25,
-            "minimum_symmetric_eigenvalue_GPa": -0.002827344050570002,
-            "determinant_step_difference_GPa2": 4.528783316241902e-10
-          },
-          {
-            "element": 60,
-            "X": 0.5125,
-            "Y": 0.037500000000000006,
-            "time": 0.04,
-            "pressure_Pa": 5828276.351712952,
-            "gamma": 0.001093097469516483,
-            "minimum_determinant_GPa2": 0.06639328541704502,
-            "maximum_determinant_GPa2": 1.375072025468467,
+            "pressure_Pa": 6769670.058073464,
+            "gamma": 0.0011599054807550325,
+            "minimum_determinant_GPa2": 0.053804958215021896,
+            "maximum_determinant_GPa2": 1.38279747176514,
             "determinant_changes_sign": false,
             "angle_degrees": 38.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.033682338091755526,
-            "determinant_step_difference_GPa2": 5.472049618981956e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.027235359148731597,
+            "determinant_step_difference_GPa2": 4.103374376396296e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.10000000000000005,
+            "pressure_Pa": -6572802.193420418,
+            "gamma": 0.0012020308569161897,
+            "minimum_determinant_GPa2": 0.03613137565720908,
+            "maximum_determinant_GPa2": 1.5843100485401707,
+            "determinant_changes_sign": false,
+            "angle_degrees": 36.25000000000001,
+            "minimum_symmetric_eigenvalue_GPa": 0.018037032949309473,
+            "determinant_step_difference_GPa2": 5.244681008931273e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.20000000000000012,
+            "pressure_Pa": -28436876.902909577,
+            "gamma": 0.001359911528103107,
+            "minimum_determinant_GPa2": 0.023744235438012483,
+            "maximum_determinant_GPa2": 1.9873725796413801,
+            "determinant_changes_sign": false,
+            "angle_degrees": 146.5,
+            "minimum_symmetric_eigenvalue_GPa": 0.011701464773460346,
+            "determinant_step_difference_GPa2": 4.480673575224525e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.3000000000000002,
+            "pressure_Pa": -23384022.66886405,
+            "gamma": 0.0001383833058944975,
+            "minimum_determinant_GPa2": 0.002202761829802612,
+            "maximum_determinant_GPa2": 2.0248428404808707,
+            "determinant_changes_sign": false,
+            "angle_degrees": 147.25,
+            "minimum_symmetric_eigenvalue_GPa": -3.326563480332556e-05,
+            "determinant_step_difference_GPa2": 7.897547706949004e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.4000000000000003,
+            "pressure_Pa": -18439100.967606343,
+            "gamma": 0.00016743188787469985,
+            "minimum_determinant_GPa2": -0.008403248351303499,
+            "maximum_determinant_GPa2": 2.0731615324896633,
+            "determinant_changes_sign": true,
+            "angle_degrees": 31.750000000000007,
+            "minimum_symmetric_eigenvalue_GPa": -0.0062004130652536515,
+            "determinant_step_difference_GPa2": 3.7152584307642567e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.5000000000000003,
+            "pressure_Pa": -14729663.34672015,
+            "gamma": 0.0001387200358811384,
+            "minimum_determinant_GPa2": -0.009041012548853688,
+            "maximum_determinant_GPa2": 2.1122188463987586,
+            "determinant_changes_sign": true,
+            "angle_degrees": 31.250000000000004,
+            "minimum_symmetric_eigenvalue_GPa": -0.006715602311155644,
+            "determinant_step_difference_GPa2": 8.878102922965647e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.6999999999999961,
+            "pressure_Pa": -9705489.713636562,
+            "gamma": 9.345227273450254e-05,
+            "minimum_determinant_GPa2": -0.0025793050355125153,
+            "maximum_determinant_GPa2": 2.161844103357982,
+            "determinant_changes_sign": true,
+            "angle_degrees": 30.25,
+            "minimum_symmetric_eigenvalue_GPa": -0.002819535957875041,
+            "determinant_step_difference_GPa2": 9.775847145676586e-11
+          },
+          {
+            "element": 60,
+            "X": 0.5125,
+            "Y": 0.037500000000000006,
+            "time": 0.04,
+            "pressure_Pa": 5818144.634691453,
+            "gamma": 0.0010924862427277207,
+            "minimum_determinant_GPa2": 0.06653228989518953,
+            "maximum_determinant_GPa2": 1.3749921439723054,
+            "determinant_changes_sign": false,
+            "angle_degrees": 38.50000000000001,
+            "minimum_symmetric_eigenvalue_GPa": 0.03375287711105057,
+            "determinant_step_difference_GPa2": 1.6882925613082023e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000005,
-            "pressure_Pa": -6920625.217836704,
-            "gamma": 0.0012768728890897973,
-            "minimum_determinant_GPa2": 0.033108696119827224,
-            "maximum_determinant_GPa2": 1.5873720892034984,
+            "pressure_Pa": -6944090.7466436885,
+            "gamma": 0.001276148618898846,
+            "minimum_determinant_GPa2": 0.033207876577071145,
+            "maximum_determinant_GPa2": 1.5872845376313314,
             "determinant_changes_sign": false,
             "angle_degrees": 36.25000000000001,
-            "minimum_symmetric_eigenvalue_GPa": 0.01642177855211535,
-            "determinant_step_difference_GPa2": 4.31694055502696e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.016472827235012477,
+            "determinant_step_difference_GPa2": 6.089665646746845e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000012,
-            "pressure_Pa": -24525248.48929249,
-            "gamma": 0.0014995131116617927,
-            "minimum_determinant_GPa2": 0.012683214825813431,
-            "maximum_determinant_GPa2": 2.0033292816841546,
+            "pressure_Pa": -24572340.008315597,
+            "gamma": 0.001498735140758327,
+            "minimum_determinant_GPa2": 0.012741586895242216,
+            "maximum_determinant_GPa2": 2.0032399392131586,
             "determinant_changes_sign": false,
             "angle_degrees": 146.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.00577948247241411,
-            "determinant_step_difference_GPa2": 1.5691018102892418e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.005811112488059933,
+            "determinant_step_difference_GPa2": 3.8205194216600624e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.3000000000000002,
-            "pressure_Pa": -17286665.134125605,
-            "gamma": 0.00014396630277206107,
-            "minimum_determinant_GPa2": -0.00787990542078505,
-            "maximum_determinant_GPa2": 2.0621700422768114,
+            "pressure_Pa": -17318055.237245716,
+            "gamma": 0.0001442825947478469,
+            "minimum_determinant_GPa2": -0.007880461793417065,
+            "maximum_determinant_GPa2": 2.062160500742213,
             "determinant_changes_sign": true,
             "angle_degrees": 32.0,
-            "minimum_symmetric_eigenvalue_GPa": -0.0058871819968596695,
-            "determinant_step_difference_GPa2": 2.7636738210434775e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.005886566173329388,
+            "determinant_step_difference_GPa2": 1.7855486186824088e-11
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.4000000000000003,
-            "pressure_Pa": -13274075.934943233,
-            "gamma": 0.00013596428777724195,
-            "minimum_determinant_GPa2": -0.008911430071085058,
-            "maximum_determinant_GPa2": 2.101516026067133,
+            "pressure_Pa": -13297544.64273855,
+            "gamma": 0.00013630278503248738,
+            "minimum_determinant_GPa2": -0.008912271893172523,
+            "maximum_determinant_GPa2": 2.101607047549371,
             "determinant_changes_sign": true,
             "angle_degrees": 31.0,
-            "minimum_symmetric_eigenvalue_GPa": -0.006660720068443093,
-            "determinant_step_difference_GPa2": 3.812718335494125e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.006660945692943732,
+            "determinant_step_difference_GPa2": 6.27937268155021e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.5000000000000003,
-            "pressure_Pa": -10517825.263904512,
-            "gamma": 9.077343859157299e-05,
-            "minimum_determinant_GPa2": -0.005993123274745915,
-            "maximum_determinant_GPa2": 2.12804644428971,
+            "pressure_Pa": -10536152.601383418,
+            "gamma": 9.098999713301268e-05,
+            "minimum_determinant_GPa2": -0.005986464780947264,
+            "maximum_determinant_GPa2": 2.128192347487197,
             "determinant_changes_sign": true,
             "angle_degrees": 149.50000000000003,
-            "minimum_symmetric_eigenvalue_GPa": -0.004946859819195959,
-            "determinant_step_difference_GPa2": 9.620268730942128e-11
+            "minimum_symmetric_eigenvalue_GPa": -0.004942571291408071,
+            "determinant_step_difference_GPa2": 3.0000245083289245e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999961,
-            "pressure_Pa": -6885040.7681044275,
-            "gamma": 4.442432016527661e-05,
-            "minimum_determinant_GPa2": 0.002150088412593735,
-            "maximum_determinant_GPa2": 2.1574058660136877,
+            "pressure_Pa": -6896975.211726867,
+            "gamma": 4.455515051546411e-05,
+            "minimum_determinant_GPa2": 0.0021655703094442752,
+            "maximum_determinant_GPa2": 2.1576097473759264,
             "determinant_changes_sign": false,
             "angle_degrees": 29.500000000000004,
-            "minimum_symmetric_eigenvalue_GPa": 0.00023828264784669928,
-            "determinant_step_difference_GPa2": 6.722979308676491e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.0002484312101961872,
+            "determinant_step_difference_GPa2": 9.078122225301966e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.04,
-            "pressure_Pa": 2034271.6347222794,
-            "gamma": 0.0011209419469400486,
-            "minimum_determinant_GPa2": 0.12570544964032734,
-            "maximum_determinant_GPa2": 1.347968703665538,
+            "pressure_Pa": 2029535.623976806,
+            "gamma": 0.0011205415361593965,
+            "minimum_determinant_GPa2": 0.12579796007555838,
+            "maximum_determinant_GPa2": 1.3479346414327702,
             "determinant_changes_sign": false,
             "angle_degrees": 39.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.06341534651862957,
-            "determinant_step_difference_GPa2": 4.34713098851347e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.06346114342020825,
+            "determinant_step_difference_GPa2": 1.9855767030563243e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000005,
-            "pressure_Pa": -4261918.915784627,
-            "gamma": 0.0016134730282407774,
-            "minimum_determinant_GPa2": 0.0106550165174055,
-            "maximum_determinant_GPa2": 1.6133649186178096,
+            "pressure_Pa": -4273428.622778913,
+            "gamma": 0.0016130529434021832,
+            "minimum_determinant_GPa2": 0.01068913179306519,
+            "maximum_determinant_GPa2": 1.6133163844911333,
             "determinant_changes_sign": false,
             "angle_degrees": 35.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.0044880246673703605,
-            "determinant_step_difference_GPa2": 8.228282222244587e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.004506505315166387,
+            "determinant_step_difference_GPa2": 3.650907718505403e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000012,
-            "pressure_Pa": -11089183.701709904,
-            "gamma": 0.001857673136168079,
-            "minimum_determinant_GPa2": -0.0035760037294443043,
-            "maximum_determinant_GPa2": 2.0408826066918553,
+            "pressure_Pa": -11110638.198093848,
+            "gamma": 0.0018572834361776035,
+            "minimum_determinant_GPa2": -0.0035673100863563793,
+            "maximum_determinant_GPa2": 2.0408501657527016,
             "determinant_changes_sign": true,
             "angle_degrees": 148.25,
-            "minimum_symmetric_eigenvalue_GPa": -0.0033805360980576626,
-            "determinant_step_difference_GPa2": 6.415315284211132e-11
+            "minimum_symmetric_eigenvalue_GPa": -0.003375248538809328,
+            "determinant_step_difference_GPa2": 3.017380312622664e-11
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.3000000000000002,
-            "pressure_Pa": -5663175.035322067,
-            "gamma": 6.740841801886059e-05,
-            "minimum_determinant_GPa2": -0.00782599493477326,
-            "maximum_determinant_GPa2": 2.0974120557948686,
+            "pressure_Pa": -5673602.041761525,
+            "gamma": 6.751390109039745e-05,
+            "minimum_determinant_GPa2": -0.007823224969848707,
+            "maximum_determinant_GPa2": 2.0974666481342346,
             "determinant_changes_sign": true,
             "angle_degrees": 30.5,
-            "minimum_symmetric_eigenvalue_GPa": -0.0061269239863274705,
-            "determinant_step_difference_GPa2": 7.09079264055168e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.006125109694793296,
+            "determinant_step_difference_GPa2": 5.925424283181879e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.4000000000000003,
-            "pressure_Pa": -4220119.350160783,
-            "gamma": 4.958345914154024e-05,
-            "minimum_determinant_GPa2": -0.006091790568222035,
-            "maximum_determinant_GPa2": 2.1140657431036525,
+            "pressure_Pa": -4227721.79598003,
+            "gamma": 4.971332460661915e-05,
+            "minimum_determinant_GPa2": -0.006081506902174866,
+            "maximum_determinant_GPa2": 2.1141510366577996,
             "determinant_changes_sign": true,
             "angle_degrees": 30.25,
-            "minimum_symmetric_eigenvalue_GPa": -0.005079158323550159,
-            "determinant_step_difference_GPa2": 4.27636140908072e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.005072624861881925,
+            "determinant_step_difference_GPa2": 6.340863632769977e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.5000000000000003,
-            "pressure_Pa": -3312860.7398024825,
-            "gamma": 3.006086278178309e-05,
-            "minimum_determinant_GPa2": -0.004543609260869536,
-            "maximum_determinant_GPa2": 2.1239287649022707,
+            "pressure_Pa": -3318730.4885881506,
+            "gamma": 3.0146685324602896e-05,
+            "minimum_determinant_GPa2": -0.004528624635268599,
+            "maximum_determinant_GPa2": 2.1240339423810966,
             "determinant_changes_sign": true,
             "angle_degrees": 29.999999999999996,
-            "minimum_symmetric_eigenvalue_GPa": -0.004111791671671139,
-            "determinant_step_difference_GPa2": 1.4633679285697143e-09
+            "minimum_symmetric_eigenvalue_GPa": -0.004102161368834734,
+            "determinant_step_difference_GPa2": 1.2445408835437544e-09
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999961,
-            "pressure_Pa": -2151338.8041336704,
-            "gamma": 1.5551533112025225e-05,
-            "minimum_determinant_GPa2": -0.0018210072520866158,
-            "maximum_determinant_GPa2": 2.135479649110056,
+            "pressure_Pa": -2155124.63893257,
+            "gamma": 1.558261816559223e-05,
+            "minimum_determinant_GPa2": -0.0018000453104517282,
+            "maximum_determinant_GPa2": 2.1356069887173987,
             "determinant_changes_sign": true,
             "angle_degrees": 29.75,
-            "minimum_symmetric_eigenvalue_GPa": -0.0023556110453499812,
-            "determinant_step_difference_GPa2": 1.2536382123368162e-09
+            "minimum_symmetric_eigenvalue_GPa": -0.0023418984371241236,
+            "determinant_step_difference_GPa2": 2.304740215949147e-10
           }
         ]
       },
       "spatial_structure": {
         "delta_b": {
-          "maximum_transverse_rms": 0.0004586712602268116,
-          "final_x_second_difference_rms": 0.0006932931191589839
+          "maximum_transverse_rms": 0.0004592371418969346,
+          "final_x_second_difference_rms": 0.0006938360590576147
         },
         "ap": {
-          "maximum_transverse_rms": 0.002836896529915408,
-          "final_x_second_difference_rms": 0.004294594096290121
+          "maximum_transverse_rms": 0.0028402261514151998,
+          "final_x_second_difference_rms": 0.0042977185438503075
         },
         "gamma": {
-          "maximum_transverse_rms": 6.523204054735404e-05,
-          "final_x_second_difference_rms": 3.31275489559119e-05
+          "maximum_transverse_rms": 6.539001567791438e-05,
+          "final_x_second_difference_rms": 3.316557231054036e-05
         }
       },
       "mass": {
-        "max_relative_mass_defect": 0.004692309442752142,
-        "max_relative_reaction_mass_defect": 0.0005031797970572517,
-        "final_relative_mass_defect": 0.004692309442752142,
-        "max_relative_chain_rule_defect": 0.0005031797972401276,
-        "solid_mass_l2": 0.00013291554918131,
-        "mineral_eos_l2": 4.7759795206149e-17
+        "max_relative_mass_defect": 0.005209403829061188,
+        "max_relative_reaction_mass_defect": 9.288569913223911e-13,
+        "final_relative_mass_defect": 0.005209403829061188,
+        "max_relative_discrete_storage_defect": 5.053735208093714e-14,
+        "solid_mass_l2": 1.8874572468955e-17,
+        "mineral_eos_l2": 4.780440479572e-17
       },
       "maximum_nodal_transverse_rms": {
-        "p": 2431.6777195855775,
-        "solid_spatial_mass_ratio": 0.003637122589931682
+        "p": 2437.762522674242
       },
-      "final_average_delta_B": 0.0080966190313812,
-      "csv_sha256": "a2a9f14e19e540d4edbc830b142a7c30db6bdf7a7fd2f5bbec36c53696f5bb1e",
+      "final_average_delta_B": 0.0080957093735265,
+      "csv_sha256": "8eaebecc7b374e8bc38a57b0ed6392483d7196c2eaad47704472fd2ca73aa52f",
       "command": [
         "mpiexec",
         "-n",
-        "8",
+        "2",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -363,11 +362,11 @@
         "dilation_slope=0.4"
       ],
       "run_manifest": {
-        "signature": "dacebbf322903b28eabfd5625d224b5a244dd0209acdb8e0082c7dbd6bad5187",
+        "signature": "bf88ddb73fcf0cfd94cc1c2431f1f843dd7bec9985a817f940444f470b77b7a4",
         "completed": true,
         "execution_provenance": {
           "schema_version": 1,
-          "captured_at_utc": "2026-09-18T23:07:02.354856+00:00",
+          "captured_at_utc": "2026-09-23T19:11:13.001796+00:00",
           "python": "3.14.0",
           "packages": {
             "numpy": "2.4.2",
@@ -398,12 +397,12 @@
           "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
           "executable": {
             "path": "moose_app/nonlinear_biot_ad-opt",
-            "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
           },
           "command": [
             "mpiexec",
             "-n",
-            "8",
+            "2",
             "moose_app/nonlinear_biot_ad-opt",
             "-i",
             "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -419,7 +418,7 @@
             "dilation_slope=0.4"
           ],
           "outputs": {
-            ".agent-runtime/poroplastic-mandel/baseline_perfect_plastic.csv": "a2a9f14e19e540d4edbc830b142a7c30db6bdf7a7fd2f5bbec36c53696f5bb1e"
+            ".agent-runtime/poroplastic-mandel/baseline_perfect_plastic.csv": "8eaebecc7b374e8bc38a57b0ed6392483d7196c2eaad47704472fd2ca73aa52f"
           }
         }
       }
@@ -435,7 +434,7 @@
       },
       "acoustic": {
         "case": "diagnostic_half_dt_mpi",
-        "exodus_sha256": "10dbd966ff1aeccb09aa52404385d167dcfca76faed06696b2fba4dcc427c12d",
+        "exodus_sha256": "5c7b9c93f713d3323d0a9718efde6af252e8c29307e100debef4d335b5ad674f",
         "hardening_modulus_Pa": 0.0,
         "dilation_slope": 0.4,
         "sampled_point": "element central Gauss point",
@@ -447,329 +446,328 @@
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.040000000000000015,
-            "pressure_Pa": 6797761.211505931,
-            "gamma": 0.000580658310719339,
-            "minimum_determinant_GPa2": 0.05306896437181299,
-            "maximum_determinant_GPa2": 1.3832930691233283,
+            "pressure_Pa": 6791819.167338507,
+            "gamma": 0.0005804679937395104,
+            "minimum_determinant_GPa2": 0.05314270480587703,
+            "maximum_determinant_GPa2": 1.383244802867424,
             "determinant_changes_sign": false,
             "angle_degrees": 38.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.026856516050834556,
-            "determinant_step_difference_GPa2": 5.76546241304321e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.026894084477441405,
+            "determinant_step_difference_GPa2": 4.4145626043601283e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000006,
-            "pressure_Pa": -6558594.579648685,
-            "gamma": 0.0006010585731773474,
-            "minimum_determinant_GPa2": 0.03604169834591601,
-            "maximum_determinant_GPa2": 1.5843885933763473,
+            "pressure_Pa": -6571937.349590034,
+            "gamma": 0.0006008651557016529,
+            "minimum_determinant_GPa2": 0.03609702662410155,
+            "maximum_determinant_GPa2": 1.5843421061834817,
             "determinant_changes_sign": false,
             "angle_degrees": 36.25000000000001,
-            "minimum_symmetric_eigenvalue_GPa": 0.017990534291314142,
-            "determinant_step_difference_GPa2": 6.378144817853482e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.018018958649656136,
+            "determinant_step_difference_GPa2": 1.5985745366320359e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000015,
-            "pressure_Pa": -28442996.384009354,
-            "gamma": 0.000680331342917575,
-            "minimum_determinant_GPa2": 0.02374353770305987,
-            "maximum_determinant_GPa2": 1.9873760941859144,
+            "pressure_Pa": -28470503.74389231,
+            "gamma": 0.0006801147308295357,
+            "minimum_determinant_GPa2": 0.02378903330942829,
+            "maximum_determinant_GPa2": 1.9873237185544261,
             "determinant_changes_sign": false,
-            "angle_degrees": 146.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.011700825838682205,
-            "determinant_step_difference_GPa2": 3.0385871249705154e-10
+            "angle_degrees": 33.50000000000001,
+            "minimum_symmetric_eigenvalue_GPa": 0.011724164204242216,
+            "determinant_step_difference_GPa2": 5.024539152798102e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.2999999999999991,
-            "pressure_Pa": -23389712.225709092,
-            "gamma": 6.951796213484866e-05,
-            "minimum_determinant_GPa2": 0.002188834577951321,
-            "maximum_determinant_GPa2": 2.024880562741596,
+            "pressure_Pa": -23410862.346959986,
+            "gamma": 6.93097043857335e-05,
+            "minimum_determinant_GPa2": 0.002201128031987986,
+            "maximum_determinant_GPa2": 2.0248469446993194,
             "determinant_changes_sign": false,
-            "angle_degrees": 32.75,
-            "minimum_symmetric_eigenvalue_GPa": -4.1158468547353166e-05,
-            "determinant_step_difference_GPa2": 2.0511030851197432e-10
+            "angle_degrees": 147.25,
+            "minimum_symmetric_eigenvalue_GPa": -3.429025268836261e-05,
+            "determinant_step_difference_GPa2": 2.757271598541333e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.39999999999999697,
-            "pressure_Pa": -18427621.89773383,
-            "gamma": 3.247184391379902e-05,
-            "minimum_determinant_GPa2": -0.008242682336873886,
-            "maximum_determinant_GPa2": 2.055545729917167,
+            "pressure_Pa": -18438118.586361673,
+            "gamma": 4.4793504367009694e-05,
+            "minimum_determinant_GPa2": -0.008345679935753199,
+            "maximum_determinant_GPa2": 2.0616992195417385,
+            "determinant_changes_sign": true,
+            "angle_degrees": 147.75,
+            "minimum_symmetric_eigenvalue_GPa": -0.006153193308983285,
+            "determinant_step_difference_GPa2": 4.783567326971383e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.49999999999999484,
+            "pressure_Pa": -14713333.322923062,
+            "gamma": 3.225339932591312e-05,
+            "minimum_determinant_GPa2": -0.009114555518619474,
+            "maximum_determinant_GPa2": 2.0854251620747672,
+            "determinant_changes_sign": true,
+            "angle_degrees": 148.5,
+            "minimum_symmetric_eigenvalue_GPa": -0.0067363026538026505,
+            "determinant_step_difference_GPa2": 1.754900721268049e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.6999999999999906,
+            "pressure_Pa": -9685009.09865824,
+            "gamma": 2.702735844766658e-05,
+            "minimum_determinant_GPa2": 0.00020174197816036474,
+            "maximum_determinant_GPa2": 2.1177967202507313,
+            "determinant_changes_sign": false,
+            "angle_degrees": 29.500000000000004,
+            "minimum_symmetric_eigenvalue_GPa": -0.001051711475811734,
+            "determinant_step_difference_GPa2": 9.793901998536754e-11
+          },
+          {
+            "element": 60,
+            "X": 0.5125,
+            "Y": 0.037500000000000006,
+            "time": 0.040000000000000015,
+            "pressure_Pa": 5837913.032571228,
+            "gamma": 0.0005450877926199692,
+            "minimum_determinant_GPa2": 0.06599664946513155,
+            "maximum_determinant_GPa2": 1.3753091862165945,
+            "determinant_changes_sign": false,
+            "angle_degrees": 38.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.03347950767841007,
+            "determinant_step_difference_GPa2": 3.2913378966714646e-10
+          },
+          {
+            "element": 60,
+            "X": 0.5125,
+            "Y": 0.037500000000000006,
+            "time": 0.10000000000000006,
+            "pressure_Pa": -6965921.655284368,
+            "gamma": 0.0006385045961850707,
+            "minimum_determinant_GPa2": 0.033156596678675536,
+            "maximum_determinant_GPa2": 1.5873440993154242,
+            "determinant_changes_sign": false,
+            "angle_degrees": 143.75,
+            "minimum_symmetric_eigenvalue_GPa": 0.016444557328635256,
+            "determinant_step_difference_GPa2": 2.0622952651150328e-10
+          },
+          {
+            "element": 60,
+            "X": 0.5125,
+            "Y": 0.037500000000000006,
+            "time": 0.20000000000000015,
+            "pressure_Pa": -24607625.516159557,
+            "gamma": 0.0007498390093961952,
+            "minimum_determinant_GPa2": 0.012701792982943159,
+            "maximum_determinant_GPa2": 2.003322620917889,
+            "determinant_changes_sign": false,
+            "angle_degrees": 33.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.005788449443481891,
+            "determinant_step_difference_GPa2": 3.249373044938997e-10
+          },
+          {
+            "element": 60,
+            "X": 0.5125,
+            "Y": 0.037500000000000006,
+            "time": 0.2999999999999991,
+            "pressure_Pa": -17323816.428567775,
+            "gamma": 7.060520331080334e-05,
+            "minimum_determinant_GPa2": -0.007933298048658975,
+            "maximum_determinant_GPa2": 2.062493257184559,
             "determinant_changes_sign": true,
             "angle_degrees": 32.0,
-            "minimum_symmetric_eigenvalue_GPa": -0.006083569102289688,
-            "determinant_step_difference_GPa2": 3.487792017003999e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.49999999999999484,
-            "pressure_Pa": -14714395.516767431,
-            "gamma": 2.3582502627207828e-05,
-            "minimum_determinant_GPa2": -0.009138355640461632,
-            "maximum_determinant_GPa2": 2.07528443300921,
-            "determinant_changes_sign": true,
-            "angle_degrees": 31.250000000000004,
-            "minimum_symmetric_eigenvalue_GPa": -0.006751875331693968,
-            "determinant_step_difference_GPa2": 8.519670385842559e-11
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.6999999999999906,
-            "pressure_Pa": -9691133.77772502,
-            "gamma": 2.2271084713935652e-05,
-            "minimum_determinant_GPa2": 0.0007278792560875566,
-            "maximum_determinant_GPa2": 2.104779946428691,
-            "determinant_changes_sign": false,
-            "angle_degrees": 29.999999999999996,
-            "minimum_symmetric_eigenvalue_GPa": -0.0007171934392480317,
-            "determinant_step_difference_GPa2": 6.445386211513179e-10
-          },
-          {
-            "element": 60,
-            "X": 0.5125,
-            "Y": 0.037500000000000006,
-            "time": 0.040000000000000015,
-            "pressure_Pa": 5842984.839674057,
-            "gamma": 0.000545239946149708,
-            "minimum_determinant_GPa2": 0.06592726051371274,
-            "maximum_determinant_GPa2": 1.375349152453769,
-            "determinant_changes_sign": false,
-            "angle_degrees": 141.75000000000003,
-            "minimum_symmetric_eigenvalue_GPa": 0.03344438082432155,
-            "determinant_step_difference_GPa2": 1.3231389595080856e-10
-          },
-          {
-            "element": 60,
-            "X": 0.5125,
-            "Y": 0.037500000000000006,
-            "time": 0.10000000000000006,
-            "pressure_Pa": -6954179.738409262,
-            "gamma": 0.0006386857581831425,
-            "minimum_determinant_GPa2": 0.03310698931161336,
-            "maximum_determinant_GPa2": 1.5873879004677742,
-            "determinant_changes_sign": false,
-            "angle_degrees": 36.25000000000001,
-            "minimum_symmetric_eigenvalue_GPa": 0.016419025348920313,
-            "determinant_step_difference_GPa2": 1.8370437809833717e-10
-          },
-          {
-            "element": 60,
-            "X": 0.5125,
-            "Y": 0.037500000000000006,
-            "time": 0.20000000000000015,
-            "pressure_Pa": -24584065.945767045,
-            "gamma": 0.0007500335983367945,
-            "minimum_determinant_GPa2": 0.012672608127184057,
-            "maximum_determinant_GPa2": 2.003367299529754,
-            "determinant_changes_sign": false,
-            "angle_degrees": 146.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.005772635891737377,
-            "determinant_step_difference_GPa2": 4.983291019416969e-10
-          },
-          {
-            "element": 60,
-            "X": 0.5125,
-            "Y": 0.037500000000000006,
-            "time": 0.2999999999999991,
-            "pressure_Pa": -17308251.388617516,
-            "gamma": 7.249370191093322e-05,
-            "minimum_determinant_GPa2": -0.007932795783742223,
-            "maximum_determinant_GPa2": 2.062551785018063,
-            "determinant_changes_sign": true,
-            "angle_degrees": 148.0,
-            "minimum_symmetric_eigenvalue_GPa": -0.005919741971147252,
-            "determinant_step_difference_GPa2": 3.794507312526729e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.005919385388606924,
+            "determinant_step_difference_GPa2": 1.6823975025614946e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.39999999999999697,
-            "pressure_Pa": -13288272.815737553,
-            "gamma": 3.8651277726979394e-05,
-            "minimum_determinant_GPa2": -0.00881668220499146,
-            "maximum_determinant_GPa2": 2.092682819024608,
+            "pressure_Pa": -13296665.932311466,
+            "gamma": 1.67900872237812e-05,
+            "minimum_determinant_GPa2": -0.008787403064064154,
+            "maximum_determinant_GPa2": 2.0883013353017397,
             "determinant_changes_sign": true,
-            "angle_degrees": 31.0,
-            "minimum_symmetric_eigenvalue_GPa": -0.006600970162624453,
-            "determinant_step_difference_GPa2": 2.5046096273351193e-10
+            "angle_degrees": 148.75,
+            "minimum_symmetric_eigenvalue_GPa": -0.0065669581440487845,
+            "determinant_step_difference_GPa2": 5.435066997155902e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.49999999999999484,
-            "pressure_Pa": -10528670.585124407,
-            "gamma": 4.203623553205245e-05,
-            "minimum_determinant_GPa2": -0.005245274518511446,
-            "maximum_determinant_GPa2": 2.114578686661037,
+            "pressure_Pa": -10527955.04429892,
+            "gamma": 2.2011465530770372e-05,
+            "minimum_determinant_GPa2": -0.004228966443536532,
+            "maximum_determinant_GPa2": 2.103832560744922,
             "determinant_changes_sign": true,
-            "angle_degrees": 149.50000000000003,
-            "minimum_symmetric_eigenvalue_GPa": -0.004478012670476317,
-            "determinant_step_difference_GPa2": 5.651394829539469e-10
+            "angle_degrees": 149.25,
+            "minimum_symmetric_eigenvalue_GPa": -0.0038426020325872945,
+            "determinant_step_difference_GPa2": 5.633682019154373e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999906,
-            "pressure_Pa": -6890328.929268284,
-            "gamma": 2.4716051619373318e-05,
-            "minimum_determinant_GPa2": 0.0035799038943742745,
-            "maximum_determinant_GPa2": 2.143576350404392,
+            "pressure_Pa": -6886791.510962256,
+            "gamma": 2.7839958958266435e-05,
+            "minimum_determinant_GPa2": 0.005767436648093534,
+            "maximum_determinant_GPa2": 2.128984318253323,
             "determinant_changes_sign": false,
-            "angle_degrees": 150.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.0011724556122403307,
-            "determinant_step_difference_GPa2": 9.088099092724455e-10
+            "angle_degrees": 29.500000000000004,
+            "minimum_symmetric_eigenvalue_GPa": 0.0025938506091640057,
+            "determinant_step_difference_GPa2": 1.0197379052279132e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.040000000000000015,
-            "pressure_Pa": 1997502.344231956,
-            "gamma": 0.0005655244461657232,
-            "minimum_determinant_GPa2": 0.12583613594533055,
-            "maximum_determinant_GPa2": 1.3479357598044663,
+            "pressure_Pa": 1995114.0587426887,
+            "gamma": 0.0005654244754689716,
+            "minimum_determinant_GPa2": 0.12588322983946187,
+            "maximum_determinant_GPa2": 1.3479184223475895,
             "determinant_changes_sign": false,
             "angle_degrees": 39.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.06347523733776655,
-            "determinant_step_difference_GPa2": 5.546980375026322e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.06349855268798388,
+            "determinant_step_difference_GPa2": 9.50625023143914e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000006,
-            "pressure_Pa": -4290192.387145204,
-            "gamma": 0.0008083534848038784,
-            "minimum_determinant_GPa2": 0.010290563654660015,
-            "maximum_determinant_GPa2": 1.6139300424541574,
+            "pressure_Pa": -4295955.646001106,
+            "gamma": 0.0008082482558446979,
+            "minimum_determinant_GPa2": 0.010307495699833956,
+            "maximum_determinant_GPa2": 1.6139056686521396,
             "determinant_changes_sign": false,
-            "angle_degrees": 144.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.0042884125156107955,
-            "determinant_step_difference_GPa2": 3.538050564327877e-10
+            "angle_degrees": 35.75,
+            "minimum_symmetric_eigenvalue_GPa": 0.004297588558026977,
+            "determinant_step_difference_GPa2": 6.008303091165068e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000015,
-            "pressure_Pa": -11117031.101790924,
-            "gamma": 0.0009293941231736036,
-            "minimum_determinant_GPa2": -0.0036143897892092582,
-            "maximum_determinant_GPa2": 2.041039277116378,
+            "pressure_Pa": -11127767.89074516,
+            "gamma": 0.0009292967316426843,
+            "minimum_determinant_GPa2": -0.003610085737662727,
+            "maximum_determinant_GPa2": 2.0410231391362696,
             "determinant_changes_sign": true,
-            "angle_degrees": 148.25,
-            "minimum_symmetric_eigenvalue_GPa": -0.003403354222071664,
-            "determinant_step_difference_GPa2": 1.7466268579027777e-10
+            "angle_degrees": 31.750000000000007,
+            "minimum_symmetric_eigenvalue_GPa": -0.0034007352279623593,
+            "determinant_step_difference_GPa2": 1.15250916449261e-11
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.2999999999999991,
-            "pressure_Pa": -5665181.182342915,
-            "gamma": 3.325885906116646e-05,
-            "minimum_determinant_GPa2": -0.007788482840478301,
-            "maximum_determinant_GPa2": 2.097913113894044,
+            "pressure_Pa": -5670411.298232518,
+            "gamma": 3.3807311624512284e-05,
+            "minimum_determinant_GPa2": -0.007786721409002952,
+            "maximum_determinant_GPa2": 2.0979290519661964,
             "determinant_changes_sign": true,
-            "angle_degrees": 30.5,
-            "minimum_symmetric_eigenvalue_GPa": -0.006103805931712614,
-            "determinant_step_difference_GPa2": 2.1199484442208094e-10
+            "angle_degrees": 149.50000000000003,
+            "minimum_symmetric_eigenvalue_GPa": -0.006102739586350825,
+            "determinant_step_difference_GPa2": 6.490874331077645e-11
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.39999999999999697,
-            "pressure_Pa": -4223681.5559266005,
-            "gamma": 1.2869422561890828e-05,
-            "minimum_determinant_GPa2": -0.005579066754910864,
-            "maximum_determinant_GPa2": 2.111032940349666,
+            "pressure_Pa": -4226682.06851395,
+            "gamma": 1.0917094864406787e-05,
+            "minimum_determinant_GPa2": -0.005864675221542623,
+            "maximum_determinant_GPa2": 2.1123685552652485,
             "determinant_changes_sign": true,
             "angle_degrees": 149.75,
-            "minimum_symmetric_eigenvalue_GPa": -0.004753895376185313,
-            "determinant_step_difference_GPa2": 1.305655470892897e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.004933777212216828,
+            "determinant_step_difference_GPa2": 5.515778805920135e-13
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.49999999999999484,
-            "pressure_Pa": -3316308.1897020456,
-            "gamma": 1.4063808726023416e-05,
-            "minimum_determinant_GPa2": -0.0035394150191332195,
-            "maximum_determinant_GPa2": 2.1197976561837875,
+            "pressure_Pa": -3315930.0013882946,
+            "gamma": 6.865285358831582e-06,
+            "minimum_determinant_GPa2": -0.003632243064100184,
+            "maximum_determinant_GPa2": 2.1199300567126524,
             "determinant_changes_sign": true,
-            "angle_degrees": 150.00000000000003,
-            "minimum_symmetric_eigenvalue_GPa": -0.003464896459779432,
-            "determinant_step_difference_GPa2": 4.919952206056122e-10
+            "angle_degrees": 149.75,
+            "minimum_symmetric_eigenvalue_GPa": -0.0035218787131942597,
+            "determinant_step_difference_GPa2": 8.305680739527366e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999906,
-            "pressure_Pa": -2153240.4541296363,
-            "gamma": 7.886356516070133e-06,
-            "minimum_determinant_GPa2": -0.00046995843132009127,
-            "maximum_determinant_GPa2": 2.131253864567171,
+            "pressure_Pa": -2152148.18287831,
+            "gamma": 8.456389043935463e-06,
+            "minimum_determinant_GPa2": -0.00027717340622896455,
+            "maximum_determinant_GPa2": 2.130577731651075,
             "determinant_changes_sign": true,
-            "angle_degrees": 29.500000000000004,
-            "minimum_symmetric_eigenvalue_GPa": -0.0014698479710183454,
-            "determinant_step_difference_GPa2": 1.1930250082108074e-12
+            "angle_degrees": 29.25,
+            "minimum_symmetric_eigenvalue_GPa": -0.0013406380791565753,
+            "determinant_step_difference_GPa2": 1.1636485281211681e-10
           }
         ]
       },
       "spatial_structure": {
         "delta_b": {
-          "maximum_transverse_rms": 0.00044832660484548086,
-          "final_x_second_difference_rms": 0.0006722048609317156
+          "maximum_transverse_rms": 0.0004012997258360274,
+          "final_x_second_difference_rms": 0.0005502486382411852
         },
         "ap": {
-          "maximum_transverse_rms": 0.002771969038165944,
-          "final_x_second_difference_rms": 0.004162640643220967
+          "maximum_transverse_rms": 0.0024763140818476574,
+          "final_x_second_difference_rms": 0.003400943981963796
         },
         "gamma": {
-          "maximum_transverse_rms": 3.2656195450979586e-05,
-          "final_x_second_difference_rms": 1.6185568603195945e-05
+          "maximum_transverse_rms": 3.2107103544990334e-05,
+          "final_x_second_difference_rms": 1.2421243341253033e-05
         }
       },
       "mass": {
-        "max_relative_mass_defect": 0.004950680445152723,
-        "max_relative_reaction_mass_defect": 0.0002517932774888543,
-        "final_relative_mass_defect": 0.004950680445152723,
-        "max_relative_chain_rule_defect": 0.00025179327781614806,
-        "solid_mass_l2": 0.00012236217039171,
-        "mineral_eos_l2": 4.8371420317185e-17
+        "max_relative_mass_defect": 0.00523852596824157,
+        "max_relative_reaction_mass_defect": 3.284883476339929e-12,
+        "final_relative_mass_defect": 0.00523852596824157,
+        "max_relative_discrete_storage_defect": 5.271338920920244e-14,
+        "solid_mass_l2": 1.8951260360696e-17,
+        "mineral_eos_l2": 4.842067061019e-17
       },
       "maximum_nodal_transverse_rms": {
-        "p": 2438.613797213637,
-        "solid_spatial_mass_ratio": 0.003541004942458016
+        "p": 2799.8291889752195
       },
-      "final_average_delta_B": 0.0080964755474556,
-      "csv_sha256": "595492b9c31b7458848950836b27f353f902175a6e9e1499712cad37f63a4225",
+      "final_average_delta_B": 0.0080957016676083,
+      "csv_sha256": "9ec3c978bd48d5bc023167aa910133c041346513888d71585927496124c9b583",
       "command": [
         "mpiexec",
         "-n",
-        "8",
+        "2",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -785,11 +783,11 @@
         "dilation_slope=0.4"
       ],
       "run_manifest": {
-        "signature": "a0cfe8f3291e5afa19262a82a2836436ffea918ae5fb037e644cdfcc41bb638e",
+        "signature": "f6689ab54bf502773a7a24c360c5c550d6fe574e77067de613cdef9e6fde5e71",
         "completed": true,
         "execution_provenance": {
           "schema_version": 1,
-          "captured_at_utc": "2026-09-18T23:12:25.658613+00:00",
+          "captured_at_utc": "2026-09-23T19:21:17.244913+00:00",
           "python": "3.14.0",
           "packages": {
             "numpy": "2.4.2",
@@ -820,12 +818,12 @@
           "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
           "executable": {
             "path": "moose_app/nonlinear_biot_ad-opt",
-            "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
           },
           "command": [
             "mpiexec",
             "-n",
-            "8",
+            "2",
             "moose_app/nonlinear_biot_ad-opt",
             "-i",
             "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -841,7 +839,7 @@
             "dilation_slope=0.4"
           ],
           "outputs": {
-            ".agent-runtime/poroplastic-mandel/diagnostic_half_dt_mpi.csv": "595492b9c31b7458848950836b27f353f902175a6e9e1499712cad37f63a4225"
+            ".agent-runtime/poroplastic-mandel/diagnostic_half_dt_mpi.csv": "9ec3c978bd48d5bc023167aa910133c041346513888d71585927496124c9b583"
           }
         }
       }
@@ -857,7 +855,7 @@
       },
       "acoustic": {
         "case": "diagnostic_associated_mpi",
-        "exodus_sha256": "74134bf70b1f54d10d0ccc051615620d2fad8091a26e0bee19708cf92f80924c",
+        "exodus_sha256": "501e83ef8d86fd74fb4a0e79adafb54d4705078da5c0f8c12a10851be9daa6ce",
         "hardening_modulus_Pa": 0.0,
         "dilation_slope": 0.6,
         "sampled_point": "element central Gauss point",
@@ -869,329 +867,328 @@
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.04,
-            "pressure_Pa": 5053671.3136268435,
-            "gamma": 0.0010618531021378303,
-            "minimum_determinant_GPa2": 0.07523718494149104,
-            "maximum_determinant_GPa2": 1.4365028362688026,
+            "pressure_Pa": 5043770.857020492,
+            "gamma": 0.001061187762066838,
+            "minimum_determinant_GPa2": 0.07539493685535062,
+            "maximum_determinant_GPa2": 1.4364258288328704,
             "determinant_changes_sign": false,
             "angle_degrees": 36.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.041213780001245814,
-            "determinant_step_difference_GPa2": 1.538343064044767e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.04129613334641313,
+            "determinant_step_difference_GPa2": 2.574770813223992e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000005,
-            "pressure_Pa": -12989252.139929358,
-            "gamma": 0.0011042862320256473,
-            "minimum_determinant_GPa2": 0.056025168801830026,
-            "maximum_determinant_GPa2": 1.6427285963286107,
+            "pressure_Pa": -13011375.227736983,
+            "gamma": 0.0011035940510803767,
+            "minimum_determinant_GPa2": 0.05615010443439598,
+            "maximum_determinant_GPa2": 1.6426511467634777,
             "determinant_changes_sign": false,
-            "angle_degrees": 35.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.03089965262515565,
-            "determinant_step_difference_GPa2": 3.140603055395985e-10
+            "angle_degrees": 144.75,
+            "minimum_symmetric_eigenvalue_GPa": 0.030965046361126236,
+            "determinant_step_difference_GPa2": 6.911280922561325e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000012,
-            "pressure_Pa": -43034354.59153109,
-            "gamma": 0.0012644893624920437,
-            "minimum_determinant_GPa2": 0.04012044985022886,
-            "maximum_determinant_GPa2": 2.0594936197736833,
+            "pressure_Pa": -43081292.92197501,
+            "gamma": 0.0012636762949627357,
+            "minimum_determinant_GPa2": 0.04023011830328638,
+            "maximum_determinant_GPa2": 2.059399808076124,
             "determinant_changes_sign": false,
             "angle_degrees": 147.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.02246915442023467,
-            "determinant_step_difference_GPa2": 4.5657713720892446e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.022526392776544668,
+            "determinant_step_difference_GPa2": 3.7840432176583505e-11
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.3000000000000002,
-            "pressure_Pa": -37156729.18639313,
-            "gamma": 0.00017651716988794044,
-            "minimum_determinant_GPa2": 0.012448397521292788,
-            "maximum_determinant_GPa2": 2.0935043343074,
+            "pressure_Pa": -37193595.6377351,
+            "gamma": 0.00017672441907313742,
+            "minimum_determinant_GPa2": 0.012489664379109488,
+            "maximum_determinant_GPa2": 2.0934442845425023,
             "determinant_changes_sign": false,
             "angle_degrees": 31.750000000000007,
-            "minimum_symmetric_eigenvalue_GPa": 0.007251538407683389,
-            "determinant_step_difference_GPa2": 1.9601066429675296e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.007274782587387951,
+            "determinant_step_difference_GPa2": 1.8489248673758674e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.4000000000000003,
-            "pressure_Pa": -31092342.682104476,
-            "gamma": 0.0001718583782426519,
-            "minimum_determinant_GPa2": -0.00332607644654646,
-            "maximum_determinant_GPa2": 2.1316422703856994,
+            "pressure_Pa": -31120797.329871397,
+            "gamma": 0.0001720297199437903,
+            "minimum_determinant_GPa2": -0.003319657553816186,
+            "maximum_determinant_GPa2": 2.1316153874987087,
             "determinant_changes_sign": true,
             "angle_degrees": 30.750000000000004,
-            "minimum_symmetric_eigenvalue_GPa": -0.0020298766557542147,
-            "determinant_step_difference_GPa2": 1.5007574826961245e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.00202578571064993,
+            "determinant_step_difference_GPa2": 5.698840570451946e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.5000000000000003,
-            "pressure_Pa": -26326055.44302259,
-            "gamma": 0.0002108105351110565,
-            "minimum_determinant_GPa2": -0.006365177628810559,
-            "maximum_determinant_GPa2": 2.1637571581961472,
+            "pressure_Pa": -26349018.62508976,
+            "gamma": 0.00021092099502089607,
+            "minimum_determinant_GPa2": -0.006366793659965131,
+            "maximum_determinant_GPa2": 2.163725648404131,
             "determinant_changes_sign": true,
             "angle_degrees": 29.75,
-            "minimum_symmetric_eigenvalue_GPa": -0.004064686654019045,
-            "determinant_step_difference_GPa2": 1.4109613286766853e-09
+            "minimum_symmetric_eigenvalue_GPa": -0.004065416671800937,
+            "determinant_step_difference_GPa2": 7.176996063423813e-11
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999961,
-            "pressure_Pa": -19560010.085674416,
-            "gamma": 0.00011635417902867297,
-            "minimum_determinant_GPa2": 0.0005684410823117699,
-            "maximum_determinant_GPa2": 2.217780578760642,
+            "pressure_Pa": -19576358.52738231,
+            "gamma": 0.0001164205923974562,
+            "minimum_determinant_GPa2": 0.0005740408039967557,
+            "maximum_determinant_GPa2": 2.2177643963103426,
             "determinant_changes_sign": false,
             "angle_degrees": 28.250000000000004,
-            "minimum_symmetric_eigenvalue_GPa": 0.00039075554160089565,
-            "determinant_step_difference_GPa2": 1.0576763943836998e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.00039458667173364326,
+            "determinant_step_difference_GPa2": 5.804576280353177e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.04,
-            "pressure_Pa": 4289619.9582521105,
-            "gamma": 0.0010068726087927129,
-            "minimum_determinant_GPa2": 0.08803655493582051,
-            "maximum_determinant_GPa2": 1.4305306593425495,
+            "pressure_Pa": 4281048.167069859,
+            "gamma": 0.001006331976769638,
+            "minimum_determinant_GPa2": 0.08818339078824593,
+            "maximum_determinant_GPa2": 1.4304658016376797,
             "determinant_changes_sign": false,
             "angle_degrees": 143.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.047876240121785874,
-            "determinant_step_difference_GPa2": 1.4462889219579722e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.04795233251067321,
+            "determinant_step_difference_GPa2": 5.99965216396825e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000005,
-            "pressure_Pa": -12870868.245686699,
-            "gamma": 0.001201685616224836,
-            "minimum_determinant_GPa2": 0.05042856667152878,
-            "maximum_determinant_GPa2": 1.6466774508618367,
+            "pressure_Pa": -12890928.58150006,
+            "gamma": 0.0012009904044995008,
+            "minimum_determinant_GPa2": 0.05054294872487169,
+            "maximum_determinant_GPa2": 1.6466022655963266,
             "determinant_changes_sign": false,
-            "angle_degrees": 35.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.027900316732122954,
-            "determinant_step_difference_GPa2": 2.432711670996568e-11
+            "angle_degrees": 145.00000000000003,
+            "minimum_symmetric_eigenvalue_GPa": 0.027959685705604698,
+            "determinant_step_difference_GPa2": 5.629777893867427e-11
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000012,
-            "pressure_Pa": -37646222.16287811,
-            "gamma": 0.0014534677232966018,
-            "minimum_determinant_GPa2": 0.02245302019169273,
-            "maximum_determinant_GPa2": 2.0783205529093514,
+            "pressure_Pa": -37687807.15276766,
+            "gamma": 0.0014526740821931977,
+            "minimum_determinant_GPa2": 0.022525202592473856,
+            "maximum_determinant_GPa2": 2.078236239586428,
             "determinant_changes_sign": false,
             "angle_degrees": 148.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.012943173582572853,
-            "determinant_step_difference_GPa2": 1.4919984345218573e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.012981964817967595,
+            "determinant_step_difference_GPa2": 1.5203908965144564e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.3000000000000002,
-            "pressure_Pa": -28405398.103670094,
-            "gamma": 0.000224428462512329,
-            "minimum_determinant_GPa2": -0.004536553565516425,
-            "maximum_determinant_GPa2": 2.137640891390304,
+            "pressure_Pa": -28433345.847614378,
+            "gamma": 0.00022465663133705365,
+            "minimum_determinant_GPa2": -0.004531804456842128,
+            "maximum_determinant_GPa2": 2.137610625308157,
             "determinant_changes_sign": true,
             "angle_degrees": 149.50000000000003,
-            "minimum_symmetric_eigenvalue_GPa": -0.0028092723828838095,
-            "determinant_step_difference_GPa2": 6.705532127823655e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.0028060860808883925,
+            "determinant_step_difference_GPa2": 1.7111158323590558e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.4000000000000003,
-            "pressure_Pa": -22991789.96110878,
-            "gamma": 0.00016954413618766614,
-            "minimum_determinant_GPa2": -0.005430108546614059,
-            "maximum_determinant_GPa2": 2.1730532618377136,
+            "pressure_Pa": -23013161.638139077,
+            "gamma": 0.00016971892148523628,
+            "minimum_determinant_GPa2": -0.005432092040790964,
+            "maximum_determinant_GPa2": 2.1730513467415475,
             "determinant_changes_sign": true,
             "angle_degrees": 29.25,
-            "minimum_symmetric_eigenvalue_GPa": -0.003554774523037485,
-            "determinant_step_difference_GPa2": 5.283193240529505e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.003555842939473697,
+            "determinant_step_difference_GPa2": 3.368688253693741e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.5000000000000003,
-            "pressure_Pa": -19231604.495197214,
-            "gamma": 0.00011924485132306228,
-            "minimum_determinant_GPa2": -0.000550119822339252,
-            "maximum_determinant_GPa2": 2.1955817417848573,
+            "pressure_Pa": -19248792.18459923,
+            "gamma": 0.00011967663149411355,
+            "minimum_determinant_GPa2": -0.0005491480936182082,
+            "maximum_determinant_GPa2": 2.1956026170099157,
             "determinant_changes_sign": true,
             "angle_degrees": 151.5,
-            "minimum_symmetric_eigenvalue_GPa": -0.00037438071712775356,
-            "determinant_step_difference_GPa2": 4.287013341975482e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.00037369969998879426,
+            "determinant_step_difference_GPa2": 9.024463511544956e-11
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999961,
-            "pressure_Pa": -14117900.038192738,
-            "gamma": 9.784003857385178e-05,
-            "minimum_determinant_GPa2": 0.01094905410141145,
-            "maximum_determinant_GPa2": 2.220457329825897,
+            "pressure_Pa": -14129918.964326305,
+            "gamma": 9.792993442540071e-05,
+            "minimum_determinant_GPa2": 0.010959669698928998,
+            "maximum_determinant_GPa2": 2.2204911378418823,
             "determinant_changes_sign": false,
             "angle_degrees": 27.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.007929528024734345,
-            "determinant_step_difference_GPa2": 7.621055817669253e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.007936952060875302,
+            "determinant_step_difference_GPa2": 3.1388236107487977e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.04,
-            "pressure_Pa": 1169348.171195968,
-            "gamma": 0.0010912983996927224,
-            "minimum_determinant_GPa2": 0.14652315474546337,
-            "maximum_determinant_GPa2": 1.4092058501264728,
+            "pressure_Pa": 1165157.9227331108,
+            "gamma": 0.0010908825088356666,
+            "minimum_determinant_GPa2": 0.146618427561945,
+            "maximum_determinant_GPa2": 1.4091768465732581,
             "determinant_changes_sign": false,
             "angle_degrees": 142.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.07760466069549798,
-            "determinant_step_difference_GPa2": 2.780513319589062e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.0776523804645019,
+            "determinant_step_difference_GPa2": 2.6942809094876452e-11
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000005,
-            "pressure_Pa": -7584614.054607344,
-            "gamma": 0.0017214983961445602,
-            "minimum_determinant_GPa2": 0.01209385971642067,
-            "maximum_determinant_GPa2": 1.6820200265720628,
+            "pressure_Pa": -7595309.405904416,
+            "gamma": 0.0017209949698421872,
+            "minimum_determinant_GPa2": 0.012128654731491705,
+            "maximum_determinant_GPa2": 1.6819750819061752,
             "determinant_changes_sign": false,
             "angle_degrees": 146.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.007005512048657514,
-            "determinant_step_difference_GPa2": 5.527260506926757e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.00702533089372781,
+            "determinant_step_difference_GPa2": 5.5647724275798005e-11
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000012,
-            "pressure_Pa": -17769567.741125353,
-            "gamma": 0.0020324778798389595,
-            "minimum_determinant_GPa2": -0.0026742155534032995,
-            "maximum_determinant_GPa2": 2.127695156858861,
+            "pressure_Pa": -17790156.896038234,
+            "gamma": 0.002031990005648765,
+            "minimum_determinant_GPa2": -0.002667109349378644,
+            "maximum_determinant_GPa2": 2.1276653197062565,
             "determinant_changes_sign": true,
-            "angle_degrees": 29.75,
-            "minimum_symmetric_eigenvalue_GPa": -0.0017313230927948342,
-            "determinant_step_difference_GPa2": 3.1623763200108734e-10
+            "angle_degrees": 150.25,
+            "minimum_symmetric_eigenvalue_GPa": -0.0017265986924724919,
+            "determinant_step_difference_GPa2": 9.380291552188447e-11
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.3000000000000002,
-            "pressure_Pa": -9786759.365966488,
-            "gamma": 0.00014138950286371485,
-            "minimum_determinant_GPa2": -0.0004568099992749132,
-            "maximum_determinant_GPa2": 2.1924040149230932,
+            "pressure_Pa": -9796609.982862154,
+            "gamma": 0.00014155862787156547,
+            "minimum_determinant_GPa2": -0.0004498680840037829,
+            "maximum_determinant_GPa2": 2.192434364154958,
             "determinant_changes_sign": true,
             "angle_degrees": 152.25,
-            "minimum_symmetric_eigenvalue_GPa": -0.0003261577047855013,
-            "determinant_step_difference_GPa2": 3.6643007757849316e-10
+            "minimum_symmetric_eigenvalue_GPa": -0.00032119490051352173,
+            "determinant_step_difference_GPa2": 3.4553569993331715e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.4000000000000003,
-            "pressure_Pa": -7573346.109106353,
-            "gamma": 7.820710287577367e-05,
-            "minimum_determinant_GPa2": 0.004811644223335131,
-            "maximum_determinant_GPa2": 2.2077325720709635,
+            "pressure_Pa": -7580641.3317509,
+            "gamma": 7.83028274738846e-05,
+            "minimum_determinant_GPa2": 0.004825732640409726,
+            "maximum_determinant_GPa2": 2.207771318167629,
             "determinant_changes_sign": false,
-            "angle_degrees": 153.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.0035557155859994305,
-            "determinant_step_difference_GPa2": 2.4230288175192127e-10
+            "angle_degrees": 27.0,
+            "minimum_symmetric_eigenvalue_GPa": 0.0035661046942166985,
+            "determinant_step_difference_GPa2": 5.626121964141806e-12
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.5000000000000003,
-            "pressure_Pa": -6229262.495026124,
-            "gamma": 5.5798154543463743e-05,
-            "minimum_determinant_GPa2": 0.00853946212295862,
-            "maximum_determinant_GPa2": 2.2160968332424296,
+            "pressure_Pa": -6235031.735797984,
+            "gamma": 5.585888661649045e-05,
+            "minimum_determinant_GPa2": 0.008557852170037373,
+            "maximum_determinant_GPa2": 2.2161387008507583,
             "determinant_changes_sign": false,
             "angle_degrees": 153.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.006419189321899832,
-            "determinant_step_difference_GPa2": 1.0375258915895635e-09
+            "minimum_symmetric_eigenvalue_GPa": 0.006433264975601705,
+            "determinant_step_difference_GPa2": 1.7164838127248228e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999961,
-            "pressure_Pa": -4498429.787021952,
-            "gamma": 3.479051897672418e-05,
-            "minimum_determinant_GPa2": 0.013606729430352842,
-            "maximum_determinant_GPa2": 2.2257165367064244,
+            "pressure_Pa": -4502368.167645607,
+            "gamma": 3.482871517179374e-05,
+            "minimum_determinant_GPa2": 0.013630026625248108,
+            "maximum_determinant_GPa2": 2.2257595571905853,
             "determinant_changes_sign": false,
             "angle_degrees": 154.00000000000003,
-            "minimum_symmetric_eigenvalue_GPa": 0.01049936593322981,
-            "determinant_step_difference_GPa2": 3.9023028385043457e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.01051777984129637,
+            "determinant_step_difference_GPa2": 2.9291135489328823e-11
           }
         ]
       },
       "spatial_structure": {
         "delta_b": {
-          "maximum_transverse_rms": 0.00024815549079896105,
-          "final_x_second_difference_rms": 0.00039867903951897195
+          "maximum_transverse_rms": 0.00024757787120287115,
+          "final_x_second_difference_rms": 0.0003976936036755288
         },
         "ap": {
-          "maximum_transverse_rms": 0.0015931273094426637,
-          "final_x_second_difference_rms": 0.002564774825685696
+          "maximum_transverse_rms": 0.0015893114065427864,
+          "final_x_second_difference_rms": 0.002558264566622812
         },
         "gamma": {
-          "maximum_transverse_rms": 5.1023014516823076e-05,
-          "final_x_second_difference_rms": 2.7837214837386905e-06
+          "maximum_transverse_rms": 5.1014298590281376e-05,
+          "final_x_second_difference_rms": 2.8096129678143873e-06
         }
       },
       "mass": {
-        "max_relative_mass_defect": 0.010562358029355947,
-        "max_relative_reaction_mass_defect": 0.0006544622239225363,
-        "final_relative_mass_defect": 0.010562358029355947,
-        "max_relative_chain_rule_defect": 0.0006544622241164256,
-        "solid_mass_l2": 7.5275646888785e-05,
-        "mineral_eos_l2": 4.7702755793549e-17
+        "max_relative_mass_defect": 0.011234943921495601,
+        "max_relative_reaction_mass_defect": 8.987477428945569e-13,
+        "final_relative_mass_defect": 0.011234943921495601,
+        "max_relative_discrete_storage_defect": 5.0848214527832176e-14,
+        "solid_mass_l2": 1.9275938830298e-17,
+        "mineral_eos_l2": 4.6940716294447e-17
       },
       "maximum_nodal_transverse_rms": {
-        "p": 2511.0318915832213,
-        "solid_spatial_mass_ratio": 0.0018252877996393715
+        "p": 2510.4975023588163
       },
-      "final_average_delta_B": 0.012939460024799,
-      "csv_sha256": "623227fd7f863cebc295f09da131f65341b913db912b23cc2d4d6a6139bf38ec",
+      "final_average_delta_B": 0.012937976654829,
+      "csv_sha256": "eaa510acaed97a2fdb4ab001191cb914c4cea4bf170e099b0152d2a90fd8a66e",
       "command": [
         "mpiexec",
         "-n",
-        "8",
+        "2",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -1207,11 +1204,11 @@
         "dilation_slope=0.6"
       ],
       "run_manifest": {
-        "signature": "7a15030d8fd403824e09f86e715e9f56eefc3803189304e1d87dda863d8fe19e",
+        "signature": "fd2e896cb3ddfdf0debb3a820a9d049690938fafa0f2237eda7f8efb8aa39374",
         "completed": true,
         "execution_provenance": {
           "schema_version": 1,
-          "captured_at_utc": "2026-09-18T23:27:01.919464+00:00",
+          "captured_at_utc": "2026-09-23T19:18:14.447704+00:00",
           "python": "3.14.0",
           "packages": {
             "numpy": "2.4.2",
@@ -1242,12 +1239,12 @@
           "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
           "executable": {
             "path": "moose_app/nonlinear_biot_ad-opt",
-            "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
           },
           "command": [
             "mpiexec",
             "-n",
-            "8",
+            "2",
             "moose_app/nonlinear_biot_ad-opt",
             "-i",
             "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -1263,7 +1260,7 @@
             "dilation_slope=0.6"
           ],
           "outputs": {
-            ".agent-runtime/poroplastic-mandel/diagnostic_associated_mpi.csv": "623227fd7f863cebc295f09da131f65341b913db912b23cc2d4d6a6139bf38ec"
+            ".agent-runtime/poroplastic-mandel/diagnostic_associated_mpi.csv": "eaa510acaed97a2fdb4ab001191cb914c4cea4bf170e099b0152d2a90fd8a66e"
           }
         }
       }
@@ -1279,7 +1276,7 @@
       },
       "acoustic": {
         "case": "hardening_coarse",
-        "exodus_sha256": "e7faef63fa0fad18e45dc6122cf1723f5ba0638c8cfa48af3be7147b68abc2d2",
+        "exodus_sha256": "e52fcd1763daf88145745c21c7c4769fda3d259254c783ea22dbe64c911be009",
         "hardening_modulus_Pa": 100000000.0,
         "dilation_slope": 0.4,
         "sampled_point": "element central Gauss point",
@@ -1291,329 +1288,328 @@
             "X": 0.125,
             "Y": 0.025,
             "time": 0.04,
-            "pressure_Pa": 7456955.236837523,
-            "gamma": 0.0011088235170619725,
-            "minimum_determinant_GPa2": 0.11151010297042235,
-            "maximum_determinant_GPa2": 1.389500650648546,
+            "pressure_Pa": 7444302.018924299,
+            "gamma": 0.0011081154234634668,
+            "minimum_determinant_GPa2": 0.1116544381045948,
+            "maximum_determinant_GPa2": 1.3894116856201602,
             "determinant_changes_sign": false,
-            "angle_degrees": 38.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.05784307298463942,
-            "determinant_step_difference_GPa2": 1.55681786906392e-10
+            "angle_degrees": 142.0,
+            "minimum_symmetric_eigenvalue_GPa": 0.057913923797631994,
+            "determinant_step_difference_GPa2": 1.5383373741517659e-10
           },
           {
             "element": 2,
             "X": 0.125,
             "Y": 0.025,
             "time": 0.10000000000000005,
-            "pressure_Pa": -3857544.294103514,
-            "gamma": 0.0011468647210532675,
-            "minimum_determinant_GPa2": 0.09384925491239972,
-            "maximum_determinant_GPa2": 1.5881997687051623,
+            "pressure_Pa": -3886030.216097311,
+            "gamma": 0.0011461535965419242,
+            "minimum_determinant_GPa2": 0.09396373731037524,
+            "maximum_determinant_GPa2": 1.5881157232989902,
             "determinant_changes_sign": false,
-            "angle_degrees": 36.25000000000001,
-            "minimum_symmetric_eigenvalue_GPa": 0.0489286835894413,
-            "determinant_step_difference_GPa2": 8.029692188937787e-11
+            "angle_degrees": 143.75,
+            "minimum_symmetric_eigenvalue_GPa": 0.04898400332123193,
+            "determinant_step_difference_GPa2": 2.3263975468257314e-10
           },
           {
             "element": 2,
             "X": 0.125,
             "Y": 0.025,
             "time": 0.20000000000000012,
-            "pressure_Pa": -22092704.63283526,
-            "gamma": 0.0012910795851781586,
-            "minimum_determinant_GPa2": 0.07856276582466083,
-            "maximum_determinant_GPa2": 1.9857774292836339,
+            "pressure_Pa": -22150491.64918439,
+            "gamma": 0.0012903046128468626,
+            "minimum_determinant_GPa2": 0.07866691237426335,
+            "maximum_determinant_GPa2": 1.9856885737633694,
             "determinant_changes_sign": false,
             "angle_degrees": 33.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.041615149890601943,
-            "determinant_step_difference_GPa2": 4.241273998673023e-12
+            "minimum_symmetric_eigenvalue_GPa": 0.041662609314773336,
+            "determinant_step_difference_GPa2": 5.358026661239634e-10
           },
           {
             "element": 2,
             "X": 0.125,
             "Y": 0.025,
             "time": 0.3000000000000002,
-            "pressure_Pa": -17560379.79378154,
-            "gamma": 0.00010562312351736688,
-            "minimum_determinant_GPa2": 0.05994726871708052,
-            "maximum_determinant_GPa2": 2.011539103499388,
+            "pressure_Pa": -17603910.81057369,
+            "gamma": 0.00010589546229522912,
+            "minimum_determinant_GPa2": 0.05998265489676069,
+            "maximum_determinant_GPa2": 2.011510893068996,
             "determinant_changes_sign": false,
             "angle_degrees": 32.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.032267464985785144,
-            "determinant_step_difference_GPa2": 8.257626943342089e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.032282345124637624,
+            "determinant_step_difference_GPa2": 8.98414398431413e-11
           },
           {
             "element": 2,
             "X": 0.125,
             "Y": 0.025,
             "time": 0.4000000000000003,
-            "pressure_Pa": -13232009.701532956,
-            "gamma": 8.719950077570742e-05,
-            "minimum_determinant_GPa2": 0.04755802667886,
-            "maximum_determinant_GPa2": 2.0376865832629805,
+            "pressure_Pa": -13264029.003540177,
+            "gamma": 8.741457404317979e-05,
+            "minimum_determinant_GPa2": 0.04756115170778481,
+            "maximum_determinant_GPa2": 2.0377122325858643,
             "determinant_changes_sign": false,
             "angle_degrees": 32.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.026052403818791925,
-            "determinant_step_difference_GPa2": 1.0970664654497142e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.026051581654737088,
+            "determinant_step_difference_GPa2": 1.3783910818299105e-10
           },
           {
             "element": 2,
             "X": 0.125,
             "Y": 0.025,
             "time": 0.5000000000000003,
-            "pressure_Pa": -10058971.469552336,
-            "gamma": 6.788508021915787e-05,
-            "minimum_determinant_GPa2": 0.04186869638621314,
-            "maximum_determinant_GPa2": 2.057470835781698,
+            "pressure_Pa": -10083190.593705583,
+            "gamma": 6.805220137510136e-05,
+            "minimum_determinant_GPa2": 0.04186438701539666,
+            "maximum_determinant_GPa2": 2.057534493535183,
             "determinant_changes_sign": false,
             "angle_degrees": 31.750000000000007,
-            "minimum_symmetric_eigenvalue_GPa": 0.02330532779949679,
-            "determinant_step_difference_GPa2": 4.928180988295061e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.0233015862950961,
+            "determinant_step_difference_GPa2": 5.63793456365147e-12
           },
           {
             "element": 2,
             "X": 0.125,
             "Y": 0.025,
             "time": 0.6999999999999961,
-            "pressure_Pa": -5983239.298541688,
-            "gamma": 4.124234594390194e-05,
-            "minimum_determinant_GPa2": 0.038646087908580116,
-            "maximum_determinant_GPa2": 2.083098169332289,
+            "pressure_Pa": -5997892.8282117965,
+            "gamma": 4.134613720713828e-05,
+            "minimum_determinant_GPa2": 0.038647902939908066,
+            "maximum_determinant_GPa2": 2.0832073600700936,
             "determinant_changes_sign": false,
             "angle_degrees": 31.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.02209202747854333,
-            "determinant_step_difference_GPa2": 5.940518008062945e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.022093536063510055,
+            "determinant_step_difference_GPa2": 2.632714948824777e-10
           },
           {
             "element": 9,
             "X": 0.475,
             "Y": 0.025,
             "time": 0.04,
-            "pressure_Pa": 6621695.871019895,
-            "gamma": 0.0010521415652713845,
-            "minimum_determinant_GPa2": 0.12169639198198771,
-            "maximum_determinant_GPa2": 1.383474525603982,
+            "pressure_Pa": 6610626.309071458,
+            "gamma": 0.0010515603332899284,
+            "minimum_determinant_GPa2": 0.12183262171559199,
+            "maximum_determinant_GPa2": 1.3833983419107707,
             "determinant_changes_sign": false,
-            "angle_degrees": 38.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.06288893205511192,
-            "determinant_step_difference_GPa2": 4.3912790070876895e-11
+            "angle_degrees": 141.75000000000003,
+            "minimum_symmetric_eigenvalue_GPa": 0.0629556471455403,
+            "determinant_step_difference_GPa2": 1.3278393662385923e-10
           },
           {
             "element": 9,
             "X": 0.475,
             "Y": 0.025,
             "time": 0.10000000000000005,
-            "pressure_Pa": -4420740.694778887,
-            "gamma": 0.0011929917055585296,
-            "minimum_determinant_GPa2": 0.09310031111098627,
-            "maximum_determinant_GPa2": 1.5893037604201155,
+            "pressure_Pa": -4446149.719155762,
+            "gamma": 0.0011923352731294653,
+            "minimum_determinant_GPa2": 0.09320524791643224,
+            "maximum_determinant_GPa2": 1.5892252376075358,
             "determinant_changes_sign": false,
-            "angle_degrees": 36.25000000000001,
-            "minimum_symmetric_eigenvalue_GPa": 0.04847489410387423,
-            "determinant_step_difference_GPa2": 1.0270712058613185e-10
+            "angle_degrees": 143.75,
+            "minimum_symmetric_eigenvalue_GPa": 0.04852565205335391,
+            "determinant_step_difference_GPa2": 2.5629495747914177e-10
           },
           {
             "element": 9,
             "X": 0.475,
             "Y": 0.025,
             "time": 0.20000000000000012,
-            "pressure_Pa": -19545044.746144004,
-            "gamma": 0.0013768944512272741,
-            "minimum_determinant_GPa2": 0.07033001425137544,
-            "maximum_determinant_GPa2": 1.995370156433445,
+            "pressure_Pa": -19595312.366664417,
+            "gamma": 0.0013762076865237649,
+            "minimum_determinant_GPa2": 0.07040931274406921,
+            "maximum_determinant_GPa2": 1.9952933933937917,
             "determinant_changes_sign": false,
             "angle_degrees": 33.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.037565867404452336,
-            "determinant_step_difference_GPa2": 3.142046345327998e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.037601787966641764,
+            "determinant_step_difference_GPa2": 5.530168961653814e-10
           },
           {
             "element": 9,
             "X": 0.475,
             "Y": 0.025,
             "time": 0.3000000000000002,
-            "pressure_Pa": -13550881.775052454,
-            "gamma": 0.00010131959736602681,
-            "minimum_determinant_GPa2": 0.04983205372040579,
-            "maximum_determinant_GPa2": 2.031122542481194,
+            "pressure_Pa": -13584502.299165452,
+            "gamma": 0.00010157526497939386,
+            "minimum_determinant_GPa2": 0.04984522975595967,
+            "maximum_determinant_GPa2": 2.031121737571147,
             "determinant_changes_sign": false,
             "angle_degrees": 147.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.027229256028877435,
-            "determinant_step_difference_GPa2": 4.532867831086307e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.027233562385923893,
+            "determinant_step_difference_GPa2": 9.24582278793995e-10
           },
           {
             "element": 9,
             "X": 0.475,
             "Y": 0.025,
             "time": 0.4000000000000003,
-            "pressure_Pa": -10024064.474546265,
-            "gamma": 7.152092862114688e-05,
-            "minimum_determinant_GPa2": 0.042631630828912824,
-            "maximum_determinant_GPa2": 2.0532454188290736,
+            "pressure_Pa": -10048488.320059545,
+            "gamma": 7.170363729575747e-05,
+            "minimum_determinant_GPa2": 0.04262972460285048,
+            "maximum_determinant_GPa2": 2.05329100314907,
             "determinant_changes_sign": false,
-            "angle_degrees": 31.750000000000007,
-            "minimum_symmetric_eigenvalue_GPa": 0.02369242059943011,
-            "determinant_step_difference_GPa2": 3.258855060805921e-10
+            "angle_degrees": 148.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.023689776451019495,
+            "determinant_step_difference_GPa2": 7.445504560110727e-10
           },
           {
             "element": 9,
             "X": 0.475,
             "Y": 0.025,
             "time": 0.5000000000000003,
-            "pressure_Pa": -7588884.261581027,
-            "gamma": 5.3816953077486406e-05,
-            "minimum_determinant_GPa2": 0.03975318759056733,
-            "maximum_determinant_GPa2": 2.0687300818597256,
+            "pressure_Pa": -7607266.319881041,
+            "gamma": 5.395369289497953e-05,
+            "minimum_determinant_GPa2": 0.03975022346521662,
+            "maximum_determinant_GPa2": 2.0688063187856427,
             "determinant_changes_sign": false,
-            "angle_degrees": 148.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.022409916852537404,
-            "determinant_step_difference_GPa2": 5.872844363596919e-10
+            "angle_degrees": 31.5,
+            "minimum_symmetric_eigenvalue_GPa": 0.022407645398109077,
+            "determinant_step_difference_GPa2": 8.260520045766384e-11
           },
           {
             "element": 9,
             "X": 0.475,
             "Y": 0.025,
             "time": 0.6999999999999961,
-            "pressure_Pa": -4497604.241491257,
-            "gamma": 3.177547878984639e-05,
-            "minimum_determinant_GPa2": 0.03840853715556292,
-            "maximum_determinant_GPa2": 2.0883431974904707,
+            "pressure_Pa": -4508655.780117268,
+            "gamma": 3.185663872466711e-05,
+            "minimum_determinant_GPa2": 0.038413009245680814,
+            "maximum_determinant_GPa2": 2.0884550226986485,
             "determinant_changes_sign": false,
             "angle_degrees": 30.750000000000004,
-            "minimum_symmetric_eigenvalue_GPa": 0.02214986175366951,
-            "determinant_step_difference_GPa2": 7.089501763424266e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.02215339080368156,
+            "determinant_step_difference_GPa2": 1.580840458537125e-10
           },
           {
             "element": 17,
             "X": 0.875,
             "Y": 0.025,
             "time": 0.04,
-            "pressure_Pa": 2112353.9743295424,
-            "gamma": 0.0010638326819770055,
-            "minimum_determinant_GPa2": 0.18683274233004155,
-            "maximum_determinant_GPa2": 1.3550610568752817,
+            "pressure_Pa": 2107809.7799945464,
+            "gamma": 0.0010634992658294033,
+            "minimum_determinant_GPa2": 0.18691564126769997,
+            "maximum_determinant_GPa2": 1.3550324601319657,
             "determinant_changes_sign": false,
-            "angle_degrees": 140.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.09466328423497372,
-            "determinant_step_difference_GPa2": 6.289521681246413e-11
+            "angle_degrees": 39.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.09470342205476057,
+            "determinant_step_difference_GPa2": 1.5049259061150622e-10
           },
           {
             "element": 17,
             "X": 0.875,
             "Y": 0.025,
             "time": 0.10000000000000005,
-            "pressure_Pa": -2751366.5150670493,
-            "gamma": 0.0014585028347612519,
-            "minimum_determinant_GPa2": 0.07408300825957702,
-            "maximum_determinant_GPa2": 1.6083873784674598,
+            "pressure_Pa": -2762172.3549158676,
+            "gamma": 0.001458191305548809,
+            "minimum_determinant_GPa2": 0.0741199782797184,
+            "maximum_determinant_GPa2": 1.6083495200089115,
             "determinant_changes_sign": false,
-            "angle_degrees": 144.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.03889723772581927,
-            "determinant_step_difference_GPa2": 2.0421965507555484e-10
+            "angle_degrees": 35.75,
+            "minimum_symmetric_eigenvalue_GPa": 0.0389151612801244,
+            "determinant_step_difference_GPa2": 4.6290916932978377e-10
           },
           {
             "element": 17,
             "X": 0.875,
             "Y": 0.025,
             "time": 0.20000000000000012,
-            "pressure_Pa": -7760162.085513602,
-            "gamma": 0.0016531173966453263,
-            "minimum_determinant_GPa2": 0.04964979207205581,
-            "maximum_determinant_GPa2": 2.025267003620203,
+            "pressure_Pa": -7779806.975655711,
+            "gamma": 0.0016528340723178819,
+            "minimum_determinant_GPa2": 0.04966675792573117,
+            "maximum_determinant_GPa2": 2.025242213318982,
             "determinant_changes_sign": false,
-            "angle_degrees": 148.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.027599069991007696,
-            "determinant_step_difference_GPa2": 4.465108144335872e-11
+            "angle_degrees": 32.0,
+            "minimum_symmetric_eigenvalue_GPa": 0.027606630481400662,
+            "determinant_step_difference_GPa2": 1.2006298732991638e-10
           },
           {
             "element": 17,
             "X": 0.875,
             "Y": 0.025,
             "time": 0.3000000000000002,
-            "pressure_Pa": -3759328.9189052144,
-            "gamma": 3.6854506177670535e-05,
-            "minimum_determinant_GPa2": 0.04086213141872829,
-            "maximum_determinant_GPa2": 2.053095676864747,
+            "pressure_Pa": -3768737.5276701255,
+            "gamma": 3.6951635124102994e-05,
+            "minimum_determinant_GPa2": 0.04085802966681216,
+            "maximum_determinant_GPa2": 2.053134354209523,
             "determinant_changes_sign": false,
-            "angle_degrees": 148.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.02318754563848824,
-            "determinant_step_difference_GPa2": 2.742517601905803e-10
+            "angle_degrees": 31.5,
+            "minimum_symmetric_eigenvalue_GPa": 0.023184803859230496,
+            "determinant_step_difference_GPa2": 2.819342190263363e-10
           },
           {
             "element": 17,
             "X": 0.875,
             "Y": 0.025,
             "time": 0.4000000000000003,
-            "pressure_Pa": -2710761.1795601537,
-            "gamma": 2.1080724297135565e-05,
-            "minimum_determinant_GPa2": 0.039444912615199654,
-            "maximum_determinant_GPa2": 2.060505725622211,
+            "pressure_Pa": -2717449.046583933,
+            "gamma": 2.1137500116310965e-05,
+            "minimum_determinant_GPa2": 0.03943947888797059,
+            "maximum_determinant_GPa2": 2.0605617565891095,
             "determinant_changes_sign": false,
-            "angle_degrees": 148.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.022540296051429265,
-            "determinant_step_difference_GPa2": 1.718727729582703e-10
+            "angle_degrees": 31.250000000000004,
+            "minimum_symmetric_eigenvalue_GPa": 0.02253726936791306,
+            "determinant_step_difference_GPa2": 1.4675021614563022e-10
           },
           {
             "element": 17,
             "X": 0.875,
             "Y": 0.025,
             "time": 0.5000000000000003,
-            "pressure_Pa": -2039381.7378040191,
-            "gamma": 1.4928238014525408e-05,
-            "minimum_determinant_GPa2": 0.03874124335852029,
-            "maximum_determinant_GPa2": 2.0652573705284105,
+            "pressure_Pa": -2044371.587256753,
+            "gamma": 1.4967454808145825e-05,
+            "minimum_determinant_GPa2": 0.03873570541014268,
+            "maximum_determinant_GPa2": 2.0653241756029384,
             "determinant_changes_sign": false,
-            "angle_degrees": 149.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.022231159344479334,
-            "determinant_step_difference_GPa2": 2.9447329991105775e-10
+            "angle_degrees": 31.0,
+            "minimum_symmetric_eigenvalue_GPa": 0.022228374985053867,
+            "determinant_step_difference_GPa2": 1.2395980075741164e-11
           },
           {
             "element": 17,
             "X": 0.875,
             "Y": 0.025,
             "time": 0.6999999999999961,
-            "pressure_Pa": -1201712.58690452,
-            "gamma": 8.329488842913602e-06,
-            "minimum_determinant_GPa2": 0.038059069839286044,
-            "maximum_determinant_GPa2": 2.0711848143569673,
+            "pressure_Pa": -1204681.4097122208,
+            "gamma": 8.350746675711186e-06,
+            "minimum_determinant_GPa2": 0.03805483557882242,
+            "maximum_determinant_GPa2": 2.0712642782835373,
             "determinant_changes_sign": false,
-            "angle_degrees": 149.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.021984095641052415,
-            "determinant_step_difference_GPa2": 1.1753806955505652e-10
+            "angle_degrees": 31.0,
+            "minimum_symmetric_eigenvalue_GPa": 0.021982164270651694,
+            "determinant_step_difference_GPa2": 1.483431641413624e-10
           }
         ]
       },
       "spatial_structure": {
         "delta_b": {
-          "maximum_transverse_rms": 3.703849430357802e-16,
-          "final_x_second_difference_rms": 4.0634947237401126e-06
+          "maximum_transverse_rms": 8.220231111896046e-14,
+          "final_x_second_difference_rms": 4.073212122136861e-06
         },
         "ap": {
-          "maximum_transverse_rms": 2.002714324356592e-15,
-          "final_x_second_difference_rms": 2.7621505689832123e-05
+          "maximum_transverse_rms": 4.619496110326573e-13,
+          "final_x_second_difference_rms": 2.7687872450196165e-05
         },
         "gamma": {
-          "maximum_transverse_rms": 5.149619902651494e-15,
-          "final_x_second_difference_rms": 1.9484189530506152e-07
+          "maximum_transverse_rms": 1.1550046116625494e-12,
+          "final_x_second_difference_rms": 1.9535702201727743e-07
         }
       },
       "mass": {
-        "max_relative_mass_defect": 0.006188576625955756,
-        "max_relative_reaction_mass_defect": 0.00044509239626922,
-        "final_relative_mass_defect": 0.006188576625955756,
-        "max_relative_chain_rule_defect": 0.00044509239841747936,
-        "solid_mass_l2": 4.33540437203e-05,
-        "mineral_eos_l2": 4.4245573063604e-17
+        "max_relative_mass_defect": 0.0066575949829316815,
+        "max_relative_reaction_mass_defect": 2.485844863286957e-13,
+        "final_relative_mass_defect": 0.0066575949829316815,
+        "max_relative_discrete_storage_defect": 4.938965902923088e-14,
+        "solid_mass_l2": 2.0309650043252e-17,
+        "mineral_eos_l2": 4.322991558419e-17
       },
       "maximum_nodal_transverse_rms": {
-        "p": 5.146060988483078e-06,
-        "solid_spatial_mass_ratio": 5.218536042907745e-13
+        "p": 9.459194984204972e-05
       },
-      "final_average_delta_B": 0.0072328783047462,
-      "csv_sha256": "724742615d61b119fa25a6cbcc0e5a3bc038c30e671ddd86a05f13f54243d3de",
+      "final_average_delta_B": 0.0072320924908964,
+      "csv_sha256": "0a7a42475f8debd06674be52e3d4da6ebdec1225bbfe2eed50c1854b4815d2a0",
       "command": [
         "mpiexec",
         "-n",
-        "8",
+        "2",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -1629,11 +1625,11 @@
         "dilation_slope=0.4"
       ],
       "run_manifest": {
-        "signature": "11fe90dc07390172791d1d612e0799e616c4561c7b421bc6ff515b47e4f3ebbb",
+        "signature": "a76b04649e1831bff6b622aedb59d09c11fb4d86c557334f39efd85b24f9d0eb",
         "completed": true,
         "execution_provenance": {
           "schema_version": 1,
-          "captured_at_utc": "2026-09-18T23:40:06.449263+00:00",
+          "captured_at_utc": "2026-09-23T19:13:01.606422+00:00",
           "python": "3.14.0",
           "packages": {
             "numpy": "2.4.2",
@@ -1664,12 +1660,12 @@
           "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
           "executable": {
             "path": "moose_app/nonlinear_biot_ad-opt",
-            "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
           },
           "command": [
             "mpiexec",
             "-n",
-            "8",
+            "2",
             "moose_app/nonlinear_biot_ad-opt",
             "-i",
             "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -1685,7 +1681,7 @@
             "dilation_slope=0.4"
           ],
           "outputs": {
-            ".agent-runtime/poroplastic-mandel/hardening_coarse.csv": "724742615d61b119fa25a6cbcc0e5a3bc038c30e671ddd86a05f13f54243d3de"
+            ".agent-runtime/poroplastic-mandel/hardening_coarse.csv": "0a7a42475f8debd06674be52e3d4da6ebdec1225bbfe2eed50c1854b4815d2a0"
           }
         }
       }
@@ -1701,7 +1697,7 @@
       },
       "acoustic": {
         "case": "hardening_fine",
-        "exodus_sha256": "f93c42c78bc8342414ad3d607e650df870bc63fff627daee4b285f53e67f72c3",
+        "exodus_sha256": "cc4cebb2fe10e82bb8333c40ee3b230cfd03e19e2c5a4939e1e17750da2b7b70",
         "hardening_modulus_Pa": 100000000.0,
         "dilation_slope": 0.4,
         "sampled_point": "element central Gauss point",
@@ -1713,329 +1709,328 @@
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.04,
-            "pressure_Pa": 7463845.847887071,
-            "gamma": 0.0011094922384780248,
-            "minimum_determinant_GPa2": 0.11142587577330751,
-            "maximum_determinant_GPa2": 1.3895529722985571,
+            "pressure_Pa": 7451178.899998519,
+            "gamma": 0.001108782108968714,
+            "minimum_determinant_GPa2": 0.11157027014400103,
+            "maximum_determinant_GPa2": 1.3894638869191331,
             "determinant_changes_sign": false,
             "angle_degrees": 38.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.057801650811187044,
-            "determinant_step_difference_GPa2": 5.0033491238998806e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.05787253047964336,
+            "determinant_step_difference_GPa2": 3.004088644509295e-11
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000005,
-            "pressure_Pa": -3845169.556578783,
-            "gamma": 0.0011465487930464985,
-            "minimum_determinant_GPa2": 0.09381976190687395,
-            "maximum_determinant_GPa2": 1.588217742018874,
+            "pressure_Pa": -3873692.820552877,
+            "gamma": 0.0011458370259717768,
+            "minimum_determinant_GPa2": 0.09393431165176368,
+            "maximum_determinant_GPa2": 1.5881336200300404,
             "determinant_changes_sign": false,
             "angle_degrees": 36.25000000000001,
-            "minimum_symmetric_eigenvalue_GPa": 0.04891505261804052,
-            "determinant_step_difference_GPa2": 1.9348800339713534e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.04897040408785641,
+            "determinant_step_difference_GPa2": 2.2509716313123818e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000012,
-            "pressure_Pa": -22119440.093094714,
-            "gamma": 0.0012899182221285264,
-            "minimum_determinant_GPa2": 0.07867138742330461,
-            "maximum_determinant_GPa2": 1.9856556512820611,
+            "pressure_Pa": -22177318.9484642,
+            "gamma": 0.0012891422010243565,
+            "minimum_determinant_GPa2": 0.07877587679066189,
+            "maximum_determinant_GPa2": 1.9855666647016186,
             "determinant_changes_sign": false,
             "angle_degrees": 33.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.04166864284401922,
-            "determinant_step_difference_GPa2": 1.6048051776351713e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.04171626461247452,
+            "determinant_step_difference_GPa2": 2.2901196217173236e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.3000000000000002,
-            "pressure_Pa": -17620671.93289849,
-            "gamma": 0.00010546981566876403,
-            "minimum_determinant_GPa2": 0.06014557121953674,
-            "maximum_determinant_GPa2": 2.0112087990886205,
+            "pressure_Pa": -17664356.774794623,
+            "gamma": 0.00010574205524764021,
+            "minimum_determinant_GPa2": 0.060181454058046084,
+            "maximum_determinant_GPa2": 2.011180160050894,
             "determinant_changes_sign": false,
             "angle_degrees": 147.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.03236739980077996,
-            "determinant_step_difference_GPa2": 3.0382384108573746e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.032382523397709306,
+            "determinant_step_difference_GPa2": 9.995816674379654e-12
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.4000000000000003,
-            "pressure_Pa": -13284126.020618774,
-            "gamma": 8.737598406302811e-05,
-            "minimum_determinant_GPa2": 0.04766722188630554,
-            "maximum_determinant_GPa2": 2.037389034907893,
+            "pressure_Pa": -13316269.755200956,
+            "gamma": 8.759140069421576e-05,
+            "minimum_determinant_GPa2": 0.04767050667734916,
+            "maximum_determinant_GPa2": 2.0374143271594556,
             "determinant_changes_sign": false,
             "angle_degrees": 147.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.02610579510381511,
-            "determinant_step_difference_GPa2": 5.90526169630401e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.026105044076539408,
+            "determinant_step_difference_GPa2": 3.5105192364159876e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.5000000000000003,
-            "pressure_Pa": -10100392.04699815,
-            "gamma": 6.807492070296126e-05,
-            "minimum_determinant_GPa2": 0.04192025886248804,
-            "maximum_determinant_GPa2": 2.0572340476053266,
+            "pressure_Pa": -10124709.486354234,
+            "gamma": 6.824242822193965e-05,
+            "minimum_determinant_GPa2": 0.041915944620015945,
+            "maximum_determinant_GPa2": 2.057297451117873,
             "determinant_changes_sign": false,
             "angle_degrees": 148.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.02332827536668186,
-            "determinant_step_difference_GPa2": 2.0648661253064304e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.023324517637967,
+            "determinant_step_difference_GPa2": 1.0583561804722308e-11
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999961,
-            "pressure_Pa": -6009310.187333985,
-            "gamma": 4.138524526211377e-05,
-            "minimum_determinant_GPa2": 0.03865289804333614,
-            "maximum_determinant_GPa2": 2.0829567588063536,
+            "pressure_Pa": -6024027.027007922,
+            "gamma": 4.148937096650075e-05,
+            "minimum_determinant_GPa2": 0.03865463212859968,
+            "maximum_determinant_GPa2": 2.0830658597975127,
             "determinant_changes_sign": false,
-            "angle_degrees": 149.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.022091554106422218,
-            "determinant_step_difference_GPa2": 6.094774337994657e-10
+            "angle_degrees": 31.0,
+            "minimum_symmetric_eigenvalue_GPa": 0.0220930061792603,
+            "determinant_step_difference_GPa2": 5.133747524310728e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.04,
-            "pressure_Pa": 6414934.872733542,
-            "gamma": 0.0010425054176670405,
-            "minimum_determinant_GPa2": 0.12428938239829565,
-            "maximum_determinant_GPa2": 1.382040559931104,
+            "pressure_Pa": 6404210.631496085,
+            "gamma": 0.001041940267693365,
+            "minimum_determinant_GPa2": 0.12442444213945413,
+            "maximum_determinant_GPa2": 1.3819668970163308,
             "determinant_changes_sign": false,
-            "angle_degrees": 141.75000000000003,
-            "minimum_symmetric_eigenvalue_GPa": 0.06415908981408025,
-            "determinant_step_difference_GPa2": 2.650099029111175e-10
+            "angle_degrees": 38.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.06422523691222015,
+            "determinant_step_difference_GPa2": 4.002412151704604e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000005,
-            "pressure_Pa": -4466672.241994548,
-            "gamma": 0.0012043431387429528,
-            "minimum_determinant_GPa2": 0.09254572144150854,
-            "maximum_determinant_GPa2": 1.5898530850706416,
+            "pressure_Pa": -4491430.031367087,
+            "gamma": 0.0012036992592595298,
+            "minimum_determinant_GPa2": 0.0926480070101681,
+            "maximum_determinant_GPa2": 1.5897758100443524,
             "determinant_changes_sign": false,
             "angle_degrees": 143.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.04818466002956562,
-            "determinant_step_difference_GPa2": 6.700922733360315e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.048234141723445534,
+            "determinant_step_difference_GPa2": 1.516952258251436e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000012,
-            "pressure_Pa": -18992186.784989066,
-            "gamma": 0.001393088333794663,
-            "minimum_determinant_GPa2": 0.06883362562490404,
-            "maximum_determinant_GPa2": 1.9972105229096115,
+            "pressure_Pa": -19040920.05168699,
+            "gamma": 0.0013924201900320308,
+            "minimum_determinant_GPa2": 0.06890797985804167,
+            "maximum_determinant_GPa2": 1.9971363993439715,
             "determinant_changes_sign": false,
             "angle_degrees": 147.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.03683925759961931,
-            "determinant_step_difference_GPa2": 6.079501763123218e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.036873923258904984,
+            "determinant_step_difference_GPa2": 3.127258174639991e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.3000000000000002,
-            "pressure_Pa": -12854588.590972187,
-            "gamma": 9.916973803526773e-05,
-            "minimum_determinant_GPa2": 0.048547593715389234,
-            "maximum_determinant_GPa2": 2.0341324308490396,
+            "pressure_Pa": -12886495.167120012,
+            "gamma": 9.942008374292132e-05,
+            "minimum_determinant_GPa2": 0.04855782444542167,
+            "maximum_determinant_GPa2": 2.0341362959753018,
             "determinant_changes_sign": false,
             "angle_degrees": 147.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.026603878834255412,
-            "determinant_step_difference_GPa2": 1.0312257298084049e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.026606782883874136,
+            "determinant_step_difference_GPa2": 1.6882421155495209e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.4000000000000003,
-            "pressure_Pa": -9482894.237156501,
-            "gamma": 6.844477715725146e-05,
-            "minimum_determinant_GPa2": 0.04206973431407417,
-            "maximum_determinant_GPa2": 2.0554118027907617,
+            "pressure_Pa": -9506026.808733724,
+            "gamma": 6.86206556693663e-05,
+            "minimum_determinant_GPa2": 0.0420673191356636,
+            "maximum_determinant_GPa2": 2.0554604560123386,
             "determinant_changes_sign": false,
             "angle_degrees": 148.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.023444535935150224,
-            "determinant_step_difference_GPa2": 1.4522097413482982e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.02344176461915637,
+            "determinant_step_difference_GPa2": 3.153775157693772e-11
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.5000000000000003,
-            "pressure_Pa": -7175103.840415986,
-            "gamma": 5.122407566787472e-05,
-            "minimum_determinant_GPa2": 0.039521409691114534,
-            "maximum_determinant_GPa2": 2.0701418950656194,
+            "pressure_Pa": -7192501.135875359,
+            "gamma": 5.135487578665979e-05,
+            "minimum_determinant_GPa2": 0.03951865591157687,
+            "maximum_determinant_GPa2": 2.0702198645471146,
             "determinant_changes_sign": false,
             "angle_degrees": 148.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.022327944362527885,
-            "determinant_step_difference_GPa2": 4.717198159864822e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.02232594273979277,
+            "determinant_step_difference_GPa2": 8.234660175965303e-11
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999961,
-            "pressure_Pa": -4250644.989288429,
-            "gamma": 3.0108877272647145e-05,
-            "minimum_determinant_GPa2": 0.03836942284194044,
-            "maximum_determinant_GPa2": 2.0887478325697644,
+            "pressure_Pa": -4261095.39178194,
+            "gamma": 3.018595339266793e-05,
+            "minimum_determinant_GPa2": 0.03837414176244688,
+            "maximum_determinant_GPa2": 2.0888597323930886,
             "determinant_changes_sign": false,
             "angle_degrees": 30.750000000000004,
-            "minimum_symmetric_eigenvalue_GPa": 0.02215514191578699,
-            "determinant_step_difference_GPa2": 3.3574298896610344e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.02215888049096476,
+            "determinant_step_difference_GPa2": 3.656876607083248e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.04,
-            "pressure_Pa": 2331156.77323125,
-            "gamma": 0.0010533018113088417,
-            "minimum_determinant_GPa2": 0.18318454951226093,
-            "maximum_determinant_GPa2": 1.3563261975716043,
+            "pressure_Pa": 2326256.365136828,
+            "gamma": 0.0010529457023635135,
+            "minimum_determinant_GPa2": 0.18327238789430067,
+            "maximum_determinant_GPa2": 1.3562951430788714,
             "determinant_changes_sign": false,
             "angle_degrees": 39.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.0928999102032464,
-            "determinant_step_difference_GPa2": 5.617204479335669e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.09294245098926945,
+            "determinant_step_difference_GPa2": 3.6424424587622184e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000005,
-            "pressure_Pa": -2953426.5689016613,
-            "gamma": 0.0014430007387416083,
-            "minimum_determinant_GPa2": 0.07525763257476636,
-            "maximum_determinant_GPa2": 1.607094240243891,
+            "pressure_Pa": -2965122.439547533,
+            "gamma": 0.0014426651271449303,
+            "minimum_determinant_GPa2": 0.07529856985549402,
+            "maximum_determinant_GPa2": 1.607053352302098,
             "determinant_changes_sign": false,
             "angle_degrees": 35.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.03948126224251547,
-            "determinant_step_difference_GPa2": 2.863351222792687e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.039501128569977395,
+            "determinant_step_difference_GPa2": 2.1690560458864638e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000012,
-            "pressure_Pa": -8426841.846832337,
-            "gamma": 0.001640003702240177,
-            "minimum_determinant_GPa2": 0.050401602142766906,
-            "maximum_determinant_GPa2": 2.023984803933107,
+            "pressure_Pa": -8448170.819229068,
+            "gamma": 0.0016396969143940788,
+            "minimum_determinant_GPa2": 0.050420812006431365,
+            "maximum_determinant_GPa2": 2.023957485271243,
             "determinant_changes_sign": false,
             "angle_degrees": 32.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.02795046423085984,
-            "determinant_step_difference_GPa2": 1.2317639963566052e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.027959091545399273,
+            "determinant_step_difference_GPa2": 1.3007576266099719e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.3000000000000002,
-            "pressure_Pa": -4130091.7546398705,
-            "gamma": 4.044441689437254e-05,
-            "minimum_determinant_GPa2": 0.04087396853114921,
-            "maximum_determinant_GPa2": 2.053621862488266,
+            "pressure_Pa": -4140425.4866592535,
+            "gamma": 4.0550923501911414e-05,
+            "minimum_determinant_GPa2": 0.04086999937471674,
+            "maximum_determinant_GPa2": 2.053661561951471,
             "determinant_changes_sign": false,
             "angle_degrees": 31.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.023172351812776992,
-            "determinant_step_difference_GPa2": 2.3486460692945244e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.023169633816136626,
+            "determinant_step_difference_GPa2": 4.741819784048751e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.4000000000000003,
-            "pressure_Pa": -2978620.0587363057,
-            "gamma": 2.3196824253276963e-05,
-            "minimum_determinant_GPa2": 0.039365496837726124,
-            "maximum_determinant_GPa2": 2.061697335910941,
+            "pressure_Pa": -2985967.418381661,
+            "gamma": 2.3259342190174165e-05,
+            "minimum_determinant_GPa2": 0.03936024877226751,
+            "maximum_determinant_GPa2": 2.0617557855807123,
             "determinant_changes_sign": false,
             "angle_degrees": 31.250000000000004,
-            "minimum_symmetric_eigenvalue_GPa": 0.0224860412714053,
-            "determinant_step_difference_GPa2": 8.339010731939211e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.02248310621665428,
+            "determinant_step_difference_GPa2": 4.139043899287209e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.5000000000000003,
-            "pressure_Pa": -2241179.228624451,
-            "gamma": 1.6448245669203746e-05,
-            "minimum_determinant_GPa2": 0.03863532527599,
-            "maximum_determinant_GPa2": 2.066875317103193,
+            "pressure_Pa": -2246662.1611272236,
+            "gamma": 1.649153228976609e-05,
+            "minimum_determinant_GPa2": 0.03863017367707866,
+            "maximum_determinant_GPa2": 2.066945393106467,
             "determinant_changes_sign": false,
             "angle_degrees": 31.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.02217323232989088,
-            "determinant_step_difference_GPa2": 1.967911320011062e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.022170690662931924,
+            "determinant_step_difference_GPa2": 3.017153887840962e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999961,
-            "pressure_Pa": -1320935.430953356,
-            "gamma": 9.193914617942602e-06,
-            "minimum_determinant_GPa2": 0.03796691208645499,
-            "maximum_determinant_GPa2": 2.073332050737698,
+            "pressure_Pa": -1324198.5613878178,
+            "gamma": 9.217448602734734e-06,
+            "minimum_determinant_GPa2": 0.037963503765033636,
+            "maximum_determinant_GPa2": 2.073415756519039,
             "determinant_changes_sign": false,
             "angle_degrees": 31.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.021942410970693826,
-            "determinant_step_difference_GPa2": 8.906185511303732e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.021941010008895423,
+            "determinant_step_difference_GPa2": 9.152690341740488e-10
           }
         ]
       },
       "spatial_structure": {
         "delta_b": {
-          "maximum_transverse_rms": 2.3439319600436105e-16,
-          "final_x_second_difference_rms": 1.1488789496744772e-06
+          "maximum_transverse_rms": 8.619163774773053e-15,
+          "final_x_second_difference_rms": 1.1520052085508928e-06
         },
         "ap": {
-          "maximum_transverse_rms": 1.4204781885462442e-15,
-          "final_x_second_difference_rms": 7.767413082016205e-06
+          "maximum_transverse_rms": 4.855823159948169e-14,
+          "final_x_second_difference_rms": 7.788512112084519e-06
         },
         "gamma": {
-          "maximum_transverse_rms": 6.477387281240423e-16,
-          "final_x_second_difference_rms": 4.89757050773662e-08
+          "maximum_transverse_rms": 1.2138722034091077e-13,
+          "final_x_second_difference_rms": 4.9107589447979285e-08
         }
       },
       "mass": {
-        "max_relative_mass_defect": 0.002905763919637861,
-        "max_relative_reaction_mass_defect": 0.00044498919420121746,
-        "final_relative_mass_defect": 0.002905763919637861,
-        "max_relative_chain_rule_defect": 0.0004449891942048368,
-        "solid_mass_l2": 4.3347477130546e-05,
-        "mineral_eos_l2": 4.109854423619e-17
+        "max_relative_mass_defect": 0.0033628868628416747,
+        "max_relative_reaction_mass_defect": 8.561373832094434e-13,
+        "final_relative_mass_defect": 0.0033628868628416747,
+        "max_relative_discrete_storage_defect": 4.9316106753849465e-14,
+        "solid_mass_l2": 1.8855667012838e-17,
+        "mineral_eos_l2": 4.1812812174272e-17
       },
       "maximum_nodal_transverse_rms": {
-        "p": 2.0170997789786148e-08,
-        "solid_spatial_mass_ratio": 4.8441446681270965e-15
+        "p": 4.450861197212721e-05
       },
-      "final_average_delta_B": 0.0072326892683947,
-      "csv_sha256": "c27f08106df73e945f9c86b5383e8c56457ef3e6dceeefc27cc8a165ec224de3",
+      "final_average_delta_B": 0.0072319029963007,
+      "csv_sha256": "223180b2dacb17c7038b38b4f8fcbba966f2bf74e1665ace37b22342aab2c49d",
       "command": [
         "mpiexec",
         "-n",
-        "8",
+        "2",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -2051,11 +2046,11 @@
         "dilation_slope=0.4"
       ],
       "run_manifest": {
-        "signature": "9a71b5357281e8a75ea51481c5795c8f3017e3c86833d531a330a534190683fa",
+        "signature": "8029dd637c3729fa9664b701838b3231defe0fb80284901d296e1613e9b04ee2",
         "completed": true,
         "execution_provenance": {
           "schema_version": 1,
-          "captured_at_utc": "2026-09-18T23:42:39.655056+00:00",
+          "captured_at_utc": "2026-09-23T19:13:01.627139+00:00",
           "python": "3.14.0",
           "packages": {
             "numpy": "2.4.2",
@@ -2086,12 +2081,12 @@
           "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
           "executable": {
             "path": "moose_app/nonlinear_biot_ad-opt",
-            "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
           },
           "command": [
             "mpiexec",
             "-n",
-            "8",
+            "2",
             "moose_app/nonlinear_biot_ad-opt",
             "-i",
             "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -2107,7 +2102,7 @@
             "dilation_slope=0.4"
           ],
           "outputs": {
-            ".agent-runtime/poroplastic-mandel/hardening_fine.csv": "c27f08106df73e945f9c86b5383e8c56457ef3e6dceeefc27cc8a165ec224de3"
+            ".agent-runtime/poroplastic-mandel/hardening_fine.csv": "223180b2dacb17c7038b38b4f8fcbba966f2bf74e1665ace37b22342aab2c49d"
           }
         }
       }
@@ -2123,7 +2118,7 @@
       },
       "acoustic": {
         "case": "hardening_half_dt",
-        "exodus_sha256": "7167c31fc47f819eccea0a5bf6e944ae49513ce54b3b33f656404b149ea19860",
+        "exodus_sha256": "fd26c9f327954bbbfb4702f2b11434cc8f0da332f9ed34e4fd2bd150426dd9ba",
         "hardening_modulus_Pa": 100000000.0,
         "dilation_slope": 0.4,
         "sampled_point": "element central Gauss point",
@@ -2135,329 +2130,328 @@
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.040000000000000015,
-            "pressure_Pa": 7481163.264923426,
-            "gamma": 0.0005550507555015642,
-            "minimum_determinant_GPa2": 0.1108807185487707,
-            "maximum_determinant_GPa2": 1.3899113596765635,
+            "pressure_Pa": 7474814.801820238,
+            "gamma": 0.0005548732137898186,
+            "minimum_determinant_GPa2": 0.11095279343603977,
+            "maximum_determinant_GPa2": 1.3898666009474272,
             "determinant_changes_sign": false,
             "angle_degrees": 38.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.05752935056328873,
-            "determinant_step_difference_GPa2": 4.96805638294795e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.057564728394840614,
+            "determinant_step_difference_GPa2": 3.497962752785355e-10
           },
           {
             "element": 44,
             "X": 0.1125,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000006,
-            "pressure_Pa": -3857094.7646725196,
-            "gamma": 0.0005729741340885381,
-            "minimum_determinant_GPa2": 0.093837223188328,
-            "maximum_determinant_GPa2": 1.5882104085310305,
-            "determinant_changes_sign": false,
-            "angle_degrees": 36.25000000000001,
-            "minimum_symmetric_eigenvalue_GPa": 0.04892256342870416,
-            "determinant_step_difference_GPa2": 4.296682037940869e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.20000000000000015,
-            "pressure_Pa": -22178805.894382533,
-            "gamma": 0.0006449503409273257,
-            "minimum_determinant_GPa2": 0.07876837997131236,
-            "maximum_determinant_GPa2": 1.9855778764536862,
-            "determinant_changes_sign": false,
-            "angle_degrees": 146.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.04171218061257698,
-            "determinant_step_difference_GPa2": 2.7303054261906823e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.2999999999999991,
-            "pressure_Pa": -17663744.312134616,
-            "gamma": 5.3052140367966334e-05,
-            "minimum_determinant_GPa2": 0.06016095641578322,
-            "maximum_determinant_GPa2": 2.0112194033044273,
-            "determinant_changes_sign": false,
-            "angle_degrees": 32.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.03237168934149204,
-            "determinant_step_difference_GPa2": 2.1646882203407714e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.39999999999999697,
-            "pressure_Pa": -13304966.550032627,
-            "gamma": 4.379064329000058e-05,
-            "minimum_determinant_GPa2": 0.04762877671534604,
-            "maximum_determinant_GPa2": 2.037537357635085,
-            "determinant_changes_sign": false,
-            "angle_degrees": 32.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.02608397480473379,
-            "determinant_step_difference_GPa2": 1.3786446984020984e-10
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.49999999999999484,
-            "pressure_Pa": -10111406.955513177,
-            "gamma": 3.408321062596808e-05,
-            "minimum_determinant_GPa2": 0.04188727572174097,
-            "maximum_determinant_GPa2": 2.057444424110276,
-            "determinant_changes_sign": false,
-            "angle_degrees": 31.750000000000007,
-            "minimum_symmetric_eigenvalue_GPa": 0.023311115384156922,
-            "determinant_step_difference_GPa2": 9.911793608097241e-11
-          },
-          {
-            "element": 44,
-            "X": 0.1125,
-            "Y": 0.037500000000000006,
-            "time": 0.6999999999999906,
-            "pressure_Pa": -6011950.358191053,
-            "gamma": 2.070446375736582e-05,
-            "minimum_determinant_GPa2": 0.03865069629596065,
-            "maximum_determinant_GPa2": 2.083212105554862,
-            "determinant_changes_sign": false,
-            "angle_degrees": 31.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.022094029531893655,
-            "determinant_step_difference_GPa2": 2.276449515004053e-10
-          },
-          {
-            "element": 60,
-            "X": 0.5125,
-            "Y": 0.037500000000000006,
-            "time": 0.040000000000000015,
-            "pressure_Pa": 6430226.36790306,
-            "gamma": 0.0005200370675960873,
-            "minimum_determinant_GPa2": 0.12386799824980087,
-            "maximum_determinant_GPa2": 1.382283145303779,
-            "determinant_changes_sign": false,
-            "angle_degrees": 141.75000000000003,
-            "minimum_symmetric_eigenvalue_GPa": 0.06394971343506234,
-            "determinant_step_difference_GPa2": 3.0163768705016025e-10
-          },
-          {
-            "element": 60,
-            "X": 0.5125,
-            "Y": 0.037500000000000006,
-            "time": 0.10000000000000006,
-            "pressure_Pa": -4497273.806536482,
-            "gamma": 0.0006024344025603981,
-            "minimum_determinant_GPa2": 0.09254380523036945,
-            "maximum_determinant_GPa2": 1.5898772967436794,
+            "pressure_Pa": -3871363.329052404,
+            "gamma": 0.0005727962465127141,
+            "minimum_determinant_GPa2": 0.09389440373250783,
+            "maximum_determinant_GPa2": 1.588168430197144,
             "determinant_changes_sign": false,
             "angle_degrees": 143.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.048179955818712816,
-            "determinant_step_difference_GPa2": 3.03266842194283e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.048950189712017034,
+            "determinant_step_difference_GPa2": 2.459472903115767e-11
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.20000000000000015,
+            "pressure_Pa": -22207760.029539354,
+            "gamma": 0.0006447562614278463,
+            "minimum_determinant_GPa2": 0.07882069971868857,
+            "maximum_determinant_GPa2": 1.985533378394869,
+            "determinant_changes_sign": false,
+            "angle_degrees": 33.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.041736026083353195,
+            "determinant_step_difference_GPa2": 1.096819302048857e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.2999999999999991,
+            "pressure_Pa": -17685583.696500927,
+            "gamma": 5.3120392330837224e-05,
+            "minimum_determinant_GPa2": 0.06017885616749083,
+            "maximum_determinant_GPa2": 2.0112051700685525,
+            "determinant_changes_sign": false,
+            "angle_degrees": 147.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.032379228889841016,
+            "determinant_step_difference_GPa2": 6.404136942972372e-11
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.39999999999999697,
+            "pressure_Pa": -13321021.620855711,
+            "gamma": 4.384447752087432e-05,
+            "minimum_determinant_GPa2": 0.0476303633995312,
+            "maximum_determinant_GPa2": 2.03755016742995,
+            "determinant_changes_sign": false,
+            "angle_degrees": 147.75,
+            "minimum_symmetric_eigenvalue_GPa": 0.02608357210991391,
+            "determinant_step_difference_GPa2": 4.149309715262284e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.49999999999999484,
+            "pressure_Pa": -10123547.887325326,
+            "gamma": 3.4125041222871765e-05,
+            "minimum_determinant_GPa2": 0.04188511189471224,
+            "maximum_determinant_GPa2": 2.057476297422639,
+            "determinant_changes_sign": false,
+            "angle_degrees": 148.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.023309237203206656,
+            "determinant_step_difference_GPa2": 3.09944278575891e-10
+          },
+          {
+            "element": 44,
+            "X": 0.1125,
+            "Y": 0.037500000000000006,
+            "time": 0.6999999999999906,
+            "pressure_Pa": -6019294.496350406,
+            "gamma": 2.0730450522124086e-05,
+            "minimum_determinant_GPa2": 0.038651629170226465,
+            "maximum_determinant_GPa2": 2.08326679183588,
+            "determinant_changes_sign": false,
+            "angle_degrees": 149.0,
+            "minimum_symmetric_eigenvalue_GPa": 0.02209479913336937,
+            "determinant_step_difference_GPa2": 6.925240797484022e-10
+          },
+          {
+            "element": 60,
+            "X": 0.5125,
+            "Y": 0.037500000000000006,
+            "time": 0.040000000000000015,
+            "pressure_Pa": 6424856.993965694,
+            "gamma": 0.000519896311002762,
+            "minimum_determinant_GPa2": 0.12393527113266782,
+            "maximum_determinant_GPa2": 1.3822462985719832,
+            "determinant_changes_sign": false,
+            "angle_degrees": 38.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.06398265868802916,
+            "determinant_step_difference_GPa2": 1.52345885906513e-10
+          },
+          {
+            "element": 60,
+            "X": 0.5125,
+            "Y": 0.037500000000000006,
+            "time": 0.10000000000000006,
+            "pressure_Pa": -4509665.262457256,
+            "gamma": 0.0006022733691878902,
+            "minimum_determinant_GPa2": 0.09259496095098446,
+            "maximum_determinant_GPa2": 1.5898386394284152,
+            "determinant_changes_sign": false,
+            "angle_degrees": 36.25000000000001,
+            "minimum_symmetric_eigenvalue_GPa": 0.048204700988503935,
+            "determinant_step_difference_GPa2": 3.282199650955775e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000015,
-            "pressure_Pa": -19046586.555635586,
-            "gamma": 0.0006967826645431006,
-            "minimum_determinant_GPa2": 0.06884189765347512,
-            "maximum_determinant_GPa2": 1.99724620911764,
+            "pressure_Pa": -19070969.972478855,
+            "gamma": 0.0006966155654987448,
+            "minimum_determinant_GPa2": 0.06887907422583128,
+            "maximum_determinant_GPa2": 1.9972091499307871,
             "determinant_changes_sign": false,
             "angle_degrees": 147.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.03683827978300913,
-            "determinant_step_difference_GPa2": 1.7953309672247286e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.03685560966956608,
+            "determinant_step_difference_GPa2": 3.834814132908093e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.2999999999999991,
-            "pressure_Pa": -12875155.211558646,
-            "gamma": 4.953745125826231e-05,
-            "minimum_determinant_GPa2": 0.04847304492548187,
-            "maximum_determinant_GPa2": 2.0343828504691053,
+            "pressure_Pa": -12891096.34716997,
+            "gamma": 4.959989295044599e-05,
+            "minimum_determinant_GPa2": 0.04847807915224619,
+            "maximum_determinant_GPa2": 2.0343849623927275,
             "determinant_changes_sign": false,
-            "angle_degrees": 147.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.026562846219468028,
-            "determinant_step_difference_GPa2": 2.606339102873001e-10
+            "angle_degrees": 32.25,
+            "minimum_symmetric_eigenvalue_GPa": 0.026564257028221294,
+            "determinant_step_difference_GPa2": 4.6520005902994654e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.39999999999999697,
-            "pressure_Pa": -9496380.12677488,
-            "gamma": 3.426074283241347e-05,
-            "minimum_determinant_GPa2": 0.04202080461447773,
-            "maximum_determinant_GPa2": 2.055705328885455,
+            "pressure_Pa": -9507933.643311758,
+            "gamma": 3.430467375551012e-05,
+            "minimum_determinant_GPa2": 0.04201958717292748,
+            "maximum_determinant_GPa2": 2.055729843737998,
             "determinant_changes_sign": false,
-            "angle_degrees": 148.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.02341902103067256,
-            "determinant_step_difference_GPa2": 1.8727359246684117e-10
+            "angle_degrees": 31.750000000000007,
+            "minimum_symmetric_eigenvalue_GPa": 0.023417634235664064,
+            "determinant_step_difference_GPa2": 7.069683033433805e-11
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.49999999999999484,
-            "pressure_Pa": -7182866.678885768,
-            "gamma": 2.5645564853632366e-05,
-            "minimum_determinant_GPa2": 0.039494711834751395,
-            "maximum_determinant_GPa2": 2.0704656639187853,
+            "pressure_Pa": -7191552.629577309,
+            "gamma": 2.5678229827647582e-05,
+            "minimum_determinant_GPa2": 0.03949337798970587,
+            "maximum_determinant_GPa2": 2.070504825058507,
             "determinant_changes_sign": false,
             "angle_degrees": 148.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.022316285154161453,
-            "determinant_step_difference_GPa2": 2.9759178454824564e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.022315314281294518,
+            "determinant_step_difference_GPa2": 1.9477806867396197e-10
           },
           {
             "element": 60,
             "X": 0.5125,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999906,
-            "pressure_Pa": -4252570.683940722,
-            "gamma": 1.5065586723287065e-05,
-            "minimum_determinant_GPa2": 0.038378472515458506,
-            "maximum_determinant_GPa2": 2.0890934855486365,
+            "pressure_Pa": -4257785.772722251,
+            "gamma": 1.5084824168479651e-05,
+            "minimum_determinant_GPa2": 0.038380935787347206,
+            "maximum_determinant_GPa2": 2.0891495660342185,
             "determinant_changes_sign": false,
-            "angle_degrees": 149.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.022166085470156804,
-            "determinant_step_difference_GPa2": 7.559488798825065e-10
+            "angle_degrees": 30.750000000000004,
+            "minimum_symmetric_eigenvalue_GPa": 0.02216802182763422,
+            "determinant_step_difference_GPa2": 2.460874420906478e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.040000000000000015,
-            "pressure_Pa": 2297000.0336085586,
-            "gamma": 0.0005311322958844722,
-            "minimum_determinant_GPa2": 0.18328174290264407,
-            "maximum_determinant_GPa2": 1.3563095916737007,
+            "pressure_Pa": 2294528.882485508,
+            "gamma": 0.0005310435760810746,
+            "minimum_determinant_GPa2": 0.18332641887390722,
+            "maximum_determinant_GPa2": 1.3562937925591296,
             "determinant_changes_sign": false,
-            "angle_degrees": 39.25,
-            "minimum_symmetric_eigenvalue_GPa": 0.09294091589650122,
-            "determinant_step_difference_GPa2": 5.595043595096882e-10
+            "angle_degrees": 140.75,
+            "minimum_symmetric_eigenvalue_GPa": 0.09296255597330977,
+            "determinant_step_difference_GPa2": 3.714983876079714e-11
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.10000000000000006,
-            "pressure_Pa": -2977124.4859786252,
-            "gamma": 0.000722708944533627,
-            "minimum_determinant_GPa2": 0.0748984128005335,
-            "maximum_determinant_GPa2": 1.60755216734713,
+            "pressure_Pa": -2982981.899538446,
+            "gamma": 0.0007226249408844247,
+            "minimum_determinant_GPa2": 0.07491880706643904,
+            "maximum_determinant_GPa2": 1.6075316323306983,
             "determinant_changes_sign": false,
             "angle_degrees": 35.75,
-            "minimum_symmetric_eigenvalue_GPa": 0.039293671145252174,
-            "determinant_step_difference_GPa2": 1.2036371899171172e-11
+            "minimum_symmetric_eigenvalue_GPa": 0.03930356488755965,
+            "determinant_step_difference_GPa2": 5.478619363730175e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.20000000000000015,
-            "pressure_Pa": -8451418.66638482,
-            "gamma": 0.0008204804314116273,
-            "minimum_determinant_GPa2": 0.050349134056284064,
-            "maximum_determinant_GPa2": 2.0241489749916837,
+            "pressure_Pa": -8462092.857053857,
+            "gamma": 0.0008204037492146259,
+            "minimum_determinant_GPa2": 0.05035869646677665,
+            "maximum_determinant_GPa2": 2.0241353738428214,
             "determinant_changes_sign": false,
             "angle_degrees": 32.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.027920091750272824,
-            "determinant_step_difference_GPa2": 2.5340216730507237e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.027924381408884702,
+            "determinant_step_difference_GPa2": 6.886342607259621e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.2999999999999991,
-            "pressure_Pa": -4133201.7059900966,
-            "gamma": 2.007458704525255e-05,
-            "minimum_determinant_GPa2": 0.040817982967616295,
-            "maximum_determinant_GPa2": 2.053953577905569,
+            "pressure_Pa": -4138361.090183713,
+            "gamma": 2.0100997004133004e-05,
+            "minimum_determinant_GPa2": 0.040815991379352566,
+            "maximum_determinant_GPa2": 2.053973645087889,
             "determinant_changes_sign": false,
             "angle_degrees": 31.5,
-            "minimum_symmetric_eigenvalue_GPa": 0.023142280824733907,
-            "determinant_step_difference_GPa2": 4.0395368300361056e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.023140920729241177,
+            "determinant_step_difference_GPa2": 1.0721403626012815e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.39999999999999697,
-            "pressure_Pa": -2982441.252710633,
-            "gamma": 1.1594484603086522e-05,
-            "minimum_determinant_GPa2": 0.039327147530235994,
-            "maximum_determinant_GPa2": 2.0620195806388657,
+            "pressure_Pa": -2986110.62715699,
+            "gamma": 1.161008346576301e-05,
+            "minimum_determinant_GPa2": 0.03932455126995822,
+            "maximum_determinant_GPa2": 2.062048995536326,
             "determinant_changes_sign": false,
             "angle_degrees": 31.250000000000004,
-            "minimum_symmetric_eigenvalue_GPa": 0.022467604241209693,
-            "determinant_step_difference_GPa2": 5.761323917941041e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.0224661568274252,
+            "determinant_step_difference_GPa2": 3.9451944489066193e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.49999999999999484,
-            "pressure_Pa": -2243585.8360240096,
-            "gamma": 8.232402816104998e-06,
-            "minimum_determinant_GPa2": 0.03860518311652908,
-            "maximum_determinant_GPa2": 2.067203648972192,
+            "pressure_Pa": -2246323.3087122953,
+            "gamma": 8.243209813582555e-06,
+            "minimum_determinant_GPa2": 0.03860265234383917,
+            "maximum_determinant_GPa2": 2.0672388674597615,
             "determinant_changes_sign": false,
             "angle_degrees": 31.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.0221598797223459,
-            "determinant_step_difference_GPa2": 2.109719413057043e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.02215863947619423,
+            "determinant_step_difference_GPa2": 4.584847432265171e-10
           },
           {
             "element": 74,
             "X": 0.8625,
             "Y": 0.037500000000000006,
             "time": 0.6999999999999906,
-            "pressure_Pa": -1321549.720297227,
-            "gamma": 4.600117477280997e-06,
-            "minimum_determinant_GPa2": 0.037950445906443135,
-            "maximum_determinant_GPa2": 2.0736672221808843,
+            "pressure_Pa": -1323178.13945729,
+            "gamma": 4.6059910202446185e-06,
+            "minimum_determinant_GPa2": 0.03794881201455619,
+            "maximum_determinant_GPa2": 2.073709237171894,
             "determinant_changes_sign": false,
             "angle_degrees": 31.0,
-            "minimum_symmetric_eigenvalue_GPa": 0.02193606067594084,
-            "determinant_step_difference_GPa2": 1.142342886950587e-10
+            "minimum_symmetric_eigenvalue_GPa": 0.02193540518026238,
+            "determinant_step_difference_GPa2": 5.85239065542531e-10
           }
         ]
       },
       "spatial_structure": {
         "delta_b": {
-          "maximum_transverse_rms": 7.356623043708632e-16,
-          "final_x_second_difference_rms": 1.1535570513655273e-06
+          "maximum_transverse_rms": 4.5035279489845414e-13,
+          "final_x_second_difference_rms": 1.1551233070926628e-06
         },
         "ap": {
-          "maximum_transverse_rms": 4.1504748968006954e-15,
-          "final_x_second_difference_rms": 7.798846910569986e-06
+          "maximum_transverse_rms": 2.5672859475754013e-12,
+          "final_x_second_difference_rms": 7.809417312960908e-06
         },
         "gamma": {
-          "maximum_transverse_rms": 1.1551984705279812e-14,
-          "final_x_second_difference_rms": 2.4516707682420812e-08
+          "maximum_transverse_rms": 5.26067015154413e-12,
+          "final_x_second_difference_rms": 2.4549652896228118e-08
         }
       },
       "mass": {
-        "max_relative_mass_defect": 0.0031344567522368257,
-        "max_relative_reaction_mass_defect": 0.00022259335306091814,
-        "final_relative_mass_defect": 0.0031344567522368257,
-        "max_relative_chain_rule_defect": 0.00022259335332486255,
-        "solid_mass_l2": 2.1669576888065e-05,
-        "mineral_eos_l2": 4.1438447467334e-17
+        "max_relative_mass_defect": 0.003363115446712884,
+        "max_relative_reaction_mass_defect": 4.0471848095080535e-12,
+        "final_relative_mass_defect": 0.003363115446712884,
+        "max_relative_discrete_storage_defect": 5.1603166184577284e-14,
+        "solid_mass_l2": 1.9349193017377e-17,
+        "mineral_eos_l2": 4.1263109436247e-17
       },
       "maximum_nodal_transverse_rms": {
-        "p": 8.26495308004793e-06,
-        "solid_spatial_mass_ratio": 1.1475519848925906e-13
+        "p": 0.00018600670601683626
       },
-      "final_average_delta_B": 0.007232396123032,
-      "csv_sha256": "f4eb68006390071ce6b789b0892f9f53199771c5daead47aca6c2f47f866aa87",
+      "final_average_delta_B": 0.0072320038626337,
+      "csv_sha256": "08f06835d9be50083f88020ec37e925f59efbb752d80ee0010ab2ab3e158a2e4",
       "command": [
         "mpiexec",
         "-n",
-        "8",
+        "2",
         "moose_app/nonlinear_biot_ad-opt",
         "-i",
         "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -2473,11 +2467,11 @@
         "dilation_slope=0.4"
       ],
       "run_manifest": {
-        "signature": "b8fe92b85abc61b11dbf8ac34c56adae2b753b4419f5e8e5cd5ec6e047d6749a",
+        "signature": "3e5dfc7a0ae80bd76835465343cbf48f0e9c78e01fdafcd52b5237cf9f2bc757",
         "completed": true,
         "execution_provenance": {
           "schema_version": 1,
-          "captured_at_utc": "2026-09-18T23:51:23.127396+00:00",
+          "captured_at_utc": "2026-09-23T19:13:01.463976+00:00",
           "python": "3.14.0",
           "packages": {
             "numpy": "2.4.2",
@@ -2508,12 +2502,12 @@
           "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
           "executable": {
             "path": "moose_app/nonlinear_biot_ad-opt",
-            "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
           },
           "command": [
             "mpiexec",
             "-n",
-            "8",
+            "2",
             "moose_app/nonlinear_biot_ad-opt",
             "-i",
             "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -2529,7 +2523,7 @@
             "dilation_slope=0.4"
           ],
           "outputs": {
-            ".agent-runtime/poroplastic-mandel/hardening_half_dt.csv": "f4eb68006390071ce6b789b0892f9f53199771c5daead47aca6c2f47f866aa87"
+            ".agent-runtime/poroplastic-mandel/hardening_half_dt.csv": "08f06835d9be50083f88020ec37e925f59efbb752d80ee0010ab2ab3e158a2e4"
           }
         }
       }
@@ -2537,54 +2531,54 @@
   },
   "corrected_spatial_differences": {
     "0.04": {
-      "rms": 6.054266085853724e-06,
-      "maximum": 1.0417975091480682e-05
+      "rms": 6.0426474928382105e-06,
+      "maximum": 1.0399143487700854e-05
     },
     "0.1": {
-      "rms": 7.1955554683418125e-06,
-      "maximum": 2.3813448499762635e-05
+      "rms": 7.224455058425317e-06,
+      "maximum": 2.390149099424938e-05
     },
     "0.2": {
-      "rms": 2.5415842778556395e-05,
-      "maximum": 6.350932440031369e-05
+      "rms": 2.5478178599487635e-05,
+      "maximum": 6.366807596515887e-05
     },
     "0.3": {
-      "rms": 1.8258981326942768e-05,
-      "maximum": 3.385369475483128e-05
+      "rms": 1.830258327907322e-05,
+      "maximum": 3.393585928130379e-05
     },
     "0.5": {
-      "rms": 1.1858466433138695e-05,
-      "maximum": 2.347878212688708e-05
+      "rms": 1.1885098890588183e-05,
+      "maximum": 2.3533161414433963e-05
     },
     "0.7": {
-      "rms": 8.247445570064812e-06,
-      "maximum": 1.8403998515222064e-05
+      "rms": 8.264641767674675e-06,
+      "maximum": 1.8445438510606912e-05
     }
   },
   "corrected_temporal_differences": {
     "0.04": {
-      "rms": 1.1551573390072e-06,
-      "maximum": 2.2867125452171637e-06
+      "rms": 1.2201015467430394e-06,
+      "maximum": 2.1632341526583217e-06
     },
     "0.1": {
-      "rms": 2.10242789314496e-06,
-      "maximum": 3.049603854368612e-06
+      "rms": 1.5568102688067091e-06,
+      "maximum": 2.4873109041407757e-06
     },
     "0.2": {
-      "rms": 3.2869354430345e-06,
-      "maximum": 3.8476296880156705e-06
+      "rms": 1.8558131675945872e-06,
+      "maximum": 2.2534745022758165e-06
     },
     "0.3": {
-      "rms": 2.072521996382784e-06,
-      "maximum": 3.0247216389897927e-06
+      "rms": 1.002913852170203e-06,
+      "maximum": 1.5478537455856922e-06
     },
     "0.5": {
-      "rms": 8.978124624851614e-07,
-      "maximum": 1.1247496557254336e-06
+      "rms": 2.7946987270665467e-07,
+      "maximum": 6.700423749138318e-07
     },
     "0.7": {
-      "rms": 4.087901361803974e-07,
-      "maximum": 6.529874820885781e-07
+      "rms": 1.884373182345197e-07,
+      "maximum": 6.759448938561952e-07
     }
   },
   "assumptions": [
@@ -2593,12 +2587,12 @@
     "synthetic uncalibrated hardening modulus 100 MPa"
   ],
   "source_sha256": {
-    "validation/scripts/check_poroplastic_spatial_stability.py": "f27af81ea4bc0e29ad7e0258cd5d9bf2bf386fe3101f2659ebfb96c93acb35c4",
+    "validation/scripts/check_poroplastic_spatial_stability.py": "f3cfd90b57745e431edce8a9c96420a9ed49de5c0d9f176ce8d03317e084ec3e",
     "validation/scripts/check_poroplastic_acoustic.py": "f281a3e7b806aa3f8103703fa70f9dec63ffbeef877104dcca9a7b2c0a4fd9ac",
-    "validation/scripts/check_poroplastic_mandel.py": "a69f512a2776b5a9db361c6e7b0c6c2787446d327360b4f6ae2cc80963a8e619",
-    "moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C": "3e776418101ced4b10617e2698ce2dbb3c7d7c03e6103b42b4432fedea619cab",
-    "moose_app/include/materials/ADImplicitPoroplasticBiotMaterial.h": "8d0638ecb56011daed346cf314d332b88859c7ed33e48baf1a43111e06f830d7",
-    "moose_app/test/tests/poroplastic_mandel/compression.i": "d9163e8c2e7d2d7fd4c0be58c895689a6984e7f0648f832566012ec99af7da0c",
+    "validation/scripts/check_poroplastic_mandel.py": "e622379ebb73eb13a8e3eaacdc1dabd927224e1c411bd6369a75834b3c860401",
+    "moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C": "489a1d03339df48e31b8f1c557357ddfcebf4733e17cd5597092048ba7a62960",
+    "moose_app/include/materials/ADImplicitPoroplasticBiotMaterial.h": "415acc775149f8d649340c0ebfd9c6f5fa52bdc8ff80e9e8d17c1aa44997726a",
+    "moose_app/test/tests/poroplastic_mandel/compression.i": "2231994c10c7c7c86669d52cb617c6ee5217dd0e72379af546288e3d0264460b",
     "validation/scripts/run_provenance.py": "6f9ef6a9e0fe76d7b088993744358b9573c4b5096b23002ec74b5b31dbb3b009"
   }
 }

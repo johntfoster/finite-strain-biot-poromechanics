@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "captured_at_utc": "2026-09-18T23:09:18.446100+00:00",
+  "captured_at_utc": "2026-09-23T19:13:53.654052+00:00",
   "python": "3.14.0",
   "packages": {
     "numpy": "2.4.2",
@@ -31,7 +31,7 @@
   "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
   "executable": {
     "path": "moose_app/nonlinear_biot_ad-opt",
-    "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+    "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
   },
   "command": [
     "python",

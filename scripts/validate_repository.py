@@ -79,6 +79,23 @@ def audit_q2_q1_scope() -> None:
     require("type = ADBiotDarcyReferenceFluxMaterial" in deck, "Mandel deck lacks reduced Biot Darcy flux")
 
 
+def audit_conservative_initialization() -> None:
+    provenance = json.loads((ROOT/'validation/conservative_formulation.json').read_text())
+    for name, hashes in provenance['files'].items():
+        require(sha256(ROOT/name) == hashes['local_sha256'], f'changed common kernel: {name}')
+        upstream = (ROOT/name).read_bytes().replace(b'MulticomponentReactiveFlowApp', b'AnisotropicBiotApp')
+        require(hashlib.sha256(upstream).hexdigest() == hashes['upstream_sha256'],
+                f'common kernel differs beyond registration: {name}')
+    elastic = json.loads((ROOT/'validation/conservative_initial_state.json').read_text())
+    plastic = json.loads((ROOT/'validation/conservative_plastic_initial_state.json').read_text())
+    require(elastic['accepted'] and plastic['accepted'], 'initial-state verification failed')
+    require(max(elastic['maximum_mass_error'], elastic['maximum_pressure_error'],
+                elastic['maximum_solid_mass_error']) < 1e-10,
+            'nonzero elastic initial state violates sealed conservation')
+    require(max(plastic['errors'].values()) < 1e-10,
+            'prescribed plastic initial history violates sealed conservation')
+
+
 def audit_sync() -> None:
     result = subprocess.run(
         [str(ROOT / "tools/sync_biot_moose.py"), "check"],
@@ -121,26 +138,26 @@ def audit_finite_deformation_results() -> None:
         ]
     require(rows, "empty finite-deformation continuation")
     final = rows[-1]
-    require(abs(max(row["side_displacement"] for row in rows) - 0.040393510476404) <= 1.0e-12,
+    require(abs(max(row["side_displacement"] for row in rows) - 0.040385621094306) <= 1.0e-12,
             "finite-deformation maximum lateral displacement drift")
-    require(abs(final["side_displacement"] - 0.02701778152189) <= 1.0e-12,
+    require(abs(final["side_displacement"] - 0.027017733345284) <= 1.0e-12,
             "finite-deformation final lateral displacement drift")
-    require(abs(final["biot_average"] - 0.58219459009679) <= 1.0e-12,
+    require(abs(final["biot_average"] - 0.58219454704313) <= 1.0e-12,
             "finite-deformation final average Biot coefficient drift")
     require(abs(min(row["biot_minimum"] for row in rows if row["time"] == final["time"])
-                - 0.58209924671994) <= 1.0e-12,
+                - 0.58209924642057) <= 1.0e-12,
             "finite-deformation final minimum Biot coefficient drift")
     require(abs(max(row["biot_maximum"] for row in rows if row["time"] == final["time"])
-                - 0.58224939716739) <= 1.0e-12,
+                - 0.58224932954368) <= 1.0e-12,
             "finite-deformation final maximum Biot coefficient drift")
-    require(max(row["solid_material_mass_constraint_l2"] for row in rows) <= 2.8e-5,
+    require(max(row["solid_material_mass_constraint_l2"] for row in rows) <= 1.0e-12,
             "finite-deformation solid-mass diagnostic exceeds recorded bound")
     require(max(row["solid_mineral_eos_constraint_l2"] for row in rows) <= 3.0e-17,
             "finite-deformation mineral-EOS residual exceeds recorded bound")
     # This is a curated-data regression value for the matched logarithmic model.
     # The independent constitutive acceptance limit remains 1e-12.
     biot_error = max(row["biot_analytic_error_l2"] for row in rows)
-    require(abs(biot_error - 4.6945015734244e-17) <= 1e-28,
+    require(abs(biot_error - 4.6774019102469e-17) <= 1e-28,
             "finite-deformation Biot diagnostic differs from the recorded result")
     require(biot_error <= 1e-12, "finite-deformation Biot identity failed")
 
@@ -195,9 +212,11 @@ def audit_poroplastic_mandel_results() -> None:
                 f"coupled storage check failed: {metric}")
     require(record["jacobian"]["relative"] <= 1e-7 and
             record["jacobian"]["absolute"] <= 1e-5, "coupled plastic Jacobian failed")
-    for metric in ("max_relative_reaction_mass_defect", "max_relative_chain_rule_defect", "solid_mass_l2"):
-        require(record["mass"]["temporal_fine"][metric] < record["mass"]["fine"][metric] <
-                record["mass"]["temporal_coarse"][metric], f"temporal refinement failed: {metric}")
+    for case, values in record["mass"].items():
+        for metric, tolerance in (("max_relative_reaction_mass_defect", 1e-8),
+                                  ("max_relative_discrete_storage_defect", 1e-10),
+                                  ("solid_mass_l2", 1e-12)):
+            require(values[metric] <= tolerance, f"{case}: conservative balance failed: {metric}")
     require(record["mass"]["spatial_fine"]["max_relative_mass_defect"] <= .01,
             "water mass and Darcy outflow disagree by more than 1% of initial water mass")
     require(all(v <= 1e-7 for v in record["elastic_limit"]["field_errors"].values()),
@@ -332,6 +351,7 @@ def main(argv=None) -> int:
     audits = (
         audit_portability,
         audit_q2_q1_scope,
+        audit_conservative_initialization,
         audit_sync,
         audit_equation_traceability,
         audit_curated_data,

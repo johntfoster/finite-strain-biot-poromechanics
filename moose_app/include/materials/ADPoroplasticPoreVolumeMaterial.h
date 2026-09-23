@@ -9,11 +9,12 @@ public:
   static InputParameters validParams();
   ADPoroplasticPoreVolumeMaterial(const InputParameters & parameters);
 protected:
+  void initQpStatefulProperties() override { computeQpProperties(); }
   void computeQpProperties() override;
   const ADVariableValue & _p;
   const ADVariableValue & _p_dot;
-  const ADVariableValue & _rho;
-  const ADVariableValue & _rho_dot;
+  const ADMaterialProperty<Real> & _rho;
+  const ADMaterialProperty<Real> & _rho_dot;
   const ADMaterialProperty<Real> & _J;
   const ADMaterialProperty<Real> & _J_dot;
   const ADMaterialProperty<Real> & _ratio;

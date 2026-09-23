@@ -23,6 +23,7 @@ protected:
   const bool _frozen_reference;
   const bool _compute_elastic;
   const Real _initial_ap;
+  bool _initializing = false;
   MaterialProperty<RankTwoTensor> & _Fp_history;
   const MaterialProperty<RankTwoTensor> & _Fp_old;
   MaterialProperty<Real> & _accumulated_history;

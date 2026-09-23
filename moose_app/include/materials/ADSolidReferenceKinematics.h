@@ -11,6 +11,7 @@ public:
   ADSolidReferenceKinematics(const InputParameters & parameters);
 
 protected:
+  void initQpStatefulProperties() override { computeQpProperties(); }
   void computeQpProperties() override;
 
   const unsigned int _ndisp;

@@ -24,6 +24,7 @@ public:
   ADConstantDeformationGradientMaterial(const InputParameters & parameters);
 
 protected:
+  void initQpStatefulProperties() override { computeQpProperties(); }
   void computeQpProperties() override;
 
   const Real _transverse_stretch;

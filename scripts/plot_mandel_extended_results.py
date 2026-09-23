@@ -306,7 +306,7 @@ def plot_large_deformation(rows: list[dict[str, float]], output: Path) -> None:
     axes[0].plot(times, side, color="#31688e", linewidth=1.8, label="lateral expansion")
     axes[0].axvline(0.2, color="0.55", linewidth=0.9, linestyle=":")
     axes[0].set_xlabel(r"time, $t$ [s]")
-    axes[0].set_ylabel("boundary displacement / specimen dimension [%]")
+    axes[0].set_ylabel("boundary displacement /\nspecimen dimension [%]")
     axes[0].set_xlim(0.0, max(times))
     axes[0].set_ylim(bottom=0.0)
     axes[0].grid(alpha=0.22)

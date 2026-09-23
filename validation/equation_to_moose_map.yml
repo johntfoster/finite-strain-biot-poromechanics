@@ -2,13 +2,24 @@ schema_version: 1
 scope: single-solid single-water finite-deformation Biot coefficient
 mappings:
 - id: optional_virgin_comparator
-  paper_equations: [eq:verification-mineral-factors, eq:trace-mineral-stability-domain, eq:poroplastic-biot-correction]
-  moose_objects: [ADImplicitPoroplasticBiotMaterial]
+  paper_equations:
+  - eq:verification-mineral-factors
+  - eq:trace-mineral-stability-domain
+  - eq:poroplastic-biot-correction
+  moose_objects:
+  - ADImplicitPoroplasticBiotMaterial
   configuration: fixed total deformation and isotropic initial plastic history
-  inputs: [total Jacobian, pressure, plastic distention, mineral and skeleton moduli]
-  ad_expectations: optional diagnostics do not enter the production residual; available coefficients retain AD dependence
-  diagnostic: unavailable virgin coefficient is NaN with plastic_elastic_biot_coefficient_available equal to zero
-  tests: [virgin_comparator_domain]
+  inputs:
+  - total Jacobian
+  - pressure
+  - plastic distention
+  - mineral and skeleton moduli
+  ad_expectations: optional diagnostics do not enter the production residual; available
+    coefficients retain AD dependence
+  diagnostic: unavailable virgin coefficient is NaN with plastic_elastic_biot_coefficient_available
+    equal to zero
+  tests:
+  - virgin_comparator_domain
 - id: solid_kinematics
   paper_equations:
   - eq:skeleton-kinematics
@@ -21,15 +32,14 @@ mappings:
   paper_equations:
   - eq:spatial-solid-mass-balance
   - eq:reference-solid-mass-balance
-  - eq:solid-mass-weak-residual
+  - eq:conservative-solid-density
   moose_objects:
   - ADBinarySolidSpatialMassMaterial
-  - ADReferenceMaterialStorageRateTerm
   variables:
-  - Q2 solid partial density stored in reference-normalized form
+  - Q2 displacement; density equals reference density divided by J
   tests:
   - mandel_water_q2_q1_smoke
-  - mandel_water_q2_q1_bdf2
+  - mandel_water_q2_q1_conservative_step
   - mandel_water_q2_q1_verification
   - mandel_water_q2_q1_jacobian
 - id: local_mineral_state
@@ -63,8 +73,8 @@ mappings:
   role: solve the scalar logarithmic mineral residual on its stable branch and retain
     first and nested second AD derivatives by Newton polishing after raw root bracketing
   bisection_stopping: stop when the log-volume interval width is at most four times
-    machine epsilon times max(1, abs(lower), abs(upper)), or the midpoint equals
-    an endpoint; retain a maximum of 100 iterations and three AD Newton updates
+    machine epsilon times max(1, abs(lower), abs(upper)), or the midpoint equals an
+    endpoint; retain a maximum of 100 iterations and three AD Newton updates
   configuration: solid reference; J for elastic states and Je for fixed plastic states
   tests:
   - mandel_water_q2_q1_jacobian
@@ -93,7 +103,8 @@ mappings:
   moose_objects:
   - ADVolumetricBarotropicSkeletonStressMaterial
   - ADReferenceSolidStressMaterial
-  - ADReferenceSolidMomentum
+  - ADReferenceBalanceState
+  - ReferenceMomentum
   tests:
   - mandel_water_q2_q1_smoke
   - mandel_water_q2_q1_jacobian
@@ -105,10 +116,14 @@ mappings:
   moose_objects:
   - ADImplicitPoroplasticBiotMaterial
   verifier: validation/scripts/check_implicit_poroplastic.py
-  configuration: Kirchhoff stress per original reference volume; total Cauchy pressure tangent
-  held_fixed: total deformation and current plastic configuration during pressure probes
-  independent_checks: energy differences for both effective stresses; mineral-volume differences and pressure quadrature
-  ad_expectations: current plastic-state derivatives remain active in the existing outer Jacobian tests
+  configuration: Kirchhoff stress per original reference volume; total Cauchy pressure
+    tangent
+  held_fixed: total deformation and current plastic configuration during pressure
+    probes
+  independent_checks: energy differences for both effective stresses; mineral-volume
+    differences and pressure quadrature
+  ad_expectations: current plastic-state derivatives remain active in the existing
+    outer Jacobian tests
   tests:
   - implicit_plastic_consistency
   - implicit_plastic_publication_history
@@ -119,13 +134,15 @@ mappings:
   - eq:reference-fluid-mass-balance
   - eq:barotropic-fluid-density
   - eq:fluid-pressure-weak-residual
+  - eq:conservative-fluid-mass-step
   moose_objects:
   - ADBiotPressureStorageMaterial
-  - ADReferenceMaterialStorageRateTerm
-  time_discretization: AD time kernel using pressure, solid-volume-fraction, and displacement-gradient
-    rates supplied by the selected MOOSE time integrator
+  - ADReferenceBalanceState
+  - ReferenceFluidMass
+  time_discretization: Backward Euler difference of complete current and previous
+    quadrature-point water mass
   tests:
-  - mandel_water_q2_q1_bdf2
+  - mandel_water_q2_q1_conservative_step
   - mandel_water_q2_q1_verification
   - mandel_water_q2_q1_jacobian
 - id: water_darcy_flux
@@ -134,7 +151,8 @@ mappings:
   - eq:fluid-pressure-weak-residual
   moose_objects:
   - ADBiotDarcyReferenceFluxMaterial
-  - ADReferenceComponentFluxTerm
+  - ADReferenceBalanceState
+  - ReferenceFluidMass
   tests:
   - mandel_water_q2_q1_verification
   - mandel_water_q2_q1_jacobian
@@ -145,7 +163,6 @@ mappings:
   variables:
   - Q2 displacement
   - continuous Q1 water pressure
-  - Q2 solid partial density
   pressure_enrichment: false
   tests:
   - mandel_water_q2_q1_smoke
@@ -232,47 +249,90 @@ mappings:
   - poroplastic_tensorial_load_unload
 - id: coupled_poroplastic_pore_volume
   paper_equations:
-  - eq:poroplastic-mineral-volume-rate
-  - eq:poroplastic-solid-fraction-rate
-  - eq:discrete-plastic-distention-rate
   - eq:verification-mineral-factors
   - eq:plastic-exponential-update
   - eq:reference-fluid-mass-balance
   - eq:fluid-pressure-weak-residual
+  - eq:conservative-fluid-mass-step
   moose_objects:
   - ADImplicitPoroplasticBiotMaterial
   - ADPoroplasticPoreVolumeMaterial
   - ADBiotPressureStorageMaterial
-  - ADReferenceMaterialStorageRateTerm
+  - ADReferenceBalanceState
+  - ReferenceFluidMass
   configuration: solid reference
-  inputs: [Q2 displacement, Q1 pressure, Q2 solid partial density, plastic multiplier increment]
-  ad_dependencies: current mineral state and exponential plastic increment retain outer AD derivatives
-  time_discretization: backward Euler field rates; log plastic distention rate equals beta times the plastic multiplier increment divided by the step
-  tests: [poroplastic_mandel_storage, poroplastic_mandel_refinement]
+  inputs:
+  - Q2 displacement
+  - Q1 pressure
+  - plastic history
+  ad_dependencies: current mineral state and exponential plastic increment retain
+    outer AD derivatives
+  time_discretization: Backward Euler difference of full water mass at converged current
+    plastic state
+  tests:
+  - poroplastic_mandel_storage
+  - poroplastic_mandel_refinement
 - id: poroplastic_spatial_stability
   paper_equations:
   - eq:plastic-isotropic-hardening
   - eq:poroplastic-loading-tangent
   - eq:poroplastic-acoustic-tensor
-  moose_objects: [ADImplicitPoroplasticBiotMaterial]
-  configuration: solid reference; Q2 displacement and Q1 pressure; active fixed-pressure tangent
+  moose_objects:
+  - ADImplicitPoroplasticBiotMaterial
+  configuration: solid reference; Q2 displacement and Q1 pressure; active fixed-pressure
+    tangent
   independent_diagnostic: validation/scripts/check_poroplastic_acoustic.py
   refinement_diagnostic: validation/scripts/check_poroplastic_spatial_stability.py
   assumptions:
   - synthetic dissipative isotropic hardening modulus 100 MPa
   - unchanged nonassociated flow direction
-  - sampled in-plane acoustic tensors; no global stability or physical-validation claim
-  tests: [implicit_plastic_hardening_jacobian, implicit_plastic_hardening_history, poroplastic_spatial_stability]
+  - sampled in-plane acoustic tensors; no global stability or physical-validation
+    claim
+  tests:
+  - implicit_plastic_hardening_jacobian
+  - implicit_plastic_hardening_history
+  - poroplastic_spatial_stability
 - id: drained_boundary_mass_reaction
-  paper_equations: [eq:fluid-pressure-weak-residual]
-  moose_objects: [NodalDofSum]
-  inputs: [saved water storage and flux residuals on Q1 pressure nodes]
+  paper_equations:
+  - eq:fluid-pressure-weak-residual
+  moose_objects:
+  - NodalDofSum
+  inputs:
+  - saved water storage and flux residuals on Q1 pressure nodes
   configuration: solid reference
-  role: sum boundary reaction degrees of freedom without counting Q2 midside interpolation values
-  tests: [poroplastic_mandel_storage, poroplastic_mandel_refinement]
-
-# Every equation identifier has an explicit implementation or analytical role.
+  role: sum boundary reaction degrees of freedom without counting Q2 midside interpolation
+    values
+  tests:
+  - poroplastic_mandel_storage
+  - poroplastic_mandel_refinement
+- id: conservative_initial_state
+  paper_equations:
+  - eq:conservative-solid-density
+  - eq:conservative-fluid-mass-step
+  moose_objects:
+  - ADReferenceBalanceState
+  - ReferenceFluidMass
+  configuration: solid reference; nonzero deformation and pressure; prescribed plastic
+    history
+  role: initialize old fluid mass from actual initial fields without committing an
+    extra plastic return
+  tests:
+  - mandel_water_q2_q1_conservative_step
+  - poroplastic_initial_mass
+  sources:
+  - validation/scripts/check_conservative_initial_state.py
+  - validation/scripts/check_conservative_plastic_initial_state.py
 supporting_mappings:
+- id: general_balance_operators
+  paper_equations:
+  - eq:reference-momentum-balance
+  - eq:reference-fluid-mass-balance
+  moose_objects:
+  - ADReferenceSolidMomentum
+  - ADReferenceComponentFluxTerm
+  - ADReferenceMaterialStorageRateTerm
+  role: retained general stress, flux, and supplied-rate operators; the coupled publication
+    inputs instead assemble ReferenceMomentum and ReferenceFluidMass
 - id: pressure_legendre_and_drained_stress_reduction
   paper_equations:
   - eq:total-stress-pressure-potential
@@ -293,8 +353,8 @@ supporting_mappings:
   interpretation: Mixed derivatives of the pressure Legendre potential identify the
     reversible Biot coefficient. The drained stress and finite pressure multiplier
     rearrange the existing constitutive stresses without changing the implemented
-    material law. Experimental interpretation requires reversible perturbations
-    at fixed plastic state.
+    material law. Experimental interpretation requires reversible perturbations at
+    fixed plastic state.
 - id: motion_and_plastic_factorization
   paper_equations:
   - eq:inelastic-multiplicative-split
@@ -304,9 +364,9 @@ supporting_mappings:
   sources:
   - moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C
   - validation/scripts/check_implicit_poroplastic.py
-  interpretation: The implementation stores Fp and Fe=F inverse(Fp); mineral volume is scalar. The spherical
-    distention and isochoric true-plastic factors are reconstructed identities, not additional solved
-    fields.
+  interpretation: The implementation stores Fp and Fe=F inverse(Fp); mineral volume
+    is scalar. The spherical distention and isochoric true-plastic factors are reconstructed
+    identities, not additional solved fields.
 - id: energy_conjugates
   paper_equations:
   - eq:local-pressure-equilibrium
@@ -321,8 +381,9 @@ supporting_mappings:
   - moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C
   - validation/scripts/check_implicit_poroplastic.py
   - validation/scripts/check_stress_trace_derivation.py
-  interpretation: Energy and Legendre derivatives establish the implemented mineral residual and effective
-    stresses; the verifier differences both energies independently. No separate energy PDE is assembled.
+  interpretation: Energy and Legendre derivatives establish the implemented mineral
+    residual and effective stresses; the verifier differences both energies independently.
+    No separate energy PDE is assembled.
 - id: stress_transform
   paper_equations:
   - eq:single-double-prime-stress-relation
@@ -332,8 +393,8 @@ supporting_mappings:
   sources:
   - moose_app/src/materials/ADReferenceSolidStressMaterial.C
   - moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C
-  interpretation: Elastic stress uses Pprime=Pdoubleprime+(1-B)p J FinvT and P=Pprime-p J FinvT; the plastic
-    return uses the equivalent Kirchhoff transformation.
+  interpretation: Elastic stress uses Pprime=Pdoubleprime+(1-B)p J FinvT and P=Pprime-p
+    J FinvT; the plastic return uses the equivalent Kirchhoff transformation.
 - id: volumetric_virtual_work
   paper_equations:
   - eq:elastic-logarithmic-volume-variation
@@ -376,8 +437,9 @@ supporting_mappings:
   sources:
   - validation/scripts/check_stress_trace_derivation.py
   - moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C
-  interpretation: Virtual-work and mineral-stress identities derive the energy closure. They are supporting
-    analytical steps, not additional numerical equations or independent state variables.
+  interpretation: Virtual-work and mineral-stress identities derive the energy closure.
+    They are supporting analytical steps, not additional numerical equations or independent
+    state variables.
 - id: matched_energy_reduction
   paper_equations:
   - eq:drained-mineral-volume-matching
@@ -390,8 +452,9 @@ supporting_mappings:
   - validation/scripts/check_stress_trace_derivation.py
   - validation/scripts/check_implicit_poroplastic.py
   - moose_app/include/utils/MatchedLogMineralState.h
-  interpretation: Drained matching and energy differentiation reduce to the scalar mineral residual. The
-    helper solves the reduced residual; the verifiers reconstruct the energy independently.
+  interpretation: Drained matching and energy differentiation reduce to the scalar
+    mineral residual. The helper solves the reduced residual; the verifiers reconstruct
+    the energy independently.
 - id: equivalent_biot_forms
   paper_equations:
   - eq:solid-pressure-implicit-tangent
@@ -402,8 +465,9 @@ supporting_mappings:
   - validation/scripts/check_stress_trace_biot_fraction.py
   - moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C
   - moose_app/include/utils/MatchedLogMineralState.h
-  interpretation: Alternative forms are algebraically equivalent to the production mineral-volume expression.
-    The independent two-state tangent holds referential mass and plastic history fixed.
+  interpretation: Alternative forms are algebraically equivalent to the production
+    mineral-volume expression. The independent two-state tangent holds referential
+    mass and plastic history fixed.
 - id: effective_stress_reconstruction
   paper_equations:
   - eq:single-prime-stress-from-energy
@@ -415,9 +479,9 @@ supporting_mappings:
   - moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C
   - moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C
   - validation/scripts/check_implicit_poroplastic.py
-  interpretation: The code evaluates the equivalent double-prime pressure correction K alpha p^2 z^2/(Ks
-    D), then adds the single-prime correction. Here z is mineral volume and D=Ks+alpha p z; the verifier
-    checks the energy derivatives.
+  interpretation: The code evaluates the equivalent double-prime pressure correction
+    K alpha p^2 z^2/(Ks D), then adds the single-prime correction. Here z is mineral
+    volume and D=Ks+alpha p z; the verifier checks the energy derivatives.
 - id: small_strain_limit
   paper_equations:
   - eq:biot-limit-infinitesimal-strain
@@ -429,8 +493,8 @@ supporting_mappings:
   sources:
   - validation/scripts/check_mandel_implicit_biot.py
   - moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C
-  interpretation: These linearizations define the analytical comparison, while the application retains
-    finite-deformation kinematics and stress.
+  interpretation: These linearizations define the analytical comparison, while the
+    application retains finite-deformation kinematics and stress.
 - id: plastic_driving_stress_and_admissibility
   paper_equations:
   - eq:kirchhoff-stress-definition
@@ -451,9 +515,10 @@ supporting_mappings:
   - moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C
   - validation/scripts/check_implicit_poroplastic.py
   - validation/scripts/check_poroplastic_hardening.py
-  interpretation: M=Fe^T tauprime Fe^-T supplies compressive mean stress and q. The smooth-cone return
-    enforces flow, current cohesion and consistency; the verifier checks dissipation. True-plastic volume
-    preservation follows from reconstructing Fp/ap^(1/3).
+  interpretation: M=Fe^T tauprime Fe^-T supplies compressive mean stress and q. The
+    smooth-cone return enforces flow, current cohesion and consistency; the verifier
+    checks dissipation. True-plastic volume preservation follows from reconstructing
+    Fp/ap^(1/3).
 - id: mandel_geometry_and_boundaries
   paper_equations:
   - eq:mandel-quarter-domain
@@ -465,9 +530,9 @@ supporting_mappings:
   - moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i
   - validation/scripts/check_mandel_implicit_biot.py
   - scripts/reproduce_mandel_publication.py
-  interpretation: The rectangular mesh, symmetry displacement constraints, right pressure Dirichlet condition
-    and prescribed analytical top displacement specify the reported test; remaining flux boundaries are
-    natural zero flux.
+  interpretation: The rectangular mesh, symmetry displacement constraints, right pressure
+    Dirichlet condition and prescribed analytical top displacement specify the reported
+    test; remaining flux boundaries are natural zero flux.
 - id: drained_volume_limit
   paper_equations:
   - eq:drained-elastic-biot-volume
@@ -476,8 +541,8 @@ supporting_mappings:
   sources:
   - validation/scripts/check_stress_trace_biot_fraction.py
   - moose_app/include/utils/MatchedLogMineralState.h
-  interpretation: At p=0 and ap=1 the scalar mineral root is a power of J; the symbolic verifier
-    checks the resulting drained coefficient reduction.
+  interpretation: At p=0 and ap=1 the scalar mineral root is a power of J; the symbolic
+    verifier checks the resulting drained coefficient reduction.
 - id: analytical_mandel_reference
   paper_equations:
   - eq:trace-mineral-pressure-tangent
@@ -501,9 +566,10 @@ supporting_mappings:
   - scripts/reproduce_mandel_publication.py
   - moose_app/src/materials/ADBiotPressureStorageMaterial.C
   - moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C
-  interpretation: The pressure derivative and linearized pore-volume rate give the storage modulus used
-    by parameters(); mandel_roots(), analytical_solution() and analytical_displacement() implement the
-    series. Source comment identifiers also name unnumbered displays and equation groups. These are reference calculations,
+  interpretation: The pressure derivative and linearized pore-volume rate give the
+    storage modulus used by parameters(); mandel_roots(), analytical_solution() and
+    analytical_displacement() implement the series. Source comment identifiers also
+    name unnumbered displays and equation groups. These are reference calculations,
     not extra MOOSE kernels.
 - id: gajo_logarithmic_elastic_equivalence
   paper_equations:
@@ -525,10 +591,10 @@ supporting_mappings:
   - paper/sections/gajo_equivalence_appendix.tex
   - references/notes/finite-strain-pressure-coupling-literature-2026-09-18.md
   interpretation: Elimination of the cited logarithmic elastic factor relations recovers
-    the scalar mineral closure. Reconstruction establishes the reverse implication on
-    a common admissible branch. Differentiating the mean total stress recovers the
-    fixed-pressure mineral-volume coefficient and distinguishes it from the finite
+    the scalar mineral closure. Reconstruction establishes the reverse implication
+    on a common admissible branch. Differentiating the mean total stress recovers
+    the fixed-pressure mineral-volume coefficient and distinguishes it from the finite
     pressure multiplier relative to the drained stress. These are supporting algebraic
-    relations, not additional implemented equations. The appendix also maps the
-    volumetric closure of Gajo's 2011 plastic specialization with reversible mineral
-    volume change; equivalence of complete flow and hardening laws is not asserted.
+    relations, not additional implemented equations. The appendix also maps the volumetric
+    closure of Gajo's 2011 plastic specialization with reversible mineral volume change;
+    equivalence of complete flow and hardening laws is not asserted.

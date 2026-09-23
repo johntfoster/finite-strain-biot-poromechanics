@@ -1,6 +1,12 @@
 [Tests]
   design = 'paper/sections/implicit_ad_implementation.tex'
   issues = ''
+  [poroplastic_initial_mass]
+    type = RunCommand
+    command = 'python3 ../../../../validation/scripts/check_conservative_plastic_initial_state.py'
+    max_time = 180
+    requirement = 'Fluid mass shall initialize from the prescribed nonzero deformation, pressure and plastic history and remain constant in a sealed stationary body.'
+  []
   [poroplastic_mandel_storage]
     type = RunCommand
     command = 'python3 ../../../../validation/scripts/check_poroplastic_mandel.py --quick'
@@ -12,7 +18,7 @@
     command = 'python3 ../../../../validation/scripts/check_poroplastic_mandel.py'
     heavy = true
     max_time = 14400
-    requirement = 'Coupled poroplastic compression and drainage shall recover the elastic limit and reduce solid and fluid mass drift under refinement while reporting spatial and temporal sensitivity.'
+    requirement = 'Coupled poroplastic compression and drainage shall recover the elastic limit and preserve solid mass and discrete fluid mass on every refinement while reporting spatial and temporal sensitivity.'
   []
   [poroplastic_spatial_stability]
     type = RunCommand

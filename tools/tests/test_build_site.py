@@ -56,6 +56,26 @@ class SiteTests(unittest.TestCase):
             for path in ROOT.glob(pattern):
                 self.assertIn(path.relative_to(ROOT).as_posix(), catalog)
 
+    def test_shared_balance_source_links(self):
+        catalog = site.examples_catalog()
+        for name in ('ReferenceMomentum', 'ReferenceFluidMass'):
+            self.assertIn('source.html?f=moose_app/src/kernels/ReferenceBalance.C">'
+                          +name+'</a>', catalog)
+
+    def test_production_cannot_revert_to_supplied_rate_kernel(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            names = ('mandel_implicit_biot/mandel_water_q2_q1.i',
+                     'poroplastic_mandel/compression.i')
+            for name in names:
+                path = root/'moose_app/test/tests'/name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('type = ReferenceMomentum\ntype = ReferenceFluidMass\n')
+            site.check_production_balances(root)
+            path.write_text('type = ReferenceMomentum\ntype = ADReferenceMaterialStorageRateTerm\n')
+            with self.assertRaisesRegex(ValueError, 'must use the conservative balance kernels'):
+                site.check_production_balances(root)
+
     def test_missing_markdown_example_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

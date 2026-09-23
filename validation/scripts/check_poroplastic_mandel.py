@@ -99,7 +99,7 @@ def storage_check(name, dt):
     if len(files) < 3:
         raise AssertionError('Missing quadrature-point storage samples')
     old = None
-    worst = dict(storage_rate=0., biot=0., elastic_biot=0., mineral=0., plastic_determinant=0.)
+    worst = dict(discrete_storage=0., storage_rate=0., biot=0., elastic_biot=0., mineral=0., plastic_determinant=0.)
     active = 0
     omitted_effect = 0.
     for file in files:
@@ -110,9 +110,14 @@ def storage_check(name, dt):
             continue
         for r, prev in zip(rows, old, strict=True):
             J,p,rho,ap = (r['check_'+v] for v in ('J','p','rho','ap'))
+            previous_mass = (prev['check_J'] - PHI0 * mineral(
+                prev['check_J']/prev['check_ap'], prev['check_p'])) * RHOF * np.exp(prev['check_p']/KF)
+            current_mass = (J - PHI0 * mineral(J/ap, p)) * RHOF * np.exp(p/KF)
+            worst['discrete_storage'] = max(worst['discrete_storage'],
+                abs((current_mass-previous_mass)/dt-r['check_discrete_storage'])/RHOF)
             jd = r['check_Jdot']
             pd = (p-prev['check_p'])/dt
-            rd = (rho-prev['check_rho'])/dt
+            rd = -jd / J**2
             lp = BETA*r['check_gamma']/dt
             def accumulation(tau, plastic=True):
                 j = J+tau*jd
@@ -133,7 +138,7 @@ def storage_check(name, dt):
                 reported = r['check_B'] if key=='biot' else r['check_Bel']
                 worst[key] = max(worst[key],abs(b-reported))
         old = rows
-    limits = dict(storage_rate=2e-7, biot=5e-8, elastic_biot=5e-8, mineral=1e-10, plastic_determinant=1e-9)
+    limits = dict(discrete_storage=2e-10, storage_rate=2e-7, biot=5e-8, elastic_biot=5e-8, mineral=1e-10, plastic_determinant=1e-9)
     for k,v in worst.items():
         if v > limits[k]:
             raise AssertionError(f'{k}: {v} > {limits[k]}')
@@ -159,7 +164,7 @@ def mass_metrics(rows):
         chain = max(chain,abs(r['water_mass']-initial-rate)/initial)
         last = r['time']
     return dict(max_relative_mass_defect=worst, max_relative_reaction_mass_defect=reaction_worst, final_relative_mass_defect=(rows[-1]['water_mass']-initial+out)/initial,
-                max_relative_chain_rule_defect=chain,
+                max_relative_discrete_storage_defect=chain,
                 solid_mass_l2=max(r['solid_material_mass_constraint_l2'] for r in rows),
                 mineral_eos_l2=max(r['solid_mineral_eos_constraint_l2'] for r in rows))
 
@@ -282,10 +287,12 @@ def main():
     storage=storage_check('storage',.01)
     print('PASS storage',storage,flush=True)
     # Unit-scaled moduli preserve dimensionless response and the absolute PETSc criterion.
+    # A perturbation sweep brackets truncation at 1e-9 and roundoff below 1e-10;
+    # 3e-10 resolves complete-mass subtraction at the unchanged acceptance limits.
     # Extrapolate the Newton initial guess away from the yield switching surface;
     # test every assembled Jacobian through the ramp and hold at unchanged tolerances.
     jrows,cmd=run('jacobian',nx=2,ny=2,dt=.02,end=.7,
-        extra=('stiffness_scale_pa=1','cohesion_pa=.02','Outputs/exodus=false','-snes_test_err','1e-9','-snes_test_jacobian'),reuse=args.reuse)
+        extra=('stiffness_scale_pa=1','cohesion_pa=.02','Outputs/exodus=false','-snes_test_err','3e-10','-snes_test_jacobian'),reuse=args.reuse)
     commands.append(cmd)
     jac=jacobian_check(RUNTIME/'jacobian.log')
     if max(r['gamma_max'] for r in jrows)<1e-8: raise AssertionError('Jacobian run remained elastic')
@@ -308,12 +315,13 @@ def main():
     if (structure['spatial_fine']['delta_b']['final_x_second_difference_rms'] >
             .6*structure['temporal_fine']['delta_b']['final_x_second_difference_rms']):
         raise AssertionError('Coefficient second differences failed spatial refinement')
-    if not (metrics['temporal_fine']['max_relative_chain_rule_defect'] < metrics['fine']['max_relative_chain_rule_defect'] < metrics['temporal_coarse']['max_relative_chain_rule_defect']):
-        raise AssertionError('Water chain-rule drift failed temporal refinement')
-    if not (metrics['temporal_fine']['max_relative_reaction_mass_defect'] < metrics['fine']['max_relative_reaction_mass_defect'] < metrics['temporal_coarse']['max_relative_reaction_mass_defect']):
-        raise AssertionError('Integrated boundary reaction and water mass failed temporal refinement')
-    if not (metrics['temporal_fine']['solid_mass_l2'] < metrics['fine']['solid_mass_l2'] < metrics['temporal_coarse']['solid_mass_l2']):
-        raise AssertionError('Solid mass drift failed temporal refinement')
+    for name, m in metrics.items():
+        if m['max_relative_discrete_storage_defect'] > 1e-10:
+            raise AssertionError(f'{name}: discrete storage fails telescoping mass conservation')
+        if m['max_relative_reaction_mass_defect'] > 1e-8:
+            raise AssertionError(f'{name}: boundary reaction fails discrete water conservation')
+        if m['solid_mass_l2'] > 1e-12:
+            raise AssertionError(f'{name}: eliminated solid density fails exact conservation')
     if max(m['mineral_eos_l2'] for m in metrics.values())>1e-10:
         raise AssertionError('Mineral EOS residual exceeded tolerance')
     # High cohesion suppresses yielding while retaining the coupled plastic code path.
@@ -368,8 +376,10 @@ def main():
         'moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C',
         'moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C',
         'moose_app/src/materials/ADSolidReferenceKinematics.C',
-        'moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C',
-        'moose_app/src/kernels/ADReferenceSolidMomentum.C',
+        'moose_app/src/kernels/ReferenceBalance.C',
+        'moose_app/include/kernels/ReferenceBalance.h',
+        'moose_app/src/materials/ADReferenceBalanceState.C',
+        'moose_app/include/materials/ADReferenceBalanceState.h',
         'moose_app/include/utils/MatchedLogMineralState.h']]
     sources.append(ROOT/'validation/scripts/run_provenance.py')
     record['source_sha256']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}

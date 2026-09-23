@@ -66,13 +66,21 @@
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C">ADBinarySolidSpatialMassMaterial</a>
-          <span class="desc">Source-free solid partial-density balance pulled to the reference; normalized referential solid mass and its AD rate.</span>
-          <span class="why">Why: closes the spatial solid mass balance.</span>
+          <span class="desc">Evaluates solid partial density as its reference value divided by the deformation Jacobian.</span>
+          <span class="why">Why: enforces constant referential solid mass at every integration point.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADBiotPressureStorageMaterial.C">ADBiotPressureStorageMaterial</a>
-          <span class="desc">Exact single-water mass storage <code>J(1−φ<sub>s</sub>)ρ̄<sub>f</sub>(p)</code> and its AD time rate.</span>
+          <span class="desc">Exact single-water mass storage <code>J(1−φ<sub>s</sub>)ρ̄<sub>f</sub>(p)</code> and a separate continuous-rate diagnostic.</span>
           <span class="why">Why: the water accumulation without a prescribed storage modulus.</span>
+        </li>
+        <li>
+          <a href="source.html?f=moose_app/src/materials/ADReferenceBalanceState.C">ADReferenceBalanceState</a>
+          <span class="desc">Supplies total first Piola stress, current and previous reference fluid mass, and Darcy mass flux to the shared balance kernels.</span>
+        </li>
+        <li>
+          <a href="source.html?f=moose_app/src/kernels/ReferenceBalance.C">ReferenceMomentum and ReferenceFluidMass</a>
+          <span class="desc">Integrate total stress and the backward difference of complete fluid mass with reference Darcy transport. The kernel source agrees with the anisotropic companion apart from application registration.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C">ADBiotDarcyReferenceFluxMaterial</a>
@@ -108,13 +116,13 @@
       <ul class="file-list">
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C">ADReferenceMaterialStorageRateTerm</a>
-          <span class="desc">Atomic conservative storage rate supplied as an AD reference-rate property (time kernel).</span>
-          <span class="why">Why: assembles the time derivatives of the solid and water accumulations.</span>
+          <span class="desc">Integrates a supplied AD reference-rate property.</span>
+          <span class="why">Supporting kernel for a prescribed continuous material rate; the coupled examples use ReferenceFluidMass.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADReferenceComponentFluxTerm.C">ADReferenceComponentFluxTerm</a>
           <span class="desc">Atomic weak-divergence term for one named reference component flux.</span>
-          <span class="why">Why: assembles the Darcy transport term.</span>
+          <span class="why">Supporting flux kernel; ReferenceFluidMass includes this term in the coupled examples.</span>
         </li>
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADMaterialPropertyResidual.C">ADMaterialPropertyResidual</a>
@@ -124,7 +132,7 @@
         <li>
           <a href="source.html?f=../moose_app/src/kernels/ADReferenceSolidMomentum.C">ADReferenceSolidMomentum</a>
           <span class="desc">Quasi-static solid-skeleton momentum component on the reference configuration.</span>
-          <span class="why">Why: the momentum residual for displacement.</span>
+          <span class="why">General momentum kernel with optional body forces; the coupled examples use ReferenceMomentum.</span>
         </li>
       </ul>
     </section>

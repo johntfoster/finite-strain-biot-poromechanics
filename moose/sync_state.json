@@ -23,12 +23,12 @@
     {
       "biot": "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h",
       "master": "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h",
-      "sha256": "b1c38b7707f46120f9e2e7939f360ceaf30a35473d1101cc8ccc163a7e2043d2"
+      "sha256": "9d210a6d2d614ae3222a205717c0e997f999b997688b467d5c103ffc8a55e1db"
     },
     {
       "biot": "moose_app/include/materials/ADBiotPressureStorageMaterial.h",
       "master": "moose_app/include/materials/ADBiotPressureStorageMaterial.h",
-      "sha256": "1f72903cd280f542ed35c20daca6647cdebf9ca2d1abe1496ae682b984f04c05"
+      "sha256": "75d41a813adea946569aacdb9e19b25a35ac0fb60469e2f112e3603e32ca877b"
     },
     {
       "biot": "moose_app/include/materials/ADConstrainedSkeletonBiotMaterial.h",
@@ -38,7 +38,7 @@
     {
       "biot": "moose_app/include/materials/ADLocalElasticMineralBiotMaterial.h",
       "master": "moose_app/include/materials/ADLocalElasticMineralBiotMaterial.h",
-      "sha256": "3ed00c90fc26172b8db12e3b703b33645d8c33ad1e2bad92f3739f4d197182ab"
+      "sha256": "b29f791515b47d228b15aca514af43d7e63c80131dbcf9b3ae41abf55b65b2d2"
     },
     {
       "biot": "moose_app/include/materials/ADReferenceSolidStressMaterial.h",
@@ -48,7 +48,7 @@
     {
       "biot": "moose_app/include/materials/ADSolidReferenceKinematics.h",
       "master": "moose_app/include/materials/ADSolidReferenceKinematics.h",
-      "sha256": "343d81f2c8479d6abf8a8d131d8b6bf5bccc5d3237961c03bbcd8a3af73d5d12"
+      "sha256": "20a7bad230f1d186d1429588f532422a6a3425be04a2784f872e5f438675036e"
     },
     {
       "biot": "moose_app/include/materials/ADBiotDarcyReferenceFluxMaterial.h",
@@ -93,7 +93,7 @@
     {
       "biot": "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C",
       "master": "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C",
-      "sha256": "a91cb763ec048927d93f330d12a021c1e0ad5c2451116263b168941609093db7"
+      "sha256": "70df992a6471b0d0eb9e8be04fe55354477ef53ee9ca1805234bb12f08537007"
     },
     {
       "biot": "moose_app/src/materials/ADBiotPressureStorageMaterial.C",
@@ -108,7 +108,7 @@
     {
       "biot": "moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C",
       "master": "moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C",
-      "sha256": "623a106d638001554cf98a94ceb8fc3be562565e61acb375a68624b1fd912b55"
+      "sha256": "517ee342d5406dfe872c1126163e465ef7b8e85dc6a34769113e5b10195234c5"
     },
     {
       "biot": "moose_app/src/materials/ADReferenceSolidStressMaterial.C",
@@ -138,17 +138,17 @@
     {
       "biot": "moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i",
       "master": "moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i",
-      "sha256": "5ea03a69cb2be080f61ba3d85869c1f77cf02464106b85c73183270d7ea57180"
+      "sha256": "364163dc4eee5ec5ecc7c2fa90120bfe15d15484e5027a084ac9953c48a2ceb7"
     },
     {
       "biot": "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i",
       "master": "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i",
-      "sha256": "7ec3686e86b36a9d9edfd0e1448b23c802c5f1f8cc3b92f1b85c7cf358654b34"
+      "sha256": "e525ea47882d84547e36599d2df427574197391b92a03d8af9edd50c406f92ce"
     },
     {
       "biot": "moose_app/test/tests/mandel_implicit_biot/tests",
       "master": "moose_app/test/tests/mandel_implicit_biot/tests",
-      "sha256": "c80189d78503e8b1f1782972ce9404242cbe577fe1957e61e625e83497b428b1"
+      "sha256": "ba209e0c7543200d00b4c1ba9e9a057ad4308096546526435e914a6831433226"
     },
     {
       "biot": "validation/scripts/check_mandel_implicit_biot.py",
@@ -164,10 +164,40 @@
       "biot": "moose_app/patches/moose/series.yml",
       "master": "moose_app/patches/moose/series.yml",
       "sha256": "806c70e91c05c598912fc2bbdb74c5895ac8d00eb101234f5eb2bb6254f22767"
+    },
+    {
+      "biot": "moose_app/include/kernels/ReferenceBalance.h",
+      "master": "moose_app/include/kernels/ReferenceBalance.h",
+      "sha256": "35597027125468147409ab0d88e85b2b88fc16902cbc7c802502b44275822dbb"
+    },
+    {
+      "biot": "moose_app/src/kernels/ReferenceBalance.C",
+      "master": "moose_app/src/kernels/ReferenceBalance.C",
+      "sha256": "1a16c9a559caafd5831166f90ea15c4d11deddf7c888ec7b441f38dad73bd1be"
+    },
+    {
+      "biot": "moose_app/include/materials/ADReferenceBalanceState.h",
+      "master": "moose_app/include/materials/ADReferenceBalanceState.h",
+      "sha256": "d20a30cc8fed544a5bff16fcd8d43b3cfcb56e1b0116e6cb3b5fc4ff0548d2ab"
+    },
+    {
+      "biot": "moose_app/src/materials/ADReferenceBalanceState.C",
+      "master": "moose_app/src/materials/ADReferenceBalanceState.C",
+      "sha256": "a327ee4d93761fe3b92269a2eede994d7db6ce446ae0a20c5288daf436739e1e"
+    },
+    {
+      "biot": "moose_app/test/tests/mandel_implicit_biot/conservative_initial_state.i",
+      "master": "moose_app/test/tests/mandel_implicit_biot/conservative_initial_state.i",
+      "sha256": "e01be97755631c821fe117b9b32ca3abff8f057697b589dc5b5d587e416c31c1"
+    },
+    {
+      "biot": "validation/scripts/check_conservative_initial_state.py",
+      "master": "validation/scripts/check_conservative_initial_state.py",
+      "sha256": "81ef8f9f48004b17a076450cb254f9e2e7199b59d34f0e4f98d1804661572b40"
     }
   ],
-  "manifest_sha256": "88073da3c39d0ea18e21a970d9d6440d04ec54e938ce620bc5dca6e9a6143ae9",
-  "master_commit": "7f8979d30b37392a72d8d396bf7d7f8ff2a61c8e",
-  "synchronized_at_utc": "2026-09-18T23:02:20.997553+00:00",
+  "manifest_sha256": "55df80b3dd7c643cfc99ac20225ce34daf93e3b63ed570bbadc772bae97e44a8",
+  "master_commit": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
+  "synchronized_at_utc": "2026-09-23T19:17:03.537099+00:00",
   "version": 1
 }

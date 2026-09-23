@@ -1,0 +1,275 @@
+{
+  "selected_perturbation": 3e-10,
+  "relative_tolerance": 1e-07,
+  "absolute_tolerance": 1e-05,
+  "results": {
+    "1e-9": {
+      "comparisons": 49,
+      "max_relative": 1.76908e-07,
+      "max_absolute": 1.10653e-06,
+      "run_manifest": {
+        "signature": "75ff976dcec1a0f7e266b6947af5764592a1e3da34ca4783aff1eb639d3da568",
+        "completed": true,
+        "execution_provenance": {
+          "schema_version": 1,
+          "captured_at_utc": "2026-09-23T19:16:05.090209+00:00",
+          "python": "3.14.0",
+          "packages": {
+            "numpy": "2.4.2",
+            "scipy": "1.17.1",
+            "sympy": "1.14.0",
+            "pandas": "3.0.1",
+            "matplotlib": "3.10.8",
+            "pyyaml": "6.0.3"
+          },
+          "conda_packages": {
+            "moose-dev": {
+              "version": "2026.02.20",
+              "build": "openmpi"
+            },
+            "moose-libmesh": {
+              "version": "2026.02.18_f8a1758",
+              "build": "openmpi_0"
+            },
+            "moose-tools": {
+              "version": "2026.02.16",
+              "build": "py314hc4e95f2_0"
+            },
+            "openmpi": {
+              "version": "5.0.8",
+              "build": "h611b0e2_111"
+            }
+          },
+          "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+          "executable": {
+            "path": "moose_app/nonlinear_biot_ad-opt",
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
+          },
+          "command": [
+            "moose_app/nonlinear_biot_ad-opt",
+            "-i",
+            "moose_app/test/tests/poroplastic_mandel/compression.i",
+            "mesh_nx=2",
+            "mesh_ny=2",
+            "step=0.02",
+            "Executioner/end_time=0.7",
+            "Outputs/file_base=.agent-runtime/poroplastic-mandel/jacobian_probe_1e-9",
+            "--disable-perf-graph-live",
+            "--color",
+            "off",
+            "stiffness_scale_pa=1",
+            "cohesion_pa=.02",
+            "Outputs/exodus=false",
+            "-snes_test_err",
+            "1e-9",
+            "-snes_test_jacobian"
+          ],
+          "outputs": {
+            ".agent-runtime/poroplastic-mandel/jacobian_probe_1e-9.csv": "7a81ecd1484127aff185ad789015bc83a3ec7301014239bc3acc2ca1e2652537"
+          }
+        }
+      }
+    },
+    "3e-10": {
+      "comparisons": 49,
+      "max_relative": 5.53973e-08,
+      "max_absolute": 3.46502e-07,
+      "run_manifest": {
+        "signature": "3f97e9e4d672a668b2fecad152204e4aca5fb67b34923aa8fad0652d83bf6ed0",
+        "completed": true,
+        "execution_provenance": {
+          "schema_version": 1,
+          "captured_at_utc": "2026-09-23T19:10:41.172296+00:00",
+          "python": "3.14.0",
+          "packages": {
+            "numpy": "2.4.2",
+            "scipy": "1.17.1",
+            "sympy": "1.14.0",
+            "pandas": "3.0.1",
+            "matplotlib": "3.10.8",
+            "pyyaml": "6.0.3"
+          },
+          "conda_packages": {
+            "moose-dev": {
+              "version": "2026.02.20",
+              "build": "openmpi"
+            },
+            "moose-libmesh": {
+              "version": "2026.02.18_f8a1758",
+              "build": "openmpi_0"
+            },
+            "moose-tools": {
+              "version": "2026.02.16",
+              "build": "py314hc4e95f2_0"
+            },
+            "openmpi": {
+              "version": "5.0.8",
+              "build": "h611b0e2_111"
+            }
+          },
+          "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+          "executable": {
+            "path": "moose_app/nonlinear_biot_ad-opt",
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
+          },
+          "command": [
+            "moose_app/nonlinear_biot_ad-opt",
+            "-i",
+            "moose_app/test/tests/poroplastic_mandel/compression.i",
+            "mesh_nx=2",
+            "mesh_ny=2",
+            "step=0.02",
+            "Executioner/end_time=0.7",
+            "Outputs/file_base=.agent-runtime/poroplastic-mandel/jacobian_probe_3e-10",
+            "--disable-perf-graph-live",
+            "--color",
+            "off",
+            "stiffness_scale_pa=1",
+            "cohesion_pa=.02",
+            "Outputs/exodus=false",
+            "-snes_test_err",
+            "3e-10",
+            "-snes_test_jacobian"
+          ],
+          "outputs": {
+            ".agent-runtime/poroplastic-mandel/jacobian_probe_3e-10.csv": "7a81ecd1484127aff185ad789015bc83a3ec7301014239bc3acc2ca1e2652537"
+          }
+        }
+      }
+    },
+    "1e-10": {
+      "comparisons": 49,
+      "max_relative": 8.40771e-08,
+      "max_absolute": 5.49499e-07,
+      "run_manifest": {
+        "signature": "59617d52f94fb1727be27f980a4a7b9ca6b74fdad7f96e24d1e01ec06f41011b",
+        "completed": true,
+        "execution_provenance": {
+          "schema_version": 1,
+          "captured_at_utc": "2026-09-23T19:10:10.905658+00:00",
+          "python": "3.14.0",
+          "packages": {
+            "numpy": "2.4.2",
+            "scipy": "1.17.1",
+            "sympy": "1.14.0",
+            "pandas": "3.0.1",
+            "matplotlib": "3.10.8",
+            "pyyaml": "6.0.3"
+          },
+          "conda_packages": {
+            "moose-dev": {
+              "version": "2026.02.20",
+              "build": "openmpi"
+            },
+            "moose-libmesh": {
+              "version": "2026.02.18_f8a1758",
+              "build": "openmpi_0"
+            },
+            "moose-tools": {
+              "version": "2026.02.16",
+              "build": "py314hc4e95f2_0"
+            },
+            "openmpi": {
+              "version": "5.0.8",
+              "build": "h611b0e2_111"
+            }
+          },
+          "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+          "executable": {
+            "path": "moose_app/nonlinear_biot_ad-opt",
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
+          },
+          "command": [
+            "moose_app/nonlinear_biot_ad-opt",
+            "-i",
+            "moose_app/test/tests/poroplastic_mandel/compression.i",
+            "mesh_nx=2",
+            "mesh_ny=2",
+            "step=0.02",
+            "Executioner/end_time=0.7",
+            "Outputs/file_base=.agent-runtime/poroplastic-mandel/jacobian_probe_1e-10",
+            "--disable-perf-graph-live",
+            "--color",
+            "off",
+            "stiffness_scale_pa=1",
+            "cohesion_pa=.02",
+            "Outputs/exodus=false",
+            "-snes_test_err",
+            "1e-10",
+            "-snes_test_jacobian"
+          ],
+          "outputs": {
+            ".agent-runtime/poroplastic-mandel/jacobian_probe_1e-10.csv": "7a81ecd1484127aff185ad789015bc83a3ec7301014239bc3acc2ca1e2652537"
+          }
+        }
+      }
+    },
+    "3e-11": {
+      "comparisons": 49,
+      "max_relative": 2.57548e-07,
+      "max_absolute": 1.68325e-06,
+      "run_manifest": {
+        "signature": "f73c508c28372fcc2c5fd1da47f513bd8f1f65896a39c66680eef51381168430",
+        "completed": true,
+        "execution_provenance": {
+          "schema_version": 1,
+          "captured_at_utc": "2026-09-23T19:11:11.213098+00:00",
+          "python": "3.14.0",
+          "packages": {
+            "numpy": "2.4.2",
+            "scipy": "1.17.1",
+            "sympy": "1.14.0",
+            "pandas": "3.0.1",
+            "matplotlib": "3.10.8",
+            "pyyaml": "6.0.3"
+          },
+          "conda_packages": {
+            "moose-dev": {
+              "version": "2026.02.20",
+              "build": "openmpi"
+            },
+            "moose-libmesh": {
+              "version": "2026.02.18_f8a1758",
+              "build": "openmpi_0"
+            },
+            "moose-tools": {
+              "version": "2026.02.16",
+              "build": "py314hc4e95f2_0"
+            },
+            "openmpi": {
+              "version": "5.0.8",
+              "build": "h611b0e2_111"
+            }
+          },
+          "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+          "executable": {
+            "path": "moose_app/nonlinear_biot_ad-opt",
+            "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
+          },
+          "command": [
+            "moose_app/nonlinear_biot_ad-opt",
+            "-i",
+            "moose_app/test/tests/poroplastic_mandel/compression.i",
+            "mesh_nx=2",
+            "mesh_ny=2",
+            "step=0.02",
+            "Executioner/end_time=0.7",
+            "Outputs/file_base=.agent-runtime/poroplastic-mandel/jacobian_probe_3e-11",
+            "--disable-perf-graph-live",
+            "--color",
+            "off",
+            "stiffness_scale_pa=1",
+            "cohesion_pa=.02",
+            "Outputs/exodus=false",
+            "-snes_test_err",
+            "3e-11",
+            "-snes_test_jacobian"
+          ],
+          "outputs": {
+            ".agent-runtime/poroplastic-mandel/jacobian_probe_3e-11.csv": "7a81ecd1484127aff185ad789015bc83a3ec7301014239bc3acc2ca1e2652537"
+          }
+        }
+      }
+    }
+  }
+}

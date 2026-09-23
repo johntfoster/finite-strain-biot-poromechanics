@@ -18,6 +18,7 @@ public:
   ADBiotPressureStorageMaterial(const InputParameters & parameters);
 
 protected:
+  void initQpStatefulProperties() override { computeQpProperties(); }
   void computeQpProperties() override;
 
   const ADVariableValue & _pressure;

@@ -58,8 +58,10 @@ flow.  Finite differences of the stored water mass independently check the
 contribution of plastic pore-volume change.  Comparisons of the assembled
 Jacobian with finite differences check the derivatives used by the global
 Newton solve.
-Water-mass change is also checked against boundary flow, and time-step
-refinement reduces the drift introduced by the chain-rule time discretization.
+Solid mass conservation determines partial density directly from deformation.
+Backward Euler differences the complete stored water mass, including the
+converged plastic contribution.  Water-mass change is checked against
+boundary flow accumulated with the same time quadrature.
 
 For the selected dilative material, the compression-and-hold calculation
 produces a positive plastic-history contribution to the Biot coefficient at

@@ -1,0 +1,62 @@
+{
+  "accepted": true,
+  "initial_J": 1.02,
+  "initial_pressure": 0.25,
+  "independent_mass": 0.5914752137759309,
+  "maximum_mass_error": 8.881784197001252e-16,
+  "maximum_pressure_error": 0.0,
+  "maximum_solid_mass_error": 0.0,
+  "execution_provenance": {
+    "schema_version": 1,
+    "captured_at_utc": "2026-09-23T19:17:01.784193+00:00",
+    "python": "3.14.0",
+    "packages": {
+      "numpy": "2.4.2",
+      "scipy": "1.17.1",
+      "sympy": "1.14.0",
+      "pandas": "3.0.1",
+      "matplotlib": "3.10.8",
+      "pyyaml": "6.0.3"
+    },
+    "conda_packages": {
+      "moose-dev": {
+        "version": "2026.02.20",
+        "build": "openmpi"
+      },
+      "moose-libmesh": {
+        "version": "2026.02.18_f8a1758",
+        "build": "openmpi_0"
+      },
+      "moose-tools": {
+        "version": "2026.02.16",
+        "build": "py314hc4e95f2_0"
+      },
+      "openmpi": {
+        "version": "5.0.8",
+        "build": "h611b0e2_111"
+      }
+    },
+    "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
+    "executable": {
+      "path": "moose_app/nonlinear_biot_ad-opt",
+      "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
+    },
+    "command": [
+      "moose_app/nonlinear_biot_ad-opt",
+      "-i",
+      "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i",
+      "moose_app/test/tests/mandel_implicit_biot/conservative_initial_state.i",
+      "Outputs/file_base=.agent-runtime/conservative-initial-state/sealed",
+      "--color",
+      "off"
+    ],
+    "outputs": {
+      ".agent-runtime/conservative-initial-state/sealed.csv": "016d86b2c6b812fc7a8db6b607c05cd7043c5d8a5b441d699d6b1eed78e2288a"
+    }
+  },
+  "source_sha256": {
+    "validation/scripts/check_conservative_initial_state.py": "81ef8f9f48004b17a076450cb254f9e2e7199b59d34f0e4f98d1804661572b40",
+    "moose_app/test/tests/mandel_implicit_biot/conservative_initial_state.i": "e01be97755631c821fe117b9b32ca3abff8f057697b589dc5b5d587e416c31c1",
+    "moose_app/src/materials/ADReferenceBalanceState.C": "a327ee4d93761fe3b92269a2eede994d7db6ce446ae0a20c5288daf436739e1e"
+  }
+}

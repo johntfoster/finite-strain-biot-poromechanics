@@ -10,19 +10,19 @@ specialization:
   balances_and_closures:
   - solid partial-density conservation in spatial form
   - matched logarithmic drained skeleton and mechanical mineral stress laws
-  - scalar mineral equation from pressure equilibrium of the distention and mineral energy
+  - scalar mineral equation from pressure equilibrium of the distention and mineral
+    energy
   - barotropic water equation of state
   discretization:
     displacement: Q2 continuous Lagrange
     water_pressure: Q1 continuous Lagrange
-    solid_spatial_mass: Q2 continuous Lagrange
+    solid_spatial_mass: eliminated pointwise as 1/J
     pressure_enrichment: false
 implementation:
   solid_mass_storage:
     objects:
     - ADBinarySolidSpatialMassMaterial
-    - ADReferenceMaterialStorageRateTerm
-    role: solve the pulled-back spatial solid mass balance d(J rho_s)/dt=0
+    role: enforce J rho_s = rho_s0 pointwise by eliminating density
   local_mineral_state:
     objects:
     - ADLocalElasticMineralBiotMaterial
@@ -31,19 +31,21 @@ implementation:
       closed-form coefficient at the converged state; independently solve the general
       two-state tangent at fixed pore pressure and fixed referential mass for verification
     shared_solver: moose_app/include/utils/MatchedLogMineralState.h
-    ad_dependencies: retain mineral-state dependence on deformation and pressure in the outer Jacobian
+    ad_dependencies: retain mineral-state dependence on deformation and pressure in
+      the outer Jacobian
   water_mass_storage:
     objects:
     - ADBiotPressureStorageMaterial
-    - ADReferenceMaterialStorageRateTerm
-    role: calculate the complete chain-rule time rate of the pulled-back water accumulation J(1-phi_s)rho_f(p)
-      from AD time-integrator rates and assemble it with an AD time kernel, with rho_f supplied by the
-      barotropic water equation of state and no prescribed Biot storage modulus
+    - ADReferenceBalanceState
+    - ReferenceFluidMass
+    role: difference complete current and previous water mass with backward Euler;
+      the barotropic EOS and current mineral/plastic states retain outer AD derivatives
   poroplastic_pore_volume:
     object: ADPoroplasticPoreVolumeMaterial
-    role: differentiate the mineral equation along the evolving plastic state and supply solid-volume-fraction rates to water storage
-    time_discretization: backward Euler field rates and beta times plastic multiplier increment divided by the step
-    dependencies: solved solid partial density, current mineral volume, total volume, pressure, and current AD plastic increment
+    role: evaluate solid fraction from eliminated density and current mineral volume;
+      provide continuous-rate diagnostics independently of the discrete residual
+    time_discretization: current plastic state enters complete mass at each time level
+    dependencies: total volume, pressure, and current AD plastic increment
   darcy_flux:
     object: ADBiotDarcyReferenceFluxMaterial
     role: pull the Q1 pressure-gradient Darcy mass flux to the solid reference configuration
@@ -55,19 +57,34 @@ implementation:
     role: homogeneous deformation with AD axial stretch and optional superposed rotation
   implicit_poroplastic:
     object: ADImplicitPoroplasticBiotMaterial
-    role: solve current symmetric exponential flow increment and yield consistency, recomputing the mass-conserving
-      matched logarithmic mineral state and state-only coefficient at fixed pore pressure and
-      current plastic state; retain the current plastic-state dependence in outer AD derivatives
-    scope: homogeneous constitutive verification and coupled compression/drainage with active plastic storage
-    hardening: optional linear increase of cohesion with accumulated plastic multiplier; zero modulus recovers perfect plasticity
-    publication_parameters: initial cohesion 20 MPa and hardening modulus 100 MPa in both material-point and coupled examples; material-point reference solid fraction 0.8 retains admissible pore volume
-    hardening_history: previous accumulated multiplier is fixed during the local solve; its current increment retains outer AD dependence
-    calibration: zero-pressure tests supply the double-prime skeleton response through K and G; the mineral law and reference solid fraction determine its pressure extension
-    pressure_verification: independent energy differences recover both effective stresses; pressure probes and quadrature fix total deformation and plastic history
-    feedback_comparator: substitutes the virgin coefficient only in the stress transformation, retaining the double-prime law; a constitutive sensitivity experiment
-    feedback_loading: simultaneous compression to axial stretch 0.65 and pressure ramps ending between zero and 1 GPa; endpoint distention checked under load-step refinement for both transformations
-    comparator_domain: optional virgin coefficient is evaluated after convergence; an unavailable or disabled comparator is NaN with availability zero, and cannot restrict production states
-    initial_history: optional isotropic plastic distention initializes Fp and the matching accumulated multiplier; the default remains the virgin state
+    role: solve current symmetric exponential flow increment and yield consistency,
+      recomputing the mass-conserving matched logarithmic mineral state and state-only
+      coefficient at fixed pore pressure and current plastic state; retain the current
+      plastic-state dependence in outer AD derivatives
+    scope: homogeneous constitutive verification and coupled compression/drainage
+      with active plastic storage
+    hardening: optional linear increase of cohesion with accumulated plastic multiplier;
+      zero modulus recovers perfect plasticity
+    publication_parameters: initial cohesion 20 MPa and hardening modulus 100 MPa
+      in both material-point and coupled examples; material-point reference solid
+      fraction 0.8 retains admissible pore volume
+    hardening_history: previous accumulated multiplier is fixed during the local solve;
+      its current increment retains outer AD dependence
+    calibration: zero-pressure tests supply the double-prime skeleton response through
+      K and G; the mineral law and reference solid fraction determine its pressure
+      extension
+    pressure_verification: independent energy differences recover both effective stresses;
+      pressure probes and quadrature fix total deformation and plastic history
+    feedback_comparator: substitutes the virgin coefficient only in the stress transformation,
+      retaining the double-prime law; a constitutive sensitivity experiment
+    feedback_loading: simultaneous compression to axial stretch 0.65 and pressure
+      ramps ending between zero and 1 GPa; endpoint distention checked under load-step
+      refinement for both transformations
+    comparator_domain: optional virgin coefficient is evaluated after convergence;
+      an unavailable or disabled comparator is NaN with availability zero, and cannot
+      restrict production states
+    initial_history: optional isotropic plastic distention initializes Fp and the
+      matching accumulated multiplier; the default remains the virgin state
 evidence:
   local_elastic_tangent: validation/mandel_implicit_biot.yml
   outer_ad_jacobian: moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i

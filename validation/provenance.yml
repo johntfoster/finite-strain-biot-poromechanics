@@ -17,7 +17,7 @@
   "execution_provenance": {
     "coupled_plastic": {
       "elastic_limit": {
-        "captured_at_utc": "2026-09-18T23:51:20.871857+00:00",
+        "captured_at_utc": "2026-09-23T19:46:43.702048+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -52,11 +52,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/elastic_limit.csv": "2893377bf2a33bac03fade7c1882b3f18f6038f975fb1486d61753f3fa8ee7a5"
+          ".agent-runtime/poroplastic-mandel/elastic_limit.csv": "657f730dc7d1b1ceb0422d38790f4e8bfa228709ffbc054eb6817607d96f64b2"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -70,7 +70,7 @@
         "schema_version": 1
       },
       "elastic_reference": {
-        "captured_at_utc": "2026-09-18T23:51:23.789004+00:00",
+        "captured_at_utc": "2026-09-23T19:46:46.331958+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -104,11 +104,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/elastic_reference.csv": "cc93bb3cf79ee5c3c76e8352158666937d74467a24919626679f596870625a0c"
+          ".agent-runtime/poroplastic-mandel/elastic_reference.csv": "e015fcdb5fec4a3268d212cc5093b471aa69e0af5dc10e93ca9f75a3288542df"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -122,11 +122,8 @@
         "schema_version": 1
       },
       "fine": {
-        "captured_at_utc": "2026-09-18T23:38:02.888067+00:00",
+        "captured_at_utc": "2026-09-23T19:14:52.986435+00:00",
         "command": [
-          "mpiexec",
-          "-n",
-          "8",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -159,11 +156,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/fine.csv": "000d90ed5b187d46b971a072cdfb506c8f37d8e8f81d35c5ab5ab1c28e1584d2"
+          ".agent-runtime/poroplastic-mandel/fine.csv": "0a9f50cf4744f75f8461508e94a0f9b4d94d9fb3d6f37c66f2685f39c07a5003"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -177,7 +174,7 @@
         "schema_version": 1
       },
       "jacobian": {
-        "captured_at_utc": "2026-09-18T23:04:39.509013+00:00",
+        "captured_at_utc": "2026-09-23T19:12:01.777832+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -194,7 +191,7 @@
           "cohesion_pa=.02",
           "Outputs/exodus=false",
           "-snes_test_err",
-          "1e-9",
+          "3e-10",
           "-snes_test_jacobian"
         ],
         "conda_packages": {
@@ -217,11 +214,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/jacobian.csv": "23e3d168a3d0eb2fa4f7e60122797da29743dac18d62152c90ac0c21eb092242"
+          ".agent-runtime/poroplastic-mandel/jacobian.csv": "7a81ecd1484127aff185ad789015bc83a3ec7301014239bc3acc2ca1e2652537"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -235,11 +232,8 @@
         "schema_version": 1
       },
       "spatial_coarse": {
-        "captured_at_utc": "2026-09-18T23:35:27.449519+00:00",
+        "captured_at_utc": "2026-09-23T19:14:04.966324+00:00",
         "command": [
-          "mpiexec",
-          "-n",
-          "8",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -272,11 +266,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/spatial_coarse.csv": "7f02dd903502ca857cf57945c07f1916a9033e3b5ae351106f53b85078d55229"
+          ".agent-runtime/poroplastic-mandel/spatial_coarse.csv": "65a4bc1986d24f82b3cad9a06d44791d756118b499c33cfa98f59645fb35d9cb"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -290,11 +284,8 @@
         "schema_version": 1
       },
       "spatial_fine": {
-        "captured_at_utc": "2026-09-18T23:42:41.208288+00:00",
+        "captured_at_utc": "2026-09-23T19:23:42.095193+00:00",
         "command": [
-          "mpiexec",
-          "-n",
-          "8",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -327,11 +318,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/spatial_fine.csv": "ddab83b10e4568683216a1b06f69fe8938a8a64bcb916ea3784d7972e62fb789"
+          ".agent-runtime/poroplastic-mandel/spatial_fine.csv": "c291beb9746c00155abaad234ad3f02ff5ed40b279361d4214240a87ba1d8274"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -345,7 +336,7 @@
         "schema_version": 1
       },
       "storage": {
-        "captured_at_utc": "2026-09-18T23:04:33.995701+00:00",
+        "captured_at_utc": "2026-09-23T19:11:56.215291+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -380,11 +371,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/storage.csv": "b726e5856b8f765b99e7edcf1672be83d89bef48172de4658ef33b22c82aeaec"
+          ".agent-runtime/poroplastic-mandel/storage.csv": "1c55d95d41aacd1c719fc322e18408d947eb91a66c146216128d3cc6ffb4550c"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -398,11 +389,8 @@
         "schema_version": 1
       },
       "temporal_coarse": {
-        "captured_at_utc": "2026-09-18T23:33:11.318811+00:00",
+        "captured_at_utc": "2026-09-23T19:12:31.977040+00:00",
         "command": [
-          "mpiexec",
-          "-n",
-          "8",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -435,11 +423,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/temporal_coarse.csv": "b34a04c581259188b8bd44bb8df306432be607ac319445e2fa60109dbbe7ccf8"
+          ".agent-runtime/poroplastic-mandel/temporal_coarse.csv": "b37a10caffc4ac5724d92aca0a9b20d971c61826b49ab743fe01e0c8b38ac7da"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -453,11 +441,8 @@
         "schema_version": 1
       },
       "temporal_fine": {
-        "captured_at_utc": "2026-09-18T23:40:20.769945+00:00",
+        "captured_at_utc": "2026-09-23T19:17:54.425036+00:00",
         "command": [
-          "mpiexec",
-          "-n",
-          "8",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -490,11 +475,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/temporal_fine.csv": "eccca2f50364e3a613134cac5ca5d178eeec7f33dd2e6a139610613a9602cf96"
+          ".agent-runtime/poroplastic-mandel/temporal_fine.csv": "2530ed91b8c19db0b49f83c615d78b0c4d8771fe3cfffe5ce2d85703e9060187"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -509,7 +494,7 @@
       }
     },
     "elastic_mandel": {
-      "captured_at_utc": "2026-09-18T23:06:49.778426+00:00",
+      "captured_at_utc": "2026-09-23T19:15:01.036512+00:00",
       "command": [
         "python",
         "scripts/reproduce_mandel_publication.py",
@@ -536,285 +521,285 @@
       },
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "outputs": {
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/large_fine.csv": "f1cb06654744e81ff0273a8e4650a86dfcc1923812ae4f9bc275e1d9fb7a07d8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/large_fine.e": "a9dad139e78d1c245561ca5b6bb11ef4a12caa47247693c07ff5c98b3cfbff32",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/large_spatial_coarse.csv": "ee27674617d231c08c5ee1cb9aa97a866678ad377b228748a42b40743d958f39",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/large_temporal_coarse.csv": "9d33186cfadf8e774668936c47ab033244b0479dc97f5ba2c8c3041afb00c319",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report.csv": "226526345d6bd51c81d4712a0d268ab92c4f475e261540d8c2c16adb012522ba",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0001.csv": "a51c987e7455e63d5ae35a367893422b53912c70b9cbe028115c05e540f963cd",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0002.csv": "886e976829f75b00c5c3dd15b7b45a7ae614e9a230dab79aca661cde82d0d73a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0003.csv": "caea966db8d93e9f1df7c0b794c49ee21ff0688d7caab9a559056706d468fbd8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0004.csv": "d97d5849325b608cf9710f14b219ac57ef24f9692949ee7970d80033683fc1ed",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0005.csv": "fff8932c412ffa4cb32eb7e151f7c2499fdd7a6103484e4f1a9cf20b318b0088",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0006.csv": "d254335c649285cf46d535deaccc6935b5b656bf16710386d8eee64fa1bda709",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0007.csv": "787f32144350e486b28fa904037be80313a47d7264ccda4b32319ac1a4872f1f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0008.csv": "aa3cf2a0499a5051147d744c6e4b36ea46119e5ae8b81c7396096d4fbdbbd9f3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0009.csv": "208d3c25f8a4c79d1e677a35a387611f6a1e37a1d128cf3b9ccfdd17f9b49a61",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0010.csv": "11629189b03b7ec315aa76c92a31253dbed775fb3021f27721ed835487295606",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0011.csv": "380eea539c5d74d66b20c43fe1681cc8079c5dca3de6574152dcf2f17a558957",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0012.csv": "03762cfd2c02586ab84876a6325bdde0115c9522e7876a2efdcea0a41bd5dc7e",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0013.csv": "3107cb95d141c2be14e87a2debafd9851e7af951a8d376214f2511e107519534",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0014.csv": "cf6d391084b908d560af4822bb8d749dfdcc534ae9eb6d6569101ed607e27456",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0015.csv": "af89c50a3fff53317dbb982b3f0e9a0e59b82e3fde6363673054be81e746f465",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0016.csv": "e473c7a02f78382389be0ac7999b84e40a5c4058460cf3d1b07de2e171c6009f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0017.csv": "29ed161c9c7f279f5f6e1c14ad265f8e048c6b9dd4b209db579c7e949577b88f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0018.csv": "a01d6b9d02cde31a1f5b41520b8b320008f12fb82d131aae4c51a0d8a399b598",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0019.csv": "c98a061fe8ee17c0cd95cd0b2f078e5d704f81ab16281ebb4e940e6ac69655b7",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0020.csv": "0f4ebfb1924c86df1763b45a29134fc1cfb0ba1e7e6452053004167f75393fb8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0021.csv": "56c5803891168676a45d6f0d0b4506bb8a65eabb35bcc523467073d2da2b7b4e",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0022.csv": "a797efacbeefc9b9c0c8e5cee0a9f89ed4eaeecf6fcee9bd972c32ceaf8d4e2a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0023.csv": "33e9ccf4e1aed7b675ac53b556438fc749f23962861f409dddb966a2f68aaf79",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0024.csv": "88e930796dfceb42a6df30ddd25b13f986ea40787b69bfd4b646c8f67b18a97a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0025.csv": "1f9d7bc6dd73d4e82f2d2c9b313d086f796c5b6cbc3465a012c90ab4b786e7ce",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0026.csv": "0146cebb2bca507b262f096a7d8bdf3e59838b24ad6a0806afcdb2c9ca289792",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0027.csv": "3d8d0c86a68374b156f24741a22d41bcb21cde2dc0d28683d2391334be3a4973",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0028.csv": "b690625c576de5adf9a7887d2e0c4d0cccde73ae4a6e87132e0f2ace3441e53c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0029.csv": "31d0dafb1b95ea763960a40c89c59d760b80624c20e8d69933ade0085795a944",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0030.csv": "a7956e4c12722d7f440eed77ac9a568180ac9a8d17ceb03dc5e7e43545274d2d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0031.csv": "68e511d16fd4201ef20ddb1408e836a8082be813920550e2dbce22c9df66cec2",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0032.csv": "3d055d8bd254cc1564d2b8789f06043983c859b1ee86d084c26e720a6268c034",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0033.csv": "e2d2892514f295f5b5f3f5e19fd6951571d10183b3a10b5a6f271bf3db48f13f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0034.csv": "6ada2931a8a03699529b6212ce7f99a4e462d1081a6ddcaaab26a827944ba3d1",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0035.csv": "c21e4685046112b955fb1c635b56d1ecce085b5721948c514480714ccafd7481",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0036.csv": "2ce173cd5bb6b3b641026ceb03d51e577059cd3a067629be33e463759cb9e299",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0037.csv": "eb524e7c36235ce677603cb41ba0cfbf02106603c3b3c7b9da5ab205a5187f78",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0038.csv": "fe20c170ac389ec9ca543f0eae458ab1c4c75adcfe6699deb5765306efd637bb",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0039.csv": "3a5bb732b220cf0f2f9e6877f345d72ca84c53d14f0637a5892cd583bdc4b644",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0040.csv": "0712ecad15112271f195f52997f9b1050bb37d435bb6ead40ea47e7a1ebe3cef",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0041.csv": "e7e711004092b82a6089867733edcb78b51e01230f3c2955c270febf4d54af8f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0042.csv": "8d7f6475465089edd333703e403c40b8e0a6e794e1460d1b8829f159a30c6326",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0043.csv": "9d0c5967af43f52b8a196cfafc3dce069644811896d50b0f45fe3d77404ea5f8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0044.csv": "26fd4d73bc4c557ae3e40f995f46fa1d3c0b329fa75cbd7f3c41c0828ed27de5",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0045.csv": "0c196fec62cd96f7cb555923f9ca7f030517fa5f1a7953dd2b510f737c4148e4",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0046.csv": "d0b02ba19b4ab417787b3c357baab7064cee9bd28ff7fb2bd8d709b2745e69e3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0047.csv": "4412c8134ce8ca60e114c26c42ec312a02f23c13757e73ed18d67a9936fef5cf",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0048.csv": "aac2a77e9d10f579a1177518f2a0afeeacc10c9de3d4d35507291aec6a992b63",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0049.csv": "336f41d39e43bf1a39b940d25af20763c278b47b9d33757edb8057a5606295f6",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0050.csv": "69b099c5a18724401eff35f23a87473567c514aa7f4ebd526227440c02f2a585",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0051.csv": "97e42b7e96d5362d2dedd3beca7a8157dcd49c75c0d7aa0cdbff2486b319cbc8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0052.csv": "19169f2727c5898d85486447f0cbd01a9e8a162c04f37c930a76ee674c9f9c70",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0053.csv": "9fcce0a5924ad1e450c57e5f5c8618cdb0cd8e941ee8ef9d47fc4b665e97854d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0054.csv": "43054dba051dd9e9012a639fa052d7f1cc9b95db7c7f0cf39f9545aba2e647fb",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0055.csv": "501828d7204738077ce3bab3d87ac30c6b8eb05174df67d5e7bf7595807c7d64",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0056.csv": "a024ce2f886fae875c0f74112ea7edd032df11bb942861019a787075e2ff46ea",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0057.csv": "2c5d9369363b93e3e1346419d5598b9d5d7ce0a9bb68ab4078b270a20db99c5b",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0058.csv": "36492c90b95cca4199436c2b256bdc77828fd9f403bb0655f7eb50308ddd5bfc",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0059.csv": "148c091b0db94dffb1aae1d5ae9bc23fb1ddd01ce8dc9d93a7562d99db668a2a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0060.csv": "0a444175a949d9d8c011eb088bf31b8c507af381d23507ec59676d23ac78b799",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0061.csv": "3468fb378de72420c1c83bab1c77466ae03c3be0a44853f8c4ed7546bce4ff24",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0062.csv": "85acc785fa36f2ce2f831c68d6d7948b21b3d5e25d9163efb9aa3463746ba09d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0063.csv": "a0aec6782d37d0f10ec8a22e9976eb9c5178c9ac6f1af1a957862e18ae03b506",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0064.csv": "b9f65e54b1b6ee53749458e14ac4b02631fdc9d50354ad46d6d56af6f56b593f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0065.csv": "982720c92240d22758d061f5ec43697e9c78a977e26d70ccbb99b4d2043120e3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0066.csv": "7a9ae83453db804dac70b0db7922fc32b5731c4947d057bbccca016cd52e2ff9",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0067.csv": "c6c4d816384054c7a7e46a25276c1efad7beef57625f66540244a861bf55d246",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0068.csv": "010d44579be69a70fc6233e364e3d7fe4447518fff6a8b934091b7f07d04804c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0069.csv": "a7f35930967743871bda37d1bbf218ddea1ce7379e334a52e7c909b249473b39",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0070.csv": "b0e20447cb63be0f50e42fad086043e215015e931d789c2dd73ead14825b8b8a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0071.csv": "b313a1132ffa3a53269b8edd83b95bbe0aa1bb098aca3618b524f25854e05f17",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0072.csv": "8e66bbcccaf2f7f363da3801876b4aa5ef3d95d56fc49e5a0c9536c3967e1c06",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0073.csv": "23f778f32966d21148cf92437a6456c57163b29dbe7b1732d636ba81ba14672a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0074.csv": "1e5276f7c33ba2f47412ee98d6ca64b4f411adc51f90aa22b24481f75358e326",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0075.csv": "20cb7a6949a4ec88eac72e6b6185994fd4a5a19d1f050bdfe81301fe411135f5",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0076.csv": "9f26fce62f15eead5cb55c5333e1427482094913cccdafec83bcd16963b0e14b",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0077.csv": "c087cb9fcdb21f36208445965c7308cfd52454d8374c8315e4b14dfff3463290",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0078.csv": "ac0d586222718ab985f45079e5828fe0d8c648e5e8b8dea5fd40b1488f6deb6a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0079.csv": "6f60ad0948982748f519b23d8f1d6b7e403a02f8c52e06b0a0b4e99f8af9d190",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0080.csv": "0911c5783ed4f48b87d2c5c382c7ac31fc4f1a96623538f4b565a06222cf4bf8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0081.csv": "4c816525a9bd3a831862901b9842fa06647b64d55129092934b6b05464dbceb0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0082.csv": "9a0aea349cfdc67e8a6539426a7ecb713e266b3c0fc3a5607f0966644fb5f526",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0083.csv": "74bf89f2b4b05ea0377709a78e4e4bda1292755918dfb7d4a32db1024c84ef76",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0084.csv": "2ed92e9d5d44238d13efc213178c5ba4a841eb7edbcd87d26ec2f6b4d706609c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0085.csv": "43943a3d0c2caf23685bbc3eb9e2ef9854ec8da638ee528c5bc8ee49ae96a301",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0086.csv": "bd06e99d37eef2b2c282a52995bd7b67f2d977ac411bd1bb615ac812e81d5fb5",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0087.csv": "0f71061723a7b8352fcbdd9f938de1c5c0fe7e89dd2ba55c6fedb4dba95c904e",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0088.csv": "561973fda5b921bf29411113fcf67700c0a709c472c7d7e353d24ab249fcc2a9",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0089.csv": "939c396d58bec3db0476447cf33d15bf1697fe79c80415164bd1651623bcf125",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_pressure_profile_0090.csv": "a0f9224ef984dbedb6106534347f70322d81b886b7a6cc82f33247fb2e676e93",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0001.csv": "324ef8433de7158a8cbf48863278da11aa412b41e77322017963d46efab541a6",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0002.csv": "daa84fa3ba13ae80fb7bed2855e7fb53a6c17f83bdb9a4cc5ddc95db0b08286c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0003.csv": "c5db6fea5a5c223b1d8ad768fad85a488df358396dba9efaf695fccee7a867f8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0004.csv": "5f2021697d993ac613d2e4d5455fcac3fdd3eb46f42072f328127b776be26143",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0005.csv": "fee5c71bd682875d4526e710dc3a35a862585b41aa95dde9c24ba112913199ae",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0006.csv": "fd210807613b6061cd8f18f27aa9f016e45efff97d7f630d3a6370780bd50278",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0007.csv": "7b1b0eb2d751ad40cc0c48435a01d750c18a4e1347515b1137631157df12a0c3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0008.csv": "535a04c15f44e3c13fc7c00d6788ec5b3c62dcd49f7f635a9518d5721004534f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0009.csv": "d76789622ba3f917292dd2037808ff19bc9965c02c660e63c77aba707b6df478",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0010.csv": "8b873f3055bed486b6f595f6f103f44c2836404e009a06af85e3f2b541b9c8a6",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0011.csv": "dcf632692b2c57248f559cea656288d1b366f4a33d13acc0604f214b346ff391",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0012.csv": "1b08b5a8ecfb1cd27098d5103f9c2ff9b5d5beac4e20acc22ffc8383c9bd0c8d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0013.csv": "7d484c8a150fe5fea434b38a86b0657d9375bc0842d144f7fe1eb336e194c059",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0014.csv": "2465c034b99b93da357e73c82ce3f78ae47f00923196851d6f8847d3eb0b8ae9",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0015.csv": "65baacf7bae30e683434112e64f553c8165d025b67e4c9bdc1c59b261daa16cf",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0016.csv": "26c335dfc7d54fc16103aad169c84efe506d124fb6452f310b94dd9a6ea53546",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0017.csv": "d1088f41a533a0cfe88fc0bdd5e26cb5d1199d00b417373dc6b0bcb314b75732",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0018.csv": "8834bc1f5ca7552dd238d59f4de314b4823c499bdf192f5d43829f1ea7304880",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0019.csv": "17e4945b3ab862a38634ee3da38782afc5ed6efc90aebd212b5a241e97b64a03",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0020.csv": "f1a255db5134af78c7dcd570b6f7481af611a779dd5d40503a1bc3c234e341eb",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0021.csv": "1dd64d01c254de40eebcf7f16024b3b428b3f1749d5f8472fc893e383e7993b7",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0022.csv": "d6b2a399954d2e4e314e59a2428d6c4cff94a48bf4f2c9e470d29899d59d7ca0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0023.csv": "ad68dc7b07e07830bc2cfe7c93fd3a7b60ab27c1b6a10411164bf40598f00eba",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0024.csv": "35ecf681a75862c268c5369888bd9fadbe99fea65bdf93177a9b1c0a9efb1cd0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0025.csv": "7b761e1c1cf613fc98baa52a14e591384905bae359b1375bff1ffd6bd46bba41",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0026.csv": "6896b56cbbffc26ed8f2c57f6e203d95c4465cbc767268079c3897386ec9c687",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0027.csv": "48246bbc725d92cdd59804e48b0fc13638f039e87c4e0c670dd10ec2cb571acd",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0028.csv": "32fbc7ca0bb20750784da14d0b25eb8b94bae65d9f692f215ec024290e8d71fb",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0029.csv": "9fd1c88a649496fd32da258906ff0d3cd091e15ba6f2fe448430d593800252a2",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0030.csv": "ada1ca73d32ab12bc6d058eb116c8de0eabcf3ee229fc36f74784d4bbe29ed39",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0031.csv": "9694ed6366e48d87249cb244920cf6db3ab82a853b610bed925db40d4f33af49",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0032.csv": "84b6a22e2d09fbe0bd31e8af2c424c75cbf9948ca1dde59535febf55d764caa7",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0033.csv": "040de7fec731278140cd68fb773d52844a4fbc84c0e6eafdada12b8d964ba3a8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0034.csv": "7bed10b55a56b4a6ca679a85fbe53c60fd56c6f702a7cb185826ce63a423af0f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0035.csv": "f855d8f048e3ea163a02183d1c99b27827e2fd5207f323eb2b9a0b7a0661d785",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0036.csv": "43a7e82ac367074bc4d2a75bd8a6d9cac70f3d50d3da52221a6c131de3bcd4fe",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0037.csv": "73ff67fd8bf26ef9e38b2bf96bc5a59c0b059e622ae4ab8c779aeb78af7f5ae8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0038.csv": "e214b988dcc31050ac63845ec26c2b7e3319422b14f41cc19f60d3ef892ef10f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0039.csv": "f52d1b6b5caeb537b8d40658e1342a0fa433412a83959067299bbb6bda0008dc",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0040.csv": "07ac3f5f8cbe32b3a13da30ead2c31079d36fbad4f0f451ec0acdfe9fa54f3b9",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0041.csv": "5b652700e6f3d2dc4b915be48bee9b33b130f8a68061009da093161e3ee5b746",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0042.csv": "84cd9644e0ca7de11836449ed9bd1ef88d9ff16ee1a9f814f07422f6050fd08f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0043.csv": "5aa1c69e4afca5fb1cc55b48cb05fc2150058ee937309c16a86cc3c7b04e7363",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0044.csv": "c478f73fac70945ea60a71f0a07953d8113cd45f709004e1962f08fc89e3fea0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0045.csv": "2b7427029228543112c4e03421e42a0e739292f3bb9d31f102e1ba5e2ee0d4d8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0046.csv": "d90f08405e380c5cc14e0593cf9a8ef33455204c5925ab31c06c313f7353c008",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0047.csv": "4d952e860cc657ca54610fb93811e0195afd728fdbbf2e8efd85dd9516531c64",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0048.csv": "e6c9230707f4b1e0a51f084a1a7bf1cc98413635148bd1ece4c40cb9e11b4994",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0049.csv": "7bdf663627dde2f00dcef0612c25602e76ecbbe494f6e0b686e7ba15a3beb794",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0050.csv": "b6fac1ee7dbc31f970d20b32f1e0f1f45152c40af7b925e74928af06106d7e58",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0051.csv": "c1bff64036109c553648311a423f3f1eb458685026507dce32008a487e822b56",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0052.csv": "fe7b9799aa34be1e5596bd42403da62928986e88a57d9f1ea7b0349ffbd30659",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0053.csv": "d4b44bd3c284926a715d89a7664c7ed3a4905b5ca23a7adc3aaeb570673945e4",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0054.csv": "8cf17c8955c3483665e055324c34fbb7625860d9ffe5d7ea4bf46aa54e4041ef",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0055.csv": "5bf6e7ee41db116eb5f856111aeb3022086f04d9fafed4202468d28aff9d0342",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0056.csv": "ff37222c4162fe120183a67c74e64b5f54ae7246399444d3285ad86da41219cb",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0057.csv": "b5a81ba20ad7229b12f16c40fa8ff79721c4990ae8bdb437a50f1f02ea30dfcb",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0058.csv": "9818e41318f42e1ce0b7a61470c30fabb056c1e16d24e0534f83d57ec92bd607",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0059.csv": "d36b558ddc430bd3999e3981ff7abc5cc3cb306ac411c61ed58078b21392b117",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0060.csv": "45acd77f8296e530749dbd8d43ddda7abe75e39391a912526faca631f85ecdfd",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0061.csv": "1e0c097ca69fdd9ed8194647b9e255e7a8a6c86a9bb3a7944253dabcb6e6ca5b",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0062.csv": "d22c4f8804f12ad8de482358d6b10840480e1359d87890dc652f0bce0fa53c0c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0063.csv": "aaa87fe9b051e1aa9e627ab9e2b085bfa2122b904f4e1f486b490bb963065aa0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0064.csv": "6cfae131b9996489a660f2776c9317bc4860e05f13e7d260b046738d2ff3f750",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0065.csv": "9720cd393d0435af70af406daec76bc9cc5e14d3fa4c96f48d3a744da54f94f6",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0066.csv": "f0152543f4cb36bcbeb35c909c751b703e4e6183ebfe38bae80faf31f9f34275",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0067.csv": "d61522ed91c52ac230f5c97575f9b89bd22e18727ab7ba6d25271eff22e7eb49",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0068.csv": "1267b8893d1c9866374b19d28f163d88ffe6eab95fea4d4c30de8bbfa33225f9",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0069.csv": "5e54d8912c29027b73ce0a8b3a9a8b7e55cd063035866bf9240d38ebdb9c7dec",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0070.csv": "2d1b5bc326dd5434cca04f74d392b7a91048b03c0877e95a2403dd8e9db0e05d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0071.csv": "37d189934bafc3deeb64085ebf78b898363ffd8b3626e34f0510cbcddee58e2d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0072.csv": "08c9fb3c26fbe4da305ae03c3a34002df6f8d49ce3c0133c58c928824fea35a0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0073.csv": "cd3d82bd8d39bb00c60dee34341a7e8bc05426233f9a10292da07acc54647a0d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0074.csv": "d7ce124eee347106a4d09afd038f5bdb93057c5439731f0c9d86fed1450e55b4",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0075.csv": "58e279cc6168c18f071f22a41d2972955b61f2ad294fc10d0060f964576b1757",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0076.csv": "7b19ec80e7b503803bde91336e90da7f18060a655053a11908483992e70746be",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0077.csv": "744e2f3c821bb4ae9069860eec475fd795d6bd477483b227268a4d2b882e66dd",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0078.csv": "fe5d2ab5716edbab0bfaf9af237fa8aacbd405bc3c1c4c851beb2e0de2a5021a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0079.csv": "cc371b71bc52e5ea8b393503a293f8d73a8586ff4fc45bbbc7c1d970a83e93cf",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0080.csv": "e2b6d007cec134da6584e915d0e671882f50922a5bc6fa8f49dd6a9a40726072",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0081.csv": "b9ad70bf387fa2a938751b29ec19cbba7744d3aa451c3fc12ec5811f705c131f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0082.csv": "25e4331828e57c559aa37a7cf3b4b3fb75d7b91ba6ee96d089819de2364d7ca4",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0083.csv": "41cc41d141277c679b855db3ae53b18789846bf5fa4d405664a18d12425ab151",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0084.csv": "1462a2890e676bc47ed11deb601ce06e89ac5acb33776135fd07f56dca3bcc36",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0085.csv": "467181756e3286108ff8f0a9d1827afc3339d2ba1134713e18ff03f0fe41311d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0086.csv": "0a05e5dd5e7b57a06d1d0a474959e081e2c57289128c11206480b4284c37485a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0087.csv": "ec0a2e3b0e871dda326fd7233baac0e58e0873d8d0f75ade6f4fefb33adaa752",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0088.csv": "d4e6c5203fb4d9ba3b87bfb96bda03c021c429ce8f1d2b477f8f543370dcd9ed",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0089.csv": "51782cc221f328ca010a255d2f96749edf0249f193db7c72b01b1bdec9a45114",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_ux_profile_0090.csv": "73966a8d22c5021dfd48513300ebf876c63b3990208d011ca734e7e8a57d5ed4",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0001.csv": "05565b67a23a4da4edd9204ec5eda0bab28854d59b82fee651d8d6f97a7e7a17",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0002.csv": "05834ccb41e681682ad824bf40b7049ade7d44be1afd3af87097d4c91beaa4ff",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0003.csv": "a10f0865ee3e9f92b121d8fa1a7e7019e2ec94355d2096cafa12520faf659c7a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0004.csv": "2a521bab5e96716f0327f4765968ee3d2dcb88ee5961d3302c9dc3b28e6d15e7",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0005.csv": "458f7b1ced8adbbb099a24b7e1816b2097952e90499368b9f1fa821cacf53738",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0006.csv": "82c13e050e500f791868fe2016c2482f73d6f45b3c16ed26729d7f63c3acb631",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0007.csv": "09c98f9000c033ab94f02f29b68070b32209a23f7136f29737d7a29938f9ccd8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0008.csv": "25fd1d833c2fc42c45afb31a1a32ccb2d823fe4ec440be8006308328aef6661a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0009.csv": "43824d64b74b5e0b227fca8f3af7b03ccfe77f77e9767732d3157b1b58275e06",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0010.csv": "b060dd7d7c0df6477268ae8b4be3aa3d884b9eaa2ada0e189608ba7086d41f4c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0011.csv": "8ab09bfabbfe1e24c428cccce8197a5380134d14454d79ef6054e73f92e1dfa0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0012.csv": "1231f93fe23c82cca35a0c1b56247a5b84878ce4253fad7602ca310edd068493",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0013.csv": "25ae2ba5439491cefad9d8849aa15deb3668a7d87274889b84a89d04e13f86f3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0014.csv": "4a2e56a6f0f99a0d86099c462340f16a8443e60f5e2e9dd7285f959d08483226",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0015.csv": "b8062200347079693cd7d95616d2d19efc68b4b8d492b39a447547bd732a9819",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0016.csv": "8266c5a2003a2f6f412424fb2ecd57f7f728f180d01478bad9e5217b087debd0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0017.csv": "fa9502c5bc606bb69075545d6ab9373e2d06830beaa2b206bf61e82ba6d99071",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0018.csv": "afde79f1bf86e286d8f60931f91e004c4b1d624096dd0be4ec4bd458cb9ddff9",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0019.csv": "0e67708a2d3e51d3006f9da371249409e68118b135b264b9765913beac7d61b6",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0020.csv": "103e1bc3ddd3ed34530f571bd47b871f3f857ff26598cc7932f7b3f31c46829b",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0021.csv": "d6b1c4649552dcf0ef3195446fe1c628ca847f39d0f7799c3d342bd3dcb02f3b",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0022.csv": "edc9e90930a25f0bf8bb3996ce143b28e2ac2f0d68a93142aafb313242b0d68f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0023.csv": "98e4eccb67af5995de042949325b7416e7eebf7267e03c88d8afddf0ff35818a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0024.csv": "0950f04670d8f3c80afceaf31884b442872f458b280f02327030ee87db17c285",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0025.csv": "725d9d9f6a2a43a6a937b86fd1464bc7977729a4ef46b6b7bf271c15e9b705bb",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0026.csv": "37e1037b78084ae368a6b04de63737847176059e44e1ae0275cf1fcb729ffaae",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0027.csv": "d5c9a716ec4675dcba0cc6bfe8aeeeffeacc5b2b27d12de7aacd05b69ef7d64d",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0028.csv": "478a2c1fb1e520e2accfe1e8a00716e7081ba0c2f2218b19e5ba34eed3e37143",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0029.csv": "dddbd259a154e69a2a0bdaec499f2dfaaaa9945d64e25cf76c4349eb9539584a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0030.csv": "6c29a8e5a0f63541abba9913aa38a122735669105ae5ad15b5a5e938c6cebded",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0031.csv": "7d209a99ab07bc7779ae39f97ec18db7a57838eef4d4989ae749cab62309180c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0032.csv": "dd9343e4d6145df42488e159852643ca84e5ba32c98a7459930b0c4fa1723edf",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0033.csv": "de21065c21a24f476153b5086046f70027f4fdd565b75e91de71b89ada757dbc",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0034.csv": "661a3b06b5108e68568779f44f0f05b77827a27bc86914870521ecb4b2a5a885",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0035.csv": "6121ca75b1f7a21cb801c2b2cbeaee993377bf33dd72101f161aea4f5fa955d6",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0036.csv": "1e4fa5eddf30ea00f3de211654b3365449080a886e154c8be48406e637bdb8c4",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0037.csv": "0f6fcbaf77b165f7ba88330811a11eee38bbc7d8ebd3aa23a806981b9d419eef",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0038.csv": "15e9e47988421b241cb4a64bc22df7f6c570670846aead174b237277fd21ca14",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0039.csv": "f04492ddb0abae3700f6d1c67501aec61cec5f15d976e01ad023d1ac744ee339",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0040.csv": "d32199f2b4727dd72d4c4131b39a30a99ae2e0e9a9c3e0c7b0cd74af7f7162f0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0041.csv": "4da821b3d916affcffc40bce31c324f2c2ebcb8bc51a2638035fc7afd5d52035",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0042.csv": "e5c6a3c685cff18dd089eda26e900cb791afadc93f0dcab8f57ad15c5bdcf4c8",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0043.csv": "83e6dde8bf66963243d17a2363324b43c6ef153cb5a6ee806393b19d07721422",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0044.csv": "a069121be6cd4ae2870220ed66c0047a2d03e79bc103591f7bd2e4fc9ccc89e3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0045.csv": "9aa2498b9521e345779e13a0870aacdbb1cb3e14e2c3fe6b20da3301a5b028dc",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0046.csv": "4a34525086e8fb5512dd4b47aa8db1c9e5193baa1ad4a40144040ed4bbaf9ad1",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0047.csv": "30fff63176977d5815700d0c642b92662f9e1a0f9b4145b30cd07c11071d2197",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0048.csv": "18e77ea619f568e267de425ee61655b4efe7815d9c288fdb442d7176dbb2a8fe",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0049.csv": "63275d99ff8966c6c70ca3db6af0f84640fcd2d356aacc13a886dedb03168e06",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0050.csv": "f650453938930e6905a274d356fd21c5b8dc9fb91073e7554e6583af30d39ce0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0051.csv": "89750092b5f659de7a69ceb8aeb07841cc15289dc62f4b46085791ae3d2fcffa",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0052.csv": "cd57b146f58b656c2da3310aeabbc7314c10fe3d013754ecb14b8c5ca58f4646",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0053.csv": "0cb623ac90224b49b78defc65740ef0a19c620e71184f57a8ab9e973b139ffa3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0054.csv": "e541f3851cfa01e680be18b20e2bfe7c3851a8cd12b9fb22a5ac5f00d1421466",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0055.csv": "07867e45327ff3352c76779c2e09561fa346f6bf26417881016f54b98a04b070",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0056.csv": "a93960728f21c640ff6fc3cdb2062b419f7d83ef99d47c8f7d8fead72aef9dbe",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0057.csv": "56e88708726f6828affc34fce1b305aed9ec8cf4e653cc62be38828021c3f23a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0058.csv": "34180a675fc323d439eb097f57a0cf407cb85c250882ccdd21da718442c5da7f",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0059.csv": "176e4951888615c3c7040f30a2ed7493eea04431d417267a8b3c0f85469e54d0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0060.csv": "5f18c650d3866ade20b3363c720c44f8bf3cfd998422e1e31328ad522ec6bb1b",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0061.csv": "00490a93b8a42a80ef3ab3fca34b5e0c234b71c603cda1427e4ec557ac2abe78",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0062.csv": "6ffe147eb01236bf50c1b540d7d858d46280bca582b58a795dbc5bf5502fe872",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0063.csv": "0aa62699860ce208216d1cf8b1c037403a1917acf14569e2fb844e6173407b87",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0064.csv": "d8fa569177f414e4436ce0f4ecdfd42e2ace451113e7973c4bd020df17f5f4c3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0065.csv": "84b429feb9be20da33249310bae800612e5c9ea30e511132991ee77d6f4d060c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0066.csv": "ce85dc1cbbf5f3e3f5ac342080124820de79bf81667bed3f0b29d142e799bf0a",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0067.csv": "68ecbf67bd1e40ef9fe3dfc9c03e12d5914eecd48ae18fd8fe7f6ddc8664ce40",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0068.csv": "041c55ea354305bbe86fd11240f45aafb7e05ae6472a163c6afd080d520249b5",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0069.csv": "b1e80b37d61af227b7a98f03b54cbfcd9c9120caa13f8d6aa11e4c6d9caad849",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0070.csv": "db77a9fa6d81ca712732ddb73d5bdba95ac6c2e4f3cfb8a56c3bbb725061bce3",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0071.csv": "1e75a72b4f4e4ea78b845cff267a2c66f293ec070b109dca8e5256615315d578",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0072.csv": "82bfa717471b8110540f20feb0833a9247b1265f4c1188506b1ab61b54dcb028",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0073.csv": "2c46f65de861b6e4e9cd95df20e62b717f1a0f35bf68313400fab86b4702d617",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0074.csv": "412a830ee7e0d4def97dfebd51fede20fb3962d17a49adf20e143c612ac42511",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0075.csv": "618b23c149aad688b7c3564aa4080e97bfb987956b01bfe7b99a51f609ec356c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0076.csv": "87422bc34c3a73749b89cd074acb2cc515ce78d6cd72b22d5f40e0c452a8108c",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0077.csv": "2b8415d9a01333125d51a44daba571252433c24f302f4219aca28773aa1a94d0",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0078.csv": "842dafcf1ac8df2d264f765b1b2c5783e24c520dbcfa5679015aad1118be9d42",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0079.csv": "baed843cb866c90f1bd52794d4a6c85ae05a86b47c0d57962817e692a8a6a8c9",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0080.csv": "7fb21b45b484eeedeb12f455c39b450ff7efeeb3832b976eef51bc0b1b0e2102",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0081.csv": "2885778f78e0c2129713384707840b1d1baa3f0ce55fb17f19ed35f8037049b9",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0082.csv": "f2225d5b6af4b2eaba62cecae15c46817b0e3e41ffc8596cdb6c723d532629f7",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0083.csv": "9582789a7715c7c3a1c1e9db8475592fac2999359324f1b37d51feeba22f8398",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0084.csv": "e1b91a8278dca3d7c7dcc4546917a95e396fc54f4c0ff01fabccb91fd214151e",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0085.csv": "6f9dd18bef8b97a125c055a39ff06ea96fe924cb9cd84aeb043d892d5507ad11",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0086.csv": "32df355d2c4ac16625d3e3ff7cfc4611e0b5613f95e13ce00cc1583f3d7bc4c4",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0087.csv": "76b43be043d1d80637233b1d35ae8e4d0d2094e81ea9d6e3ba3a3711896ac266",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0088.csv": "969ad04f1332888881d70316c12eed87c6b34c4c420845caa1a6be8d4702a5ee",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0089.csv": "fd18e533563ff950dd39d256b61c63c965fb7251652983200aa63ac290334f13",
-        ".agent-runtime/mandel-publication/20260918T230649647641Z/report_uy_profile_0090.csv": "564b3adc10b8d1d8118fc0ec6d9c74635a06107fa40a5156cccc992a31fdf9fd"
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/large_fine.csv": "b0ce4e14e98979182442ddf438ac2a1c249452a2157dce4a95916e29b0727930",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/large_fine.e": "ba8ff6119003466502a0ae92f25a205a3daa642ffba18a55f05c2f1ce0627f5d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/large_spatial_coarse.csv": "3f6632cf7945f37610173949c21c4d3cba15c3c3b0613449a0a2b948057ead4a",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/large_temporal_coarse.csv": "971fe61fbd29fa0ae26fd1b25ec5bc7e35d53d99bd41810f1a7bcb1b740acd04",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report.csv": "a9e1bd396b93f038552db8651784fab3ad630243f689a93a18d2e60d8c8c8bb4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0001.csv": "b68874c4d48cd30efdad5a5689767c175f1af2b42e609db2f4039364260ba1f4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0002.csv": "bd5341ee93ab872774b5f1f3898615a3cc320d58c22171623b4c6b74865696d9",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0003.csv": "598e5649ea076d575b46930db3cf03f6617bce86c15643ecf2ce8bd701688596",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0004.csv": "c62c7b4dcb2c263e3cfb3ef987e00ec79995e7f602bd4c5a6f3502116c606e9b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0005.csv": "fe5990226c163f9251bde671b4855bbdaf5aa73c653f233d46d5302ffd1c8a09",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0006.csv": "d5537f9444704a029e59acc6f7bfde617d49d43c53ea058e89637e477cb3b6f5",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0007.csv": "78b6bf6ad365f1d65f6e11a21922f19d8388990ce64d12ef5db2ed1ae6573b31",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0008.csv": "67f71fd0c2bb843d8c29cb63b0ea3b6be31ccfa9b52c307abf5451e2913e9994",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0009.csv": "666f1608fcf9c466f065e0855e3e0d50c159d3be0d34a3b58e25ceb5754e09e5",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0010.csv": "067666520925cc03571e9ce794febcf327411e0a8a4bce314c0257ec6aa463f3",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0011.csv": "f4904ec622f19619bfed016e93d1defd396831c3c37e6b563200a2b926de9506",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0012.csv": "e91f441d2218a45fbfd0d99f95524b3e0335fb37e4acea5093bc04158602b7b4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0013.csv": "dca8662c3e601a228b82fce1ad61c3cf8d26b3c45b3b0a032a090b08865c4e2b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0014.csv": "cf0634cc5e0db851e9f13050a766546d8ee283a81cfb7613eb12ff67dbed8bd1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0015.csv": "b9a9fe7cc182aea2770140a578f58e4b775f1895faa2a4e354d1bc1796c934e3",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0016.csv": "64cba4c2b3afeee66e379cc7beb5662af143622808329499c47723f758b146b5",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0017.csv": "72a3f08e363a73e0e9963b1d71873558a78134fb404b7c510a31ec56ec4b17aa",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0018.csv": "93b27bc7a4cca0db96c51d4d937983ef4c45fe6358bd661f379c55877f192bbe",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0019.csv": "f831131da3843ef31a69f26b63a74a97c18192eb7cf3771978064e53fbad46eb",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0020.csv": "770b558db7b0d00baee35f6acdef3b95e87a59ead4a480c1b98caf489df3600a",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0021.csv": "0ab4bca596f73079d30f3fcf338abba5ff1cb55cda59c12694d637eee8e07bfe",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0022.csv": "ceb89a54b271af3d9d0b9d34d05a7617f5e18f554170bbc18de8e6023cf6a0cb",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0023.csv": "6a06909177e9a650e62fd885ed2a70a793d9797c1ebaa33911848bfa87f44962",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0024.csv": "40f2cb59da60c44464ff6825fb0529f811c2373d1cfecaff7a88ce45dd331362",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0025.csv": "dbf46050be6fa1ac8c1c7352cf46a43985c2b8f0afef957210aaa8ec6bb67383",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0026.csv": "af98f866c5ba3b5db5ce7e188161de6a344788dc557f26941edc4b2c9bc2a76f",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0027.csv": "aef44901f660715ec72b86edb07d8d5a9454b4ff05d754cb05e58aa0938efdaa",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0028.csv": "1d09dff23441ea883a08c8903d3f321bca606216583a41f91a209f55c7464fd1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0029.csv": "bd8a9cfdb78fba57f79d9283488c373c14f47cc5e0719ddd97dfa50bb04ef285",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0030.csv": "1abc383eb865d10f103cc696138c2fb17f726300984174ea74758405a0f92c01",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0031.csv": "ca6bf27f76eb8b26cdf8c7cf52e4da3cb3ae232c8d49facc7efdfce9b2dbbfa7",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0032.csv": "1644b65a901c559600c9fb5cfdf9350af1a172e0376e1a2fa8bd6153000c1008",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0033.csv": "31f52509e8ece8104258d22a2d55722d79d76876fcd9772376d977e1fb3047fd",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0034.csv": "5072ece89d9d26c6b72d98432b5e2c08df7fdb91e9eeb9f089cc1b07bb650127",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0035.csv": "24b4eebde89889c8c51f2b6d1883215fa940b8797a2e62a96b2ef143d30f75ed",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0036.csv": "95ac3daa5b755ea7a0b2a7b99ca8ba403cd8cf46ad2aa82ddfa882494fd52ade",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0037.csv": "75d827dd65da44ee9e5ce7819dd447944cbe0a9ec12a9423b4454672a185e1c6",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0038.csv": "1c4e5ea00f4d4c86e856ffa84bd4eff758f5cb73ca64be25b626b54eefebfd34",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0039.csv": "76cb3341a2996f7e39b4fc7ad33100a3909e1c4aa18443470d6958339d09016d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0040.csv": "f40b9133bb4fbb097cfa4cff95351b19cd7eb1d8cdcb6d5e72ea82f0b53ed9f8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0041.csv": "2c2c45553fbf9bab2133c88a590057b555501e480f8e4deacccd9c7691e25efb",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0042.csv": "d3ba1c7613b4cf7dc7bd9393f6897455ada2c0f8c0a4be498a0483b90637ac8b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0043.csv": "d1c56fb334a78f9fd86c6441111546856fd6c510b645f159afcd9806b70a816d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0044.csv": "c815a885a432bba503dcfcc4e4a91c8996bf2e6679604982b715a2308e298913",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0045.csv": "2477a57214064bee66b8713c767ad16e88a4cddd9eeee406b8f065812e144db3",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0046.csv": "334984a8099f6be34c6a995a974776ce1299e1e88b0c41724ed03579241eb8fa",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0047.csv": "4ab312f9a17f077848ca32605c94be083319cfa9518957c64fa41afb7da20254",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0048.csv": "993cee10389c55f75047ef01bda021f30e0d424337ccafd34b0ee6d0f6396bbf",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0049.csv": "b6b345f5ea67203184512544296f62cd79173bb38342d64efcf0d9a93f683985",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0050.csv": "676da3465e3aa7f4844863175f8686b2514a6bd9ba059ad0d615a9b381ed6212",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0051.csv": "53810a53cac58fc37fd5db650cece3cb9babf78c8f041b26f0c6411657f02aa8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0052.csv": "660918aa02ad612827c3bace89491e39aaabb4114e9af4bafaeb4c4329e0a0c8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0053.csv": "541b36cdcda8f4d308ab995b14080e48c07e013551a972cbc5d0d9328deebbb5",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0054.csv": "2a4c734c716ce67e863566c82b12fb9ac25abffa1d1ec3e7380042dcc10de9b9",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0055.csv": "1b14a44f98061e4838ac5334dadb7365e023a6a371d315fae3ad3a8ad91e8650",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0056.csv": "352d6e2708dcbbdc9f489b985e8d60463318c74422b973cf5b0350bda5521400",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0057.csv": "4bb3546ad043733f7c118a3926cac7e03c309ef435c5b3ce3ab9e5776672b73f",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0058.csv": "08e2282dd287cc472c60688ada6121b813809a3646cbcb1b19c74ae5de075b18",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0059.csv": "d9f82bd3f689dc75b197408bf4ccd7ecf691c699c1a0b702ffd68a45913ad39b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0060.csv": "023eda97aa8f5a73686a28b98bf58034eb16c73ba45513e29e192c6f0846211b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0061.csv": "5a42dd870e5e18db26b11ecd2d9739caca0cec4dc358bc65c54e23583a78491a",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0062.csv": "6f32d90400f92eb440a43e2f22fb9418d0d0b26bec32d676fcb00a8853ccb105",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0063.csv": "455faa55bc777ce8e462e08e7734ae4f10562fd77dc03ee3ea6ae92692096fab",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0064.csv": "a25cd105349dc44150f75b6cadf3dae478a3dea27afe28cc0e5eb43b849a3697",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0065.csv": "1bdf9318ef5aebb65a4ee99369144e2c45bcfa65e86be1e12482d187108115ae",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0066.csv": "564599db96fdfa01cfa840933aaacc44960603b8465fc4416f6db7fa8d461963",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0067.csv": "9f27129d80ad71bccb57b2b7e23a1e3661143841cf0ac9f5ae21a096382a2a68",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0068.csv": "971cd8eabe527e28ede658c79485cab114810c825c2e6e06f1b84bc3f96b2a27",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0069.csv": "01f02fd6f1576c69a42a07da1297797e5bed7a24c47b0fa923b8b618c0aa3aa8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0070.csv": "c1ed77e58cd5df62900961eea867ed36aee40f6a706ef9793b543e653dfada08",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0071.csv": "f3f008000a6d2243fd876f9e22bc229fb6011e5951a0a20ff0494e8fbd421be9",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0072.csv": "eac466a7ca3c1eb27a330c24fdc30c5b5991d14e24ac8f363d3923a2ef141769",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0073.csv": "d88ceb9b1f719d69e35442223d1627068453f85e56b4ed38d92fd12463528982",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0074.csv": "c39baf242c0e8a65e50f5f1169b2c7aff5086f322549e2df3fee187bd02d9cbd",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0075.csv": "836e5d6955c3334620b567abe50bed1183c93bf693201874aad71e96969dbf55",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0076.csv": "2476621378bb34a26854470d99d9934b4df5acd4a1465f26daeba72efc7f3385",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0077.csv": "be16f15cda952914b5e266686b588b4e50c0151246dca5105edec30156f97a76",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0078.csv": "ba0bb48b12cf9f670de8d2b8830e677389da77ca0ee7b11e80ce3d8cb651e826",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0079.csv": "a11a12ffab9c3a12529cb08f030ad472f82e81ee8d9bfef9eb73122313eecd21",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0080.csv": "edab565d92b11dddf37a656f36bfa973715800a7ecddc9776c3a8a2f19172a07",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0081.csv": "44f6f2b85ec2bfe9847be1c98a4237f46540c3523f0db9bd1bd3efc145e310f0",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0082.csv": "bb75ea4fa4e3fec7fab50b2d3a275aaaf12124bd3a40a7a4479cfbf32d329b14",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0083.csv": "67dc5162328991cab3e959fd45ec5780aacd83efec6bedfd16ef59f030a6340d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0084.csv": "2084d8cb0875f7a427844a49d0bd5c86b96a3ed6ba925831ceebfbab147ed903",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0085.csv": "e15c46012b856c3b8ddb7b669c4a422a0b54524e7e196d2c2c0ce1a2468a0fae",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0086.csv": "6738df9d0383b3800fce0aebcd193f8b1658f1e59ab3615ffd13f98ed7971fd7",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0087.csv": "3e6235c6b0ec5bce00a48405862c33fbe21c511b94b17c1108ffde613b6ff733",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0088.csv": "0a70e7894654ae45dc470eceab6ec5d83ed79c732353eaacd121710bf471fc23",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0089.csv": "7f5a88d1476b54a24729eceb36a1132408119dd54e008bb1236d41fbd31c154d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_pressure_profile_0090.csv": "1f4cfb568951d73e26dcd8a5afe14521b0538d13d99c917226a395b34a192d3f",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0001.csv": "165e72b203a52ada9196b41f160a555dc23c35b7d090ff8317b26d867b01dbfb",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0002.csv": "a53de62816ba99abe5bab17a64494fbbf210c5f311469a303d483ab9aa5264d1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0003.csv": "37d500de2a9ade930151f85e14edf6896547134bdfdd7f5d559064d19a424da7",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0004.csv": "9792cefec9c633acfbe099f800bca09bc8a2c4fb95717ea0dbda7819202d6f83",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0005.csv": "86dccdbe81886856257b6bb18192edb3be69c1015742fb9168f7cdfc0e51f66d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0006.csv": "f55d7007f75f8f6a034e07fa9d8269d7187ed088c61dd33297952d83b30e6ae1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0007.csv": "c165ddb5f94c89573e637dc641dbcda30725622e2cc2e019d2fcc55de3316d59",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0008.csv": "ebdc46a6bb763c057f29b4d3c32f9b283301c2313287b69cd675b23eb9ac1f3c",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0009.csv": "7bbc57818f0ecaa68a255ef2392f08cd17f5d83b61b90b2814c8fee5b7b55ff6",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0010.csv": "c4b67cc61210b84459ed4c30206d2286282cb23ada516d18fcf05f55c699c7c4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0011.csv": "c429dea5e89ab0cb43c2cf3d4f2cfb64e5549ae221a10ec5be861a5bddff2acf",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0012.csv": "66d03a654d9e526afb51a0756ebd0e774ab81e5b302194fe7d98b3630d048897",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0013.csv": "8ae7d065f5e361bec2ba79085f615f0a453975c26e6c2e7b36411c1befa8753e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0014.csv": "0f12efd7b8cae6741658d64f2c91dcddf59a62f9b9355d733bef700bf5036553",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0015.csv": "3500f0628a3ed2bc72c3970e3f84485f9344e60d8304f547404e3e637029d318",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0016.csv": "f093b7a679c59d7a849dc89cf5b610bb441c055d4d433756e8d83127ea00cc41",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0017.csv": "cfdfe93db7964cb73a55a2f0a70b4e57b9c1ffaa722cfedd12b278991615c02e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0018.csv": "97f6cb38f0f8c50140f55e24467a7f4b4504b64be2e81899ec06904b2fd35c93",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0019.csv": "32b4cb1a2542f2f2e504248047c57e196fe582415e1206a12136f8202b14416c",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0020.csv": "136ed23a5d2b317f1d117d9b52ad5cc03d0e4bf5ff3cf740b0bc974e0440839d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0021.csv": "50b287229e4f6c46867e9d19e3350ab261d67808c50bd10ec7f8b032129378bc",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0022.csv": "89da94f7ca99ca3aa84479e8b47fbab70c23a24f0b7b49849d23b76c3f7a5c2d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0023.csv": "6a4ea178f47259ebed74176f790a0ad4a1a00575eec8266cbdeb4424cff0c795",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0024.csv": "55a2dc27609817044e5f62e5e8953160e59a5447fef15217c38c55c8ddb888b0",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0025.csv": "fbe6ee370ec6a472dbd2030dd1a955045e55d590cfe6fa13f4e0745af8860ebc",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0026.csv": "1b77dc9b00b65ee2f17e8f365f062a24a1f171a90d3dd8528e543ae172910eda",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0027.csv": "60555f0a0b8de519d3a23a964388ee4f646cfc8a1e6d9c9efb045e237ace34b3",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0028.csv": "a891c2d345f6401a7363d415f028840936ce407abf37cbfdbacd54f9de4815df",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0029.csv": "1663880cfcf837d59aadba16d2ec1ad4f446ed6b82f6cd834a438a3998a2dcd8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0030.csv": "c66cda8334798b432d6d0893a7ad8ceeaa47fbfb7e4518439378fc92eb891773",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0031.csv": "06e4a01b5508b62e034ae3d3cfaf0d0090fc4fbb1949d9c1a8d49a9ec2aa0904",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0032.csv": "dcc51192cad4716438d52bc8ea0070cf710d32214c7c8ea1b9be75b2a7eed5eb",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0033.csv": "890d84ca938ea437e25876c06ea86ba16c6c05f84524b38d3025d14e6c147e84",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0034.csv": "0deac2dc6543efb3f2272666b393d615cd7a68d394b203dd5764fa0018ec35b4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0035.csv": "1928a03973da7eba98db176eb60354089f20bb4d1a5bf9aa476a5970076a893b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0036.csv": "711f1edb0d9326f65aa463c9701a7428af2a4626d561def0eebc51aa5076d5d6",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0037.csv": "d255261230b1c5b56c0ea2f4cb3e25374a89f130d938c72e5926eade85706ea8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0038.csv": "9f3f10554ce32ffb33b05718c49e0b037382812ecdf2c11acc93924cbf3f7fe1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0039.csv": "20435b124ae59f934dcfc8e4ce427b80d7d00d81526b85413e6b8fda8ed05d09",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0040.csv": "a6cdaf8157308085708d40ee5cf51b538f47a11700dd2f502d0d14b5ad1422c3",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0041.csv": "5c161ac0296ad60734d0674981afb4125417f51f6968d9b0a4b5a3777a3bd000",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0042.csv": "5ce4252a84f297fb541b5c9cb630c9d08f4484665b51d77ec3f13acbaa50ce5e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0043.csv": "cff3ca39cb2f16eb67a5a570ae7639003751555a9252efc979d712774436fbbb",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0044.csv": "3bb8a7c30bb9fd085e66d56aadd4d1765d1eac742829ce0beef95f100fcb5732",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0045.csv": "a0f6ab53e335a9ce80e17aa3cb8f4221553a414d7cfaeb6eb928779e89bb4d2d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0046.csv": "d08e25a0fbe47d4fe3f5f641ecd06b96eac302eeb10ff27755c72b6383be48f5",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0047.csv": "87eac3313b968fe7caef5d8012e6c22300c007521df76cf51e39ce78face30c3",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0048.csv": "1c5bdb3e1b822e47317df42d38c232e730b847841361f5f20e4f7b6533ebf41f",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0049.csv": "5046da9b935deb46b8b9af2a2e81f64e3764b7c5d3199d5ac2561134d8565183",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0050.csv": "d8a25d336cbc5fe466f594af1035419419dd7fc1bcb1e31eefe02af159fd59b1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0051.csv": "ae77638e1f0ca2a93864ee139fcf327e55137140e2ef47bea534f92f2c8fb09a",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0052.csv": "3c5bb67f1a383dfdacda241eec86eb90bbeb9298c767b10e07e70831f18e98af",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0053.csv": "061bd98e4647f90dd815aa697d5488190184386142d76f21b3281603e0c0b739",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0054.csv": "173975276e25d44bc03b1fcd25adcd05ecd330e7edcdc8482d71b900fc2bc543",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0055.csv": "12c722fbd4f6546a6babc339402da560cd9076bb39509772921db9ae15bf3535",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0056.csv": "e131127608e98e6b93b7b349ead6db77c64b9721e77838bd238300c3d80c3a71",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0057.csv": "5f2756ff883f6c47981215ab6a4cca07163d894840aad27cf66c2853e2ec3474",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0058.csv": "b7042fbf479a181786f54dd75c9f14b45e6d6562057c9c74c2b2711bc175fa18",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0059.csv": "9e8ac2e755721d06880b46837d6c377e486c523c9bbe735de2d814abae13b1bf",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0060.csv": "eae41158d9415d73320c031e3b5b9faf0d1b15605d98159d633f61fd95d75599",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0061.csv": "1bf9a1412d59695bbae231dfd4b26fcf214ea8da4bd63875b4d0e4e8f74c3781",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0062.csv": "b0c03cfa1bf54fe1081bc35b10501e4429e8a13c678a073d89b480133a0a5255",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0063.csv": "dff07f013680e09246ab9a84e02bd01dd0d836d54ac254fae7ee320437fee60a",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0064.csv": "28075d94eaae4fecc7cb0cc621ff3ab81efef7b464fa09e63e6abc0bbc5ffcd7",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0065.csv": "1916c65d3e664fb2fc22615d2dd8eb39886cce07d6dd118d32ce8a3e07f878c7",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0066.csv": "b33482e13efa5bdd2dce679aeb534cc5aa1bc224b7737021d51482009d0ee5de",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0067.csv": "f66933f0980a21af77787d4a50b581eafcfd6a0e6c3adb7a23c50feed539be95",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0068.csv": "62d293207c2b01d8d0f3adbb5cef5cc0143952090ef64f29516de9f65cda078b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0069.csv": "9d9fea756cd40bcb64ca461c4aaf4aa392e92becf4612759ddd087edb66be44d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0070.csv": "6067d63c4976e6d0bb4d0517e985bef64a982962436a5eb4c0fb45b3bf2147fb",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0071.csv": "9416936f0f15b19b2d10ad94c57cb4507da6d8ce8bcbf23accb95b210505f66c",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0072.csv": "65d81aee8fb3de08363c53abd9718a28ea5c894953717e27f882f65eb90346a9",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0073.csv": "0829e2258908544784f745085a88fcee6092ea16464786e1079b49ff7a114110",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0074.csv": "5854fee64371c1a48cfa13060ea86faaeb463c7501f3fd7e5930cbb93bb41e2e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0075.csv": "969516883e303fb372f1fec9d37bca8d0c937f74e1656b995b774d8fcfb0b1c1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0076.csv": "0253d25e4558b232212915293cc74b69e334173841df152442963500735bd233",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0077.csv": "d3a9b9344476c2541cd8117c9ad479341fe8578feb844873207255cc614b3542",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0078.csv": "3580ff9225c4b1f91fc51660e339fcf5cc42f55ed59743719fcacf4cbf4fcf0b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0079.csv": "bee1f674477e13c0092e2b6099665204eba79f67cac22cf70767ed7a5cc6646b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0080.csv": "1c0a804980de23956cc6705389612348a5dff6c4843ce18c40b7cc9f33ab5ede",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0081.csv": "68c5cf24d29b123550ca7a9da07a76fdb9093bb8a92049bab726d98ba55cf69c",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0082.csv": "a1d4303edcd05bfc3c5b9e5e8d07f2a6c89127aafce1bfa9b59baee65d8d3ad3",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0083.csv": "bcff4d4a5806dd82420dabff3654eb3c8f5ee50db71eaa1fa952a4e83b6a0218",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0084.csv": "d25fb06c5aabd961fd8c1328dfa3cc28af2285312ea700609140b6ea2d26c349",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0085.csv": "eab468f3bc69bd82f3226715bd8e07957b0514f9a4a62e64ff9f02c1e19177aa",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0086.csv": "6046ee4f1e222923f2f52768b3680741a583af7355e4f0130dfaac427fcd385d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0087.csv": "b7da0881e559fa8081df11dbd4229611df1dba8567da93831fa5db306db52af5",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0088.csv": "5461a10b41b27b9be035e50ac216eeac1c22773b2f4709b1d13d576e772275a7",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0089.csv": "6ef48a84d68dc085c41dad4e6d8ef64908764c8096f6b7f7824e875ee0ff53bc",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_ux_profile_0090.csv": "5a5a187d9a4c6c61fa56c85742b7edbefcf6442f6f4ec1d4f7b51bfa7a121276",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0001.csv": "b69c64064a39638b1e672fecd35f7e336eb540793d086a5c7fb608184b1476ae",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0002.csv": "0581979432e58ebd9b1b003246298dca38682b37a22269e3c08934fd9c687ad8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0003.csv": "83831b6ec0195a816954d0cd9de1e09332e7d92c3be7a217cfcfc31da3217a21",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0004.csv": "70997e13dd69d2ef59f286361171da264a9dccfcc97fa9d7b3c1ec69f4276070",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0005.csv": "e047206041061cc449c308c1ebcbf0968a71f87bb9fbaf438416634e8fd6aff0",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0006.csv": "f6e77f7d8b9f70e80b5dbf161ba4e61b377292a19521842f3b98199bee4c401c",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0007.csv": "94c09744c8f33001f7d4f74dce329518bc28efc4d1234c4c7bd8a6fafdc26362",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0008.csv": "23bdb75650e66fc2ac50e29c729078be7688f7292adc8fee34a2a510b6f9ed24",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0009.csv": "b7bd35b5af6340c0a980bf8e9b16dfb03fe82541a455e4cb65393ee50f2d8f54",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0010.csv": "b56f63b4b7d83a557e4bb2cb850cfcac330171b2787e4a5f2cbe9110c888f8a8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0011.csv": "85ff5e16f4abddd935a9d9e1092d348a9d8876bf795521058107e862e942b6b1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0012.csv": "d6e77dba744b4ab9d004692ee36636881bac2988b6bb02bed95372e9c506e55e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0013.csv": "0d8a74a792b88a2d1d0f1295c56a58d10cd7dd28104db37d560db6c592e44c2e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0014.csv": "231e5be0570358827825e53c61054991cece0d6a953b2817dcc073dcc768d9b4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0015.csv": "34054959b057c374bad4c91203d5139d95ec3a2916d5d78cd06478c3b82ac2e8",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0016.csv": "49f44a01e3cd435220ef7926bde2523532358f66acb2d26a83ad42614a28e112",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0017.csv": "4db31725ae0e9b633377bcb52e3d4e03ce0a56c298040fa337bbbb1e4ef2afee",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0018.csv": "2b0d3ce83437400c26ef642a469aecf41a3fcd7c4ab3281b8d96b768e757c19d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0019.csv": "e0738b72b62c4fc5b6a9271a94b8fbef2a9f0f2192a4fce64e550639c61f3241",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0020.csv": "d99a429f46fa935169c2141031afc0f67688e12f6fe447a543539c9e89ab60f0",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0021.csv": "8fc192f9bd20adfe2d63bc1047539e46edbcf2f1092198a0ea15dd8aedca2d5c",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0022.csv": "b3adfe3a2d438adcb45d157534bab3f16be9273249fffa080dfa7fd0e00001de",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0023.csv": "258c6973538ead81c113415639b937c1b38b868b73f9c90a6a85d8807db31391",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0024.csv": "df220ee74771dd759c24d5753c5a722bcb1960d16de448d7fba5d17603e5bbc6",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0025.csv": "11dce6996d232304d876430017ebfd0f2cd83325404c71d51556616783893e08",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0026.csv": "5a060e95fff2fb2b3adff55472507516b0ef1d18e377f83dcdfa6ea229870c4d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0027.csv": "e5a0c704a714a6256687bf6659451a632644d58c5812c630dd8a8a4471b45c19",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0028.csv": "4f6c218fe336cc3bfef8b2a8cd3dbf1d453f52c68b0782aa2b0937769db46c4e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0029.csv": "8c3a4108a26167e2ac8985976261c0e34301b5e5e8fb031691de1e623b469955",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0030.csv": "f10c68eabb1467c9ec8ea858b919905cf487accd3e0132f11749756f477d18a0",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0031.csv": "c96bc782700b3695b5aa33a972a020c8432d42158567dbf95714170b1bfe1e6b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0032.csv": "472be800a945d10ee15bf0f68ce2b18f15ebaa2e1d87b7b5a6c2f6980e24e309",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0033.csv": "5c32415dfa31ed65cef2ca715350885d81982c452589a0be90c3b80939357a57",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0034.csv": "62ac119a2be907f1496cf00dcc0bb7479c95e168ba19e3a5c2423af625288c54",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0035.csv": "f6c508178ae0ef1db07af90759fb8c14ab3b298d706d63b7b3c6120554f1d9f0",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0036.csv": "7648536e4bf5e535b732f3344f10954a15eda74c8f74b353815011f4848db6d2",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0037.csv": "9ac1e26b413bb80b72aee42e13a62db6ca75b806f58c1a00c4648948e5822cd1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0038.csv": "cb7b6de5e6775480c743b8df52c0bb9ccff7004556b347ba07a3cb6d51711f26",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0039.csv": "fc2c50429d03b603b954e9922362fe03d1f12372842d49f7caf926bd8a4907ce",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0040.csv": "d06ae8f479f21934aef966136bf4c719d55362a156ade69e3d5ae5708fd28b65",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0041.csv": "161b82c596d5c0e65c4a2ccfa26d17d40f8822e60db32c12bbb1b7ceddd39274",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0042.csv": "1a026f3f46fdcd6428c197d10571c2cd8568551c4d692d1f6cb3fea761ba19b9",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0043.csv": "45d93ae79e4261db60e92d3103d8b564941b5dd4382c5b7e15e00196ef773dbd",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0044.csv": "b84b77c4bebff0d225c2e67d74d71b4a6fa4a490650d3520b3c7a9ea37d9f8d4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0045.csv": "ae01b64176b03e7a6b8d11c9f13188c622163358a61244de2c25482ee422b513",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0046.csv": "2b031b5f9072492a44c71a2e18ddcc888d08dfdaebc80520b75bcd1f2b4929c2",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0047.csv": "ea0c303bf8976f68efcf5fe94f65de314b92d22be9c676c272b7c97b702f1013",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0048.csv": "265c984080542cc8c275052d4b754a8cb1f006c2e75a6bf6005f5e571d236330",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0049.csv": "e05479aca990946f04bd61726bdb15dd37bd3c1c78ccf88ef33b37007d977ccf",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0050.csv": "0e4e66c06993d9552038a7df9b6a8717c8682d1adba95d63355826a3ca0261c4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0051.csv": "28cf8b01934eaf15bb350658bdd05f26c1e2056db7599b7278dc58dd0f2e4ef0",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0052.csv": "8440c90c4bfee29e6fb74af50c0b4d0af3b73a6760aba69a37dcb4158e907e1e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0053.csv": "31292d03d5f7fb552ddfc45c6c022ebdb0bca570e5aed862175d28b9f44e49b2",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0054.csv": "20f70c7e4dc897b91555e231a45a59057a85202daa2e5175b56ea29e7117a248",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0055.csv": "968b36c0c6d178ad8d34d90e7b28adc275beafefd760571c232f749c0917f556",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0056.csv": "10c46c2e5a30b5e6fa3a90879720d463dea96ac97ccab64ec032cb1573ba8e5b",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0057.csv": "819384c9907b052042740319aafc5ed291e2352d0c7890b0b52482a15b3f6751",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0058.csv": "fcf8ea12e915e3af4626e5d40be3d4c4276dfc46c2c0dde53aa0487cc4bfd8bf",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0059.csv": "b60f00cb076b9ecc91576cfae938aac412d35e36e408ecde6c286b3397af89f1",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0060.csv": "b7f82e6aa2a4171958625f433e780a874ffeda8814884c4dfbab633f9a69bc59",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0061.csv": "1059a4da91741eff768b1dbc54e015159f706a260f3e1c1be2b902353b26698a",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0062.csv": "cf18109e0d649aed5e537d99e60ba254d52113fc89f55eb5152a4876246d852e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0063.csv": "8b92e758c85fd61723d276ae24d61d9c2315d8004e3ba9a0c119345643d21044",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0064.csv": "c897225476fc781be21164d6bbc01cc251fbd0569e3e49b85a35a24d0d5ce6ab",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0065.csv": "25b8f65492781ec4c11b528ee0427e14f6db033ea02ca3cddcfe5533687ea789",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0066.csv": "bd7b7b82bd5081bb964b135909d40d699db034a1020b78359cc2275319615b03",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0067.csv": "46b94187129bcac5e56fb7cf0f4c99b5826654e19ca4b351f8f8c336bcd6b6fd",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0068.csv": "204751f3bfc959e96592c7a7a5def22dbdbf1864e29eb716753fb8be3a0d08dd",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0069.csv": "1b8489db78867db0bbec26fc042c81e4b0ee996c58964a9571e077f78db83094",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0070.csv": "ede040195176008fa04687cb8904bd89a62ea6f7c3015a2091666450921f5668",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0071.csv": "9838e91c57dbcf42e299fdc1060de62603174941653a119888f7c4910fa0b5c5",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0072.csv": "ebae31e385e398ba978a366a142b77819f8e7b7736937d4336f89a72c8f77826",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0073.csv": "a3c816ba498089b5182813185db0053d8eb0216cc6c37e2327715f3b32baa8c5",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0074.csv": "8ba5d945bbcf673e182888d060461310906bf90d82bedfbade8dd01d0920fa8c",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0075.csv": "69d38927142c65902b843b2ad33cbabc69a203f79be431645c58ddb6dcbb905a",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0076.csv": "1911bba6a653b3f5c7cba69d3780e94a990dffaa7fbc2061ab7db1ede89e5c9d",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0077.csv": "a882e511b2658f243be8a3589ba4f336abb6d5be24e27d5a3b93c97328480556",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0078.csv": "1488baad6644114f5babeb1fd58d8bf16f912ad021294f29662abf6d6d2db8d4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0079.csv": "37e42ceb62e77224962e4cdfbdbd73ad8a3fb98953995e7f201e937dce9d2006",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0080.csv": "cc5cc216317d9290d735e29ff09e76b6a1a4b39bba6f80a59566afaf35d83136",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0081.csv": "be712e27a1ccf289e5c94dbc1b9fc03925559d284161e82043c023312b0c1338",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0082.csv": "83e324a7079ffb3e8c96eecd02b079d18a92d5b73f2122b02ac4d1bff694ca4e",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0083.csv": "a41abac83b818e3caf305c222ca43ed146fbb6bb5c8b124fac92e58b89cdb2fd",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0084.csv": "ebeeab90ec32f6637a622703541a5a04dd2751e5c6bf6ad81814796ee556f4bf",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0085.csv": "014471447e53f63e1375ddcb7ddbdbd158ba5b37a27ff75e679b2a9e0e7a1a71",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0086.csv": "7f0e41603d0001e5541a2272d4e0ff31245994754e694def641622b9a4b10d7a",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0087.csv": "c00e62a7448ba62a05fae68f8d475a3003271b05a3845794a4a58d77283c25ae",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0088.csv": "7950a06aed18ab45d751131856d98c01b898aa8dfb86197c361e6013355ea6f9",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0089.csv": "3b9c7d6e8f327ab10489c2c3e85b0d04b82670654b7d22ee29c45fb3187f2bb4",
+        ".agent-runtime/mandel-publication/20260923T191500891784Z/report_uy_profile_0090.csv": "c76325fc23b537485abaec9d4a4f1a215901852319cf8eb541d140e2014ef6af"
       },
       "packages": {
         "matplotlib": "3.10.8",
@@ -829,7 +814,7 @@
     },
     "material_point": [
       {
-        "captured_at_utc": "2026-09-18T23:06:33.974292+00:00",
+        "captured_at_utc": "2026-09-23T19:15:58.361508+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -856,7 +841,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -875,7 +860,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:06:37.815906+00:00",
+        "captured_at_utc": "2026-09-23T19:16:02.434911+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -902,7 +887,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -921,7 +906,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:06:40.310664+00:00",
+        "captured_at_utc": "2026-09-23T19:16:05.251903+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -948,7 +933,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -967,7 +952,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:06:42.853869+00:00",
+        "captured_at_utc": "2026-09-23T19:16:08.057981+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -994,7 +979,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1013,7 +998,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:06:49.375448+00:00",
+        "captured_at_utc": "2026-09-23T19:16:14.429147+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1040,7 +1025,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1059,7 +1044,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:02.794932+00:00",
+        "captured_at_utc": "2026-09-23T19:16:27.407363+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1086,7 +1071,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1105,7 +1090,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:07.684806+00:00",
+        "captured_at_utc": "2026-09-23T19:16:31.004587+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1132,7 +1117,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1151,7 +1136,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:15.744960+00:00",
+        "captured_at_utc": "2026-09-23T19:16:36.177998+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1178,7 +1163,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1197,7 +1182,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:18.416333+00:00",
+        "captured_at_utc": "2026-09-23T19:16:38.333454+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1224,7 +1209,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1243,7 +1228,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:21.737961+00:00",
+        "captured_at_utc": "2026-09-23T19:16:40.804902+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1270,7 +1255,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1289,7 +1274,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:24.457736+00:00",
+        "captured_at_utc": "2026-09-23T19:16:42.961919+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1316,7 +1301,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1335,7 +1320,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:27.959700+00:00",
+        "captured_at_utc": "2026-09-23T19:16:45.513226+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1362,7 +1347,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1381,7 +1366,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:30.678976+00:00",
+        "captured_at_utc": "2026-09-23T19:16:47.663326+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1408,7 +1393,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1427,7 +1412,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:34.195455+00:00",
+        "captured_at_utc": "2026-09-23T19:16:50.189885+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1454,7 +1439,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1473,7 +1458,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:36.906669+00:00",
+        "captured_at_utc": "2026-09-23T19:16:52.360514+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1500,7 +1485,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1519,7 +1504,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:40.454913+00:00",
+        "captured_at_utc": "2026-09-23T19:16:54.994023+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1546,7 +1531,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1565,7 +1550,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:43.184262+00:00",
+        "captured_at_utc": "2026-09-23T19:16:57.116406+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1592,7 +1577,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1611,7 +1596,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:46.752229+00:00",
+        "captured_at_utc": "2026-09-23T19:16:59.884364+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1638,7 +1623,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1657,7 +1642,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:49.502992+00:00",
+        "captured_at_utc": "2026-09-23T19:17:02.104052+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1684,7 +1669,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1703,7 +1688,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:53.049457+00:00",
+        "captured_at_utc": "2026-09-23T19:17:04.733460+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1730,7 +1715,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1749,7 +1734,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:07:58.067062+00:00",
+        "captured_at_utc": "2026-09-23T19:17:08.320034+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1776,7 +1761,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1795,7 +1780,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:08:06.303312+00:00",
+        "captured_at_utc": "2026-09-23T19:17:13.506958+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1822,7 +1807,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1841,7 +1826,7 @@
         "schema_version": 1
       },
       {
-        "captured_at_utc": "2026-09-18T23:08:09.838087+00:00",
+        "captured_at_utc": "2026-09-23T19:17:16.174919+00:00",
         "command": [
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
@@ -1868,7 +1853,7 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
@@ -1889,11 +1874,11 @@
     ],
     "spatial_stability": {
       "baseline_perfect_plastic": {
-        "captured_at_utc": "2026-09-18T23:07:02.354856+00:00",
+        "captured_at_utc": "2026-09-23T19:11:13.001796+00:00",
         "command": [
           "mpiexec",
           "-n",
-          "8",
+          "2",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -1928,11 +1913,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/baseline_perfect_plastic.csv": "a2a9f14e19e540d4edbc830b142a7c30db6bdf7a7fd2f5bbec36c53696f5bb1e"
+          ".agent-runtime/poroplastic-mandel/baseline_perfect_plastic.csv": "8eaebecc7b374e8bc38a57b0ed6392483d7196c2eaad47704472fd2ca73aa52f"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -1946,11 +1931,11 @@
         "schema_version": 1
       },
       "diagnostic_associated_mpi": {
-        "captured_at_utc": "2026-09-18T23:27:01.919464+00:00",
+        "captured_at_utc": "2026-09-23T19:18:14.447704+00:00",
         "command": [
           "mpiexec",
           "-n",
-          "8",
+          "2",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -1985,11 +1970,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/diagnostic_associated_mpi.csv": "623227fd7f863cebc295f09da131f65341b913db912b23cc2d4d6a6139bf38ec"
+          ".agent-runtime/poroplastic-mandel/diagnostic_associated_mpi.csv": "eaa510acaed97a2fdb4ab001191cb914c4cea4bf170e099b0152d2a90fd8a66e"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -2003,11 +1988,11 @@
         "schema_version": 1
       },
       "diagnostic_half_dt_mpi": {
-        "captured_at_utc": "2026-09-18T23:12:25.658613+00:00",
+        "captured_at_utc": "2026-09-23T19:21:17.244913+00:00",
         "command": [
           "mpiexec",
           "-n",
-          "8",
+          "2",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -2042,11 +2027,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/diagnostic_half_dt_mpi.csv": "595492b9c31b7458848950836b27f353f902175a6e9e1499712cad37f63a4225"
+          ".agent-runtime/poroplastic-mandel/diagnostic_half_dt_mpi.csv": "9ec3c978bd48d5bc023167aa910133c041346513888d71585927496124c9b583"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -2060,11 +2045,11 @@
         "schema_version": 1
       },
       "hardening_coarse": {
-        "captured_at_utc": "2026-09-18T23:40:06.449263+00:00",
+        "captured_at_utc": "2026-09-23T19:13:01.606422+00:00",
         "command": [
           "mpiexec",
           "-n",
-          "8",
+          "2",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -2099,11 +2084,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/hardening_coarse.csv": "724742615d61b119fa25a6cbcc0e5a3bc038c30e671ddd86a05f13f54243d3de"
+          ".agent-runtime/poroplastic-mandel/hardening_coarse.csv": "0a7a42475f8debd06674be52e3d4da6ebdec1225bbfe2eed50c1854b4815d2a0"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -2117,11 +2102,11 @@
         "schema_version": 1
       },
       "hardening_fine": {
-        "captured_at_utc": "2026-09-18T23:42:39.655056+00:00",
+        "captured_at_utc": "2026-09-23T19:13:01.627139+00:00",
         "command": [
           "mpiexec",
           "-n",
-          "8",
+          "2",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -2156,11 +2141,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/hardening_fine.csv": "c27f08106df73e945f9c86b5383e8c56457ef3e6dceeefc27cc8a165ec224de3"
+          ".agent-runtime/poroplastic-mandel/hardening_fine.csv": "223180b2dacb17c7038b38b4f8fcbba966f2bf74e1665ace37b22342aab2c49d"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -2174,11 +2159,11 @@
         "schema_version": 1
       },
       "hardening_half_dt": {
-        "captured_at_utc": "2026-09-18T23:51:23.127396+00:00",
+        "captured_at_utc": "2026-09-23T19:13:01.463976+00:00",
         "command": [
           "mpiexec",
           "-n",
-          "8",
+          "2",
           "moose_app/nonlinear_biot_ad-opt",
           "-i",
           "moose_app/test/tests/poroplastic_mandel/compression.i",
@@ -2213,11 +2198,11 @@
         },
         "executable": {
           "path": "moose_app/nonlinear_biot_ad-opt",
-          "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+          "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
         },
         "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
         "outputs": {
-          ".agent-runtime/poroplastic-mandel/hardening_half_dt.csv": "f4eb68006390071ce6b789b0892f9f53199771c5daead47aca6c2f47f866aa87"
+          ".agent-runtime/poroplastic-mandel/hardening_half_dt.csv": "08f06835d9be50083f88020ec37e925f59efbb752d80ee0010ab2ab3e158a2e4"
         },
         "packages": {
           "matplotlib": "3.10.8",
@@ -2232,7 +2217,7 @@
       }
     },
     "supplementary": {
-      "captured_at_utc": "2026-09-18T23:09:18.446100+00:00",
+      "captured_at_utc": "2026-09-23T19:13:53.654052+00:00",
       "command": [
         "python",
         "scripts/reproduce_examples.py"
@@ -2257,7 +2242,7 @@
       },
       "executable": {
         "path": "moose_app/nonlinear_biot_ad-opt",
-        "sha256": "07142f3f2df4017bbd1a85280c13a481f461042f61214c8d45b71a04d17e2b8c"
+        "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
       },
       "framework_commit": "abafb58b67a6037c6723ffeb19647c84484466da",
       "outputs": {
@@ -2304,42 +2289,43 @@
     ".githooks/prepare-commit-msg": "683254978579c51bc5fe7434f532b364b99b6b7d30fd60e076aeba204b81c1ea",
     ".github/workflows/container.yml": "3632d7470c39859a000d9a17fff2138f720e85cde62f9267afe1a752819af0aa",
     ".github/workflows/pages.yml": "c0828eabeb2da7fa7d16094774e1a4a76110e6ed38e88ccbc2422919ba0474f5",
+    ".github/workflows/research-infrastructure.yml": "14e3f5c49387604a82b5ea574b0cf59f0f8edc0164a3a50ebe243b9140107c7f",
     "CITATION.cff": "ca423ade3696ff46ebfd308241ea27beb30871b93bd67be683e217e3aac8edd8",
     "Makefile": "4cd33a50c62ac7f46bcd3a421eb4523251158a0d93a612eed9b55d3a0111ea8a",
     "all.bib": "9a57e5b8a7a2d667e457115bda546109fe65f2e99c212319f19ba948eb95497d",
     "docs/assets/img/implicit_poroplastic_feedback.png": "7e194bab0968710b2ab47896f7e19dc024e29065799e77123ef015d24d549b65",
     "docs/assets/img/implicit_poroplastic_history.png": "5e73482f063ac94f2669a2822243522c5225f8a54b380e85b6b3260eff84dbaa",
-    "docs/assets/img/mandel_displacements.png": "75b492598210f420802a8ce9695f200fa9b2f6da6e8a52e4f587c1d87728a31a",
-    "docs/assets/img/mandel_finite_deformation.png": "a4998af212a8c7d45158bb1e250a77617de3b3ac4af9a37969610c43b1b9baf1",
-    "docs/assets/img/mandel_normalized_biot_contours.png": "7325182be2967a7f910b02b994dda7285e5504246317241c41eec7342d9d7a8b",
+    "docs/assets/img/mandel_displacements.png": "9bf41408150009c5130764fe5da5a04db981ca9b7b812866f4cc7b502507d266",
+    "docs/assets/img/mandel_finite_deformation.png": "56e384832dd38217b49934da4bd3462944b3e4b7f550924951c054a9ddec3d6c",
+    "docs/assets/img/mandel_normalized_biot_contours.png": "99c357aa5bec4dcabf89297503cb080254db761a42593140e3bbba8e78035a8e",
     "docs/assets/img/mandel_pressure_profiles.png": "aeb585b1f17b90ac6565a0b5b1267608819292d5b8866556c0f7effbbc777803",
     "docs/assets/img/poroplastic_b_feedback.png": "91dbeec444ebb57ab2480ef9e7219920a70f1b6a7e8c30ecedf218d7f134ddff",
     "docs/assets/img/poroplastic_delta_b.png": "8b3d39e9066a273f0783dd8fe893e22c023dd02cfb622ff5c0cf5d337e2d2a1a",
     "docs/assets/img/poroplastic_load_unload.png": "f154fa00a1615948fa5a241502f8d0d35f29a64a2da51172ad5b672216860a2e",
-    "docs/assets/img/poroplastic_mandel_biot_ratio.png": "28077f4e9aa2a55e5f1ae1cdc2f8be320433b4636f2665de3fb345414259852b",
-    "docs/assets/img/poroplastic_mandel_history.png": "0b90d981396576d605f1c2e45c8c5c6d53936e37b872fb1f6e831b54044fe6af",
+    "docs/assets/img/poroplastic_mandel_biot_ratio.png": "c35bbb9327571b48e9cef38e8501d27479acd1f1801c3377cf00b6705c85de06",
+    "docs/assets/img/poroplastic_mandel_history.png": "2b71fbc39f311541047c56ffc52e06f682491e948ab05bf83fc8ecb63f502d28",
     "docs/assets/img/tensorial_load_unload.png": "4b7dabcbfec3fdb2efd09eb1572e702e0d96e1af37b4e1e3324824b930b81cbe",
-    "docs/index.html": "ab80a4c4af15e19f07fc22baeb8a89924fea7d99fb7c71bdd1060f4dbac117e7",
-    "docs/mandel.html": "f92e78182a90f85768d64a2965fd07600e4cd7d4703528ca83b0cce99e7328b0",
-    "docs/moose-catalog.html": "2b4bac801f69ad8fc269f558295d3a021c10ca10d8917d58195ed1b0ad6b16a5",
+    "docs/index.html": "c5e330b9c53b29ee2280d096942038df20f9b582616a8e18d849875524c38444",
+    "docs/mandel.html": "d1412c35596a3e179d5f0aa1c4c50469fed2871b1c8a32b90ec878aeb5142547",
+    "docs/moose-catalog.html": "8b7c13bb79e9181f94e29dc430f639ab44b55e57f5c5ab53e25e3c5ab6b4becb",
     "docs/poroplastic.html": "aff0777bce06e5a9d583f443a460f006073f2bdfe7d2d10a1dc74dc80669b28e",
-    "docs/reproduction.html": "43f4fb93a6147b09cbc497dc77e04f61410c1ac7b34c4901db8845a573c9637b",
+    "docs/reproduction.html": "bfeb52fc0bcfec3d6b2f10dd0bc05af0d31df91a0918be97d0be6eb4514315ba",
     "docs/source.html": "cf9f97c9d2e90a5ebee8e9d487a3537fb344b59ffe309c3cda669911ba6843cd",
     "figures/implicit_poroplastic_feedback.pgf": "27302fc41ddd0d65f9762c7dc631de7a7e406ea5cf7a1536e1b437fb6799ef44",
     "figures/implicit_poroplastic_feedback.png": "7e194bab0968710b2ab47896f7e19dc024e29065799e77123ef015d24d549b65",
     "figures/implicit_poroplastic_history.pgf": "b4addf101f625f43f5c04c84d78cb8c58ffb1a0ab19d1e2ecbfe7a45f8b9ba9e",
     "figures/implicit_poroplastic_history.png": "5e73482f063ac94f2669a2822243522c5225f8a54b380e85b6b3260eff84dbaa",
-    "figures/mandel_displacements.pdf": "299ed0113f14d9e11b1590bfd0218e9fb0034ccf11af6b4c46db46e06c7bdc2a",
-    "figures/mandel_displacements.pgf": "01368c27919da65746baa63a618e95760a1583c9e4fcbedb5a833c9137afbbb6",
-    "figures/mandel_displacements.png": "75b492598210f420802a8ce9695f200fa9b2f6da6e8a52e4f587c1d87728a31a",
-    "figures/mandel_finite_deformation.pdf": "b14a79e9de6700320f9362799b5e4cd48d4c261edbc0ec997437481ba3e2972f",
-    "figures/mandel_finite_deformation.pgf": "fc30e15ae9d637b8068755fb1ffc7f6cb849536479ecd70616ddcc7aef974942",
-    "figures/mandel_finite_deformation.png": "a4998af212a8c7d45158bb1e250a77617de3b3ac4af9a37969610c43b1b9baf1",
-    "figures/mandel_normalized_biot_contours.pdf": "ab1a08a60a21a972b704ff7fd0884fa6f04c3fdc5dd51ba0800216b18822961e",
-    "figures/mandel_normalized_biot_contours.pgf": "7fed4d07effeb959c84717bc74e001ae3543f241d70e5f18de06b63874da1feb",
-    "figures/mandel_normalized_biot_contours.png": "7325182be2967a7f910b02b994dda7285e5504246317241c41eec7342d9d7a8b",
-    "figures/mandel_pressure_profiles.pdf": "7a51e7232e29f56cb48c18d0abad5923ea77c1fb3d9bcfaa795b23bd294c86d8",
-    "figures/mandel_pressure_profiles.pgf": "15265d1e6d9e928df5e93a9d0fe592d9eb1ab8be385826b2455f9a35fc0a6fd7",
+    "figures/mandel_displacements.pdf": "3cf69263b4e1bd4dc54e84b71a7be93c3faf02c1ba0da0959a8becf46ea7e572",
+    "figures/mandel_displacements.pgf": "82f64fdd274a6f2aa4efe7aa8f9cc448b02d6792fff12746fa6042a5178028ad",
+    "figures/mandel_displacements.png": "9bf41408150009c5130764fe5da5a04db981ca9b7b812866f4cc7b502507d266",
+    "figures/mandel_finite_deformation.pdf": "73b1757b79d3c8e4fd6a6dcde8bb1aaa3cca4493801fe2370cdb5194cc4edd13",
+    "figures/mandel_finite_deformation.pgf": "c05e41a845cc2955f3e2299fcaef24b0d029b8d66117aee7636e627257c66309",
+    "figures/mandel_finite_deformation.png": "56e384832dd38217b49934da4bd3462944b3e4b7f550924951c054a9ddec3d6c",
+    "figures/mandel_normalized_biot_contours.pdf": "e1a028121c586ce409be0ffeb52bba66a8f36055e42ca515a6c34203a4a2e20b",
+    "figures/mandel_normalized_biot_contours.pgf": "6943bd94c6405da6afec8fc55a59e91a077296981efc0fbbf8212d247f51ffeb",
+    "figures/mandel_normalized_biot_contours.png": "99c357aa5bec4dcabf89297503cb080254db761a42593140e3bbba8e78035a8e",
+    "figures/mandel_pressure_profiles.pdf": "f2510fbe17781bf7c15fba045974ddd8bf7df880a38098e63663dbd1339b46c3",
+    "figures/mandel_pressure_profiles.pgf": "d1b36ca5c68720062f9c0325e3cc80a5ab59c6adf42e3378308992c9497a3e36",
     "figures/mandel_pressure_profiles.png": "aeb585b1f17b90ac6565a0b5b1267608819292d5b8866556c0f7effbbc777803",
     "figures/poroplastic_b_feedback.pgf": "3385bb359f478d161f165aa1bb4f936dfaa2dd12670e8663c2994b813522b8ae",
     "figures/poroplastic_b_feedback.png": "91dbeec444ebb57ab2480ef9e7219920a70f1b6a7e8c30ecedf218d7f134ddff",
@@ -2347,31 +2333,33 @@
     "figures/poroplastic_delta_b.png": "8b3d39e9066a273f0783dd8fe893e22c023dd02cfb622ff5c0cf5d337e2d2a1a",
     "figures/poroplastic_load_unload.pgf": "ca1e377e6c52e255d1e407abacf7a13b56dfebdd51f92587fe82732615a3bf6e",
     "figures/poroplastic_load_unload.png": "f154fa00a1615948fa5a241502f8d0d35f29a64a2da51172ad5b672216860a2e",
-    "figures/poroplastic_mandel_biot_ratio.pgf": "04221138928e059b8d3ec6755fc32d3ccc0fff90163e706447ed18349d8f2bee",
-    "figures/poroplastic_mandel_biot_ratio.png": "28077f4e9aa2a55e5f1ae1cdc2f8be320433b4636f2665de3fb345414259852b",
-    "figures/poroplastic_mandel_history.pgf": "21514273d844cc7a938fea96a73468057cc06c14e4dccfc5a40a2a4fc25a6082",
-    "figures/poroplastic_mandel_history.png": "0b90d981396576d605f1c2e45c8c5c6d53936e37b872fb1f6e831b54044fe6af",
+    "figures/poroplastic_mandel_biot_ratio.pgf": "b72333f6d0e0fcf4b8eb902803d19db5301354b1e7296ffbdbf5d915ef84b573",
+    "figures/poroplastic_mandel_biot_ratio.png": "c35bbb9327571b48e9cef38e8501d27479acd1f1801c3377cf00b6705c85de06",
+    "figures/poroplastic_mandel_history.pgf": "4853e6dd5906390d5c5b7e5f3e3ab212de60dc2784eea4135269f127262be31f",
+    "figures/poroplastic_mandel_history.png": "2b71fbc39f311541047c56ffc52e06f682491e948ab05bf83fc8ecb63f502d28",
     "figures/tensorial_load_unload.pgf": "8d0340a881acb555a0676ddaa76a49f77c7ff5abe12aa3f495f93f946acd0874",
     "figures/tensorial_load_unload.png": "4b7dabcbfec3fdb2efd09eb1572e702e0d96e1af37b4e1e3324824b930b81cbe",
-    "moose/sync_manifest.json": "88073da3c39d0ea18e21a970d9d6440d04ec54e938ce620bc5dca6e9a6143ae9",
-    "moose/sync_state.json": "7f9743dafa7ac81caf82c45d598ec4ed74bb976b0bdc458537789c00ed1c41ea",
+    "moose/sync_manifest.json": "55df80b3dd7c643cfc99ac20225ce34daf93e3b63ed570bbadc772bae97e44a8",
+    "moose/sync_state.json": "add4c9ef925728be255abd5f74d4e09bcf0296cc9327812ea23552c45202d45b",
     "moose_app/include/base/NonlinearBiotADApp.h": "0866b2cebcbfc367c25900af83a7a1a7004c7a24ae21507755f85b2ed6c8bb9f",
     "moose_app/include/kernels/ADMaterialPropertyResidual.h": "c086f659c2adcaec938e44a57151aac19e367a00a98aaa2eae53e5f6f3dc82a5",
     "moose_app/include/kernels/ADReferenceComponentFluxTerm.h": "0546e5e8ccfd8162352843b6278a6f71b0442baf2362a426308cf6aca18caf38",
     "moose_app/include/kernels/ADReferenceMaterialStorageRateTerm.h": "c5cf92ceede8f5fd1d90d86946e9967d7cf074635a40aafdf3fc6adbad342cfa",
     "moose_app/include/kernels/ADReferenceSolidMomentum.h": "570e1e74d552bcc8a922629b76111c02248211e44e3e43d3b5c2ab93d2f4a4e2",
-    "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h": "b1c38b7707f46120f9e2e7939f360ceaf30a35473d1101cc8ccc163a7e2043d2",
+    "moose_app/include/kernels/ReferenceBalance.h": "35597027125468147409ab0d88e85b2b88fc16902cbc7c802502b44275822dbb",
+    "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h": "9d210a6d2d614ae3222a205717c0e997f999b997688b467d5c103ffc8a55e1db",
     "moose_app/include/materials/ADBiotDarcyReferenceFluxMaterial.h": "822102b9813e3d592b2e98744be9a6fbf4ad7eb3ae6a2473597e1b4c74658caa",
-    "moose_app/include/materials/ADBiotPressureStorageMaterial.h": "1f72903cd280f542ed35c20daca6647cdebf9ca2d1abe1496ae682b984f04c05",
-    "moose_app/include/materials/ADConstantDeformationGradientMaterial.h": "eef6d796c8ba8c6908e16e3c7ddf95c2fd2385c5b34caeda8c5900758046cb58",
+    "moose_app/include/materials/ADBiotPressureStorageMaterial.h": "75d41a813adea946569aacdb9e19b25a35ac0fb60469e2f112e3603e32ca877b",
+    "moose_app/include/materials/ADConstantDeformationGradientMaterial.h": "a73a6cc68f1b7e6ab393faab7536353a9ec8d484871d1d35175654d48bf49393",
     "moose_app/include/materials/ADConstrainedSkeletonBiotMaterial.h": "ee709a054ae7cb2d50c9ad2b8166bcf769fa331b87907a72a761062a4ca4fab9",
-    "moose_app/include/materials/ADImplicitPoroplasticBiotMaterial.h": "8d0638ecb56011daed346cf314d332b88859c7ed33e48baf1a43111e06f830d7",
-    "moose_app/include/materials/ADLocalElasticMineralBiotMaterial.h": "3ed00c90fc26172b8db12e3b703b33645d8c33ad1e2bad92f3739f4d197182ab",
+    "moose_app/include/materials/ADImplicitPoroplasticBiotMaterial.h": "415acc775149f8d649340c0ebfd9c6f5fa52bdc8ff80e9e8d17c1aa44997726a",
+    "moose_app/include/materials/ADLocalElasticMineralBiotMaterial.h": "b29f791515b47d228b15aca514af43d7e63c80131dbcf9b3ae41abf55b65b2d2",
     "moose_app/include/materials/ADPlasticStateBiotMaterial.h": "5c34b35bd975143e6c79e6824df46e42bd3f6982ca376bddec56ea830e5f3c28",
     "moose_app/include/materials/ADPoroplasticBiotCoefficientMaterial.h": "aa1f81aad71ed1019ca52f8f8e503e5d1985cd024547b96eba2b6a9b14c830e0",
-    "moose_app/include/materials/ADPoroplasticPoreVolumeMaterial.h": "8fe4ab8c1108b00c6ddef740ef5705e88dccaf7ff8a4864aac5e73856612d51a",
+    "moose_app/include/materials/ADPoroplasticPoreVolumeMaterial.h": "99e03507fab4820957b37f857063a6c9950e9236a151b80cdecad40f3d23984c",
+    "moose_app/include/materials/ADReferenceBalanceState.h": "d20a30cc8fed544a5bff16fcd8d43b3cfcb56e1b0116e6cb3b5fc4ff0548d2ab",
     "moose_app/include/materials/ADReferenceSolidStressMaterial.h": "773dc3edecea20cff3020a2aeea92f55d1371d4f7861a13ac951e2dd651a7d4a",
-    "moose_app/include/materials/ADSolidReferenceKinematics.h": "343d81f2c8479d6abf8a8d131d8b6bf5bccc5d3237961c03bbcd8a3af73d5d12",
+    "moose_app/include/materials/ADSolidReferenceKinematics.h": "20a7bad230f1d186d1429588f532422a6a3425be04a2784f872e5f438675036e",
     "moose_app/include/materials/ADVolumetricBarotropicSkeletonStressMaterial.h": "90741efb8dbe6dbb3e762e797190dff4460ef5cbf3588c5c091d8bb4b6456ead",
     "moose_app/include/postprocessors/ADMaterialScalarL2Error.h": "66a08ec210a09d830bc0d45cc86e588704c89cdec20562fb7ffd1dac3c1a4fc4",
     "moose_app/include/postprocessors/NodalDofSum.h": "97e592e6c89d6764083b6b8de5532bed35590caa76cfbb695d2d2d60813c07e7",
@@ -2381,17 +2369,19 @@
     "moose_app/src/kernels/ADReferenceComponentFluxTerm.C": "383b1faa093217673c90b6abb95c4a522fc0ab41fea4af8be937fdc899c58875",
     "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C": "37949b95362ac61164504f8ee11d4cbd090baaac345a30b9bb01f70b538314a9",
     "moose_app/src/kernels/ADReferenceSolidMomentum.C": "a469a325d1e876422846b4b6841778b9016fadd5c8234c2336a9c02b3b0c0301",
+    "moose_app/src/kernels/ReferenceBalance.C": "1a16c9a559caafd5831166f90ea15c4d11deddf7c888ec7b441f38dad73bd1be",
     "moose_app/src/main.C": "176ea88ac0f871badac1139a5d09c7e76a78466d832a50e2a59c554604824211",
-    "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C": "a91cb763ec048927d93f330d12a021c1e0ad5c2451116263b168941609093db7",
+    "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C": "70df992a6471b0d0eb9e8be04fe55354477ef53ee9ca1805234bb12f08537007",
     "moose_app/src/materials/ADBiotDarcyReferenceFluxMaterial.C": "127f3a46b7f96543c6fd8854c859fd24454a3ed92f0d2ddb856ff14a87bfc98c",
     "moose_app/src/materials/ADBiotPressureStorageMaterial.C": "ff889d4b502934a8ea80aabbc973a7b6ee89d869dd7f8db4aea02b25eeb7f12d",
     "moose_app/src/materials/ADConstantDeformationGradientMaterial.C": "9db5bbcc94428a2e38c75e3bef8555bc962d489192e1dc3f5d08d8658e7179a8",
     "moose_app/src/materials/ADConstrainedSkeletonBiotMaterial.C": "d8342f30188842ecb4aa3dac71d701adce16dc78d4f2d4ee9eabd53459c0aeb5",
-    "moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C": "3e776418101ced4b10617e2698ce2dbb3c7d7c03e6103b42b4432fedea619cab",
-    "moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C": "623a106d638001554cf98a94ceb8fc3be562565e61acb375a68624b1fd912b55",
+    "moose_app/src/materials/ADImplicitPoroplasticBiotMaterial.C": "489a1d03339df48e31b8f1c557357ddfcebf4733e17cd5597092048ba7a62960",
+    "moose_app/src/materials/ADLocalElasticMineralBiotMaterial.C": "517ee342d5406dfe872c1126163e465ef7b8e85dc6a34769113e5b10195234c5",
     "moose_app/src/materials/ADPlasticStateBiotMaterial.C": "5509957bcfaaae8f0824374e527be27ef6113edbf112bbd49557ed54cbd68b7d",
     "moose_app/src/materials/ADPoroplasticBiotCoefficientMaterial.C": "26e871844e665af4a5a6106487a8f8a693f41c8c610bfa1861d17674741c1a53",
-    "moose_app/src/materials/ADPoroplasticPoreVolumeMaterial.C": "ccd943676d0dfaa9915eeeaab04a27521449bc91768ed34e35d6591563a3da2f",
+    "moose_app/src/materials/ADPoroplasticPoreVolumeMaterial.C": "8b5318c5dc05bb43c6ed11d572b757995eaa3a000293a72cba2e55bb715ce4c4",
+    "moose_app/src/materials/ADReferenceBalanceState.C": "a327ee4d93761fe3b92269a2eede994d7db6ce446ae0a20c5288daf436739e1e",
     "moose_app/src/materials/ADReferenceSolidStressMaterial.C": "c0c39cf04372091874baf3c184e24000bb19a2701e58c86d9f27f5b2bc62cee9",
     "moose_app/src/materials/ADSolidReferenceKinematics.C": "9e714d7b167412a16811a268703c99e4b4cec7e91fb8bd0d9396c1bf57c81b35",
     "moose_app/src/materials/ADVolumetricBarotropicSkeletonStressMaterial.C": "768f6175d25a4a61a9be61315a519a63bd153e8b85333c52acad290a6b9871b6",
@@ -2401,9 +2391,10 @@
     "moose_app/test/tests/implicit_poroplastic/comparator_domain.i": "4c79fc62289a581f77eb9811ff78e1bf6b6e31154060bbcef0849edf94b534d8",
     "moose_app/test/tests/implicit_poroplastic/material_path.i": "e8ed9061ed32cbb4498e9bdca189520fc3a7c5d6448789c30a988599992e75b6",
     "moose_app/test/tests/implicit_poroplastic/tests": "9eea821f75bbb358768e801719f21680141e1ce00f070fe6a95466230ba47ba4",
-    "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i": "7ec3686e86b36a9d9edfd0e1448b23c802c5f1f8cc3b92f1b85c7cf358654b34",
-    "moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i": "5ea03a69cb2be080f61ba3d85869c1f77cf02464106b85c73183270d7ea57180",
-    "moose_app/test/tests/mandel_implicit_biot/tests": "c80189d78503e8b1f1782972ce9404242cbe577fe1957e61e625e83497b428b1",
+    "moose_app/test/tests/mandel_implicit_biot/conservative_initial_state.i": "e01be97755631c821fe117b9b32ca3abff8f057697b589dc5b5d587e416c31c1",
+    "moose_app/test/tests/mandel_implicit_biot/implicit_biot_q2_q1_jacobian.i": "e525ea47882d84547e36599d2df427574197391b92a03d8af9edd50c406f92ce",
+    "moose_app/test/tests/mandel_implicit_biot/mandel_water_q2_q1.i": "364163dc4eee5ec5ecc7c2fa90120bfe15d15484e5027a084ac9953c48a2ceb7",
+    "moose_app/test/tests/mandel_implicit_biot/tests": "ba209e0c7543200d00b4c1ba9e9a057ad4308096546526435e914a6831433226",
     "moose_app/test/tests/poroplastic_biot/poroplastic_b_feedback.i": "3a3e998316c27c617638f5ac313108f365512877abbddbf5c9b2217592c3372c",
     "moose_app/test/tests/poroplastic_biot/poroplastic_compression.i": "c748854030f0f72991b0cd70ed716d3d92c296a521f6fcc27c32cd6168e5db3c",
     "moose_app/test/tests/poroplastic_biot/poroplastic_delta_b.i": "dd4b2fee939add731861eb4c1903f549ad87f092c7237808b0035853571c552a",
@@ -2416,38 +2407,39 @@
     "moose_app/test/tests/poroplastic_biot/poroplastic_unload_tangent.i": "92ae7810eea7865419d8d95f1c255b0507519cd937208318600a453d3ec2de96",
     "moose_app/test/tests/poroplastic_biot/tensorial_load_unload.i": "9cafbe52ca754410a005306c11c7299d61b365c33a74396a64472200e2ede093",
     "moose_app/test/tests/poroplastic_biot/tests": "5b1753e56094d59d09a10187827d327cbc4b3553e7b8beb7fc35b59de307183c",
-    "moose_app/test/tests/poroplastic_mandel/compression.i": "d9163e8c2e7d2d7fd4c0be58c895689a6984e7f0648f832566012ec99af7da0c",
-    "moose_app/test/tests/poroplastic_mandel/storage_samples.i": "6335b66c5d3f3ad231de6bd9452a2439065dab8bb9cc30567f812d33c84bee01",
-    "moose_app/test/tests/poroplastic_mandel/tests": "a5c83f3d3e38c7758636dbfac8edb9ee5d5a1756d8d52f564146e2237f36c64c",
+    "moose_app/test/tests/poroplastic_mandel/compression.i": "2231994c10c7c7c86669d52cb617c6ee5217dd0e72379af546288e3d0264460b",
+    "moose_app/test/tests/poroplastic_mandel/initial_state.i": "5731dba7e07a0369c2224933947cd44ef98d25e9a9ef762f0d5c1cc213627f3c",
+    "moose_app/test/tests/poroplastic_mandel/storage_samples.i": "c57cd18f39fadf2a4f62c190b806348eaa417d00c205b3bb61f2bfd3a23a104f",
+    "moose_app/test/tests/poroplastic_mandel/tests": "3358b6483b04c64ab4bb284cb7e956c7d2254f6bdda367e6141b3d1209bbb9af",
     "paper/defs.tex": "2ce1a86d727aa30144fa7fa620c6cabd15d0663d5c7a6e66e839055fbe085ab4",
     "paper/main.tex": "345ab5bd044c15db36405eeafcafa09202bb0ea2ff05c18d96406e9c447f6c3b",
     "paper/sections/acknowledgements.tex": "622fcea0db32e1eb38433353b8abb2d0de295857662a75b9f8152a2af9ccaede",
-    "paper/sections/conclusions.tex": "0ee877eed8363db13d06730590a216a7ad12423d788f03790bc608dcbae16b56",
+    "paper/sections/conclusions.tex": "09401f2e7bb3f30126ce300659d071e9db3dcfd0bc665f0aad17812a104f4806",
     "paper/sections/declarations.tex": "9c0d924c4ed7689bb46db578f0e1dcb8ab25d197b33277323a14240d88f2c1b4",
     "paper/sections/finite_deformation_biot.tex": "95d84b7a27bc9d151f384e059dd4dd52a4bedb467b42b106165ba5f38d922bce",
     "paper/sections/gajo_equivalence_appendix.tex": "d3e0f0cc045c98d77238a1290ae02aec3f360813e0265148f000c5bda3f31136",
-    "paper/sections/implicit_ad_implementation.tex": "eed66d9178da5763752d14ced1e5dcbd16d87cc9ce3c5fd94abcbf9c2fdb3215",
+    "paper/sections/implicit_ad_implementation.tex": "2a39115328371414ec1f617de8338c3aa2afcecd917cab99c39570e03cc586aa",
     "paper/sections/introduction.tex": "b88ce3fb4025be24c569b4ad140dd7b76a8dcdc2879b11e4caa620a03bf23be9",
     "paper/sections/mandel_analytical_appendix.tex": "c861c4d38fd01231e8661cb0459b1ad0a0f5ab57d0ed42aefdb6e8cf5bee972f",
-    "paper/sections/mandel_verification.tex": "cb24894d75ee262b7639ef7c7bf5627019375202fb6b228e0232e52d85df0a6e",
+    "paper/sections/mandel_verification.tex": "62d34053734a1130bcde2332fe0b1bdc6f2aa281c6248a9bc3bc874090c3a5f8",
     "paper/sections/poroplastic_results.tex": "22470e9119664d117ee398f0ee7e850503de6dfaad33d52ffd0ef90da0c7fa51",
     "provenance/ai-use.yml": "c5e8bc27e44299688523c83f36917ccb75780d2eefac1bfe4e926471b2a0d125",
-    "provenance/ai_use_statement.tex": "689c7136d81547f99066a4a06e284300f8be403ab1fa2710c8663532809e29f3",
-    "scripts/build_site.py": "e8ac0b395ac339c8ec2426df96b315f34567c8cb58833d36bb55bdda3d5a2c49",
-    "scripts/check_equation_traceability.py": "9f54490b2d9a801c620e362bd6ec05a47f56f24f3bfb4c9bc741d6c4c2feef1d",
+    "provenance/ai_use_statement.tex": "e2919cb29cfc155f00bea9fb6ccdc220572f47b024b31101010338505abfb84e",
+    "scripts/build_site.py": "771260add767806eacf8a87a1adeb0df92f0efc56957fbb566fb89c832f0577c",
+    "scripts/check_equation_traceability.py": "86248b5171140fca49151829d6365b340db13a3748d425c6992235bc675fbc23",
     "scripts/curate_mandel_profiles.py": "140d1629bae116100925d21ab487e014e62fd007c65cfefa92bfda20196640b3",
     "scripts/extract_mandel_density_contours.py": "b8bb8dbd06c6a5363b4183132929314cc5b7f25d0ce8047fca0b753380d5d964",
     "scripts/plot_implicit_poroplastic.py": "ae2c26e48a64eb03fee88d024e595c674593d579629f1a424e0d79696d77431d",
-    "scripts/plot_mandel_extended_results.py": "f7783f210eb155ec6d8db9b1a04ed5f47682ebbdfa4d831e342a88c5713a938e",
+    "scripts/plot_mandel_extended_results.py": "9823398b1b98bb1c99bd25bcce0838a284069e40e303d24973c119dc19b59211",
     "scripts/plot_poroplastic_b_feedback.py": "f37d0ff64aeab9dd99d0248a70b7989d131407fd59c7cc90537d4f8f857b1afb",
     "scripts/plot_poroplastic_delta_b.py": "f484610dd119dd25f08936eeb8615d7195652c46505b3518f8feb60cbb584237",
     "scripts/plot_poroplastic_load_unload.py": "793a1d2461d442e073e12dd3e62b839fbf4f51e3a2adb847e63cb2b63f9a15f8",
     "scripts/plot_poroplastic_mandel.py": "7d7be0e6be3afd6bc663ce4fb790d36d4ddfcaac684dfeacc9dd993b46d11261",
     "scripts/plot_tensorial_load_unload.py": "1a8216ea775466e361f2e2b67be27e07f50debf86c435f168d47b8edbdb05cf5",
     "scripts/reproduce_examples.py": "a7d579d89065b79fdc34d75279ddc8ddd75f70800cd5e260aecc82351b299b85",
-    "scripts/reproduce_mandel_publication.py": "157f8131b6f711dc2591c98bc25d2c3214752bfb57ba9819589c1b5544cff77b",
-    "scripts/update_validation_provenance.py": "451fbab6a3e735756da612e1d408381d79c422862d33909a5edea9cff85d743c",
-    "scripts/validate_repository.py": "43cfeef5829a865d59c95e4345ff957e42569b9c14fa3294d8bf05e8ddad010b",
+    "scripts/reproduce_mandel_publication.py": "1a0d7f0bcb261defa84449f4643b42812027d97588350c7ad8edb4e6fee3e41b",
+    "scripts/update_validation_provenance.py": "7a7e5e6ff2d4cdb71b9801467cca049cb3e363682ee1edb9c4a452db8d4cd80c",
+    "scripts/validate_repository.py": "337759f24fcec09331629c39b3700dd55c5a24b1173cf2779c643ca5522b543e",
     "submission/README.md": "dcaeb1afd53c9a87429642d11179badcda36dd8517800aadfa04cd399010c31e",
     "submission/cover-letter.txt": "fb367559c7e52026c589b662914680fdebcd3fc97ce35c617a4bd5f1cc8b66ad",
     "submission/highlights.txt": "a6d4f4e6c18e5321ac7e6bb1db96e876935731dcefb44b599d9301a0d4903820",
@@ -2455,33 +2447,39 @@
     "tools/prebuilt_app.py": "b9397001ab9dbb013ea8b37b23371f8029c09b3e18e92c679748e723c0afb30f",
     "tools/setup_reproduction.sh": "a2e25eeb3af86618db34d7606c6bfcc4c24fe136388157cbdad9e2175373346b",
     "tools/test_container.sh": "b452cf9d609940a8def4a8be5b2faba06dfc5730b96f63a293da3d58bbe7f2f1",
-    "tools/tests/test_equation_traceability.py": "ddf1e3a1054ab46f0c3c7df4509da868afb775bbb503f1ed8f6dc158d18aec72",
+    "tools/tests/test_equation_traceability.py": "fd09b344b866af52a06b120b60c0b7e03a6e297593766f26a4ea62f494d1704f",
     "tools/tests/test_prebuilt_app.py": "f49f67ceb676af9b390389f9bc4076e80ae78111965f96eb3d66783f6615fb1f",
-    "validation/README.md": "52d994c2b8f4f73d3f04e62b125897130ff9da05da3b48cad9d18fa5374fbf6c",
-    "validation/acceptance.yml": "962b4077655a297777b089486ef933c7c5c2c9e0ab81c42eab862a94e5adbd8d",
-    "validation/equation_to_moose_map.yml": "60656553c6e1cdfe1c456ad8db4dd4553327f9dcb80eaca12c5f41566fe3a30e",
+    "validation/README.md": "5b1fe712b566d5bb12312bb39c27e2d35a3dd042f4c4cadc2d03b7fdb9d22782",
+    "validation/acceptance.yml": "c126d9ca03f5b06f3bb61abd30060117c01137c57a58a3228ab5b78cf7e075d8",
+    "validation/conservative_formulation.json": "093d985fd60e917e418843dfeeac848f369b3087d82862f023744b5f87bbb044",
+    "validation/conservative_initial_state.json": "be2f7d3b0c0365de343a14cec711640f1aab09db03502cf36121641dddb5d587",
+    "validation/conservative_jacobian_perturbations.json": "7f4f966fab78542e2220c4b412b1fa3a99a5d71056fcdecf8ad9a703e46f602a",
+    "validation/conservative_plastic_initial_state.json": "4fd4c4667b0f73f1b83dae5a9cf9d8fef335ff47e9ede16d5189cb0c9941c305",
+    "validation/equation_to_moose_map.yml": "4ca8b5b0ce04dbbb577e39a50fce156750fd7609c011e3081c491d1d6bd0f210",
     "validation/implicit_poroplastic_feedback.csv": "af83af2505764096b43579e9a5f48323cf3c0208869ada5c60a7c792e76f38a8",
     "validation/implicit_poroplastic_history.csv": "929be2859489ad69b00adbd98380d04178039ec65a47c210682fbbd70fcf205d",
-    "validation/implicit_poroplastic_verification.json": "1eee5835cedb808a6687782834a284571a69690f0f00650eec987ea30bb9ed07",
-    "validation/mandel_biot_contours.csv": "d9e0d2808c1be958134da30de0b3731a1d6eb9db10f6b5826eb8d5b9c20d2a1e",
-    "validation/mandel_density_contours.csv": "57926a0b30939d2529b70cb43cb71137a096c9a7ce1d2511d0317fb06915ae29",
-    "validation/mandel_displacement_profiles.csv": "20930983796a15bb3879dabcef90bb7f00d51c9d7191435a9c6bd981cf7fa534",
-    "validation/mandel_execution_provenance.json": "82f2c05894409cc6f2164dd4e7491842ebd75d06128caad76ef3ec4ef26e260e",
-    "validation/mandel_implicit_biot.yml": "fceb1dc04294c71b64d77ea50740a7e7bd6d56e70258bea0f0e1545c25a35956",
-    "validation/mandel_large_deformation.csv": "03bcf5f1a125649d9f84cd8be568788f8382d07fee15d882b7f433db7001bfa1",
-    "validation/mandel_pressure_profiles.csv": "bc82635762f0759ada9c0f833d0f6425248562ecd16ab57ef757abb3f2d9683b",
+    "validation/implicit_poroplastic_verification.json": "2e6341c8383fba3c9651f7503f2aa38f86bb4f152a032a2bc2001d591b8a5b52",
+    "validation/mandel_biot_contours.csv": "097714664f8f4b351be8c955962c6855a65ab7a6a4a506d9cb474291d853ee2b",
+    "validation/mandel_density_contours.csv": "4b7b47a2d791c8bbcca7be5f2f833e94ef007a97d180ee9757ce1025fcad334e",
+    "validation/mandel_displacement_profiles.csv": "6d7ab791017b2760430d818084e53686f58d2338528ba0de0fcefc7b6cf26bc5",
+    "validation/mandel_execution_provenance.json": "c5f937a9858d68e0b0bfce64c0f00703b5f17db32f09e6364049b8df65a4b656",
+    "validation/mandel_implicit_biot.yml": "0879aa432c7a0a4143abd7d669f0c703b894bf5a24c9f6069fad94ccc08a927f",
+    "validation/mandel_large_deformation.csv": "48b13386abf84e65173f4cf5bbafcc2b8893052f35ddc247bebf6a6b5e6d0408",
+    "validation/mandel_pressure_profiles.csv": "13b76c472f706d5db7fef63c8e247fc902c632615b6e84bad78e7cb34cf67bbf",
     "validation/poroplastic_b_feedback.csv": "1e57e319a9b8c78c363fc5b793f27a7cba3a4b8ee1f7c51a1da8dd793bad3899",
     "validation/poroplastic_delta_b.csv": "84acebb8014e4656c32626a983fe92ee11345b55a17a5b571ee5bd1f2e65b203",
     "validation/poroplastic_domain_checks.json": "4f5a70001306fdc8ca5aa393dc01d49f9b3c5067f621895a5a7372caf7da1669",
     "validation/poroplastic_general_path.csv": "b1d7b4580e9c10b88066f03b760aeac03d7243253c56e0708d99e59eef8f253f",
     "validation/poroplastic_load_unload.csv": "9bf2cf9cc9150482aa8774f739133272ba849a1038849b9691a21a7eb570ef86",
-    "validation/poroplastic_mandel_contours.csv": "0060dcd7e5eccbbfade259990de41d85a93a83cbe9070c742c1044e951e8a6ad",
-    "validation/poroplastic_mandel_history.csv": "4add0f8fb83dbf6a051ef96901be4d63445a1c6542c13f04207a90b85361086c",
-    "validation/poroplastic_mandel_numerical_notes.md": "4894339a97ebbbfe3e5b9d37ea2b561f981fd78ae85c5febfff17664f0772cfa",
-    "validation/poroplastic_mandel_verification.json": "13908534cfea3e450680adfad0aeedc5d8ce9f45ab77c2be7616a5992448c30c",
-    "validation/poroplastic_spatial_stability.json": "906ebc7d836fbb4fa016fb1e2c0d5b4d8d6e69dc0f57271a28d87a3a752b3887",
-    "validation/poroplastic_spatial_stability.md": "5014f64d0650584907b0248a2acc0cc54f7d9c4abfdb3aab1ddd19820a4c25ec",
+    "validation/poroplastic_mandel_contours.csv": "9c1f59c871bc4d7a17a9ffab5c1e6f251ea66a4ce3514f6cdebeb0bf3f45ca91",
+    "validation/poroplastic_mandel_history.csv": "2b5552505ac2d4e202d27d28ae03e3e251b2b509d12b29d618c6e889388e1769",
+    "validation/poroplastic_mandel_numerical_notes.md": "707ca1ce0a0a3167ffd2859cdc788e76d355bdf1077d4502335069dbacb1d0cd",
+    "validation/poroplastic_mandel_verification.json": "2a88e9732f7c983e41822e55b6f60c2935f8ef7b826eb61d4f4fba4125a2d573",
+    "validation/poroplastic_spatial_stability.json": "ae01252775da6ef309450e84a92f37870a4cecfa777996fee1734b209aa767b2",
+    "validation/poroplastic_spatial_stability.md": "72aea1a4fef8d98c50b13f475c18e86394d0b72031ce46a72e32a9eb04d488b6",
     "validation/scripts/check_comparator_domain.py": "237722d5de286e4ba15cb76b29c64c82e1906a2f6394b36659726595d2bcd815",
+    "validation/scripts/check_conservative_initial_state.py": "81ef8f9f48004b17a076450cb254f9e2e7199b59d34f0e4f98d1804661572b40",
+    "validation/scripts/check_conservative_plastic_initial_state.py": "f9ee8929db821328d783a190740da3ae3795c0cb16ee0e153a8c1d450f9dd214",
     "validation/scripts/check_implicit_poroplastic.py": "eb84ee6fc6d9133310a5dec6a518b44d94fa6da9e657d94ed3ddd5d7ea06c73c",
     "validation/scripts/check_mandel_implicit_biot.py": "5899ba12d8f3186d59396bc35477b5ea23858efa16963704b1906cd1292ffb6e",
     "validation/scripts/check_poroplastic_acoustic.py": "f281a3e7b806aa3f8103703fa70f9dec63ffbeef877104dcca9a7b2c0a4fd9ac",
@@ -2489,16 +2487,16 @@
     "validation/scripts/check_poroplastic_general_path.py": "e03008cc71d3bff0e9459ce21da1e077895c39496048fefaab6ded668ffd1e0c",
     "validation/scripts/check_poroplastic_hardening.py": "8690696645fb958057e27c3edc0ae05ec0f8d5471db1712e10af416e64ac8dec",
     "validation/scripts/check_poroplastic_load_unload.py": "8ee4aa53b03a578d200fb3942a3cc8ecf8a11a5be13036bbc5cd0a3e8cecde00",
-    "validation/scripts/check_poroplastic_mandel.py": "a69f512a2776b5a9db361c6e7b0c6c2787446d327360b4f6ae2cc80963a8e619",
-    "validation/scripts/check_poroplastic_spatial_stability.py": "f27af81ea4bc0e29ad7e0258cd5d9bf2bf386fe3101f2659ebfb96c93acb35c4",
+    "validation/scripts/check_poroplastic_mandel.py": "e622379ebb73eb13a8e3eaacdc1dabd927224e1c411bd6369a75834b3c860401",
+    "validation/scripts/check_poroplastic_spatial_stability.py": "f3cfd90b57745e431edce8a9c96420a9ed49de5c0d9f176ce8d03317e084ec3e",
     "validation/scripts/check_stress_trace_biot_fraction.py": "07601480f96557edcfc5cc7894eb52246fdaa9f29b490daaf28e4416d4b0750a",
     "validation/scripts/check_stress_trace_derivation.py": "83978ec2b6069fc8f5bccab2979c649e257725d1babf005d2e232c98df268609",
     "validation/scripts/check_tensorial_load_unload.py": "45e21ee1b9b56e9b253794b61a3e84609fd154ba40b37cae831ef431c5bb5c49",
     "validation/scripts/curate_poroplastic_delta_b.py": "2ae2a28937d17e622bb2f22083f27a7b170bc8e5a1fdeea406e3f818236efe86",
     "validation/scripts/diagnose_poroplastic_contours.py": "3a5e7e3b2477534be5ef46c2f10f73c8568d3e780aac089e2f2287b38b745032",
     "validation/scripts/run_provenance.py": "6f9ef6a9e0fe76d7b088993744358b9573c4b5096b23002ec74b5b31dbb3b009",
-    "validation/supplementary_execution_provenance.json": "d74649f6c9c36c608b2378bdab8b8643b524efa6ae15bae0e99589d5d71a2c70",
+    "validation/supplementary_execution_provenance.json": "b4c6cecc0f9d88db3c5194244fef98c181b6ae52fb5ed95b1964398699b61c37",
     "validation/tensorial_load_unload.csv": "93328104091a649b3993e23539f3b2b8c494a8b6b06ff6ee49c9bae654af4e3b",
-    "validation/theory_traceability.yml": "823d469a6bebcc5c6fe9cbb4c883f62c49444560b13f77298a628e58c45e0813"
+    "validation/theory_traceability.yml": "a76f188346341cb5e30e5555dd98532a77677dbdc874ab97ad6ae911aad22b32"
   }
 }

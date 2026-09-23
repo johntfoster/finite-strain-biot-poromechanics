@@ -14,6 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "validation/provenance.yml"
 
 FILES = [
+    "validation/conservative_formulation.json",
+    "validation/conservative_initial_state.json",
+    "validation/conservative_plastic_initial_state.json",
+    "validation/conservative_jacobian_perturbations.json",
     "Makefile",
     "scripts/reproduce_examples.py",
     ".devcontainer/Dockerfile",

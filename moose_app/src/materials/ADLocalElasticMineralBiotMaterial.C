@@ -17,9 +17,7 @@ ADLocalElasticMineralBiotMaterial::validParams()
       "Biot coefficient. "
       "ADConstrainedSkeletonBiotMaterial supplies an independent implicit diagnostic.");
   params.addRequiredCoupledVar("pressure", "Continuous pore-pressure field.");
-  params.addRequiredCoupledVar(
-      "solid_spatial_mass_ratio",
-      "Current bulk solid partial density divided by its reference value.");
+
   params.addParam<MaterialPropertyName>(
       "solid_jacobian_name", "solid_reference_J", "Solid-reference Jacobian J_s.");
   params.addParam<MaterialPropertyName>(
@@ -94,9 +92,9 @@ ADLocalElasticMineralBiotMaterial::ADLocalElasticMineralBiotMaterial(
   : Material(parameters),
     _pressure(adCoupledValue("pressure")),
     _pressure_dot(_fe_problem.isTransient() ? &adCoupledDot("pressure") : nullptr),
-    _solid_spatial_mass_ratio(adCoupledValue("solid_spatial_mass_ratio")),
+    _solid_spatial_mass_ratio(getADMaterialProperty<Real>("solid_spatial_mass_ratio")),
     _solid_spatial_mass_ratio_dot(
-        _fe_problem.isTransient() ? &adCoupledDot("solid_spatial_mass_ratio") : nullptr),
+        getADMaterialProperty<Real>("solid_spatial_mass_ratio_dot")),
     _J(getADMaterialProperty<Real>("solid_jacobian_name")),
     _J_dot(getADMaterialProperty<Real>("solid_jacobian_rate_name")),
     _skeleton_bulk_modulus(getParam<Real>("skeleton_bulk_modulus")),
@@ -166,7 +164,7 @@ ADLocalElasticMineralBiotMaterial::computeQpProperties()
              (_reference_solid_volume_fraction * _J[_qp] * z)) / D;
     _solid_volume_fraction_dot[_qp] =
         _reference_solid_volume_fraction *
-        ((*_solid_spatial_mass_ratio_dot)[_qp] / _intrinsic_density_ratio[_qp] -
+        (_solid_spatial_mass_ratio_dot[_qp] / _intrinsic_density_ratio[_qp] -
          _solid_spatial_mass_ratio[_qp] * _intrinsic_density_ratio_dot[_qp] /
              (_intrinsic_density_ratio[_qp] * _intrinsic_density_ratio[_qp]));
   }
