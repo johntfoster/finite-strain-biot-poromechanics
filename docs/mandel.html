@@ -99,21 +99,6 @@
           <span class="why">Why: provides the reference Darcy flux for the water-pressure weak residual.</span>
         </li>
         <li>
-          <a href="source.html?f=../moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C">ADReferenceMaterialStorageRateTerm</a>
-          <span class="desc">Integrates a supplied AD reference-rate property.</span>
-          <span class="why">Supporting kernel for a prescribed continuous material rate; the coupled examples use ReferenceFluidMass.</span>
-        </li>
-        <li>
-          <a href="source.html?f=../moose_app/src/kernels/ADReferenceComponentFluxTerm.C">ADReferenceComponentFluxTerm</a>
-          <span class="desc">Atomic weak-divergence term for one named reference component flux.</span>
-          <span class="why">Supporting flux kernel; ReferenceFluidMass includes this term in the coupled examples.</span>
-        </li>
-        <li>
-          <a href="source.html?f=../moose_app/src/kernels/ADReferenceSolidMomentum.C">ADReferenceSolidMomentum</a>
-          <span class="desc">Quasi-static solid-skeleton momentum component on the reference configuration.</span>
-          <span class="why">General momentum kernel with optional body forces; the coupled examples use ReferenceMomentum.</span>
-        </li>
-        <li>
           <a href="source.html?f=../moose_app/src/postprocessors/ADMaterialScalarL2Error.C">ADMaterialScalarL2Error</a>
           <span class="desc">Element-integral L2 error of a material property against an analytical function.</span>
           <span class="why">Why: reports the Biot-identity, mineral-EOS, and referential-mass diagnostics used by the acceptance gates.</span>

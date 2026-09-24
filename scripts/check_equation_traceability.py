@@ -89,6 +89,13 @@ def audit(root=ROOT):
         raise ValueError(f"Unmapped manuscript equations: {sorted(missing)}")
     if set(objects) - mapped_objects:
         raise ValueError(f"Unmapped MOOSE objects: {sorted(set(objects) - mapped_objects)}")
+    # A mapping alone must not keep an unused compiled object alive.
+    selected = {name for path in (root/'moose_app/test/tests').rglob('*.i')
+                for name in re.findall(r'^\s*type\s*=\s*[\'\"]?(\w+)',
+                                       re.sub(r'#.*', '', path.read_text()), re.M)}
+    unused = set(objects) - selected
+    if unused:
+        raise ValueError(f"MOOSE objects without an input: {sorted(unused)}")
     return labels, mappings, objects
 
 

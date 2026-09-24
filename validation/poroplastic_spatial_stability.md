@@ -36,7 +36,7 @@ the derivative calculation at half the finite-difference increment.
 
 The perfectly plastic control has friction slope 0.6, dilation slope 0.4,
 and cohesion 20 MPa. Its sampled determinant first changes sign at
-0.2 s. The minimum is -0.00904101 GPa² at
+0.2 s. The minimum is -0.00904082 GPa² at
 0.5 s and (X, Y) = (0.1125, 0.0375) m.
 The half-step and associated-flow controls examine time discretization and
 the choice of flow direction separately. The associated control uses dilation
@@ -54,12 +54,12 @@ local uniqueness is checked separately from this mechanical loading tangent.
 
 | Case | Minimum sampled det(Q), GPa² | Maximum transverse RMS of B − B_el | Maximum relative reaction mass error |
 | --- | ---: | ---: | ---: |
-| H = 0 | -0.00904101 | 0.000459237 | 9.28857e-13 |
-| H = 0, half time step | -0.00911456 | 0.0004013 | 3.28488e-12 |
-| H = 0, associated flow | -0.00636679 | 0.000247578 | 8.98748e-13 |
-| H = 100 MPa, 20 × 2 | 0.0380548 | 8.22023e-14 | 2.48584e-13 |
-| H = 100 MPa, 40 × 4 | 0.0379635 | 8.61916e-15 | 8.56137e-13 |
-| H = 100 MPa, 40 × 4, half time step | 0.0379488 | 4.50353e-13 | 4.04718e-12 |
+| H = 0 | -0.00904082 | 0.000459171 | 9.24372e-13 |
+| H = 0, half time step | -0.00911466 | 0.000401425 | 3.28786e-12 |
+| H = 0, associated flow | -0.00636678 | 0.000247744 | 8.99369e-13 |
+| H = 100 MPa, 20 × 2 | 0.0380548 | 8.22055e-14 | 2.50888e-13 |
+| H = 100 MPa, 40 × 4 | 0.0379635 | 8.62208e-15 | 8.54694e-13 |
+| H = 100 MPa, 40 × 4, half time step | 0.0379488 | 4.50357e-13 | 4.04652e-12 |
 
 ## Refinement and conservation
 
@@ -78,7 +78,7 @@ run its maximum normalized mismatch is
 0.00336289.
 Solid conservation is enforced pointwise, and its independently integrated
 L2 diagnostic on that run is
-1.88557e-17.
+1.8564e-17.
 
 [The matrix driver](scripts/check_poroplastic_spatial_stability.py) checks
 complete histories, acoustic signs, transverse structure, and mesh/time

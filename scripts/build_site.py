@@ -58,13 +58,13 @@ def registered_objects(root=ROOT):
 def check_production_balances(root=ROOT):
     """Keep the coupled publication inputs on the conservative balance kernels."""
     required = {'ReferenceMomentum', 'ReferenceFluidMass'}
-    retained = {'ADReferenceSolidMomentum', 'ADReferenceMaterialStorageRateTerm',
+    retired = {'ADReferenceSolidMomentum', 'ADReferenceMaterialStorageRateTerm',
                 'ADReferenceComponentFluxTerm'}
     for name in ('mandel_implicit_biot/mandel_water_q2_q1.i',
                  'poroplastic_mandel/compression.i'):
         deck = root/'moose_app/test/tests'/name
         selected = set(re.findall(r'^\s*type\s*=\s*(\w+)', deck.read_text(), re.M))
-        if not required <= selected or retained & selected:
+        if not required <= selected or retired & selected:
             raise ValueError(f'{name}: production inputs must use the conservative balance kernels')
 
 
@@ -176,15 +176,11 @@ def build():
     count = check_links(OUTPUT, sources=True)
     objects = registered_objects()
     local_objects = set(objects)
-    # These shared operators remain available to other consumers. Publication
-    # inputs use the common conservative pair, checked separately below.
-    compatibility_objects = {'ADReferenceSolidMomentum', 'ADReferenceMaterialStorageRateTerm',
-                             'ADReferenceComponentFluxTerm'}
     check_production_balances()
     all_selected = set()
     for deck in (ROOT/'moose_app/test/tests').rglob('*.i'):
         all_selected.update(re.findall(r'^\s*type\s*=\s*(\w+)', deck.read_text(), re.M))
-    unused = local_objects - all_selected - compatibility_objects
+    unused = local_objects - all_selected
     if unused:
         raise ValueError(f'Application objects lack a retained input: {sorted(unused)}')
     selected = set()
@@ -193,7 +189,7 @@ def build():
     documented = set(re.findall(r'(moose_app/src/[^"?]+/\w+\.C)',
                                 (OUTPUT/'mandel.html').read_text()))
     expected = {objects[name].relative_to(ROOT).as_posix()
-                for name in (selected & local_objects) | compatibility_objects}
+                for name in selected & local_objects}
     expected.add('moose_app/src/base/NonlinearBiotADApp.C')
     if documented != expected:
         raise ValueError(f'Mandel object links disagree with inputs: {documented ^ expected}')

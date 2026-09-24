@@ -95,9 +95,10 @@ using the barotropic equation of state
  \label{eq:barotropic-fluid-density}
 \end{equation}
 Here \(K_f\) is the constant fluid bulk modulus and
-\((p_0,\bar\rho_{f0})\) is its reference state.  Substitution of
-\eqref{eq:conservative-solid-density} gives the pore volume per reference
-mixture volume as \(J-\phi_{s0}\bar J\).  Let \(\mbf w_f\)
+\((p_0,\bar\rho_{f0})\) is its reference state.  Substituting
+\eqref{eq:conservative-solid-density} into the pore volume per reference
+mixture volume, \(J\phi_f=J(1-\phi_s)\), gives
+\(J-\phi_{s0}\bar J\).  Let \(\mbf w_f\)
 be the fluid mass flux relative to the solid.  Its reference flux is
 \(\mbf W_f=J\mbf F^{-1}\mbf w_f\).  The fluid balance is
 \begin{equation}
@@ -136,11 +137,10 @@ With zero body force, the residual equations are
  -\int_{\Gamma_t}\delta\mbf u\mathbin{\cdot}\mbf T_0\dd A_0=0,
  \label{eq:momentum-weak-residual}\\
  R_p(\delta p)
- &=\int_{\Omega_0}\delta p\pder{}{t}
- \left[\bar\rho_f(p)\left(J-\phi_{s0}\bar J\right)\right]\dd V_0 \notag\\
- &\quad-\int_{\Omega_0}\nabla_{\mbf X}\delta p\mathbin{\cdot}
- \mbf W_f\dd V_0
- +\int_{\Gamma_f}\delta p\,M_f\dd A_0=0.
+ &=\int_{\Omega_0}\left\{\delta p\pder{}{t}
+ \left[\bar\rho_f(p)\left(J-\phi_{s0}\bar J\right)\right]
+ -\nabla_{\mbf X}\delta p\mathbin{\cdot}\mbf W_f\right\}\dd V_0 \notag\\
+ &\quad+\int_{\Gamma_f}\delta p\,M_f\dd A_0=0.
  \label{eq:fluid-pressure-weak-residual}
 \end{align}
 The time derivative follows a solid material point.  The discrete fields use

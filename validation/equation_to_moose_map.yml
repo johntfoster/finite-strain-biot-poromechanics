@@ -219,6 +219,10 @@ mappings:
   - implicit_plastic_publication_history
 - id: constitutive_verification_residuals
   paper_equations:
+  - eq:verification-mineral-factors
+  - eq:poroplastic-biot-correction
+  - eq:single-prime-kirchhoff-stress
+  - eq:distension
   - sec:weak-residuals-and-spaces
   moose_objects:
   - ADMaterialPropertyResidual
@@ -323,16 +327,6 @@ mappings:
   - validation/scripts/check_conservative_initial_state.py
   - validation/scripts/check_conservative_plastic_initial_state.py
 supporting_mappings:
-- id: general_balance_operators
-  paper_equations:
-  - eq:reference-momentum-balance
-  - eq:reference-fluid-mass-balance
-  moose_objects:
-  - ADReferenceSolidMomentum
-  - ADReferenceComponentFluxTerm
-  - ADReferenceMaterialStorageRateTerm
-  role: retained general stress, flux, and supplied-rate operators; the coupled publication
-    inputs instead assemble ReferenceMomentum and ReferenceFluidMass
 - id: pressure_legendre_and_drained_stress_reduction
   paper_equations:
   - eq:total-stress-pressure-potential

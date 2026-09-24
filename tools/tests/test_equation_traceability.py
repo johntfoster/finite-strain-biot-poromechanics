@@ -18,6 +18,7 @@ class TraceabilityTests(unittest.TestCase):
             'paper/main.tex': r'\paperinput{sections/model.tex}',
             'paper/sections/model.tex': '\\label{eq:balance}\n% \\label{eq:comment}\n',
             'moose_app/src/kernels/Balance.C': 'registerMooseObject("App", Balance); // eq:balance\n',
+            'moose_app/test/tests/model/balance.i': 'type = Balance\n',
             'moose_app/test/tests/model/tests': '[Tests]\n [balance]\n []\n[]\n',
             'validation/equation_to_moose_map.yml': yaml.safe_dump({
                 'mappings': [{'id': 'balance', 'paper_equations': ['eq:balance'],
@@ -47,6 +48,7 @@ class TraceabilityTests(unittest.TestCase):
             data = yaml.safe_load(inventory.read_text())
             data['mappings'][0]['moose_objects'].append('OtherBalance')
             inventory.write_text(yaml.safe_dump(data))
+            (root/'moose_app/test/tests/model/other.i').write_text('type = OtherBalance\n')
             _, _, objects = trace.audit(root)
             self.assertEqual(set(objects), {'Balance', 'OtherBalance'})
             self.assertEqual(objects['Balance'], objects['OtherBalance'])
@@ -74,6 +76,13 @@ class TraceabilityTests(unittest.TestCase):
                 (root/name).write_text(content)
                 with self.assertRaisesRegex(ValueError, message):
                     trace.audit(root)
+
+    def test_mapped_but_unused_object_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.fixture(directory)
+            (root/'moose_app/test/tests/model/balance.i').write_text('# type = Balance\n')
+            with self.assertRaisesRegex(ValueError, 'MOOSE objects without an input.*Balance'):
+                trace.audit(root)
 
     def test_numbered_display_needs_a_label(self):
         with tempfile.TemporaryDirectory() as directory:

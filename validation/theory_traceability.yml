@@ -49,6 +49,15 @@ implementation:
   darcy_flux:
     object: ADBiotDarcyReferenceFluxMaterial
     role: pull the Q1 pressure-gradient Darcy mass flux to the solid reference configuration
+  momentum_balance:
+    object: ReferenceMomentum
+    equation: eq:momentum-weak-residual
+    role: integrate the total first Piola stress against the reference test gradient
+    assumptions: quasistatic response, zero body force; natural zero traction on free boundaries
+  material_probes:
+    object: ADMaterialPropertyResidual
+    role: assemble algebraic probes of constitutive outputs for the outer AD Jacobian tests
+    scope: verification only; no additional physical balance equation
   total_stress:
     object: ADReferenceSolidStressMaterial
     role: apply the nonlinear Biot pressure contribution to the first Piola stress

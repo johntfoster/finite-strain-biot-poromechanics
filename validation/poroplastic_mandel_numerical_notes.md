@@ -44,9 +44,9 @@ using the same scale and panel layout as the elastic figure. Raw element
 averages are plotted without smoothing.
 
 The pressure-boundary reaction sums only actual pressure degrees of freedom.
-Integrated reaction and total fluid-mass change agree within 1.9e-12 of the
+Integrated reaction and total fluid-mass change agree within 2.0e-12 of the
 initial fluid mass across all five mesh/time cases. The storage differences
-telescope within 5.03e-14, and the largest solid reference-mass L2 residual
+telescope within 5.1e-14, and the largest solid reference-mass L2 residual
 is 2.2e-17. These checks enforce conservation separately on every mesh and
 time step. They do not require a nonzero defect to decrease monotonically.
 Direct integration of the boundary-gradient Darcy flux has a separate spatial
@@ -56,7 +56,7 @@ discretization error: the publication run's maximum mismatch is
 The return mapping and its local constitutive equations are unchanged.
 Independent material-point tests verify flow, hardening, mineral equilibrium,
 stress transformations, and their derivatives. Suppressing yielding recovers
-the elastic coupled solution within 1.19e-13
+the elastic coupled solution within 1.2e-13
 in the normalized pressure, displacement, and coefficient comparisons.
 
 [The verification record](poroplastic_mandel_verification.json) contains run

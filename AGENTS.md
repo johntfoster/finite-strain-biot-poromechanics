@@ -204,12 +204,14 @@
 - Before building or running `moose_app/`, use
   `agent_environment/skills/setup-moose-conda/SKILL.md`. Run its non-mutating
   diagnostic before setup, build, or test operations.
-- The formulation uses Q2 displacement, continuous Q1 water pressure, and Q2
-  solid partial density. The local update supplies intrinsic solid density
+- The formulation uses Q2 displacement and continuous Q1 water pressure.
+  Solid partial density equals its reference value divided by the deformation
+  Jacobian. The local update supplies intrinsic solid density
   and solid volume fraction. The Mandel problem
   has no pressure enrichment, reconstructed EG pressure material, EG facet
   operator, or pressure stabilization.
-- Solve solid mass conservation and the mineral EOS as residual equations.
+- Enforce solid mass conservation pointwise and solve the mineral EOS locally.
+  Assemble water storage as the backward difference of complete reference mass.
   Use the matched-logarithmic closed form in the production
   mineral update and verify its fixed-pressure tangent independently with
   `ADConstrainedSkeletonBiotMaterial`, retaining outer MOOSE AD dependence.

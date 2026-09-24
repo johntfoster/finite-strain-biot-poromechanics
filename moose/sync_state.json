@@ -6,21 +6,6 @@
       "sha256": "c086f659c2adcaec938e44a57151aac19e367a00a98aaa2eae53e5f6f3dc82a5"
     },
     {
-      "biot": "moose_app/include/kernels/ADReferenceComponentFluxTerm.h",
-      "master": "moose_app/include/kernels/ADReferenceComponentFluxTerm.h",
-      "sha256": "0546e5e8ccfd8162352843b6278a6f71b0442baf2362a426308cf6aca18caf38"
-    },
-    {
-      "biot": "moose_app/include/kernels/ADReferenceMaterialStorageRateTerm.h",
-      "master": "moose_app/include/kernels/ADReferenceMaterialStorageRateTerm.h",
-      "sha256": "c5cf92ceede8f5fd1d90d86946e9967d7cf074635a40aafdf3fc6adbad342cfa"
-    },
-    {
-      "biot": "moose_app/include/kernels/ADReferenceSolidMomentum.h",
-      "master": "moose_app/include/kernels/ADReferenceSolidMomentum.h",
-      "sha256": "570e1e74d552bcc8a922629b76111c02248211e44e3e43d3b5c2ab93d2f4a4e2"
-    },
-    {
       "biot": "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h",
       "master": "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h",
       "sha256": "9d210a6d2d614ae3222a205717c0e997f999b997688b467d5c103ffc8a55e1db"
@@ -74,21 +59,6 @@
       "biot": "moose_app/src/kernels/ADMaterialPropertyResidual.C",
       "master": "moose_app/src/kernels/ADMaterialPropertyResidual.C",
       "sha256": "f579c7d8a0fe3d654366aaff7f347580ee28c6821d2b086f947385f2b1b973b7"
-    },
-    {
-      "biot": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C",
-      "master": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C",
-      "sha256": "383b1faa093217673c90b6abb95c4a522fc0ab41fea4af8be937fdc899c58875"
-    },
-    {
-      "biot": "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C",
-      "master": "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C",
-      "sha256": "37949b95362ac61164504f8ee11d4cbd090baaac345a30b9bb01f70b538314a9"
-    },
-    {
-      "biot": "moose_app/src/kernels/ADReferenceSolidMomentum.C",
-      "master": "moose_app/src/kernels/ADReferenceSolidMomentum.C",
-      "sha256": "a469a325d1e876422846b4b6841778b9016fadd5c8234c2336a9c02b3b0c0301"
     },
     {
       "biot": "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C",
@@ -196,8 +166,8 @@
       "sha256": "81ef8f9f48004b17a076450cb254f9e2e7199b59d34f0e4f98d1804661572b40"
     }
   ],
-  "manifest_sha256": "55df80b3dd7c643cfc99ac20225ce34daf93e3b63ed570bbadc772bae97e44a8",
+  "manifest_sha256": "a7da0bbd9b688555ea1a169ad519cd7d12fe2e1b121568893fa06b42b5bac97e",
   "master_commit": "ae51da21b52ffc2ec382dcc286f7a1b2bfdf9c92",
-  "synchronized_at_utc": "2026-09-23T19:17:03.537099+00:00",
+  "synchronized_at_utc": "2026-09-24T15:25:08.543819+00:00",
   "version": 1
 }

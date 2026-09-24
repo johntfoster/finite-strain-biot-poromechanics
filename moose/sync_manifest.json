@@ -8,18 +8,6 @@
       "biot": "moose_app/include/kernels/ADMaterialPropertyResidual.h"
     },
     {
-      "master": "moose_app/include/kernels/ADReferenceComponentFluxTerm.h",
-      "biot": "moose_app/include/kernels/ADReferenceComponentFluxTerm.h"
-    },
-    {
-      "master": "moose_app/include/kernels/ADReferenceMaterialStorageRateTerm.h",
-      "biot": "moose_app/include/kernels/ADReferenceMaterialStorageRateTerm.h"
-    },
-    {
-      "master": "moose_app/include/kernels/ADReferenceSolidMomentum.h",
-      "biot": "moose_app/include/kernels/ADReferenceSolidMomentum.h"
-    },
-    {
       "master": "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h",
       "biot": "moose_app/include/materials/ADBinarySolidSpatialMassMaterial.h"
     },
@@ -62,18 +50,6 @@
     {
       "master": "moose_app/src/kernels/ADMaterialPropertyResidual.C",
       "biot": "moose_app/src/kernels/ADMaterialPropertyResidual.C"
-    },
-    {
-      "master": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C",
-      "biot": "moose_app/src/kernels/ADReferenceComponentFluxTerm.C"
-    },
-    {
-      "master": "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C",
-      "biot": "moose_app/src/kernels/ADReferenceMaterialStorageRateTerm.C"
-    },
-    {
-      "master": "moose_app/src/kernels/ADReferenceSolidMomentum.C",
-      "biot": "moose_app/src/kernels/ADReferenceSolidMomentum.C"
     },
     {
       "master": "moose_app/src/materials/ADBinarySolidSpatialMassMaterial.C",

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "captured_at_utc": "2026-09-23T19:13:53.654052+00:00",
+  "captured_at_utc": "2026-09-24T18:08:32.356552+00:00",
   "python": "3.14.0",
   "packages": {
     "numpy": "2.4.2",
@@ -34,7 +34,7 @@
     "sha256": "43985895fa2374a8ded7253f3d2183508d28e1d978dab5723b68de8073eb1ba1"
   },
   "command": [
-    "python",
+    "python3",
     "scripts/reproduce_examples.py"
   ],
   "outputs": {

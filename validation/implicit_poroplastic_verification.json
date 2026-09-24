@@ -282,7 +282,7 @@
   "execution_provenance": [
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:15:58.361508+00:00",
+      "captured_at_utc": "2026-09-24T15:32:34.370171+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -328,7 +328,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:02.434911+00:00",
+      "captured_at_utc": "2026-09-24T15:32:39.920750+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -374,7 +374,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:05.251903+00:00",
+      "captured_at_utc": "2026-09-24T15:32:43.315553+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -420,7 +420,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:08.057981+00:00",
+      "captured_at_utc": "2026-09-24T15:32:46.738601+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -466,7 +466,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:14.429147+00:00",
+      "captured_at_utc": "2026-09-24T15:32:56.545648+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -512,7 +512,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:27.407363+00:00",
+      "captured_at_utc": "2026-09-24T15:33:17.589936+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -558,7 +558,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:31.004587+00:00",
+      "captured_at_utc": "2026-09-24T15:33:22.558765+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -604,7 +604,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:36.177998+00:00",
+      "captured_at_utc": "2026-09-24T15:33:30.474739+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -650,7 +650,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:38.333454+00:00",
+      "captured_at_utc": "2026-09-24T15:33:33.142780+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -696,7 +696,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:40.804902+00:00",
+      "captured_at_utc": "2026-09-24T15:33:36.439959+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -742,7 +742,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:42.961919+00:00",
+      "captured_at_utc": "2026-09-24T15:33:39.156878+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -788,7 +788,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:45.513226+00:00",
+      "captured_at_utc": "2026-09-24T15:33:42.614904+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -834,7 +834,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:47.663326+00:00",
+      "captured_at_utc": "2026-09-24T15:33:45.320540+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -880,7 +880,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:50.189885+00:00",
+      "captured_at_utc": "2026-09-24T15:33:48.778176+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -926,7 +926,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:52.360514+00:00",
+      "captured_at_utc": "2026-09-24T15:33:51.496639+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -972,7 +972,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:54.994023+00:00",
+      "captured_at_utc": "2026-09-24T15:33:54.955819+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -1018,7 +1018,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:57.116406+00:00",
+      "captured_at_utc": "2026-09-24T15:33:57.669469+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -1064,7 +1064,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:16:59.884364+00:00",
+      "captured_at_utc": "2026-09-24T15:34:01.170540+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -1110,7 +1110,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:17:02.104052+00:00",
+      "captured_at_utc": "2026-09-24T15:34:03.881333+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -1156,7 +1156,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:17:04.733460+00:00",
+      "captured_at_utc": "2026-09-24T15:34:07.370637+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -1202,7 +1202,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:17:08.320034+00:00",
+      "captured_at_utc": "2026-09-24T15:34:12.234083+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -1248,7 +1248,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:17:13.506958+00:00",
+      "captured_at_utc": "2026-09-24T15:34:20.311270+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
@@ -1294,7 +1294,7 @@
     },
     {
       "schema_version": 1,
-      "captured_at_utc": "2026-09-23T19:17:16.174919+00:00",
+      "captured_at_utc": "2026-09-24T15:34:23.844531+00:00",
       "python": "3.14.0",
       "packages": {
         "numpy": "2.4.2",
